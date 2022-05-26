@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "67803603321",
+    "project_id": "wallet-manager-1",
+    "storage_bucket": "wallet-manager-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:67803603321:android:1e4b26a072c71bdf450fa8",
+        "android_client_info": {
+          "package_name": "step.wallet.maganger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "67803603321-mvgglj787lad95966uj5629kcnhg3u3l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "step.wallet.maganger",
+            "certificate_hash": "82c8932cbc42895079be0bc79c134587a481a8bf"
+          }
+        },
+        {
+          "client_id": "67803603321-74d7583428tnkd65hvb3jhel24c51k09.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPyf6iAq9TIT4evPlGUXD8QGmup47bpTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "67803603321-74d7583428tnkd65hvb3jhel24c51k09.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
