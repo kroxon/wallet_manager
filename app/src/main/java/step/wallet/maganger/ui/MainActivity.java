@@ -2,16 +2,23 @@ package step.wallet.maganger.ui;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Group;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.navigation.NavigationView;
 import com.google.api.services.drive.Drive;
 import step.wallet.maganger.R;
 import step.wallet.maganger.data.DBConstants;
@@ -34,6 +41,9 @@ public class MainActivity extends GoogleDriveActivity {
     private Button writeToDb;
     private Button saveToGoogleDrive;
     private Button restoreFromDb;
+    private MaterialToolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     private GoogleDriveApiDataRepository repository;
 
@@ -68,6 +78,9 @@ public class MainActivity extends GoogleDriveActivity {
         writeToDb = findViewById(R.id.write_to_db);
         saveToGoogleDrive = findViewById(R.id.save_to_google_drive);
         restoreFromDb = findViewById(R.id.restore_from_db);
+        toolbar = findViewById(R.id.topAppBar);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.navigation_view);
     }
 
     private void initViews() {
@@ -82,6 +95,8 @@ public class MainActivity extends GoogleDriveActivity {
                 signOut();
                 revokeAccess();
                 repository = null;
+                googleSignIn.setVisibility(View.VISIBLE);
+                contentViews.setVisibility(View.GONE);
             }
         });
 
@@ -127,6 +142,42 @@ public class MainActivity extends GoogleDriveActivity {
                         Log.e(LOG_TAG, "error download file", e);
                         showMessage("Error download");
                     });
+        });
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                drawerLayout.openDrawer(GravityCompat.START);
+
+            }
+        });
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull @org.jetbrains.annotations.NotNull MenuItem item) {
+
+                int id = item.getItemId();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                switch (id)
+                {
+
+                    case R.id.nav_home:
+                        Toast.makeText(MainActivity.this, "Home is Clicked", Toast.LENGTH_SHORT).show();break;
+                    case R.id.nav_delete:
+                        Toast.makeText(MainActivity.this, "DELETE is Clicked",Toast.LENGTH_SHORT).show();break;
+                    case R.id.nav_login:
+                        Toast.makeText(MainActivity.this, "login is Clicked",Toast.LENGTH_SHORT).show();break;
+                    case R.id.nav_setting:
+                        Toast.makeText(MainActivity.this, "Settings is Clicked",Toast.LENGTH_SHORT).show();break;
+                    case R.id.nav_email:
+                        Toast.makeText(MainActivity.this, "Email is Clicked",Toast.LENGTH_SHORT).show();break;
+                    case R.id.nav_rate:
+                        Toast.makeText(MainActivity.this, "Rate us is Clicked",Toast.LENGTH_SHORT).show();break;
+                    default:
+                        return true;
+
+                }
+                return true;
+            }
         });
     }
 }
