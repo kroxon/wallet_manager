@@ -23,7 +23,7 @@
         android:id="@+id/content_views"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="edit_text_db_input,write_to_db,save_to_google_drive,restore_from_db"
+        app:constraint_referenced_ids="edit_text_db_input,write_to_db,save_to_google_drive,restore_from_db, google_sign_out"
         android:visibility="gone"
         />
 
@@ -73,9 +73,22 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="Restore from Google Drive"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/google_sign_out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/save_to_google_drive" />
+
+    <Button
+        android:id="@+id/google_sign_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Google Sign Out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/restore_from_db" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
