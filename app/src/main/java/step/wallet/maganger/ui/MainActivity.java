@@ -8,6 +8,9 @@ import android.widget.EditText;
 
 import androidx.constraintlayout.widget.Group;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.api.services.drive.Drive;
 import step.wallet.maganger.R;
@@ -25,6 +28,7 @@ public class MainActivity extends GoogleDriveActivity {
     private static final String GOOGLE_DRIVE_DB_LOCATION = "database";
 
     private Button googleSignIn;
+    private Button googleSignOut;
     private Group contentViews;
     private EditText inputToDb;
     private Button writeToDb;
@@ -40,6 +44,7 @@ public class MainActivity extends GoogleDriveActivity {
         findViews();
         initViews();
     }
+
 
     @Override
     protected void onGoogleDriveSignedInSuccess(Drive driveApi) {
@@ -57,6 +62,7 @@ public class MainActivity extends GoogleDriveActivity {
 
     private void findViews() {
         googleSignIn = findViewById(R.id.google_sign_in);
+        googleSignOut = findViewById(R.id.google_sign_out);
         contentViews = findViewById(R.id.content_views);
         inputToDb = findViewById(R.id.edit_text_db_input);
         writeToDb = findViewById(R.id.write_to_db);
@@ -67,6 +73,16 @@ public class MainActivity extends GoogleDriveActivity {
     private void initViews() {
         googleSignIn.setOnClickListener(v -> {
             startGoogleDriveSignIn();
+        });
+
+        googleSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startGoogleSignOut();
+                signOut();
+                revokeAccess();
+                repository = null;
+            }
         });
 
         writeToDb.setOnClickListener(v -> {

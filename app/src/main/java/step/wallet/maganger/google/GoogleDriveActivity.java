@@ -44,6 +44,11 @@ public abstract class GoogleDriveActivity extends GoogleSignInActivity {
         onGoogleDriveSignedInFailed(exception);
     }
 
+    @Override
+    protected void onGoogleSignedOutSuccess(GoogleSignInAccount signInAccount) {
+
+    }
+
     private void initializeDriveClient(GoogleSignInAccount signInAccount) {
         List<String> scopes = new ArrayList<>();
         scopes.add(DriveScopes.DRIVE_APPDATA);
