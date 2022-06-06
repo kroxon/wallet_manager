@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Programista/AndroidStudioProjects/Walletmanager/app/src/main/res/drawable/ic_home.xml" value="0.403125" />
         <entry key="..\:/Users/Programista/AndroidStudioProjects/Walletmanager/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/Programista/AndroidStudioProjects/Walletmanager/app/src/main/res/layout/nav_header.xml" value="0.38697916666666665" />
+        <entry key="..\:/Users/Programista/AndroidStudioProjects/Walletmanager/app/src/main/res/menu/my_nav_items.xml" value="0.38697916666666665" />
       </map>
     </option>
   </component>
