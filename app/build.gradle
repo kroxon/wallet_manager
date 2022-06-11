@@ -60,6 +60,7 @@ dependencies {
         exclude group: 'org.apache.httpcomponents'
     }
     implementation 'com.google.firebase:firebase-auth:21.0.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -77,6 +78,9 @@ dependencies {
     // For Navigation drawer
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'org.jetbrains:annotations:16.0.2'
+
+    // bottom navigation
+    implementation 'com.etebarian:meow-bottom-navigation-java:1.2.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
