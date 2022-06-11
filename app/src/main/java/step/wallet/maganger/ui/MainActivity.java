@@ -12,7 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Group;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
+import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -20,6 +22,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.api.services.drive.Drive;
+
 import step.wallet.maganger.R;
 import step.wallet.maganger.data.DBConstants;
 import step.wallet.maganger.data.InfoRepository;
@@ -44,6 +47,8 @@ public class MainActivity extends GoogleDriveActivity {
     private MaterialToolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+
+    MeowBottomNavigation bottomNavigation;
 
     private GoogleDriveApiDataRepository repository;
 
@@ -81,6 +86,7 @@ public class MainActivity extends GoogleDriveActivity {
         toolbar = findViewById(R.id.topAppBar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
+        bottomNavigation = findViewById(R.id.bottom_navigation);
     }
 
     private void initViews() {
@@ -157,21 +163,26 @@ public class MainActivity extends GoogleDriveActivity {
 
                 int id = item.getItemId();
                 drawerLayout.closeDrawer(GravityCompat.START);
-                switch (id)
-                {
+                switch (id) {
 
                     case R.id.nav_home:
-                        Toast.makeText(MainActivity.this, "Home is Clicked", Toast.LENGTH_SHORT).show();break;
+                        Toast.makeText(MainActivity.this, "Home is Clicked", Toast.LENGTH_SHORT).show();
+                        break;
                     case R.id.nav_delete:
-                        Toast.makeText(MainActivity.this, "DELETE is Clicked",Toast.LENGTH_SHORT).show();break;
+                        Toast.makeText(MainActivity.this, "DELETE is Clicked", Toast.LENGTH_SHORT).show();
+                        break;
                     case R.id.nav_login:
-                        Toast.makeText(MainActivity.this, "login is Clicked",Toast.LENGTH_SHORT).show();break;
+                        Toast.makeText(MainActivity.this, "login is Clicked", Toast.LENGTH_SHORT).show();
+                        break;
                     case R.id.nav_setting:
-                        Toast.makeText(MainActivity.this, "Settings is Clicked",Toast.LENGTH_SHORT).show();break;
+                        Toast.makeText(MainActivity.this, "Settings is Clicked", Toast.LENGTH_SHORT).show();
+                        break;
                     case R.id.nav_email:
-                        Toast.makeText(MainActivity.this, "Email is Clicked",Toast.LENGTH_SHORT).show();break;
+                        Toast.makeText(MainActivity.this, "Email is Clicked", Toast.LENGTH_SHORT).show();
+                        break;
                     case R.id.nav_rate:
-                        Toast.makeText(MainActivity.this, "Rate us is Clicked",Toast.LENGTH_SHORT).show();break;
+                        Toast.makeText(MainActivity.this, "Rate us is Clicked", Toast.LENGTH_SHORT).show();
+                        break;
                     default:
                         return true;
 
@@ -179,5 +190,65 @@ public class MainActivity extends GoogleDriveActivity {
                 return true;
             }
         });
+
+        bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_home));
+        bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_history));
+        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_wallet));
+//        bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_charts));
+        bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
+            @Override
+            public void onShowItem(MeowBottomNavigation.Model item) {
+                Fragment fragment = null;
+                //check condition
+                switch (item.getId()) {
+                    case 1:
+                        //when id i 1
+                        //initialize first fragment
+                        fragment = new FirstFragment();
+                        break;
+                    case 2:
+                        //when id i 2
+                        //initialize second fragment
+                        fragment = new SecondFragment();
+                        break;
+                    case 3:
+                        //when id i 3
+                        //initialize third fragment
+                        fragment = new ThirdFragment();
+                        break;
+//                    case 4:
+//                        //when id i 3
+//                        //initialize third fragment
+//                        fragment = new FourthFragment();
+//                        break;
+                }
+                loadfragment(fragment);
+            }
+        });
+
+        bottomNavigation.setCount(1, "");
+
+        bottomNavigation.show(1, true);
+
+        bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
+            @Override
+            public void onClickItem(MeowBottomNavigation.Model item) {
+                //display toast
+                Toast.makeText(getApplicationContext(), item.getId() + " is selected", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        bottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
+            @Override
+            public void onReselectItem(MeowBottomNavigation.Model item) {
+                //display toast
+                Toast.makeText(getApplicationContext(), item.getId() + " is reselected", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void loadfragment(Fragment fragment) {
+        //replace fragment
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).commit();
     }
 }
