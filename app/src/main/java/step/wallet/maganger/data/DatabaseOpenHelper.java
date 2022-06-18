@@ -1,7 +1,10 @@
 package step.wallet.maganger.data;
 
-import static step.wallet.maganger.data.DBConstants.DATABASE_CREATE;
+import static step.wallet.maganger.data.DBConstants.DATABASE_CREATE_1;
 import static step.wallet.maganger.data.DBConstants.DATABASE_CREATE_2;
+import static step.wallet.maganger.data.DBConstants.DATABASE_CREATE_3;
+import static step.wallet.maganger.data.DBConstants.DATABASE_CREATE_4;
+import static step.wallet.maganger.data.DBConstants.DATABASE_CREATE_5;
 import static step.wallet.maganger.data.DBConstants.DB_NAME;
 import static step.wallet.maganger.data.DBConstants.DB_VERSION;
 
@@ -24,8 +27,11 @@ class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        database.execSQL(DATABASE_CREATE);
+        database.execSQL(DATABASE_CREATE_1);
         database.execSQL(DATABASE_CREATE_2);
+        database.execSQL(DATABASE_CREATE_3);
+        database.execSQL(DATABASE_CREATE_4);
+        database.execSQL(DATABASE_CREATE_5);
     }
 
     @Override

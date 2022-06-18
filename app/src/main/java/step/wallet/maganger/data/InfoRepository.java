@@ -13,18 +13,18 @@ public class InfoRepository {
 
     public void writeInfo(@NonNull String info) {
         ContentValues values = new ContentValues();
-        values.put(DBConstants.INFO_FIELD_TEXT, info);
-        db.insert(DBConstants.TABLE_INFO, null, values);
+        values.put(DBConstants.COL_GENERAL_NOTE_1, info);
+        db.insert(DBConstants.TABLE_GENERAL, null, values);
         db.close();
     }
 
     @Nullable
     public String getInfo() {
         String info;
-        final String[] cols = new String[]{DBConstants.INFO_FIELD_TEXT};
+        final String[] cols = new String[]{DBConstants.COL_GENERAL_NOTE_1};
         try (Cursor cursor = db.query(
                 true,
-                DBConstants.TABLE_INFO,
+                DBConstants.TABLE_GENERAL,
                 cols,
                 null,
                 null,
