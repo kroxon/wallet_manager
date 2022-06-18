@@ -1,11 +1,17 @@
 package step.wallet.maganger.ui;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,12 +22,14 @@ import androidx.fragment.app.Fragment;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.api.services.drive.Drive;
+import com.squareup.picasso.Picasso;
+
+import org.apache.http.util.ByteArrayBuffer;
 
 import step.wallet.maganger.R;
 import step.wallet.maganger.data.DBConstants;
@@ -29,7 +37,12 @@ import step.wallet.maganger.data.InfoRepository;
 import step.wallet.maganger.google.GoogleDriveActivity;
 import step.wallet.maganger.google.GoogleDriveApiDataRepository;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class MainActivity extends GoogleDriveActivity {
 
@@ -87,6 +100,8 @@ public class MainActivity extends GoogleDriveActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
         bottomNavigation = findViewById(R.id.bottom_navigation);
+
+
     }
 
     private void initViews() {
@@ -103,6 +118,7 @@ public class MainActivity extends GoogleDriveActivity {
                 repository = null;
                 googleSignIn.setVisibility(View.VISIBLE);
                 contentViews.setVisibility(View.GONE);
+                unloadAccountInfo();
             }
         });
 
@@ -215,6 +231,7 @@ public class MainActivity extends GoogleDriveActivity {
                         //when id i 3
                         //initialize third fragment
                         fragment = new ThirdFragment();
+                        loadAccountInfo();
                         break;
 //                    case 4:
 //                        //when id i 3
@@ -245,10 +262,57 @@ public class MainActivity extends GoogleDriveActivity {
                 Toast.makeText(getApplicationContext(), item.getId() + " is reselected", Toast.LENGTH_SHORT).show();
             }
         });
+
+//        loadAccountInfo();
     }
+
+    private void loadAccountInfo() {
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this.getApplicationContext());
+        if (acct != null) {
+            String personName = acct.getDisplayName();
+            String personGivenName = acct.getGivenName();
+            String personFamilyName = acct.getFamilyName();
+            String personEmail = acct.getEmail();
+            String personId = acct.getId();
+            Uri personPhoto = acct.getPhotoUrl();
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+            View headerView = navigationView.getHeaderView(0);
+            TextView tvUsername = (TextView) headerView.findViewById(R.id.userName);
+            TextView tvMail = (TextView) headerView.findViewById(R.id.userMail);
+            TextView tvIcon = (TextView) headerView.findViewById(R.id.icon_text);
+            RelativeLayout relativeLayoutIcon = (RelativeLayout) headerView.findViewById(R.id.icon_container);
+
+            tvMail.setVisibility(View.VISIBLE);
+            tvMail.setText(personEmail);
+            tvUsername.setVisibility(View.VISIBLE);
+            tvUsername.setText(personName);
+            relativeLayoutIcon.setVisibility(View.VISIBLE);
+            tvIcon.setVisibility(View.VISIBLE);
+            tvIcon.setText(String.valueOf(String.valueOf(personGivenName.charAt(0))));
+        }
+    }
+
+    private void unloadAccountInfo() {
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        View headerView = navigationView.getHeaderView(0);
+        TextView tvUsername = (TextView) headerView.findViewById(R.id.userName);
+        TextView tvMail = (TextView) headerView.findViewById(R.id.userMail);
+        TextView tvIcon = (TextView) headerView.findViewById(R.id.icon_text);
+        RelativeLayout relativeLayoutIcon = (RelativeLayout) headerView.findViewById(R.id.icon_container);
+
+        tvMail.setVisibility(View.GONE);
+        tvUsername.setVisibility(View.GONE);
+        relativeLayoutIcon.setVisibility(View.GONE);
+        tvIcon.setVisibility(View.GONE);
+    }
+
 
     private void loadfragment(Fragment fragment) {
         //replace fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).commit();
     }
+
+
 }
