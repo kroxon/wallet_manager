@@ -81,6 +81,9 @@ dependencies {
 
     // bottom navigation
     implementation 'com.etebarian:meow-bottom-navigation-java:1.2.0'
+
+    // image from Uri
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

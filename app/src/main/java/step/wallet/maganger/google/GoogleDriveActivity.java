@@ -1,5 +1,7 @@
 package step.wallet.maganger.google;
 
+import android.net.Uri;
+
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.Scopes;
@@ -10,6 +12,7 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
+
 import step.wallet.maganger.R;
 
 import java.util.ArrayList;
@@ -37,7 +40,9 @@ public abstract class GoogleDriveActivity extends GoogleSignInActivity {
     @Override
     protected void onGoogleSignedInSuccess(final GoogleSignInAccount signInAccount) {
         initializeDriveClient(signInAccount);
+//        initializeAccountInfo(signInAccount);
     }
+
 
     @Override
     protected void onGoogleSignedInFailed(final ApiException exception) {
@@ -66,4 +71,5 @@ public abstract class GoogleDriveActivity extends GoogleSignInActivity {
                 .build();
         onGoogleDriveSignedInSuccess(driveApi);
     }
+
 }
