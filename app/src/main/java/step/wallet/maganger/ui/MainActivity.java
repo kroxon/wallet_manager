@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -78,8 +79,9 @@ public class MainActivity extends GoogleDriveActivity {
     protected void onGoogleDriveSignedInSuccess(Drive driveApi) {
         showMessage(R.string.message_drive_client_is_ready);
         repository = new GoogleDriveApiDataRepository(driveApi);
-        googleSignIn.setVisibility(View.GONE);
-        contentViews.setVisibility(View.VISIBLE);
+//        googleSignIn.setVisibility(View.GONE);
+//        contentViews.setVisibility(View.VISIBLE);
+        loadAccountInfo();
     }
 
     @Override
@@ -89,13 +91,13 @@ public class MainActivity extends GoogleDriveActivity {
     }
 
     private void findViews() {
-        googleSignIn = findViewById(R.id.google_sign_in);
-        googleSignOut = findViewById(R.id.google_sign_out);
-        contentViews = findViewById(R.id.content_views);
-        inputToDb = findViewById(R.id.edit_text_db_input);
-        writeToDb = findViewById(R.id.write_to_db);
-        saveToGoogleDrive = findViewById(R.id.save_to_google_drive);
-        restoreFromDb = findViewById(R.id.restore_from_db);
+//        googleSignIn = findViewById(R.id.google_sign_in);
+//        googleSignOut = findViewById(R.id .google_sign_out);
+//        contentViews = findViewById(R.id.content_views);
+//        inputToDb = findViewById(R.id.edit_text_db_input);
+//        writeToDb = findViewById(R.id.write_to_db);
+//        saveToGoogleDrive = findViewById(R.id.save_to_google_drive);
+//        restoreFromDb = findViewById(R.id.restore_from_db);
         toolbar = findViewById(R.id.topAppBar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
@@ -105,66 +107,67 @@ public class MainActivity extends GoogleDriveActivity {
     }
 
     private void initViews() {
-        googleSignIn.setOnClickListener(v -> {
-            startGoogleDriveSignIn();
-        });
+//        googleSignIn.setOnClickListener(v -> {
+//            startGoogleDriveSignIn();
+//        });
 
-        googleSignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startGoogleSignOut();
-                signOut();
-                revokeAccess();
-                repository = null;
-                googleSignIn.setVisibility(View.VISIBLE);
-                contentViews.setVisibility(View.GONE);
-                unloadAccountInfo();
-            }
-        });
+//        googleSignOut.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startGoogleSignOut();
+//                signOut();
+//                revokeAccess();
+//                repository = null;
+//                googleSignIn.setVisibility(View.VISIBLE);
+//                contentViews.setVisibility(View.GONE);
+//                unloadAccountInfo();
+//            }
+//        });
 
-        writeToDb.setOnClickListener(v -> {
-            String text = inputToDb.getText().toString();
-            InfoRepository repository = new InfoRepository();
-            repository.writeInfo(text);
-            showMessage("Save to local database");
-        });
+//        writeToDb.setOnClickListener(v -> {
+//            String text = inputToDb.getText().toString();
+//            InfoRepository repository = new InfoRepository();
+//            repository.writeInfo(text);
+//            showMessage("Save to local database");
+//        });
 
-        saveToGoogleDrive.setOnClickListener(v -> {
-            File db = new File(DBConstants.DB_LOCATION);
-            if (repository == null) {
-                showMessage(R.string.message_google_sign_in_failed);
-                return;
-            }
+//        saveToGoogleDrive.setOnClickListener(v -> {
+//            File db = new File(DBConstants.DB_LOCATION);
+//            if (repository == null) {
+//                showMessage(R.string.message_google_sign_in_failed);
+//                return;
+//            }
+//
+//            repository.uploadFile(db, GOOGLE_DRIVE_DB_LOCATION)
+//                    .addOnSuccessListener(r -> showMessage("Upload success"))
+//                    .addOnFailureListener(e -> {
+//                        Log.e(LOG_TAG, "error upload file", e);
+//                        showMessage("Error upload");
+//                    });
+//        });
+//
+//        restoreFromDb.setOnClickListener(v -> {
+//            if (repository == null) {
+//                showMessage(R.string.message_google_sign_in_failed);
+//                return;
+//            }
+//
+//            File db = new File(DBConstants.DB_LOCATION);
+//            db.getParentFile().mkdirs();
+//            db.delete();
+//            repository.downloadFile(db, GOOGLE_DRIVE_DB_LOCATION)
+//                    .addOnSuccessListener(r -> {
+//                        InfoRepository repository = new InfoRepository();
+//                        String infoText = repository.getInfo();
+//                        inputToDb.setText(infoText);
+//                        showMessage("Retrieved");
+//                    })
+//                    .addOnFailureListener(e -> {
+//                        Log.e(LOG_TAG, "error download file", e);
+//                        showMessage("Error download");
+//                    });
+//        });
 
-            repository.uploadFile(db, GOOGLE_DRIVE_DB_LOCATION)
-                    .addOnSuccessListener(r -> showMessage("Upload success"))
-                    .addOnFailureListener(e -> {
-                        Log.e(LOG_TAG, "error upload file", e);
-                        showMessage("Error upload");
-                    });
-        });
-
-        restoreFromDb.setOnClickListener(v -> {
-            if (repository == null) {
-                showMessage(R.string.message_google_sign_in_failed);
-                return;
-            }
-
-            File db = new File(DBConstants.DB_LOCATION);
-            db.getParentFile().mkdirs();
-            db.delete();
-            repository.downloadFile(db, GOOGLE_DRIVE_DB_LOCATION)
-                    .addOnSuccessListener(r -> {
-                        InfoRepository repository = new InfoRepository();
-                        String infoText = repository.getInfo();
-                        inputToDb.setText(infoText);
-                        showMessage("Retrieved");
-                    })
-                    .addOnFailureListener(e -> {
-                        Log.e(LOG_TAG, "error download file", e);
-                        showMessage("Error download");
-                    });
-        });
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,12 +176,14 @@ public class MainActivity extends GoogleDriveActivity {
 
             }
         });
+        navigationView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @org.jetbrains.annotations.NotNull MenuItem item) {
 
                 int id = item.getItemId();
                 drawerLayout.closeDrawer(GravityCompat.START);
+                File db = new File(DBConstants.DB_LOCATION);
                 switch (id) {
 
                     case R.id.nav_home:
@@ -188,8 +193,54 @@ public class MainActivity extends GoogleDriveActivity {
                         Toast.makeText(MainActivity.this, "DELETE is Clicked", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_login:
-                        Toast.makeText(MainActivity.this, "login is Clicked", Toast.LENGTH_SHORT).show();
+                        startGoogleDriveSignIn();
+                        Toast.makeText(MainActivity.this, "LOGIN is Clicked", Toast.LENGTH_SHORT).show();
                         break;
+                    case R.id.nav_logout:
+                        startGoogleSignOut();
+                        signOut();
+                        revokeAccess();
+                        repository = null;
+//                        googleSignIn.setVisibility(View.VISIBLE);
+//                        contentViews.setVisibility(View.GONE);
+                        unloadAccountInfo();
+                        Toast.makeText(MainActivity.this, "LOGOUT is Clicked", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.nav_upload:{
+                        Toast.makeText(MainActivity.this, "UPLOAD is Clicked", Toast.LENGTH_SHORT).show();
+                        if (repository == null) {
+                            showMessage(R.string.message_google_sign_in_failed);
+                            break;
+                        }
+
+                        repository.uploadFile(db, GOOGLE_DRIVE_DB_LOCATION)
+                                .addOnSuccessListener(r -> showMessage("Upload success"))
+                                .addOnFailureListener(e -> {
+                                    Log.e(LOG_TAG, "error upload file", e);
+                                    showMessage("Error upload");
+                                });}
+                        break;
+                    case R.id.nav_download: {
+                        Toast.makeText(MainActivity.this, "DOWNLOAD is Clicked", Toast.LENGTH_SHORT).show();
+                        if (repository == null) {
+                            showMessage(R.string.message_google_sign_in_failed);
+                            break;
+                        }
+                        db.getParentFile().mkdirs();
+                        db.delete();
+                        repository.downloadFile(db, GOOGLE_DRIVE_DB_LOCATION)
+                                .addOnSuccessListener(r -> {
+                                    InfoRepository repository = new InfoRepository();
+                                    String infoText = repository.getInfo();
+                                    inputToDb.setText(infoText);
+                                    showMessage("Retrieved");
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e(LOG_TAG, "error download file", e);
+                                    showMessage("Error download");
+                                });
+                    }
+                    break;
                     case R.id.nav_setting:
                         Toast.makeText(MainActivity.this, "Settings is Clicked", Toast.LENGTH_SHORT).show();
                         break;
