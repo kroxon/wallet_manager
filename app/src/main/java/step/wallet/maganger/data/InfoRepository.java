@@ -38,6 +38,18 @@ public class InfoRepository {
 
     }
 
+    public void removeTransaction (String idTransaction){
+        String[] whereArgs = new String[] { String.valueOf(idTransaction) };
+        db.delete(DBConstants.TABLE_TRANSACTION, DBConstants.COL_TRANSACTION_ID+"=?",whereArgs);
+    }
+
+    public void updateTransaction(String idTransaction, String date){
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.COL_TRANSACTION_VALUE, date);
+        String[] whereArgs = new String[] { String.valueOf(idTransaction) };
+        db.update(DBConstants.TABLE_TRANSACTION, values, DBConstants.COL_TRANSACTION_ID+"=?", whereArgs);
+    }
+
     @Nullable
     public String getInfo() {
         String info;

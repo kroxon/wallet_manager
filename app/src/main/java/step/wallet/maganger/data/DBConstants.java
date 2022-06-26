@@ -22,6 +22,7 @@ public class DBConstants {
     static final String COL_ACC_TYPE = "ACCOUNT_TYPE";
     static final String COL_ACC_BALANCE = "ACCOUNT_BALANCE";
     static final String COL_TRANSACTION_ID = "TRANSACTION_ID";
+    static final String COL_TRANSACTION_VALUE = "TRANSACTION_VALUE";
     static final String COL_TRANSACTION_ID_CAT = "TRANSACTION_ID_CATEGORY";
     static final String COL_TRANSACTION_ID_SUBCAT = "TRANSACTION_ID_SUBCATEGORY";
     static final String COL_TRANSACTION_DATE = "TRANSACTION_ID_DATETIME";
@@ -65,10 +66,10 @@ public class DBConstants {
     static {
         DATABASE_CREATE_4 = "CREATE TABLE IF NOT EXISTS "
                 + TABLE_TRANSACTION
-                + " (" + COL_TRANSACTION_ID + " INTEGER PRIMARY KEY, " + COL_TRANSACTION_ID_CAT + " INTEGER, " +
-                COL_TRANSACTION_ID_SUBCAT + " INTEGER, " + COL_TRANSACTION_DATE + " INTEGER, " +
-                COL_TRANSACTION_ID_ACC + " INTEGER, " + COL_TRANSACTION_NOTE_1 + " TEXT, " +
-                COL_TRANSACTION_NOTE_2 + " TEXT, " + COL_TRANSACTION_PHOTO + " TEXT);";
+                + " (" + COL_TRANSACTION_ID + " INTEGER PRIMARY KEY, " + COL_TRANSACTION_VALUE + " INTEGER, "
+                + COL_TRANSACTION_ID_CAT + " INTEGER, " + COL_TRANSACTION_ID_SUBCAT + " INTEGER, "
+                + COL_TRANSACTION_DATE + " INTEGER, " + COL_TRANSACTION_ID_ACC + " INTEGER, " +
+                COL_TRANSACTION_NOTE_1 + " TEXT, " + COL_TRANSACTION_NOTE_2 + " TEXT, " + COL_TRANSACTION_PHOTO + " TEXT);";
     }
 
     static {
