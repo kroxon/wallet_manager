@@ -1,16 +1,14 @@
 package step.wallet.maganger.data;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import step.wallet.maganger.ui.FirstFragment;
-import step.wallet.maganger.ui.MainActivity;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InfoRepository {
 
@@ -68,5 +66,26 @@ public class InfoRepository {
             info = cursor.getString(0);
         }
         return info;
+    }
+
+    @Nullable
+    public List<String> getAllCategories() {
+        List<String> list = new ArrayList<String>();
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY;
+        // on below line we are creating a new array list.
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(1));//adding 2nd column data
+            } while (cursor.moveToNext());
+        }
+//        // closing connection
+//        cursor.close();
+//        db.close();
+        // returning lables
+        return list;
+
     }
 }

@@ -4,7 +4,7 @@ public class DBConstants {
 
     public static final String DB_LOCATION = "/data/data/step.wallet.maganger/databases/" + DBConstants.DB_NAME;
 
-    static final String DB_NAME = "WalletManager";
+    static final String DB_NAME = "WalletManager.db";
     static final int DB_VERSION = 1;
 
     static final String TABLE_CATEGORY = "TABLE_CATEGORY";
