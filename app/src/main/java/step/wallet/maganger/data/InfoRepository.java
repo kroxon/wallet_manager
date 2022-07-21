@@ -41,11 +41,30 @@ public class InfoRepository {
         db.delete(DBConstants.TABLE_TRANSACTION, DBConstants.COL_TRANSACTION_ID+"=?",whereArgs);
     }
 
+    public void removeCategory (String nameCategory){
+        String[] whereArgs = new String[] { String.valueOf(nameCategory) };
+        db.delete(DBConstants.TABLE_CATEGORY, DBConstants.COL_CAT_NAME+"=?",whereArgs);
+    }
+
     public void updateTransaction(String idTransaction, String date){
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_TRANSACTION_VALUE, date);
         String[] whereArgs = new String[] { String.valueOf(idTransaction) };
         db.update(DBConstants.TABLE_TRANSACTION, values, DBConstants.COL_TRANSACTION_ID+"=?", whereArgs);
+    }
+
+    public void updateCategory(String newNameCategory, String oldNameCategory){
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.COL_CAT_NAME, newNameCategory);
+        String[] whereArgs = new String[] { String.valueOf(oldNameCategory) };
+        db.update(DBConstants.TABLE_CATEGORY, values, DBConstants.COL_CAT_NAME+"=?", whereArgs);
+    }
+
+    public void addCategory (@NonNull String nameCategory){
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.COL_CAT_NAME, nameCategory);
+        db.insert(DBConstants.TABLE_CATEGORY, null, values);
+        db.close();
     }
 
     @Nullable
