@@ -1,5 +1,6 @@
 package step.wallet.maganger.ui;
 
+import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -19,7 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Group;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
+import android.app.Fragment;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -362,7 +363,9 @@ public class MainActivity extends GoogleDriveActivity {
 
     private void loadfragment(Fragment fragment) {
         //replace fragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).commit();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, fragment);
+        transaction.commit();
     }
 
 
