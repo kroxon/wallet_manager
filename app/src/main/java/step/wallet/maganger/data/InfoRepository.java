@@ -107,4 +107,48 @@ public class InfoRepository {
         return list;
 
     }
+
+    // to do - returning ID category
+
+    @Nullable
+    public String getIdCategory(String cateoryName) {
+        String idCategory = "0";
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_NAME + " = '" + cateoryName + "'" ;
+        // on below line we are creating a new array list.
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and search for ID Category name
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(1).equals(cateoryName))
+                idCategory = cursor.getString(0);
+            } while (cursor.moveToNext());
+        }
+        return idCategory;
+
+    }
+
+
+    // to do - returning subcategories by ID category
+
+    @Nullable
+    public List<String> getSubcategories(String cateoryId) {
+        List<String> list = new ArrayList<String>();
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_SUBCATEGORY + " WHERE " + DBConstants.COL_SUBCAT_SUPERCAT_ID + " = '" + cateoryId + "'";
+        // on below line we are creating a new array list.
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(2));//adding 2nd column data
+            } while (cursor.moveToNext());
+        }
+//        // closing connection
+//        cursor.close();
+//        db.close();
+        // returning lables
+        return list;
+
+    }
 }
