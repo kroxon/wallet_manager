@@ -67,6 +67,14 @@ public class InfoRepository {
         db.close();
     }
 
+    public void addSubcategory (@NonNull String nameSubcategory, String idSUperCat){
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.COL_SUBCAT_NAME, nameSubcategory);
+        values.put(DBConstants.COL_SUBCAT_SUPERCAT_ID, idSUperCat);
+        db.insert(DBConstants.TABLE_SUBCATEGORY, null, values);
+        db.close();
+    }
+
     @Nullable
     public String getInfo() {
         String info;
