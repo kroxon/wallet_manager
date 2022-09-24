@@ -67,6 +67,11 @@ public class InfoRepository {
         db.close();
     }
 
+    public void removeSubategory (String nameSubcategory, String idCategory){
+        String[] whereArgs = new String[] { String.valueOf(nameSubcategory), String.valueOf(idCategory) };
+        db.delete(DBConstants.TABLE_SUBCATEGORY, DBConstants.COL_SUBCAT_NAME+"=? AND " + DBConstants.COL_SUBCAT_SUPERCAT_ID + "=?", whereArgs);
+    }
+
     public void addSubcategory (@NonNull String nameSubcategory, String idSUperCat){
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_SUBCAT_NAME, nameSubcategory);
