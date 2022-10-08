@@ -15,6 +15,7 @@ public class DBConstants {
 
     static final String COL_CAT_ID = "CATEGORY_ID";
     static final String COL_CAT_NAME = "CATEGORY_NAME";
+    static final String COL_CAT_ICON = "CATEGORY_ICON";
 
     static final String COL_SUBCAT_ID = "SUBCATEGORY_ID";
     static final String COL_SUBCAT_SUPERCAT_ID= "SUPERCATEGORY_ID";

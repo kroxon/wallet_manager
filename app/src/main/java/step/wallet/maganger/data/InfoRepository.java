@@ -53,10 +53,17 @@ public class InfoRepository {
         db.update(DBConstants.TABLE_TRANSACTION, values, DBConstants.COL_TRANSACTION_ID+"=?", whereArgs);
     }
 
-    public void updateCategory(String newNameCategory, String oldNameCategory){
+    public void updateCategoryName(String newNameCategory, String oldNameCategory){
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_CAT_NAME, newNameCategory);
         String[] whereArgs = new String[] { String.valueOf(oldNameCategory) };
+        db.update(DBConstants.TABLE_CATEGORY, values, DBConstants.COL_CAT_NAME+"=?", whereArgs);
+    }
+
+    public void updateCategoryIcon(String iconIdRepository, String NameCategory){
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.COL_CAT_ICON, iconIdRepository);
+        String[] whereArgs = new String[] { String.valueOf(NameCategory) };
         db.update(DBConstants.TABLE_CATEGORY, values, DBConstants.COL_CAT_NAME+"=?", whereArgs);
     }
 
