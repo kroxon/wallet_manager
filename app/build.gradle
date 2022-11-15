@@ -93,6 +93,11 @@ dependencies {
 
     // image from Uri
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    // icon adapter widget
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
+
+
 }
 
 apply plugin: 'com.google.gms.google-services'

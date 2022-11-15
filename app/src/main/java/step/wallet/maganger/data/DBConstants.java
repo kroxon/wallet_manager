@@ -15,12 +15,17 @@ public class DBConstants {
 
     static final String COL_CAT_ID = "CATEGORY_ID";
     static final String COL_CAT_NAME = "CATEGORY_NAME";
+    static final String COL_CAT_ICON = "CATEGORY_ICON";
+
     static final String COL_SUBCAT_ID = "SUBCATEGORY_ID";
+    static final String COL_SUBCAT_SUPERCAT_ID= "SUPERCATEGORY_ID";
     static final String COL_SUBCAT_NAME = "INFO_FIELD_TEXT";
+
     static final String COL_ACC_ID = "ACCOUNT_ID";
     static final String COL_ACC_NAME = "ACCOUNT_NAME";
     static final String COL_ACC_TYPE = "ACCOUNT_TYPE";
     static final String COL_ACC_BALANCE = "ACCOUNT_BALANCE";
+
     static final String COL_TRANSACTION_ID = "TRANSACTION_ID";
     static final String COL_TRANSACTION_VALUE = "TRANSACTION_VALUE";
     static final String COL_TRANSACTION_ID_CAT = "TRANSACTION_ID_CATEGORY";
@@ -30,6 +35,7 @@ public class DBConstants {
     static final String COL_TRANSACTION_NOTE_1 = "TRANSACTION_NOTE_1";
     static final String COL_TRANSACTION_NOTE_2 = "TRANSACTION_NOTE_2";
     static final String COL_TRANSACTION_PHOTO = "TRANSACTION_PHOTO";
+
     static final String COL_GENERAL_ID = "GENERAL_ID";
     static final String COL_GENERAL_SYNCHRONISED = "GENERAL_SYNCHRONISED";
     static final String COL_GENERAL_NOTE_1 = "GENERAL_NOTE_1";
@@ -47,13 +53,13 @@ public class DBConstants {
     static {
         DATABASE_CREATE_1 = "CREATE TABLE IF NOT EXISTS "
                 + TABLE_CATEGORY
-                + " (" + COL_CAT_ID + " INTEGER PRIMARY KEY, " + COL_CAT_NAME + " TEXT);";
+                + " (" + COL_CAT_ID + " INTEGER PRIMARY KEY, " + COL_CAT_NAME + " TEXT, " + COL_CAT_ICON + " INTEGER);";
     }
 
     static {
         DATABASE_CREATE_2 = "CREATE TABLE IF NOT EXISTS "
                 + TABLE_SUBCATEGORY
-                + " (" + COL_SUBCAT_ID + " INTEGER PRIMARY KEY, " + COL_SUBCAT_NAME + " TEXT);";
+                + " (" + COL_SUBCAT_ID + " INTEGER PRIMARY KEY, " + COL_SUBCAT_SUPERCAT_ID + " INTEGER, " + COL_SUBCAT_NAME + " TEXT);";
     }
 
     static {
