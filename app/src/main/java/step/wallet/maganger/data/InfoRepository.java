@@ -41,9 +41,30 @@ public class InfoRepository {
         db.delete(DBConstants.TABLE_TRANSACTION, DBConstants.COL_TRANSACTION_ID+"=?",whereArgs);
     }
 
+    // remove selected category and move subcategories to right place
     public void removeCategory (String nameCategory){
+        String idCategory = getIdCategory(nameCategory);
+        int idCat = Integer.parseInt(idCategory);
         String[] whereArgs = new String[] { String.valueOf(nameCategory) };
-        db.delete(DBConstants.TABLE_CATEGORY, DBConstants.COL_CAT_NAME+"=?",whereArgs);
+        removeSubategory(idCategory);
+        db.delete(DBConstants.TABLE_CATEGORY, DBConstants.COL_CAT_NAME+"=?", whereArgs);
+
+//        // reducing the number "id category" to match the correct one
+//
+//        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_SUBCATEGORY  + " WHERE " + DBConstants.COL_SUBCAT_SUPERCAT_ID + " > '" + idCat + "'" ;;
+//        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+//        // looping through all rows and decreasing number
+//        if (cursor.moveToFirst()) {
+//            do {
+//                int idSuperCat = Integer.parseInt(cursor.getString(1));
+//                String idSubcat = cursor.getString(0);
+//                ContentValues values = new ContentValues();
+//                values.put(DBConstants.COL_SUBCAT_SUPERCAT_ID, String.valueOf(idSuperCat - 1));
+//                String[] whereArgsUpdate = new String[] { idSubcat };
+//                db.update(DBConstants.TABLE_SUBCATEGORY, values, DBConstants.COL_SUBCAT_SUPERCAT_ID + "=?", whereArgsUpdate);
+//            } while (cursor.moveToNext());
+//        }
+
     }
 
     public void updateTransaction(String idTransaction, String date){
@@ -70,13 +91,19 @@ public class InfoRepository {
     public void addCategory (@NonNull String nameCategory){
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_CAT_NAME, nameCategory);
+        values.put(DBConstants.COL_CAT_ICON, "2131165331");
         db.insert(DBConstants.TABLE_CATEGORY, null, values);
         db.close();
     }
 
-    public void removeSubategory (String nameSubcategory, String idCategory){
+    public void removeSubategoryByName(String nameSubcategory, String idCategory){
         String[] whereArgs = new String[] { String.valueOf(nameSubcategory), String.valueOf(idCategory) };
         db.delete(DBConstants.TABLE_SUBCATEGORY, DBConstants.COL_SUBCAT_NAME+"=? AND " + DBConstants.COL_SUBCAT_SUPERCAT_ID + "=?", whereArgs);
+    }
+
+    public void removeSubategory(String idCategory){
+        String[] whereArgs = new String[] { idCategory };
+        db.delete(DBConstants.TABLE_SUBCATEGORY, DBConstants.COL_SUBCAT_SUPERCAT_ID + "=?", whereArgs);
     }
 
     public void addSubcategory (@NonNull String nameSubcategory, String idSUperCat){
@@ -171,4 +198,21 @@ public class InfoRepository {
         return list;
 
     }
+
+    @Nullable
+    public int getIdCategoryIcon(String cateoryName) {
+        int idCategoryIcon = 0;
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_NAME + " = '" + cateoryName + "'" ;
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and search for ID Category name
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(1).equals(cateoryName))
+                    idCategoryIcon = Integer.parseInt(cursor.getString(2));
+            } while (cursor.moveToNext());
+        }
+        return idCategoryIcon;
+    }
+
 }

@@ -53,7 +53,7 @@ public class DBConstants {
     static {
         DATABASE_CREATE_1 = "CREATE TABLE IF NOT EXISTS "
                 + TABLE_CATEGORY
-                + " (" + COL_CAT_ID + " INTEGER PRIMARY KEY, " + COL_CAT_NAME + " TEXT);";
+                + " (" + COL_CAT_ID + " INTEGER PRIMARY KEY, " + COL_CAT_NAME + " TEXT, " + COL_CAT_ICON + " INTEGER);";
     }
 
     static {
