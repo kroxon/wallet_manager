@@ -114,6 +114,13 @@ public class InfoRepository {
         db.close();
     }
 
+    public void updateSubcategoryName(String newNameSubcategory, String oldNameSubcategory, String idCategory){
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.COL_SUBCAT_NAME, newNameSubcategory);
+        String[] whereArgs = new String[] { String.valueOf(oldNameSubcategory), String.valueOf(idCategory)};
+        db.update(DBConstants.TABLE_SUBCATEGORY, values, DBConstants.COL_SUBCAT_NAME + "=? AND " + DBConstants.COL_SUBCAT_SUPERCAT_ID + "=?", whereArgs);
+    }
+
     @Nullable
     public String getInfo() {
         String info;
