@@ -1,0 +1,6 @@
+<!--@formatter:off-->
+<tags>
+    <tag name="tag">
+        <tag name="nested">Nested</tag>
+    </tag>
+</tags>

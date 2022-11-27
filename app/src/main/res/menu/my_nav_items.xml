@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home"
+        android:title="Home"></item>
+
+    <item
+        android:id="@+id/nav_delete"
+        android:icon="@drawable/ic_delete"
+        android:title="Delete"></item>
+
+    <item
+        android:id="@+id/nav_login"
+        android:icon="@drawable/ic_login"
+        android:title="Log in"></item>
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_logout"
+        android:title="Log out"></item>
+
+    <item
+        android:id="@+id/nav_upload"
+        android:icon="@drawable/ic_cloud_upload"
+        android:title="Cloud upload"></item>
+
+    <item
+        android:id="@+id/nav_download"
+        android:icon="@drawable/ic_cloud_download"
+        android:title="Cloud download"></item>
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/nav_setting"
+                android:icon="@drawable/ic_setting"
+                android:title="Settings"></item>
+        </menu>
+
+    </item>
+
+    <item android:title="Contact">
+
+        <menu>
+            <item
+                android:id="@+id/nav_email"
+                android:icon="@drawable/ic_email"
+                android:title="Email"></item>
+            <item
+                android:id="@+id/nav_rate"
+                android:icon="@drawable/ic_star"
+                android:title="Rate us"></item>
+        </menu>
+
+    </item>
+
+</menu>

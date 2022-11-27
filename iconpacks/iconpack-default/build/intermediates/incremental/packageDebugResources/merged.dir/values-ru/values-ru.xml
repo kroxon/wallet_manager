@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="icd_category_arrows">Стрелы</string>
+    <string name="icd_category_arts">Искусство</string>
+    <string name="icd_category_audio">Музыка и звук</string>
+    <string name="icd_category_buildings">Места и здания</string>
+    <string name="icd_category_computer">Компьютер</string>
+    <string name="icd_category_finance">Финансы и шоппинг</string>
+    <string name="icd_category_food">Еда и напитки</string>
+    <string name="icd_category_home">Дом и жизнь</string>
+    <string name="icd_category_leisure">Досуг</string>
+    <string name="icd_category_nature">Природа и животные</string>
+    <string name="icd_category_people">Семья и люди</string>
+    <string name="icd_category_photo_video">Фото и видео</string>
+    <string name="icd_category_science">Математика и наука</string>
+    <string name="icd_category_sports">Спорт</string>
+    <string name="icd_category_symbols">Знаки и Символы</string>
+    <string name="icd_category_technology">Технологая</string>
+    <string name="icd_category_time">Время</string>
+    <string name="icd_category_tools">Инструменты</string>
+    <string name="icd_category_transport">Транспорт и путешествия</string>
+</resources>

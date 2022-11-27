@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr format="reference" name="icdStyle"/>
+    <color name="icd_icon_color_normal">#99000000</color>
+    <dimen name="icd_dialog_icon_size">50dp</dimen>
+    <dimen name="icd_dialog_max_height">500dp</dimen>
+    <dimen name="icd_dialog_max_width">400dp</dimen>
+    <string name="icd_action_cancel">Cancel</string>
+    <string name="icd_action_clear">Clear</string>
+    <string name="icd_action_select">Select</string>
+    <string name="icd_max_sel_message">The maximum number of selected icons has been reached</string>
+    <string name="icd_no_result">No icons found for this search</string>
+    <string name="icd_search_hint">Search icons</string>
+    <string name="icd_title">Select icon</string>
+    <style name="BaseIcdStyle">
+        <item name="icdMaxWidth">@dimen/icd_dialog_max_width</item>
+        <item name="icdMaxHeight">@dimen/icd_dialog_max_height</item>
+        <item name="icdIconSize">@dimen/icd_dialog_icon_size</item>
+        <item name="icdIconStyle">@style/IcdIconStyle</item>
+        <item name="icdIconForegroundStyle">@style/IcdIconForegroundStyle</item>
+        <item name="icdIconColor">@color/icd_icon_color_normal</item>
+        <item name="icdSelectedIconColor">?colorPrimary</item>
+        <item name="icdListHeaderStyle">@style/IcdListHeaderStyle</item>
+        <item name="icdListStickyHeaderStyle">@style/IcdListStickyHeaderStyle</item>
+        <item name="icdDividerDrawable">?android:listDivider</item>
+        <item name="icdSearchBarStyle">@style/IcdSearchBarStyle</item>
+        <item name="icdSearchIconStyle">@style/IcdSearchIconStyle</item>
+        <item name="icdCancelSearchIconStyle">@style/IcdCancelSearchIconStyle</item>
+        <item name="icdNoResultLabelStyle">@style/IcdNoResultLabelStyle</item>
+        <item name="icdDialogTitleStyle">@style/IcdTitleStyle</item>
+        <item name="icdDialogListStyle">@style/IcdListStyle</item>
+        <item name="icdDialogButtonStyle">@style/IcdDialogButtonStyle</item>
+    </style>
+    <style name="IcdCancelSearchIconStyle">
+        <item name="srcCompat">@drawable/icd_ic_close</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <item name="tint">@color/material_on_background_emphasis_medium</item>
+        <item name="android:disabledAlpha">1.0</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+    <style name="IcdDialogButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog"/>
+    <style name="IcdIconForegroundStyle">
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+    <style name="IcdIconStyle">
+        <item name="android:padding">8dp</item>
+        <item name="tint">@color/icd_icon_color</item>
+    </style>
+    <style name="IcdListHeaderStyle">
+        <item name="android:textAppearance">@style/IcdListHeaderTextAppearance</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+    <style name="IcdListHeaderTextAppearance" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">@color/material_on_background_emphasis_medium</item>
+    </style>
+    <style name="IcdListStickyHeaderStyle" parent="IcdListHeaderStyle">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:background">?colorBackgroundFloating</item>
+    </style>
+    <style name="IcdListStyle">
+        <item name="android:padding">8dp</item>
+        <item name="android:clipToPadding">false</item>
+    </style>
+    <style name="IcdNoResultLabelStyle">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Small</item>
+        <item name="android:text">@string/icd_no_result</item>
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">24dp</item>
+    </style>
+    <style name="IcdSearchBarStyle">
+        <item name="android:hint">@string/icd_search_hint</item>
+        <item name="android:inputType">text</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:maxLength">32</item>
+        <item name="android:background">@null</item>
+        <item name="android:imeOptions">actionSearch|flagNoExtractUi</item>
+    </style>
+    <style name="IcdSearchIconStyle">
+        <item name="srcCompat">@drawable/icd_ic_search</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <item name="tint">@color/material_on_background_emphasis_medium</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+    <style name="IcdStyle" parent="BaseIcdStyle"/>
+    <style name="IcdTitleStyle">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:minLines">1</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+    </style>
+    <declare-styleable name="IconDialog">
+
+        <!-- Maximum width for the calculator dialog. The dialog will expand to that width. -->
+        <attr format="dimension|reference" name="icdMaxWidth"/>
+
+        <!-- Maximum height for the calculator dialog. The dialog will expand to that height. -->
+        <attr format="dimension|reference" name="icdMaxHeight"/>
+
+        <!-- Size of the icons displayed in the dialog. This has an influence on the number
+             of spans shown (the number of columns). -->
+        <attr format="dimension|reference" name="icdIconSize"/>
+
+        <!-- Style for the icon image views. Note that these views support `android:state_checked`
+             state attribute in color state lists. -->
+        <attr format="reference" name="icdIconStyle"/>
+
+        <!-- Style for the icon foreground view.
+             It's used to display the ripple drawable by default. -->
+        <attr format="reference" name="icdIconForegroundStyle"/>
+
+        <!-- Normal icon color. Note that color state lists aren't supported as a value of this
+             attribute until API 23. On lower APIs, use attributes or hardcoded colors. -->
+        <attr format="color|reference" name="icdIconColor"/>
+
+        <!-- Selected icon color. -->
+        <attr format="color|reference" name="icdSelectedIconColor"/>
+
+        <!-- Style for a list header used to display a category name (non sticky). -->
+        <attr format="reference" name="icdListHeaderStyle"/>
+
+        <!-- Style for a list header used to display a category name (sticky). -->
+        <attr format="reference" name="icdListStickyHeaderStyle"/>
+
+        <!-- Style for the drawable used to separate the header and footer of the dialog. -->
+        <attr format="reference" name="icdDividerDrawable"/>
+
+        <!-- Style for the search EditText. -->
+        <attr format="reference" name="icdSearchBarStyle"/>
+
+        <!-- Style for the search icon at the start of the search field. -->
+        <attr format="reference" name="icdSearchIconStyle"/>
+
+        <!-- Style for the cancel/erase search button at the end of the search field. -->
+        <attr format="reference" name="icdCancelSearchIconStyle"/>
+
+        <!-- Style for the text displayed when search returned no results. -->
+        <attr format="reference" name="icdNoResultLabelStyle"/>
+
+        <!-- Style for the dialog title text. -->
+        <attr format="reference" name="icdDialogTitleStyle"/>
+
+        <!-- Style for the RecyclerView used to display icons. -->
+        <attr format="reference" name="icdDialogListStyle"/>
+
+        <!-- Style for the dialog buttons. -->
+        <attr format="reference" name="icdDialogButtonStyle"/>
+
+    </declare-styleable>
+</resources>

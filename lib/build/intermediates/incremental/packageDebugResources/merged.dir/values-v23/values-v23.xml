@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="IcdStyle" parent="BaseIcdStyle">
+        <!-- Because of what seems to be a bug, `AppCompatResources` is unable to inflate
+             nested `ColorStateList`s before API 23. Because @color/icd_icon_color references
+             ?attr/icdIconColor, and ?attr/icdIconColor references a color state list,
+             @color/material_on_background_emphasis_medium, this doesn't work for API < 23.
+             See [https://issuetracker.google.com/issues/157424678].
+
+             For now ?attr/icdIconColor references a hard coded color pre API 21.
+             (with different values for light and dark themes)
+             -->
+        <item name="icdIconColor">@color/material_on_background_emphasis_medium</item>
+    </style>
+</resources>

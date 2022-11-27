@@ -1,0 +1,2 @@
+com/maltaisn/icondialog/BuildConfig.java
+ com.maltaisn.icondialog.BuildConfig

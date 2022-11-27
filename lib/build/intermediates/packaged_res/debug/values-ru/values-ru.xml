@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="icd_action_cancel">Отмена</string>
+    <string name="icd_action_clear">Очистить</string>
+    <string name="icd_action_select">Выбрать</string>
+    <string name="icd_max_sel_message">Достигнуто максимальное количество выбранных значков</string>
+    <string name="icd_no_result">Не найдено подходящих значков</string>
+    <string name="icd_search_hint">Поиск значоков</string>
+    <string name="icd_title">Выберите значок</string>
+</resources>

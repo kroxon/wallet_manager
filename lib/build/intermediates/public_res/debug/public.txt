@@ -1,0 +1,12 @@
+style IcdCancelSearchIconStyle
+style IcdDialogButtonStyle
+style IcdIconForegroundStyle
+style IcdIconStyle
+style IcdListHeaderStyle
+style IcdListStickyHeaderStyle
+style IcdListStyle
+style IcdNoResultLabelStyle
+style IcdSearchBarStyle
+style IcdSearchIconStyle
+style IcdStyle
+style IcdTitleStyle

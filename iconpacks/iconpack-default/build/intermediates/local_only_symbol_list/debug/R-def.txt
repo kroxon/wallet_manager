@@ -1,0 +1,23 @@
+R_DEF: Internal format may change without notice
+local
+string icd_category_arrows
+string icd_category_arts
+string icd_category_audio
+string icd_category_buildings
+string icd_category_computer
+string icd_category_finance
+string icd_category_food
+string icd_category_home
+string icd_category_leisure
+string icd_category_nature
+string icd_category_people
+string icd_category_photo_video
+string icd_category_science
+string icd_category_sports
+string icd_category_symbols
+string icd_category_technology
+string icd_category_time
+string icd_category_tools
+string icd_category_transport
+xml iconpack_default_icons
+xml iconpack_default_tags
