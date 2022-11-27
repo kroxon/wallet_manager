@@ -1,0 +1,2 @@
+com/maltaisn/iconpack/mdi/BuildConfig.java
+ com.maltaisn.iconpack.mdi.BuildConfig

@@ -1,0 +1,31 @@
+R_DEF: Internal format may change without notice
+local
+string catg_arrows
+string catg_characters
+string catg_clothes
+string catg_editor
+string catg_files
+string catg_filmtv
+string catg_food
+string catg_games
+string catg_google
+string catg_holidays
+string catg_home
+string catg_money
+string catg_music
+string catg_nature
+string catg_networking
+string catg_other
+string catg_places
+string catg_player
+string catg_power
+string catg_programming
+string catg_science
+string catg_sport
+string catg_tech
+string catg_time
+string catg_travel
+string catg_users
+string catg_weather
+xml iconpack_mdi_icons
+xml iconpack_mdi_tags

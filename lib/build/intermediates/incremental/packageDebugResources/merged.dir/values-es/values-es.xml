@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="icd_action_cancel">Cancelar</string>
+    <string name="icd_action_clear">Limpiar</string>
+    <string name="icd_action_select">Seleccionar</string>
+    <string name="icd_max_sel_message">Máximo de iconos seleccionados alcanzado</string>
+    <string name="icd_no_result">Iconos no encontrados en esta búsqueda</string>
+    <string name="icd_search_hint">Buscar iconos</string>
+    <string name="icd_title">Selecionar icono</string>
+</resources>

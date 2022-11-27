@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="icd_category_arrows">Flechas</string>
+    <string name="icd_category_arts">Artes</string>
+    <string name="icd_category_audio">Música y sonido</string>
+    <string name="icd_category_buildings">Lugares y edificios</string>
+    <string name="icd_category_computer">Computadora</string>
+    <string name="icd_category_finance">Finanzas y compras</string>
+    <string name="icd_category_food">Comida y bebida</string>
+    <string name="icd_category_home">Hogar y vida</string>
+    <string name="icd_category_leisure">Ocio</string>
+    <string name="icd_category_nature">Naturaleza</string>
+    <string name="icd_category_people">Familia y gente</string>
+    <string name="icd_category_photo_video">Foto y video</string>
+    <string name="icd_category_science">Matemáticas y ciencia</string>
+    <string name="icd_category_sports">Deportes</string>
+    <string name="icd_category_symbols">Caracteres y símbolos</string>
+    <string name="icd_category_technology">Tecnología</string>
+    <string name="icd_category_time">Tiempo</string>
+    <string name="icd_category_tools">Herramientas</string>
+    <string name="icd_category_transport">Transporte y viajes</string>
+</resources>

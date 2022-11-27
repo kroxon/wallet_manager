@@ -1,0 +1,2 @@
+com/maltaisn/iconpack/defaultpack/BuildConfig.java
+ com.maltaisn.iconpack.defaultpack.BuildConfig

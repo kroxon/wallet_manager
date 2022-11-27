@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res"><file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\drawable\icd_ic_close.xml" preprocessing="true" qualifiers=""><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-xxxhdpi\icd_ic_close.png" qualifiers="xxxhdpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-mdpi\icd_ic_close.png" qualifiers="mdpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-ldpi\icd_ic_close.png" qualifiers="ldpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-xxhdpi\icd_ic_close.png" qualifiers="xxhdpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-hdpi\icd_ic_close.png" qualifiers="hdpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-xhdpi\icd_ic_close.png" qualifiers="xhdpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-anydpi-v21\icd_ic_close.xml" qualifiers="anydpi-v21" type="drawable"/></file><file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\drawable\icd_ic_search.xml" preprocessing="true" qualifiers=""><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-xxxhdpi\icd_ic_search.png" qualifiers="xxxhdpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-mdpi\icd_ic_search.png" qualifiers="mdpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-ldpi\icd_ic_search.png" qualifiers="ldpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-xxhdpi\icd_ic_search.png" qualifiers="xxhdpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-hdpi\icd_ic_search.png" qualifiers="hdpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-xhdpi\icd_ic_search.png" qualifiers="xhdpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-anydpi-v21\icd_ic_search.xml" qualifiers="anydpi-v21" type="drawable"/></file><file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\drawable\icd_ic_unavailable.xml" preprocessing="true" qualifiers=""><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-xxxhdpi\icd_ic_unavailable.png" qualifiers="xxxhdpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-mdpi\icd_ic_unavailable.png" qualifiers="mdpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-ldpi\icd_ic_unavailable.png" qualifiers="ldpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-xxhdpi\icd_ic_unavailable.png" qualifiers="xxhdpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-hdpi\icd_ic_unavailable.png" qualifiers="hdpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-xhdpi\icd_ic_unavailable.png" qualifiers="xhdpi-v4" type="drawable"/><generated-file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\pngs\debug\drawable-anydpi-v21\icd_ic_unavailable.xml" qualifiers="anydpi-v21" type="drawable"/></file></source><source path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\rs\debug"/><source path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\resValues\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res"><file name="icd_icon_color" path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\color\icd_icon_color.xml" qualifiers="" type="color"/><file name="icd_dialog_icon" path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\layout\icd_dialog_icon.xml" qualifiers="" type="layout"/><file name="icd_item_header" path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\layout\icd_item_header.xml" qualifiers="" type="layout"/><file name="icd_item_icon" path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\layout\icd_item_icon.xml" qualifiers="" type="layout"/><file name="icd_item_sticky_header" path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\layout\icd_item_sticky_header.xml" qualifiers="" type="layout"/><file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\values\attrs.xml" qualifiers=""><attr format="reference" name="icdStyle"/><declare-styleable name="IconDialog">
+
+        
+        <attr format="dimension|reference" name="icdMaxWidth"/>
+
+        
+        <attr format="dimension|reference" name="icdMaxHeight"/>
+
+        
+        <attr format="dimension|reference" name="icdIconSize"/>
+
+        
+        <attr format="reference" name="icdIconStyle"/>
+
+        
+        <attr format="reference" name="icdIconForegroundStyle"/>
+
+        
+        <attr format="color|reference" name="icdIconColor"/>
+
+        
+        <attr format="color|reference" name="icdSelectedIconColor"/>
+
+        
+        <attr format="reference" name="icdListHeaderStyle"/>
+
+        
+        <attr format="reference" name="icdListStickyHeaderStyle"/>
+
+        
+        <attr format="reference" name="icdDividerDrawable"/>
+
+        
+        <attr format="reference" name="icdSearchBarStyle"/>
+
+        
+        <attr format="reference" name="icdSearchIconStyle"/>
+
+        
+        <attr format="reference" name="icdCancelSearchIconStyle"/>
+
+        
+        <attr format="reference" name="icdNoResultLabelStyle"/>
+
+        
+        <attr format="reference" name="icdDialogTitleStyle"/>
+
+        
+        <attr format="reference" name="icdDialogListStyle"/>
+
+        
+        <attr format="reference" name="icdDialogButtonStyle"/>
+
+    </declare-styleable></file><file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\values\colors.xml" qualifiers=""><color name="icd_icon_color_normal">#99000000</color></file><file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\values\dimen.xml" qualifiers=""><dimen name="icd_dialog_max_width">400dp</dimen><dimen name="icd_dialog_max_height">500dp</dimen><dimen name="icd_dialog_icon_size">50dp</dimen></file><file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\values\strings.xml" qualifiers=""><string name="icd_title">Select icon</string><string name="icd_search_hint">Search icons</string><string name="icd_action_clear">Clear</string><string name="icd_action_select">Select</string><string name="icd_action_cancel">Cancel</string><string name="icd_no_result">No icons found for this search</string><string name="icd_max_sel_message">The maximum number of selected icons has been reached</string></file><file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\values\styles.xml" qualifiers=""><public name="IcdStyle" type="style"/><style name="IcdStyle" parent="BaseIcdStyle"/><style name="BaseIcdStyle">
+        <item name="icdMaxWidth">@dimen/icd_dialog_max_width</item>
+        <item name="icdMaxHeight">@dimen/icd_dialog_max_height</item>
+        <item name="icdIconSize">@dimen/icd_dialog_icon_size</item>
+        <item name="icdIconStyle">@style/IcdIconStyle</item>
+        <item name="icdIconForegroundStyle">@style/IcdIconForegroundStyle</item>
+        <item name="icdIconColor">@color/icd_icon_color_normal</item>
+        <item name="icdSelectedIconColor">?colorPrimary</item>
+        <item name="icdListHeaderStyle">@style/IcdListHeaderStyle</item>
+        <item name="icdListStickyHeaderStyle">@style/IcdListStickyHeaderStyle</item>
+        <item name="icdDividerDrawable">?android:listDivider</item>
+        <item name="icdSearchBarStyle">@style/IcdSearchBarStyle</item>
+        <item name="icdSearchIconStyle">@style/IcdSearchIconStyle</item>
+        <item name="icdCancelSearchIconStyle">@style/IcdCancelSearchIconStyle</item>
+        <item name="icdNoResultLabelStyle">@style/IcdNoResultLabelStyle</item>
+        <item name="icdDialogTitleStyle">@style/IcdTitleStyle</item>
+        <item name="icdDialogListStyle">@style/IcdListStyle</item>
+        <item name="icdDialogButtonStyle">@style/IcdDialogButtonStyle</item>
+    </style><public name="IcdIconStyle" type="style"/><style name="IcdIconStyle">
+        <item name="android:padding">8dp</item>
+        <item name="tint">@color/icd_icon_color</item>
+    </style><public name="IcdIconForegroundStyle" type="style"/><style name="IcdIconForegroundStyle">
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style><public name="IcdListHeaderStyle" type="style"/><style name="IcdListHeaderStyle">
+        <item name="android:textAppearance">@style/IcdListHeaderTextAppearance</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style><public name="IcdListStickyHeaderStyle" type="style"/><style name="IcdListStickyHeaderStyle" parent="IcdListHeaderStyle">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:background">?colorBackgroundFloating</item>
+    </style><style name="IcdListHeaderTextAppearance" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">@color/material_on_background_emphasis_medium</item>
+    </style><public name="IcdSearchBarStyle" type="style"/><style name="IcdSearchBarStyle">
+        <item name="android:hint">@string/icd_search_hint</item>
+        <item name="android:inputType">text</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:maxLength">32</item>
+        <item name="android:background">@null</item>
+        <item name="android:imeOptions">actionSearch|flagNoExtractUi</item>
+    </style><public name="IcdSearchIconStyle" type="style"/><style name="IcdSearchIconStyle">
+        <item name="srcCompat">@drawable/icd_ic_search</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <item name="tint">@color/material_on_background_emphasis_medium</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style><public name="IcdCancelSearchIconStyle" type="style"/><style name="IcdCancelSearchIconStyle">
+        <item name="srcCompat">@drawable/icd_ic_close</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <item name="tint">@color/material_on_background_emphasis_medium</item>
+        <item name="android:disabledAlpha">1.0</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style><public name="IcdTitleStyle" type="style"/><style name="IcdTitleStyle">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:minLines">1</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+    </style><public name="IcdListStyle" type="style"/><style name="IcdListStyle">
+        <item name="android:padding">8dp</item>
+        <item name="android:clipToPadding">false</item>
+    </style><public name="IcdNoResultLabelStyle" type="style"/><style name="IcdNoResultLabelStyle">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Small</item>
+        <item name="android:text">@string/icd_no_result</item>
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">24dp</item>
+    </style><public name="IcdDialogButtonStyle" type="style"/><style name="IcdDialogButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog"/></file><file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\values-de\strings.xml" qualifiers="de"><string name="icd_title">Icons auswählen</string><string name="icd_search_hint">Icons suchen</string><string name="icd_action_clear">Auswahl löschen</string><string name="icd_action_select">Auswählen</string><string name="icd_action_cancel">Abbrechen</string><string name="icd_no_result">Für diesen Suchbegriff wurden keine Icons gefunden</string><string name="icd_max_sel_message">Die maximale Anzahl an Icons wurde ausgewählt</string></file><file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\values-es\strings.xml" qualifiers="es"><string name="icd_title">Selecionar icono</string><string name="icd_search_hint">Buscar iconos</string><string name="icd_action_clear">Limpiar</string><string name="icd_action_select">Seleccionar</string><string name="icd_action_cancel">Cancelar</string><string name="icd_no_result">Iconos no encontrados en esta búsqueda</string><string name="icd_max_sel_message">Máximo de iconos seleccionados alcanzado</string></file><file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\values-fr\strings.xml" qualifiers="fr"><string name="icd_title">Sélectionner une icône</string><string name="icd_search_hint">Rechercher des icônes</string><string name="icd_action_clear">Effacer</string><string name="icd_action_select">OK</string><string name="icd_action_cancel">Annuler</string><string name="icd_no_result">Aucune icône trouvée</string><string name="icd_max_sel_message">Le nombre maximal d\'icônes sélectionnées a été atteint</string></file><file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\values-night\colors.xml" qualifiers="night-v8"><color name="icd_icon_color_normal">#99ffffff</color></file><file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\values-pt\strings.xml" qualifiers="pt"><string name="icd_title">Selecionar ícone</string><string name="icd_search_hint">Pesquisar ícones</string><string name="icd_action_clear">Limpar</string><string name="icd_action_select">Selecionar</string><string name="icd_action_cancel">Cancelar</string><string name="icd_no_result">Nenhum ícone encontrado para essa busca</string><string name="icd_max_sel_message">O número máximo de ícones selecionados foi alcançado</string></file><file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\values-ru\strings.xml" qualifiers="ru"><string name="icd_title">Выберите значок</string><string name="icd_search_hint">Поиск значоков</string><string name="icd_action_clear">Очистить</string><string name="icd_action_select">Выбрать</string><string name="icd_action_cancel">Отмена</string><string name="icd_no_result">Не найдено подходящих значков</string><string name="icd_max_sel_message">Достигнуто максимальное количество выбранных значков</string></file><file path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\main\res\values-v23\styles.xml" qualifiers="v23"><style name="IcdStyle" parent="BaseIcdStyle">
+        
+        <item name="icdIconColor">@color/material_on_background_emphasis_medium</item>
+    </style></file></source><source path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\rs\debug"/><source path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\build\generated\res\resValues\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\Programista\AndroidStudioProjects\icondialoglib\lib\src\debug\res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable name="IconDialog">
+
+        
+        <attr format="dimension|reference" name="icdMaxWidth"/>
+
+        
+        <attr format="dimension|reference" name="icdMaxHeight"/>
+
+        
+        <attr format="dimension|reference" name="icdIconSize"/>
+
+        
+        <attr format="reference" name="icdIconStyle"/>
+
+        
+        <attr format="reference" name="icdIconForegroundStyle"/>
+
+        
+        <attr format="color|reference" name="icdIconColor"/>
+
+        
+        <attr format="color|reference" name="icdSelectedIconColor"/>
+
+        
+        <attr format="reference" name="icdListHeaderStyle"/>
+
+        
+        <attr format="reference" name="icdListStickyHeaderStyle"/>
+
+        
+        <attr format="reference" name="icdDividerDrawable"/>
+
+        
+        <attr format="reference" name="icdSearchBarStyle"/>
+
+        
+        <attr format="reference" name="icdSearchIconStyle"/>
+
+        
+        <attr format="reference" name="icdCancelSearchIconStyle"/>
+
+        
+        <attr format="reference" name="icdNoResultLabelStyle"/>
+
+        
+        <attr format="reference" name="icdDialogTitleStyle"/>
+
+        
+        <attr format="reference" name="icdDialogListStyle"/>
+
+        
+        <attr format="reference" name="icdDialogButtonStyle"/>
+
+    </declare-styleable></configuration></mergedItems></merger>
