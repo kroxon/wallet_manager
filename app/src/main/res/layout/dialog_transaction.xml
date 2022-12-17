@@ -79,11 +79,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Kategoria"
+            android:layout_marginLeft="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/catLabel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/catLabel"
-            app:startIconDrawable="@drawable/ic_home">
+            app:layout_constraintStart_toEndOf="@+id/catLabel"
+            app:startIconDrawable="@drawable/ic_star"
+            app:layout_constraintTop_toTopOf="@+id/catLabel">
 
             <AutoCompleteTextView
                 android:id="@+id/catAutoCompleteTv"

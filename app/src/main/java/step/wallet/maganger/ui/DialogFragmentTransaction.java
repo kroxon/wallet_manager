@@ -18,6 +18,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,11 +26,14 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import step.wallet.maganger.R;
 import step.wallet.maganger.adapters.HorizontalSubcatRecylerviewAdapter;
+import step.wallet.maganger.adapters.SpinnerCategoryAdapter;
 import step.wallet.maganger.data.InfoRepository;
 
 public class DialogFragmentTransaction extends DialogFragment {
@@ -94,25 +98,26 @@ public class DialogFragmentTransaction extends DialogFragment {
 
         // Category Spinner Drop down elements
         actvCat = view.findViewById(R.id.catAutoCompleteTv);
+        TextInputLayout textInputLayout = view.findViewById(R.id.dTransactionCatSpinner);
         InfoRepository repository = new InfoRepository();
         List<String> categories = new ArrayList<String>();
         categories = repository.getAllCategories();
-        categories.add("Automobile");
-        categories.add("Business Services");
-        categories.add("Computers");
-        categories.add("Education");
-        categories.add("Personal");
-        categories.add("Travel");
+        List<String> finalCategories = categories;
 
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.dropdown_item, categories);
+        SpinnerCategoryAdapter adapter = new SpinnerCategoryAdapter (getContext(), categories);
+        adapter.setDropDownViewResource(R.layout.dialog_transaction_category_dropdown);
         actvCat.setAdapter(adapter);
+        actvCat.setListSelection(0);
+//        textInputLayout.setStartIconDrawable(repository.getIdCategoryIcon(finalCategories.get(1)));
 
+        actvCat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int w = repository.getIdCategoryIcon(finalCategories.get(i));
+                textInputLayout.setStartIconDrawable(w);
+            }
+        });
 
-        int spinnerPosition = adapter.getPosition(categories.get(0));
-
-//set the default according to value
-        actvCat.setSelection(spinnerPosition);
 
 //        mActionCancel.setOnClickListener(new View.OnClickListener() {
 //            @Override
