@@ -74,7 +74,7 @@
             app:layout_constraintTop_toBottomOf="@+id/dateLabel"></TextView>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/catSpinner"
+            android:id="@+id/dTransactionCatSpinner"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -114,15 +114,16 @@
             android:textAllCaps="true"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/catSpinner"></TextView>
+            app:layout_constraintTop_toBottomOf="@+id/dTransactionCatSpinner"></TextView>
 
-        <Spinner
-            android:id="@+id/subCatSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dTransactionSubcatRV"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/subCatLabel"></Spinner>
+            app:layout_constraintTop_toBottomOf="@+id/subCatLabel"></androidx.recyclerview.widget.RecyclerView>
 
         <!--        <TextView-->
         <!--            android:id="@+id/action_ok"-->

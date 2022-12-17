@@ -97,6 +97,8 @@ dependencies {
     // icon adapter widget
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
 
+//    //recycler card view
+//    implementation 'com.adnroid.support:recyclerview-v7:25.3.1'
 
 }
 

@@ -22,11 +22,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import step.wallet.maganger.R;
+import step.wallet.maganger.adapters.HorizontalSubcatRecylerviewAdapter;
+import step.wallet.maganger.data.InfoRepository;
 
 public class DialogFragmentTransaction extends DialogFragment {
 
@@ -43,7 +47,7 @@ public class DialogFragmentTransaction extends DialogFragment {
     private TextView btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btn00;
     private TextView btBksp, btDecimal, btClr;
     private AutoCompleteTextView actvCat, actvSubCat;
-    private Spinner subCatSpinner;
+    private RecyclerView subcatList;
 
     @Override
     public void onStart() {
@@ -64,6 +68,11 @@ public class DialogFragmentTransaction extends DialogFragment {
         tvInput = view.findViewById(R.id.tvInput);
 //        mActionCancel = view.findViewById(R.id.action_cancel);
 
+        subcatList = view.findViewById(R.id.dTransactionSubcatRV);
+        subcatList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        subcatList.setAdapter(new HorizontalSubcatRecylerviewAdapter(new String [] {"jedzenie", "chemia", "RTV", "czynsz", "woda", "ubezpieczenie", "narzędzie", "farby"}));
+
+
         btn0 = view.findViewById(R.id.btn0);
         btn1 = view.findViewById(R.id.btn1);
         btn2 = view.findViewById(R.id.btn2);
@@ -80,13 +89,14 @@ public class DialogFragmentTransaction extends DialogFragment {
         btDecimal = view.findViewById(R.id.btndecimal);
         btClr = view.findViewById(R.id.btnclr);
 
-        actvCat = view.findViewById(R.id.catAutoCompleteTv);
-        subCatSpinner = view.findViewById(R.id.subCatSpinner);
 
         // testing dropdown autocomplete Text view
 
-        // Spinner Drop down elements
+        // Category Spinner Drop down elements
+        actvCat = view.findViewById(R.id.catAutoCompleteTv);
+        InfoRepository repository = new InfoRepository();
         List<String> categories = new ArrayList<String>();
+        categories = repository.getAllCategories();
         categories.add("Automobile");
         categories.add("Business Services");
         categories.add("Computers");
@@ -97,9 +107,7 @@ public class DialogFragmentTransaction extends DialogFragment {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.dropdown_item, categories);
         actvCat.setAdapter(adapter);
-//        actvCat.setText(categories.get(0).toString());
 
-        subCatSpinner.setAdapter(adapter);
 
         int spinnerPosition = adapter.getPosition(categories.get(0));
 
@@ -267,6 +275,7 @@ public class DialogFragmentTransaction extends DialogFragment {
                 tvInput.setText("");
             }
         });
+
 
         return view;
     }
