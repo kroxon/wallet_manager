@@ -1,32 +1,30 @@
 package step.wallet.maganger.ui;
 
 import android.app.DialogFragment;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import step.wallet.maganger.R;
+import step.wallet.maganger.adapters.HorizontalSubcatRecylerviewAdapter;
+import step.wallet.maganger.adapters.SpinnerCategoryAdapter;
+import step.wallet.maganger.data.InfoRepository;
 
 public class DialogFragmentTransaction extends DialogFragment {
 
@@ -42,8 +40,8 @@ public class DialogFragmentTransaction extends DialogFragment {
     private TextView mActionOk, mActionCancel, tvInput;
     private TextView btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btn00;
     private TextView btBksp, btDecimal, btClr;
-    private AutoCompleteTextView actvCat, actvSubCat;
-    private Spinner subCatSpinner;
+    private Spinner dTCatSpinner, actvSubCat;
+    private RecyclerView subcatList;
 
     @Override
     public void onStart() {
@@ -64,6 +62,11 @@ public class DialogFragmentTransaction extends DialogFragment {
         tvInput = view.findViewById(R.id.tvInput);
 //        mActionCancel = view.findViewById(R.id.action_cancel);
 
+        subcatList = view.findViewById(R.id.dTransactionSubcatRV);
+        subcatList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        subcatList.setAdapter(new HorizontalSubcatRecylerviewAdapter(new String [] {"jedzenie", "chemia", "RTV", "czynsz", "woda", "ubezpieczenie", "narzędzie", "farby"}));
+
+
         btn0 = view.findViewById(R.id.btn0);
         btn1 = view.findViewById(R.id.btn1);
         btn2 = view.findViewById(R.id.btn2);
@@ -80,31 +83,33 @@ public class DialogFragmentTransaction extends DialogFragment {
         btDecimal = view.findViewById(R.id.btndecimal);
         btClr = view.findViewById(R.id.btnclr);
 
-        actvCat = view.findViewById(R.id.catAutoCompleteTv);
-        subCatSpinner = view.findViewById(R.id.subCatSpinner);
 
         // testing dropdown autocomplete Text view
 
-        // Spinner Drop down elements
+        // Category Spinner Drop down elements
+        dTCatSpinner = view.findViewById(R.id.dTransactionCatSpinner);
+        InfoRepository repository = new InfoRepository();
         List<String> categories = new ArrayList<String>();
-        categories.add("Automobile");
-        categories.add("Business Services");
-        categories.add("Computers");
-        categories.add("Education");
-        categories.add("Personal");
-        categories.add("Travel");
+        categories = repository.getAllCategories();
+        List<String> finalCategories = categories;
 
+        SpinnerCategoryAdapter adapter = new SpinnerCategoryAdapter (getContext(), finalCategories);
+        adapter.setDropDownViewResource(R.layout.dialog_transaction_category_dropdown);
+        dTCatSpinner.setAdapter(adapter);
+//        textInputLayout.setStartIconDrawable(repository.getIdCategoryIcon(finalCategories.get(1)));
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.dropdown_item, categories);
-        actvCat.setAdapter(adapter);
-//        actvCat.setText(categories.get(0).toString());
+        dTCatSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getContext(), "" + finalCategories.get(i), Toast.LENGTH_SHORT).show();
+            }
 
-        subCatSpinner.setAdapter(adapter);
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
-        int spinnerPosition = adapter.getPosition(categories.get(0));
+            }
+        });
 
-//set the default according to value
-        actvCat.setSelection(spinnerPosition);
 
 //        mActionCancel.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -267,6 +272,7 @@ public class DialogFragmentTransaction extends DialogFragment {
                 tvInput.setText("");
             }
         });
+
 
         return view;
     }

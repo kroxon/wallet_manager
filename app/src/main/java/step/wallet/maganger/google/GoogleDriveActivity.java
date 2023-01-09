@@ -7,8 +7,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Scope;
-import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
@@ -61,7 +61,7 @@ public abstract class GoogleDriveActivity extends GoogleSignInActivity {
         GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(this, scopes);
         credential.setSelectedAccount(signInAccount.getAccount());
         Drive.Builder builder = new Drive.Builder(
-                AndroidHttp.newCompatibleTransport(),
+                new NetHttpTransport(),
                 new GsonFactory(),
                 credential
         );
