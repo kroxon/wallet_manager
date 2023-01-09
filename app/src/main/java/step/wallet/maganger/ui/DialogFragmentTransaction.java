@@ -1,32 +1,22 @@
 package step.wallet.maganger.ui;
 
 import android.app.DialogFragment;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +40,7 @@ public class DialogFragmentTransaction extends DialogFragment {
     private TextView mActionOk, mActionCancel, tvInput;
     private TextView btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btn00;
     private TextView btBksp, btDecimal, btClr;
-    private AutoCompleteTextView actvCat, actvSubCat;
+    private Spinner dTCatSpinner, actvSubCat;
     private RecyclerView subcatList;
 
     @Override
@@ -97,24 +87,26 @@ public class DialogFragmentTransaction extends DialogFragment {
         // testing dropdown autocomplete Text view
 
         // Category Spinner Drop down elements
-        actvCat = view.findViewById(R.id.catAutoCompleteTv);
-        TextInputLayout textInputLayout = view.findViewById(R.id.dTransactionCatSpinner);
+        dTCatSpinner = view.findViewById(R.id.dTransactionCatSpinner);
         InfoRepository repository = new InfoRepository();
         List<String> categories = new ArrayList<String>();
         categories = repository.getAllCategories();
         List<String> finalCategories = categories;
 
-        SpinnerCategoryAdapter adapter = new SpinnerCategoryAdapter (getContext(), categories);
+        SpinnerCategoryAdapter adapter = new SpinnerCategoryAdapter (getContext(), finalCategories);
         adapter.setDropDownViewResource(R.layout.dialog_transaction_category_dropdown);
-        actvCat.setAdapter(adapter);
-        actvCat.setListSelection(0);
+        dTCatSpinner.setAdapter(adapter);
 //        textInputLayout.setStartIconDrawable(repository.getIdCategoryIcon(finalCategories.get(1)));
 
-        actvCat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        dTCatSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int w = repository.getIdCategoryIcon(finalCategories.get(i));
-                textInputLayout.setStartIconDrawable(w);
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getContext(), "" + finalCategories.get(i), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
 

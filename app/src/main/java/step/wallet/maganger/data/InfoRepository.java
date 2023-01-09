@@ -32,22 +32,22 @@ public class InfoRepository {
         values.put(DBConstants.COL_TRANSACTION_NOTE_2, note_2);
         values.put(DBConstants.COL_TRANSACTION_PHOTO, photo);
         db.insert(DBConstants.TABLE_TRANSACTION, null, values);
-        db.close();
+//        db.close();
 
     }
 
-    public void removeTransaction (String idTransaction){
-        String[] whereArgs = new String[] { String.valueOf(idTransaction) };
-        db.delete(DBConstants.TABLE_TRANSACTION, DBConstants.COL_TRANSACTION_ID+"=?",whereArgs);
+    public void removeTransaction(String idTransaction) {
+        String[] whereArgs = new String[]{String.valueOf(idTransaction)};
+        db.delete(DBConstants.TABLE_TRANSACTION, DBConstants.COL_TRANSACTION_ID + "=?", whereArgs);
     }
 
     // remove selected category and move subcategories to right place
-    public void removeCategory (String nameCategory){
+    public void removeCategory(String nameCategory) {
         String idCategory = getIdCategory(nameCategory);
         int idCat = Integer.parseInt(idCategory);
-        String[] whereArgs = new String[] { String.valueOf(nameCategory) };
+        String[] whereArgs = new String[]{String.valueOf(nameCategory)};
         removeSubategory(idCategory);
-        db.delete(DBConstants.TABLE_CATEGORY, DBConstants.COL_CAT_NAME+"=?", whereArgs);
+        db.delete(DBConstants.TABLE_CATEGORY, DBConstants.COL_CAT_NAME + "=?", whereArgs);
 
 //        // reducing the number "id category" to match the correct one
 //
@@ -67,57 +67,57 @@ public class InfoRepository {
 
     }
 
-    public void updateTransaction(String idTransaction, String date){
+    public void updateTransaction(String idTransaction, String date) {
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_TRANSACTION_VALUE, date);
-        String[] whereArgs = new String[] { String.valueOf(idTransaction) };
-        db.update(DBConstants.TABLE_TRANSACTION, values, DBConstants.COL_TRANSACTION_ID+"=?", whereArgs);
+        String[] whereArgs = new String[]{String.valueOf(idTransaction)};
+        db.update(DBConstants.TABLE_TRANSACTION, values, DBConstants.COL_TRANSACTION_ID + "=?", whereArgs);
     }
 
-    public void updateCategoryName(String newNameCategory, String oldNameCategory){
+    public void updateCategoryName(String newNameCategory, String oldNameCategory) {
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_CAT_NAME, newNameCategory);
-        String[] whereArgs = new String[] { String.valueOf(oldNameCategory) };
-        db.update(DBConstants.TABLE_CATEGORY, values, DBConstants.COL_CAT_NAME+"=?", whereArgs);
+        String[] whereArgs = new String[]{String.valueOf(oldNameCategory)};
+        db.update(DBConstants.TABLE_CATEGORY, values, DBConstants.COL_CAT_NAME + "=?", whereArgs);
     }
 
-    public void updateCategoryIcon(String iconIdRepository, String NameCategory){
+    public void updateCategoryIcon(String iconIdRepository, String NameCategory) {
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_CAT_ICON, iconIdRepository);
-        String[] whereArgs = new String[] { String.valueOf(NameCategory) };
-        db.update(DBConstants.TABLE_CATEGORY, values, DBConstants.COL_CAT_NAME+"=?", whereArgs);
+        String[] whereArgs = new String[]{String.valueOf(NameCategory)};
+        db.update(DBConstants.TABLE_CATEGORY, values, DBConstants.COL_CAT_NAME + "=?", whereArgs);
     }
 
-    public void addCategory (@NonNull String nameCategory){
+    public void addCategory(@NonNull String nameCategory) {
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_CAT_NAME, nameCategory);
         values.put(DBConstants.COL_CAT_ICON, "2131165331");
         db.insert(DBConstants.TABLE_CATEGORY, null, values);
-        db.close();
+//        db.close();
     }
 
-    public void removeSubategoryByName(String nameSubcategory, String idCategory){
-        String[] whereArgs = new String[] { String.valueOf(nameSubcategory), String.valueOf(idCategory) };
-        db.delete(DBConstants.TABLE_SUBCATEGORY, DBConstants.COL_SUBCAT_NAME+"=? AND " + DBConstants.COL_SUBCAT_SUPERCAT_ID + "=?", whereArgs);
+    public void removeSubategoryByName(String nameSubcategory, String idCategory) {
+        String[] whereArgs = new String[]{String.valueOf(nameSubcategory), String.valueOf(idCategory)};
+        db.delete(DBConstants.TABLE_SUBCATEGORY, DBConstants.COL_SUBCAT_NAME + "=? AND " + DBConstants.COL_SUBCAT_SUPERCAT_ID + "=?", whereArgs);
     }
 
-    public void removeSubategory(String idCategory){
-        String[] whereArgs = new String[] { idCategory };
+    public void removeSubategory(String idCategory) {
+        String[] whereArgs = new String[]{idCategory};
         db.delete(DBConstants.TABLE_SUBCATEGORY, DBConstants.COL_SUBCAT_SUPERCAT_ID + "=?", whereArgs);
     }
 
-    public void addSubcategory (@NonNull String nameSubcategory, String idSUperCat){
+    public void addSubcategory(@NonNull String nameSubcategory, String idSUperCat) {
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_SUBCAT_NAME, nameSubcategory);
         values.put(DBConstants.COL_SUBCAT_SUPERCAT_ID, idSUperCat);
         db.insert(DBConstants.TABLE_SUBCATEGORY, null, values);
-        db.close();
+//        db.close();
     }
 
-    public void updateSubcategoryName(String newNameSubcategory, String oldNameSubcategory, String idCategory){
+    public void updateSubcategoryName(String newNameSubcategory, String oldNameSubcategory, String idCategory) {
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_SUBCAT_NAME, newNameSubcategory);
-        String[] whereArgs = new String[] { String.valueOf(oldNameSubcategory), String.valueOf(idCategory)};
+        String[] whereArgs = new String[]{String.valueOf(oldNameSubcategory), String.valueOf(idCategory)};
         db.update(DBConstants.TABLE_SUBCATEGORY, values, DBConstants.COL_SUBCAT_NAME + "=? AND " + DBConstants.COL_SUBCAT_SUPERCAT_ID + "=?", whereArgs);
     }
 
@@ -138,6 +138,7 @@ public class InfoRepository {
             cursor.moveToLast();
             info = cursor.getString(0);
         }
+//        db.close();
         return info;
     }
 
@@ -158,6 +159,7 @@ public class InfoRepository {
 //        cursor.close();
 //        db.close();
         // returning lables
+//        db.close();
         return list;
 
     }
@@ -167,7 +169,7 @@ public class InfoRepository {
     @Nullable
     public String getIdCategory(String cateoryName) {
         String idCategory = "0";
-        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_NAME + " = '" + cateoryName + "'" ;
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_NAME + " = '" + cateoryName + "'";
         // on below line we are creating a new array list.
         Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
 
@@ -175,9 +177,10 @@ public class InfoRepository {
         if (cursor.moveToFirst()) {
             do {
                 if (cursor.getString(1).equals(cateoryName))
-                idCategory = cursor.getString(0);
+                    idCategory = cursor.getString(0);
             } while (cursor.moveToNext());
         }
+//        db.close();
         return idCategory;
 
     }
@@ -209,7 +212,7 @@ public class InfoRepository {
     @Nullable
     public int getIdCategoryIcon(String cateoryName) {
         int idCategoryIcon = 0;
-        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_NAME + " = '" + cateoryName + "'" ;
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_NAME + " = '" + cateoryName + "'";
         Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
 
         // looping through all rows and search for ID Category name
@@ -219,6 +222,7 @@ public class InfoRepository {
                     idCategoryIcon = Integer.parseInt(cursor.getString(2));
             } while (cursor.moveToNext());
         }
+//        db.close();
         return idCategoryIcon;
     }
 

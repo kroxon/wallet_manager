@@ -73,28 +73,43 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dateLabel"></TextView>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <!--        <com.google.android.material.textfield.TextInputLayout-->
+        <!--            android:id="@+id/dTransactionCatSpinner"-->
+        <!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:hint="Kategoria"-->
+        <!--            android:layout_marginLeft="20dp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/catLabel"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/catLabel"-->
+        <!--            app:startIconDrawable="@drawable/ic_star"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/catLabel">-->
+
+        <!--            <AutoCompleteTextView-->
+        <!--                android:id="@+id/catAutoCompleteTv"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:inputType="none"-->
+        <!--                android:textAllCaps="true"-->
+        <!--                android:textSize="16dp"></AutoCompleteTextView>-->
+
+        <!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+
+
+        <Spinner
             android:id="@+id/dTransactionCatSpinner"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Kategoria"
             android:layout_marginLeft="20dp"
+            android:hint="Kategoria"
             app:layout_constraintBottom_toBottomOf="@+id/catLabel"
             app:layout_constraintStart_toEndOf="@+id/catLabel"
-            app:startIconDrawable="@drawable/ic_star"
             app:layout_constraintTop_toTopOf="@+id/catLabel">
 
-            <AutoCompleteTextView
-                android:id="@+id/catAutoCompleteTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="none"
-                android:textAllCaps="true"
-                android:textSize="16dp"></AutoCompleteTextView>
-
-        </com.google.android.material.textfield.TextInputLayout>
+        </Spinner>
 
         <!--        <Spinner-->
         <!--            android:layout_width="wrap_content"-->
