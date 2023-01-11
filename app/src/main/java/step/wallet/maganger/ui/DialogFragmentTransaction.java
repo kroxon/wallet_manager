@@ -1,14 +1,19 @@
 package step.wallet.maganger.ui;
 
+import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,8 +23,12 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import step.wallet.maganger.R;
 import step.wallet.maganger.adapters.HorizontalSubcatRecylerviewAdapter;
@@ -39,9 +48,10 @@ public class DialogFragmentTransaction extends DialogFragment {
     //widgets
     private TextView mActionOk, mActionCancel, tvInput;
     private TextView btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btn00;
-    private TextView btBksp, btDecimal, btClr;
+    private TextView btBksp, btDecimal, btClr, dateTv;
     private Spinner dTCatSpinner, actvSubCat;
     private RecyclerView subcatList;
+    private LinearLayout lResult;
 
     @Override
     public void onStart() {
@@ -59,36 +69,42 @@ public class DialogFragmentTransaction extends DialogFragment {
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 //        mActionOk = view.findViewById(R.id.action_ok);
-        tvInput = view.findViewById(R.id.tvInput);
+        tvInput = (TextView) view.findViewById(R.id.tvInput);
+        dateTv = (TextView) view.findViewById(R.id.dateTxt);
 //        mActionCancel = view.findViewById(R.id.action_cancel);
 
-        subcatList = view.findViewById(R.id.dTransactionSubcatRV);
+        subcatList = (RecyclerView) view.findViewById(R.id.dTransactionSubcatRV);
         subcatList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         subcatList.setAdapter(new HorizontalSubcatRecylerviewAdapter(new String [] {"jedzenie", "chemia", "RTV", "czynsz", "woda", "ubezpieczenie", "narzędzie", "farby"}));
 
 
-        btn0 = view.findViewById(R.id.btn0);
-        btn1 = view.findViewById(R.id.btn1);
-        btn2 = view.findViewById(R.id.btn2);
-        btn3 = view.findViewById(R.id.btn3);
-        btn4 = view.findViewById(R.id.btn4);
-        btn5 = view.findViewById(R.id.btn5);
-        btn6 = view.findViewById(R.id.btn6);
-        btn7 = view.findViewById(R.id.btn7);
-        btn8 = view.findViewById(R.id.btn8);
-        btn9 = view.findViewById(R.id.btn9);
-        btn00 = view.findViewById(R.id.btndouble0);
+        btn0 = (TextView) view.findViewById(R.id.btn0);
+        btn1 = (TextView) view.findViewById(R.id.btn1);
+        btn2 = (TextView) view.findViewById(R.id.btn2);
+        btn3 = (TextView) view.findViewById(R.id.btn3);
+        btn4 = (TextView) view.findViewById(R.id.btn4);
+        btn5 = (TextView) view.findViewById(R.id.btn5);
+        btn6 = (TextView) view.findViewById(R.id.btn6);
+        btn7 = (TextView) view.findViewById(R.id.btn7);
+        btn8 = (TextView) view.findViewById(R.id.btn8);
+        btn9 = (TextView) view.findViewById(R.id.btn9);
+        btn00 = (TextView) view.findViewById(R.id.btndouble0);
+        lResult = (LinearLayout) view.findViewById(R.id.lResult);
 
-        btBksp = view.findViewById(R.id.btnbksp);
-        btDecimal = view.findViewById(R.id.btndecimal);
-        btClr = view.findViewById(R.id.btnclr);
+        btBksp = (TextView) view.findViewById(R.id.btnbksp);
+        btDecimal = (TextView) view.findViewById(R.id.btndecimal);
+        btClr = (TextView) view.findViewById(R.id.btnclr);
 
 
         // testing dropdown autocomplete Text view
 
         // Category Spinner Drop down elements
-        dTCatSpinner = view.findViewById(R.id.dTransactionCatSpinner);
+        dTCatSpinner = (Spinner) view.findViewById(R.id.dTransactionCatSpinner);
         InfoRepository repository = new InfoRepository();
+        final Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
         List<String> categories = new ArrayList<String>();
         categories = repository.getAllCategories();
         List<String> finalCategories = categories;
@@ -102,6 +118,9 @@ public class DialogFragmentTransaction extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getContext(), "" + finalCategories.get(i), Toast.LENGTH_SHORT).show();
+                List <String> subcategoriesList = repository.getSubcategories(repository.getIdCategory(finalCategories.get(i)));
+                String [] subcategories = subcategoriesList.toArray(new String[0]);
+                subcatList.setAdapter(new HorizontalSubcatRecylerviewAdapter(subcategories));
             }
 
             @Override
@@ -109,6 +128,26 @@ public class DialogFragmentTransaction extends DialogFragment {
 
             }
         });
+
+        dateTv.setText(new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date()));
+        dateTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog dialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                        month = month+1;
+                        String date = dayOfMonth+"."+month+"."+year;
+                        dateTv.setText(date);
+
+                    }
+                },year, month,day);
+                dialog.show();
+            }
+        });
+
+
 
 
 //        mActionCancel.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +174,7 @@ public class DialogFragmentTransaction extends DialogFragment {
 //                getDialog().dismiss();
 //            }
 //        });
+
 
         btn0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -275,6 +315,10 @@ public class DialogFragmentTransaction extends DialogFragment {
 
 
         return view;
+    }
+
+    public void loadSubcategiriesList(String categoryId) {
+
     }
 
 
