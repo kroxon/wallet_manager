@@ -181,6 +181,7 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             }
             loadToolbarSpinnerData()
             setSpinnerToolbarSelectedValue(spinner_toolbar!!, selectegCategory!!)
+            addSubcategory("subcategory")
         }
 
         imgMenuOption!!.setOnClickListener {

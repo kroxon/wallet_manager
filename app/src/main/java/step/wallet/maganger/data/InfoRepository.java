@@ -21,12 +21,13 @@ public class InfoRepository {
         db.close();
     }
 
-    public void writeTransaction(@NonNull String id_category, String id_subcategory, String date, String id_account,
+    public void writeTransaction(@NonNull String id_category, String id_subcategory, String date, String amount, String id_account,
                                  String note_1, String note_2, String photo) {
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_TRANSACTION_ID_CAT, id_category);
         values.put(DBConstants.COL_TRANSACTION_ID_SUBCAT, id_subcategory);
         values.put(DBConstants.COL_TRANSACTION_DATE, date);
+        values.put(DBConstants.COL_TRANSACTION_VALUE, amount);
         values.put(DBConstants.COL_TRANSACTION_ID_ACC, id_account);
         values.put(DBConstants.COL_TRANSACTION_NOTE_1, note_1);
         values.put(DBConstants.COL_TRANSACTION_NOTE_2, note_2);
@@ -182,7 +183,24 @@ public class InfoRepository {
         }
 //        db.close();
         return idCategory;
+    }
 
+    @Nullable
+    public String getIdSubcategory(String subcateoryName, String categoryId) {
+        String idSubcategory = "0";
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_SUBCATEGORY + " WHERE " + DBConstants.COL_SUBCAT_NAME + " = '" + subcateoryName + "' AND " + DBConstants.COL_SUBCAT_SUPERCAT_ID + " = '" + categoryId + "'";
+        // on below line we are creating a new array list.
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and search for ID Category name
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(2).equals(subcateoryName))
+                    idSubcategory = cursor.getString(0);
+            } while (cursor.moveToNext());
+        }
+//        db.close();
+        return idSubcategory;
     }
 
 

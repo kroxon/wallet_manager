@@ -97,7 +97,7 @@ public class DialogFragmentIconSelect extends DialogFragment implements Recycler
         bSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (imageResource != 0)
+                if (imageResource != 0);
                 mOnInputListener.sendInput(imageResource);
                 getDialog().dismiss();
             }

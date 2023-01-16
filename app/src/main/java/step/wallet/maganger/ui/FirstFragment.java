@@ -76,7 +76,7 @@ public class FirstFragment extends Fragment implements DialogFragmentTransaction
             public void onClick(View view) {
 
                 InfoRepository repository = new InfoRepository();
-                repository.writeTransaction("" + i, "" + i + 2, "" + i + 3,
+                repository.writeTransaction("" + i, "" + i + 2, "" + i + 3, "" + i + 100,
                         "" + i + 4, "" + i + 5, "" + i + 6, "" + i + 7);
                 text_example.setText("" + i + " " + (i + 2) + " " + (i + 3) +
                         " " + (i + 4) + " " + (i + 5) + " " + (i + 6) + " " + (i + 7));

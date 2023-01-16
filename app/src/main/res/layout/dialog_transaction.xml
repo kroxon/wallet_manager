@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutDialog"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_height="620dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/dialog_background"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -97,7 +97,6 @@
         <!--        </com.google.android.material.textfield.TextInputLayout>-->
 
 
-
         <Spinner
             android:id="@+id/dTransactionCatSpinner"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -133,12 +132,15 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/dTransactionSubcatRV"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
             android:padding="5dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/subCatLabel"></androidx.recyclerview.widget.RecyclerView>
+
 
         <!--        <TextView-->
         <!--            android:id="@+id/action_ok"-->
@@ -554,12 +556,15 @@
                     android:textSize="20sp" />
 
                 <LinearLayout
+                    android:id="@+id/lResult"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/lighgrey"></LinearLayout>
+                    android:background="@color/lighgrey"
+                    android:clickable="true"
+                    android:orientation="horizontal"></LinearLayout>
 
                 <TextView
-                    android:id="@+id/btnresult"
+                    android:id="@+id/lResultTxt"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -567,7 +572,17 @@
                     android:gravity="center"
                     android:text="="
                     android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/lResultImg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:src="@drawable/ic_check"
+                    android:visibility="visible"></ImageView>
 
             </LinearLayout>
 
@@ -580,35 +595,35 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/buttonNo"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/button_cancel_backgroung"
-        android:text="CANCEL"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/layoutDialog"
-        app:layout_constraintEnd_toStartOf="@id/buttonYes"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutDialog" />
+    <!--    <Button-->
+    <!--        android:id="@+id/buttonNo"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="40dp"-->
+    <!--        android:layout_marginStart="40dp"-->
+    <!--        android:layout_marginEnd="10dp"-->
+    <!--        android:background="@drawable/button_cancel_backgroung"-->
+    <!--        android:text="CANCEL"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        android:textSize="14sp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@id/layoutDialog"-->
+    <!--        app:layout_constraintEnd_toStartOf="@id/buttonYes"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/layoutDialog" />-->
 
-    <Button
-        android:id="@+id/buttonYes"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="40dp"
-        android:background="@drawable/button_save_backgroung"
-        android:text="SAVE"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/layoutDialog"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/buttonNo"
-        app:layout_constraintTop_toBottomOf="@id/layoutDialog" />
+    <!--    <Button-->
+    <!--        android:id="@+id/buttonYes"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="40dp"-->
+    <!--        android:layout_marginStart="10dp"-->
+    <!--        android:layout_marginEnd="40dp"-->
+    <!--        android:background="@drawable/button_save_backgroung"-->
+    <!--        android:text="SAVE"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        android:textSize="14sp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@id/layoutDialog"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toEndOf="@id/buttonNo"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/layoutDialog" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
