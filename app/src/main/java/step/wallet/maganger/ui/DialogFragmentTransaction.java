@@ -2,17 +2,17 @@ package step.wallet.maganger.ui;
 
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -35,9 +35,16 @@ import step.wallet.maganger.adapters.HorizontalSubcatRecylerviewAdapter;
 import step.wallet.maganger.adapters.SpinnerCategoryAdapter;
 import step.wallet.maganger.data.InfoRepository;
 
-public class DialogFragmentTransaction extends DialogFragment {
+public class DialogFragmentTransaction extends DialogFragment implements HorizontalSubcatRecylerviewAdapter.ItemClickListener{
 
     private static final String TAG = "DialogFragmentTransaction";
+    public String selectedSubcategory;
+
+    @Override
+    public void onItemClick(View view, int position, String subcatName) {
+        Toast.makeText(getContext(), "You clicked number: " + (position + 1) + ", selected subcategory:  " + subcatName, Toast.LENGTH_SHORT).show();
+        selectedSubcategory = subcatName;
+    }
 
     public interface OnInputSelected {
         void sendInput(String input);
@@ -46,12 +53,17 @@ public class DialogFragmentTransaction extends DialogFragment {
     public OnInputSelected mOnInputSelected;
 
     //widgets
-    private TextView mActionOk, mActionCancel, tvInput;
+    private ImageView lResultImg;
+    private TextView lResultTv;
+    private TextView tvInput;
     private TextView btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btn00;
     private TextView btBksp, btDecimal, btClr, dateTv;
     private Spinner dTCatSpinner, actvSubCat;
-    private RecyclerView subcatList;
+    private RecyclerView subcatListRV;
     private LinearLayout lResult;
+    private HorizontalSubcatRecylerviewAdapter adapter;
+
+
 
     @Override
     public void onStart() {
@@ -68,15 +80,24 @@ public class DialogFragmentTransaction extends DialogFragment {
 
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+        InfoRepository repository = new InfoRepository();
+
+
 //        mActionOk = view.findViewById(R.id.action_ok);
         tvInput = (TextView) view.findViewById(R.id.tvInput);
         dateTv = (TextView) view.findViewById(R.id.dateTxt);
+        lResultImg = (ImageView) view.findViewById(R.id.lResultImg);
+        lResultTv = (TextView) view.findViewById(R.id.lResultTxt);
 //        mActionCancel = view.findViewById(R.id.action_cancel);
 
-        subcatList = (RecyclerView) view.findViewById(R.id.dTransactionSubcatRV);
-        subcatList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        subcatList.setAdapter(new HorizontalSubcatRecylerviewAdapter(new String [] {"jedzenie", "chemia", "RTV", "czynsz", "woda", "ubezpieczenie", "narzędzie", "farby"}));
-
+        subcatListRV = (RecyclerView) view.findViewById(R.id.dTransactionSubcatRV);
+        subcatListRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+//        subcatListRV.setAdapter(new HorizontalSubcatRecylerviewAdapter(new String [] {"jedzenie", "chemia", "RTV", "czynsz", "woda", "ubezpieczenie", "narzędzie", "farby"}));
+        List<String> cats = new ArrayList<String>();
+        cats = repository.getAllCategories();
+        List <String> subcategoriesList = repository.getSubcategories(repository.getIdCategory(cats.get(0)));
+        String [] subcats = subcategoriesList.toArray(new String[0]);
+        loadSubcatRecycleViewer(getActivity(), subcats);
 
         btn0 = (TextView) view.findViewById(R.id.btn0);
         btn1 = (TextView) view.findViewById(R.id.btn1);
@@ -100,7 +121,6 @@ public class DialogFragmentTransaction extends DialogFragment {
 
         // Category Spinner Drop down elements
         dTCatSpinner = (Spinner) view.findViewById(R.id.dTransactionCatSpinner);
-        InfoRepository repository = new InfoRepository();
         final Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
@@ -120,7 +140,13 @@ public class DialogFragmentTransaction extends DialogFragment {
                 Toast.makeText(getContext(), "" + finalCategories.get(i), Toast.LENGTH_SHORT).show();
                 List <String> subcategoriesList = repository.getSubcategories(repository.getIdCategory(finalCategories.get(i)));
                 String [] subcategories = subcategoriesList.toArray(new String[0]);
-                subcatList.setAdapter(new HorizontalSubcatRecylerviewAdapter(subcategories));
+//                subcatListRV.setAdapter(new HorizontalSubcatRecylerviewAdapter(subcategories));
+                loadSubcatRecycleViewer(getActivity(), subcategories);
+                try {
+                    selectedSubcategory = subcategoriesList.get(0);
+                } catch (Exception e){
+                    selectedSubcategory = "0";
+                }
             }
 
             @Override
@@ -144,6 +170,15 @@ public class DialogFragmentTransaction extends DialogFragment {
                     }
                 },year, month,day);
                 dialog.show();
+            }
+        });
+
+        lResultImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "" + finalCategories.get(dTCatSpinner.getSelectedItemPosition()), Toast.LENGTH_SHORT).show();
+                repository.writeTransaction(repository.getIdCategory(finalCategories.get(dTCatSpinner.getSelectedItemPosition())), repository.getIdSubcategory(selectedSubcategory, repository.getIdCategory(finalCategories.get(dTCatSpinner.getSelectedItemPosition()))),
+                        dateTv.getText().toString(), tvInput.getText().toString(), "0", "note 1", "note 2", "photo1");
             }
         });
 
@@ -456,4 +491,10 @@ public class DialogFragmentTransaction extends DialogFragment {
 //
 //        }
 //    }
+
+    public void loadSubcatRecycleViewer(Context context, String[] items) {
+        adapter = new HorizontalSubcatRecylerviewAdapter(getActivity(), items);
+        adapter.setClickListener(this);
+        subcatListRV.setAdapter(adapter);
+    }
 }
