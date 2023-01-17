@@ -182,19 +182,19 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_check"
-                android:tint="#101010"
                 android:layout_margin="4dp"
                 android:background="#5B43A047"
-                android:id="@+id/bSaveNewCatName">
+                android:id="@+id/bSaveNewCatName"
+                app:tint="#101010">
             </ImageButton>
             <ImageButton
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_clear"
-                android:tint="#101010"
                 android:layout_margin="4dp"
                 android:background="#48F65F5F"
-                android:id="@+id/bCancelNewCatName">
+                android:id="@+id/bCancelNewCatName"
+                app:tint="#101010">
             </ImageButton>
         </LinearLayout>
 

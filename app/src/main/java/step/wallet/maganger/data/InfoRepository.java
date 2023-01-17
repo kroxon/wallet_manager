@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import step.wallet.maganger.classes.Transaction;
+
 public class InfoRepository {
 
     private final SQLiteDatabase db = DatabaseOpenHelper.getAppDatabase();
@@ -244,4 +246,31 @@ public class InfoRepository {
         return idCategoryIcon;
     }
 
+//    public Transactions
+
+    public ArrayList<Transaction> readTransactions(String idAccount) {
+        ArrayList<Transaction> transactionsList = new ArrayList<Transaction>();
+
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_TRANSACTION + " WHERE " + DBConstants.COL_TRANSACTION_ID_ACC + " = '" + idAccount + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and search for ID Accout
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(5).equals(idAccount)) {
+                    Transaction transaction = new Transaction();
+                    transaction.setTransactionId(cursor.getString(0));
+                    transaction.setTransactionValue(cursor.getString(1));
+                    transaction.setTransactionIdCategory(cursor.getString(2));
+                    transaction.setTransactionIdSubcategory(cursor.getString(3));
+                    transaction.setTransactionDate(cursor.getString(4));
+                    transaction.setTransactionNote1(cursor.getString(6));
+                    transaction.setTransactionNote2(cursor.getString(7));
+                    transaction.setTransactionPhoto(cursor.getString(8));
+                    transactionsList.add(transaction);
+                }
+            } while (cursor.moveToNext());
+        }
+        return transactionsList;
+    }
 }

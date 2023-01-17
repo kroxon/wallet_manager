@@ -7,11 +7,17 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/testTextView2"
         android:layout_width="match_parent"
-        android:textStyle="bold"
-        android:textSize="20sp"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:text="Second fragment"
-        android:gravity="center"/>
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:id="@+id/historyFrame"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"></FrameLayout>
 
 </FrameLayout>
