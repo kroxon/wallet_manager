@@ -180,12 +180,13 @@
             app:layout_constraintBottom_toTopOf="@+id/calc_layout" />
 
         <LinearLayout
+            android:layout_marginHorizontal="20dp"
             android:id="@+id/calc_layout"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="250dp"
             android:orientation="vertical"
             android:paddingBottom="25dp"
-            android:weightSum="5"
+            android:weightSum="6"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <LinearLayout

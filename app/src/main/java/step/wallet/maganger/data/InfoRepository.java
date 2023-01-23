@@ -94,7 +94,7 @@ public class InfoRepository {
     public void addCategory(@NonNull String nameCategory) {
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_CAT_NAME, nameCategory);
-        values.put(DBConstants.COL_CAT_ICON, "2131165331");
+        values.put(DBConstants.COL_CAT_ICON, "2131165357");
         db.insert(DBConstants.TABLE_CATEGORY, null, values);
 //        db.close();
     }
@@ -188,6 +188,24 @@ public class InfoRepository {
     }
 
     @Nullable
+    public String getCategoryName (String idCategory) {
+        String categoryName = "0";
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_ID + " = '" + idCategory + "'";
+        // on below line we are creating a new array list.
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and search for ID Category name
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(0).equals(idCategory))
+                    categoryName = cursor.getString(1);
+            } while (cursor.moveToNext());
+        }
+//        db.close();
+        return categoryName;
+    }
+
+    @Nullable
     public String getIdSubcategory(String subcateoryName, String categoryId) {
         String idSubcategory = "0";
         String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_SUBCATEGORY + " WHERE " + DBConstants.COL_SUBCAT_NAME + " = '" + subcateoryName + "' AND " + DBConstants.COL_SUBCAT_SUPERCAT_ID + " = '" + categoryId + "'";
@@ -240,6 +258,24 @@ public class InfoRepository {
             do {
                 if (cursor.getString(1).equals(cateoryName))
                     idCategoryIcon = Integer.parseInt(cursor.getString(2));
+            } while (cursor.moveToNext());
+        }
+//        db.close();
+        return idCategoryIcon;
+    }
+
+
+    @Nullable
+    public String getIdCategoryIconById(String categoryId) {
+        String idCategoryIcon = "0";
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_ID + " = '" + categoryId + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and search for ID Category name
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(0).equals(categoryId))
+                    idCategoryIcon = cursor.getString(2);
             } while (cursor.moveToNext());
         }
 //        db.close();

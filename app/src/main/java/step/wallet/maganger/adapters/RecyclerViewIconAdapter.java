@@ -33,9 +33,6 @@ public class RecyclerViewIconAdapter extends RecyclerView.Adapter<RecyclerViewIc
         int selectedItem = 0;
     }
 
-
-
-    // inflates the cell layout from xml when needed
     @Override
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

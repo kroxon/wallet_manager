@@ -23,9 +23,6 @@ import java.util.ArrayList
 import android.widget.EditText
 
 
-
-
-
 class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
     ListViewVerticalAdapter.OnShareClickedListener, DialogFragmentIconSelect.OnInputListener {
 
@@ -168,16 +165,14 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             val repository = InfoRepository()
             val labels: List<String> = repository.allCategories as List<String>
             var i = 1
-            for (item in labels) {
-                if (item.contains("New Category"))
+            while (true) {
+                if (labels.contains("New Category " + i))
                     i++
-            }
-            if (i == 1) {
-                repository.addCategory("New Category")
-                selectegCategory = "New Category"
-            } else {
-                repository.addCategory("New Category" + i)
-                selectegCategory = "New Category" + i
+                else {
+                    addCategory("New Category " + i)
+                    selectegCategory = "New Category " + i
+                    break
+                }
             }
             loadToolbarSpinnerData()
             setSpinnerToolbarSelectedValue(spinner_toolbar!!, selectegCategory!!)
@@ -360,7 +355,10 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             if (i.equals(name))
                 flag = false
         if (flag == true) {
-            repository.addSubcategory(name, repository.getIdCategory(spinner_toolbar!!.selectedItem.toString()))
+            repository.addSubcategory(
+                name,
+                repository.getIdCategory(spinner_toolbar!!.selectedItem.toString())
+            )
             Toast.makeText(this, "\"$name\" added", Toast.LENGTH_SHORT).show()
         } else
             Toast.makeText(this, "\"$name\" already exists", Toast.LENGTH_SHORT).show()
@@ -399,7 +397,8 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                 newUrl + " edit " + spinner_toolbar!!.selectedItem.toString(), Toast.LENGTH_SHORT
             ).show()
 
-            showEditItemDialog(this@Category_Activity, newUrl,
+            showEditItemDialog(
+                this@Category_Activity, newUrl,
                 repository.getIdCategory(spinner_toolbar!!.selectedItem.toString())!!
             )
 //            loadListViewSubcat(spinner_toolbar!!.selectedItemPosition)
@@ -423,14 +422,14 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         }
     }
 
-    private fun showEditItemDialog(c: Context, oldSubcatrgory: String, idCategory:String) {
+    private fun showEditItemDialog(c: Context, oldSubcatrgory: String, idCategory: String) {
         val taskEditText = EditText(c)
         val dialog = AlertDialog.Builder(c)
             .setTitle("Edit subcategory name")
             .setMessage("What do you want to do next?")
             .setView(taskEditText)
-            .setPositiveButton("Add") {
-                    dialog, which -> val task = taskEditText.text.toString()
+            .setPositiveButton("Add") { dialog, which ->
+                val task = taskEditText.text.toString()
                 val repository = InfoRepository()
 
                 val labels: List<String> =
@@ -440,10 +439,22 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                     if (i.equals(taskEditText.text.toString()))
                         flag = false
                 if (flag == true) {
-                    repository.updateSubcategoryName(taskEditText.text.toString(), oldSubcatrgory, idCategory)
-                    Toast.makeText(this, taskEditText.text.toString() + " added", Toast.LENGTH_SHORT).show()
+                    repository.updateSubcategoryName(
+                        taskEditText.text.toString(),
+                        oldSubcatrgory,
+                        idCategory
+                    )
+                    Toast.makeText(
+                        this,
+                        taskEditText.text.toString() + " added",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else
-                    Toast.makeText(this, taskEditText.text.toString() + " already exists", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        taskEditText.text.toString() + " already exists",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
 //                repository.updateSubcategoryName(taskEditText.text.toString(), oldSubcatrgory, idCategory)
                 loadListViewSubcat(spinner_toolbar!!.selectedItemPosition)

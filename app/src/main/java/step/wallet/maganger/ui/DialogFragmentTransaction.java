@@ -35,7 +35,7 @@ import step.wallet.maganger.adapters.HorizontalSubcatRecylerviewAdapter;
 import step.wallet.maganger.adapters.SpinnerCategoryAdapter;
 import step.wallet.maganger.data.InfoRepository;
 
-public class DialogFragmentTransaction extends DialogFragment implements HorizontalSubcatRecylerviewAdapter.ItemClickListener{
+public class DialogFragmentTransaction extends DialogFragment implements HorizontalSubcatRecylerviewAdapter.ItemClickListener {
 
     private static final String TAG = "DialogFragmentTransaction";
     public String selectedSubcategory;
@@ -62,7 +62,6 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
     private RecyclerView subcatListRV;
     private LinearLayout lResult;
     private HorizontalSubcatRecylerviewAdapter adapter;
-
 
 
     @Override
@@ -95,8 +94,8 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 //        subcatListRV.setAdapter(new HorizontalSubcatRecylerviewAdapter(new String [] {"jedzenie", "chemia", "RTV", "czynsz", "woda", "ubezpieczenie", "narzędzie", "farby"}));
         List<String> cats = new ArrayList<String>();
         cats = repository.getAllCategories();
-        List <String> subcategoriesList = repository.getSubcategories(repository.getIdCategory(cats.get(0)));
-        String [] subcats = subcategoriesList.toArray(new String[0]);
+        List<String> subcategoriesList = repository.getSubcategories(repository.getIdCategory(cats.get(0)));
+        String[] subcats = subcategoriesList.toArray(new String[0]);
         loadSubcatRecycleViewer(getActivity(), subcats);
 
         btn0 = (TextView) view.findViewById(R.id.btn0);
@@ -129,7 +128,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         categories = repository.getAllCategories();
         List<String> finalCategories = categories;
 
-        SpinnerCategoryAdapter adapter = new SpinnerCategoryAdapter (getContext(), finalCategories);
+        SpinnerCategoryAdapter adapter = new SpinnerCategoryAdapter(getContext(), finalCategories);
         adapter.setDropDownViewResource(R.layout.dialog_transaction_category_dropdown);
         dTCatSpinner.setAdapter(adapter);
 //        textInputLayout.setStartIconDrawable(repository.getIdCategoryIcon(finalCategories.get(1)));
@@ -138,13 +137,13 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getContext(), "" + finalCategories.get(i), Toast.LENGTH_SHORT).show();
-                List <String> subcategoriesList = repository.getSubcategories(repository.getIdCategory(finalCategories.get(i)));
-                String [] subcategories = subcategoriesList.toArray(new String[0]);
+                List<String> subcategoriesList = repository.getSubcategories(repository.getIdCategory(finalCategories.get(i)));
+                String[] subcategories = subcategoriesList.toArray(new String[0]);
 //                subcatListRV.setAdapter(new HorizontalSubcatRecylerviewAdapter(subcategories));
                 loadSubcatRecycleViewer(getActivity(), subcategories);
                 try {
                     selectedSubcategory = subcategoriesList.get(0);
-                } catch (Exception e){
+                } catch (Exception e) {
                     selectedSubcategory = "0";
                 }
             }
@@ -163,12 +162,21 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                        month = month+1;
-                        String date = dayOfMonth+"."+month+"."+year;
+                        month = month + 1;
+                        String dayTwoDigit = "";
+                        String monthTwoDigit = "";
+                        if (dayOfMonth < 10)
+                            dayTwoDigit = "0" + dayOfMonth;
+                        else dayTwoDigit = "" + dayOfMonth;
+                        if (month < 10)
+                            monthTwoDigit = "0" + month;
+                        else
+                            monthTwoDigit = "" + month;
+                        String date = dayTwoDigit + "." + monthTwoDigit + "." + year;
                         dateTv.setText(date);
 
                     }
-                },year, month,day);
+                }, year, month, day);
                 dialog.show();
             }
         });
@@ -181,8 +189,6 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                         dateTv.getText().toString(), tvInput.getText().toString(), "0", "note 1", "note 2", "photo1");
             }
         });
-
-
 
 
 //        mActionCancel.setOnClickListener(new View.OnClickListener() {
