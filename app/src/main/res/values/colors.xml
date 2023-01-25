@@ -13,4 +13,6 @@
     <color name="lighgrey">#989797</color>
     <color name="underline">#D8D6D6</color>
     <color name="colorButton">#1E88E5</color>
+    <color name="colorApp1">#1E88E5</color>
+    <color name="colorAppText1">#A4C2DD</color>
 </resources>

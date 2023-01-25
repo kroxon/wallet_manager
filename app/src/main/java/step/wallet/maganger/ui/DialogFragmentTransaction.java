@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -57,10 +58,11 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
     private TextView lResultTv;
     private TextView tvInput;
     private TextView btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btn00;
-    private TextView btBksp, btDecimal, btClr, dateTv;
+    private TextView btBksp, btDecimal, btClr, dateTv1, dateTv2;
     private Spinner dTCatSpinner, actvSubCat;
     private RecyclerView subcatListRV;
     private LinearLayout lResult;
+    private ConstraintLayout conLayTrDatePick;
     private HorizontalSubcatRecylerviewAdapter adapter;
 
 
@@ -84,7 +86,8 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 
 //        mActionOk = view.findViewById(R.id.action_ok);
         tvInput = (TextView) view.findViewById(R.id.tvInput);
-        dateTv = (TextView) view.findViewById(R.id.dateTxt);
+        dateTv1 = (TextView) view.findViewById(R.id.dateTxt1);
+        dateTv2 = (TextView) view.findViewById(R.id.dateTxt2);
         lResultImg = (ImageView) view.findViewById(R.id.lResultImg);
         lResultTv = (TextView) view.findViewById(R.id.lResultTxt);
 //        mActionCancel = view.findViewById(R.id.action_cancel);
@@ -114,6 +117,8 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         btBksp = (TextView) view.findViewById(R.id.btnbksp);
         btDecimal = (TextView) view.findViewById(R.id.btndecimal);
         btClr = (TextView) view.findViewById(R.id.btnclr);
+
+        conLayTrDatePick = (ConstraintLayout) view.findViewById(R.id.trlayoutDatePicker);
 
 
         // testing dropdown autocomplete Text view
@@ -154,8 +159,9 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             }
         });
 
-        dateTv.setText(new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date()));
-        dateTv.setOnClickListener(new View.OnClickListener() {
+        dateTv1.setText(new SimpleDateFormat("dd", Locale.getDefault()).format(new Date()));
+        dateTv2.setText(new SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(new Date()));
+        conLayTrDatePick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerDialog dialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
@@ -164,16 +170,20 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 
                         month = month + 1;
                         String dayTwoDigit = "";
-                        String monthTwoDigit = "";
-                        if (dayOfMonth < 10)
-                            dayTwoDigit = "0" + dayOfMonth;
-                        else dayTwoDigit = "" + dayOfMonth;
-                        if (month < 10)
-                            monthTwoDigit = "0" + month;
-                        else
-                            monthTwoDigit = "" + month;
-                        String date = dayTwoDigit + "." + monthTwoDigit + "." + year;
-                        dateTv.setText(date);
+                        SimpleDateFormat format=new SimpleDateFormat("MMMM");// also you can use: "yyyy-MMMM-dd"
+                        Calendar calendar1 = Calendar.getInstance();
+                        calendar1.set(year, month - 1, dayOfMonth);
+                        String monthTwoDigit=format.format(calendar1.getTime());
+//                        if (dayOfMonth < 10)
+//                            dayTwoDigit = "0" + dayOfMonth;
+//                        else dayTwoDigit = "" + dayOfMonth;
+//                        if (month < 10)
+//                            monthTwoDigit = "0" + month;
+//                        else
+//                            monthTwoDigit = "" + month;
+//                        String date = dayTwoDigit + " " + monthTwoDigit + " " + year;
+                        dateTv1.setText(dayOfMonth + "");
+                        dateTv2.setText(monthTwoDigit + " " + year);
 
                     }
                 }, year, month, day);
@@ -186,7 +196,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             public void onClick(View view) {
                 Toast.makeText(getContext(), "" + finalCategories.get(dTCatSpinner.getSelectedItemPosition()), Toast.LENGTH_SHORT).show();
                 repository.writeTransaction(repository.getIdCategory(finalCategories.get(dTCatSpinner.getSelectedItemPosition())), repository.getIdSubcategory(selectedSubcategory, repository.getIdCategory(finalCategories.get(dTCatSpinner.getSelectedItemPosition()))),
-                        dateTv.getText().toString(), tvInput.getText().toString(), "0", "note 1", "note 2", "photo1");
+                        dateTv1.getText().toString(), tvInput.getText().toString(), "0", "note 1", "note 2", "photo1");
             }
         });
 
