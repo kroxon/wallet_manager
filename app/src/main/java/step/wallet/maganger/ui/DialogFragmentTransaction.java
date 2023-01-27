@@ -1,5 +1,6 @@
 package step.wallet.maganger.ui;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -36,7 +37,7 @@ import step.wallet.maganger.adapters.HorizontalSubcatRecylerviewAdapter;
 import step.wallet.maganger.adapters.SpinnerCategoryAdapter;
 import step.wallet.maganger.data.InfoRepository;
 
-public class DialogFragmentTransaction extends DialogFragment implements HorizontalSubcatRecylerviewAdapter.ItemClickListener {
+public class DialogFragmentTransaction extends DialogFragment implements HorizontalSubcatRecylerviewAdapter.ItemClickListener, DialogFragmentCategorySelect.OnInputSelected {
 
     private static final String TAG = "DialogFragmentTransaction";
     public String selectedSubcategory;
@@ -47,6 +48,17 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         selectedSubcategory = subcatName;
     }
 
+    @Override
+    public void sendInput(String catName, int catIcon) {
+        iconCategorySelected.setImageResource(catIcon);
+        categoryNameSelected.setText(catName);
+        InfoRepository repository = new InfoRepository();
+        List<String> list = repository.getSubcategories(repository.getIdCategory(catName));
+        String[] array = list.toArray(new String[0]);
+        loadSubcatRecycleViewer(getContext(), array);
+    }
+
+
     public interface OnInputSelected {
         void sendInput(String input);
     }
@@ -54,15 +66,15 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
     public OnInputSelected mOnInputSelected;
 
     //widgets
-    private ImageView lResultImg;
-    private TextView lResultTv;
-    private TextView tvInput;
+    private ImageView lResultImg, iconCategorySelected;
+    private TextView lResultTv, categoryNameSelected;
+    private TextView tvInput, expensesTv, incomeTv;
     private TextView btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btn00;
     private TextView btBksp, btDecimal, btClr, dateTv1, dateTv2;
     private Spinner dTCatSpinner, actvSubCat;
     private RecyclerView subcatListRV;
-    private LinearLayout lResult;
-    private ConstraintLayout conLayTrDatePick;
+    private LinearLayout lResult, expensesUnderline, incomeUnderline;
+    private ConstraintLayout conLayTrDatePick, conLayTrCatSelct;
     private HorizontalSubcatRecylerviewAdapter adapter;
 
 
@@ -72,6 +84,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     }
 
+    @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -119,6 +132,15 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         btClr = (TextView) view.findViewById(R.id.btnclr);
 
         conLayTrDatePick = (ConstraintLayout) view.findViewById(R.id.trlayoutDatePicker);
+        conLayTrCatSelct = (ConstraintLayout) view.findViewById(R.id.trCategorySelectLayout);
+
+        iconCategorySelected = (ImageView) view.findViewById(R.id.trIconCategory);
+        categoryNameSelected = (TextView) view.findViewById(R.id.trNameCategory);
+
+        expensesTv = (TextView) view.findViewById(R.id.trExpenses);
+        incomeTv = (TextView) view.findViewById(R.id.trIncome);
+        expensesUnderline = (LinearLayout) view.findViewById(R.id.trExpensesUnderline);
+        incomeUnderline = (LinearLayout) view.findViewById(R.id.trIncomeUnderline);
 
 
         // testing dropdown autocomplete Text view
@@ -197,6 +219,37 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                 Toast.makeText(getContext(), "" + finalCategories.get(dTCatSpinner.getSelectedItemPosition()), Toast.LENGTH_SHORT).show();
                 repository.writeTransaction(repository.getIdCategory(finalCategories.get(dTCatSpinner.getSelectedItemPosition())), repository.getIdSubcategory(selectedSubcategory, repository.getIdCategory(finalCategories.get(dTCatSpinner.getSelectedItemPosition()))),
                         dateTv1.getText().toString(), tvInput.getText().toString(), "0", "note 1", "note 2", "photo1");
+            }
+        });
+
+        conLayTrCatSelct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragmentCategorySelect dialog = new DialogFragmentCategorySelect();
+                dialog.setTargetFragment(DialogFragmentTransaction.this, 1);
+                dialog.show(getFragmentManager(), "DialogFragmentCategorySelect");
+            }
+        });
+
+        expensesTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                incomeUnderline.setVisibility(View.INVISIBLE);
+                expensesUnderline.setVisibility(View.VISIBLE);
+                expensesTv.setTextColor(Color.WHITE);
+                incomeTv.setTextColor(Color.parseColor("#C1BFBF"));
+                conLayTrCatSelct.setVisibility(View.VISIBLE);
+            }
+        });
+
+        incomeTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expensesUnderline.setVisibility(View.INVISIBLE);
+                incomeUnderline.setVisibility(View.VISIBLE);
+                incomeTv.setTextColor(Color.WHITE);
+                expensesTv.setTextColor(Color.parseColor("#C1BFBF"));
+                conLayTrCatSelct.setVisibility(View.GONE);
             }
         });
 

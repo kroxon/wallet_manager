@@ -407,7 +407,7 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     }
 
     override fun sendInput(input: Int) {
-        Toast.makeText(this, input, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "send: " + input, Toast.LENGTH_SHORT).show()
         imgCategoryIcon?.setImageResource(input)
         val repository = InfoRepository()
         repository.updateCategoryIcon(input.toString(), etCatName?.text.toString())
