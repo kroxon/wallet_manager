@@ -6,13 +6,17 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -21,6 +25,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,7 +43,7 @@ import step.wallet.maganger.adapters.HorizontalSubcatRecylerviewAdapter;
 import step.wallet.maganger.adapters.SpinnerCategoryAdapter;
 import step.wallet.maganger.data.InfoRepository;
 
-public class DialogFragmentTransaction extends DialogFragment implements HorizontalSubcatRecylerviewAdapter.ItemClickListener, DialogFragmentCategorySelect.OnInputSelected {
+public class DialogFragmentTransaction extends DialogFragment implements HorizontalSubcatRecylerviewAdapter.ItemClickListener, DialogFragmentCategorySelect.OnInputSelected, DialogNotesTransaction.OnInputSend {
 
     private static final String TAG = "DialogFragmentTransaction";
     public String selectedSubcategory;
@@ -58,6 +64,11 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         loadSubcatRecycleViewer(getContext(), array);
     }
 
+    @Override
+    public void sendNotes(String sendNotes) {
+        notesTv.setText(sendNotes);
+    }
+
 
     public interface OnInputSelected {
         void sendInput(String input);
@@ -67,8 +78,9 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 
     //widgets
     private ImageView lResultImg, iconCategorySelected;
-    private TextView lResultTv, categoryNameSelected;
-    private TextView tvInput, expensesTv, incomeTv;
+    private TextView lResultTv, categoryNameSelected, plusMinusTv;
+    private TextView tvInput, expensesTv, incomeTv, notesTv;
+    private TextView bDigit0, bDigit1, bDigit2, bDigit3, bDigit4, bDigit5, bDigit6, bDigit7, bDigit8, bDigit9, bDigitBcksp, bDigitDivide, bDigitMultiply, bDigitPlus, bDigitMinus, bDigitEqual, bDigitComma;
     private TextView btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btn00;
     private TextView btBksp, btDecimal, btClr, dateTv1, dateTv2;
     private Spinner dTCatSpinner, actvSubCat;
@@ -76,7 +88,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
     private LinearLayout lResult, expensesUnderline, incomeUnderline;
     private ConstraintLayout conLayTrDatePick, conLayTrCatSelct;
     private HorizontalSubcatRecylerviewAdapter adapter;
-
+    private AlertDialog alertDialogNotes;
 
     @Override
     public void onStart() {
@@ -84,6 +96,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
@@ -126,10 +139,27 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         btn9 = (TextView) view.findViewById(R.id.btn9);
         btn00 = (TextView) view.findViewById(R.id.btndouble0);
         lResult = (LinearLayout) view.findViewById(R.id.lResult);
-
         btBksp = (TextView) view.findViewById(R.id.btnbksp);
         btDecimal = (TextView) view.findViewById(R.id.btndecimal);
         btClr = (TextView) view.findViewById(R.id.btnclr);
+
+        bDigit0 = (TextView) view.findViewById(R.id.trDigit0);
+        bDigit1 = (TextView) view.findViewById(R.id.trDigit1);
+        bDigit2 = (TextView) view.findViewById(R.id.trDigit2);
+        bDigit3 = (TextView) view.findViewById(R.id.trDigit3);
+        bDigit4 = (TextView) view.findViewById(R.id.trDigit4);
+        bDigit5 = (TextView) view.findViewById(R.id.trDigit5);
+        bDigit6 = (TextView) view.findViewById(R.id.trDigit6);
+        bDigit7 = (TextView) view.findViewById(R.id.trDigit7);
+        bDigit8 = (TextView) view.findViewById(R.id.trDigit8);
+        bDigit9 = (TextView) view.findViewById(R.id.trDigit9);
+        bDigitBcksp = (TextView) view.findViewById(R.id.trDigitBcsp);
+        bDigitDivide = (TextView) view.findViewById(R.id.trDigitDivide);
+        bDigitMultiply = (TextView) view.findViewById(R.id.trDigitMultiply);
+        bDigitPlus = (TextView) view.findViewById(R.id.trDigitPlus);
+        bDigitMinus = (TextView) view.findViewById(R.id.trDigitMinus);
+        bDigitEqual = (TextView) view.findViewById(R.id.trDigitEqual);
+        bDigitComma = (TextView) view.findViewById(R.id.trDigitComma);
 
         conLayTrDatePick = (ConstraintLayout) view.findViewById(R.id.trlayoutDatePicker);
         conLayTrCatSelct = (ConstraintLayout) view.findViewById(R.id.trCategorySelectLayout);
@@ -139,11 +169,14 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 
         expensesTv = (TextView) view.findViewById(R.id.trExpenses);
         incomeTv = (TextView) view.findViewById(R.id.trIncome);
+        plusMinusTv = (TextView) view.findViewById(R.id.trPlusMinusTv);
         expensesUnderline = (LinearLayout) view.findViewById(R.id.trExpensesUnderline);
         incomeUnderline = (LinearLayout) view.findViewById(R.id.trIncomeUnderline);
+        notesTv = (TextView) view.findViewById(R.id.trNotesTv);
 
 
-        // testing dropdown autocomplete Text view
+        iconCategorySelected.setImageResource(repository.getIdCategoryIcon(repository.getAllCategories().get(0)));
+        categoryNameSelected.setText(repository.getAllCategories().get(0));
 
         // Category Spinner Drop down elements
         dTCatSpinner = (Spinner) view.findViewById(R.id.dTransactionCatSpinner);
@@ -239,6 +272,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                 expensesTv.setTextColor(Color.WHITE);
                 incomeTv.setTextColor(Color.parseColor("#C1BFBF"));
                 conLayTrCatSelct.setVisibility(View.VISIBLE);
+                plusMinusTv.setText("-");
             }
         });
 
@@ -250,6 +284,39 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                 incomeTv.setTextColor(Color.WHITE);
                 expensesTv.setTextColor(Color.parseColor("#C1BFBF"));
                 conLayTrCatSelct.setVisibility(View.GONE);
+                plusMinusTv.setText("+");
+            }
+        });
+
+//        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//        View alertNotesView = getLayoutInflater().inflate(R.layout.dialog_tr_notes, null);
+//        EditText notesEt = (EditText) alertNotesView.findViewById(R.id.trEtNotes);
+//        ImageButton notesCancelImg = (ImageButton) alertNotesView.findViewById(R.id.trNotesCancel);
+//        Button notesOkButton = (Button) alertNotesView.findViewById(R.id.trNotesOk);
+//        notesOkButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                notesTv.setText(notesEt.getText().toString());
+//                alertDialogNotes.dismiss();
+//            }
+//        });
+//        notesCancelImg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                alertDialogNotes.dismiss();
+//            }
+//        });
+//        builder.setView(alertNotesView);
+//        alertDialogNotes = builder.create();
+//
+//
+        notesTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogNotesTransaction dialogNotes = new DialogNotesTransaction();
+                dialogNotes.setValue(notesTv.getText().toString());
+                dialogNotes.setTargetFragment(DialogFragmentTransaction.this, 1);
+                dialogNotes.show(getFragmentManager(), "DialogFragmentNotes");
             }
         });
 
@@ -280,7 +347,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 //        });
 
 
-        btn0.setOnClickListener(new View.OnClickListener() {
+        bDigit0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (tvInput.getText().toString().equals("0")) {
@@ -290,7 +357,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             }
         });
 
-        btn1.setOnClickListener(new View.OnClickListener() {
+        bDigit1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (tvInput.getText().toString().equals("0")) {
@@ -300,7 +367,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             }
         });
 
-        btn2.setOnClickListener(new View.OnClickListener() {
+        bDigit2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (tvInput.getText().toString().equals("0")) {
@@ -310,7 +377,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             }
         });
 
-        btn3.setOnClickListener(new View.OnClickListener() {
+        bDigit3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (tvInput.getText().toString().equals("0")) {
@@ -320,7 +387,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             }
         });
 
-        btn4.setOnClickListener(new View.OnClickListener() {
+        bDigit4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (tvInput.getText().toString().equals("0")) {
@@ -330,7 +397,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             }
         });
 
-        btn5.setOnClickListener(new View.OnClickListener() {
+        bDigit5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (tvInput.getText().toString().equals("0")) {
@@ -340,7 +407,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             }
         });
 
-        btn6.setOnClickListener(new View.OnClickListener() {
+        bDigit6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (tvInput.getText().toString().equals("0")) {
@@ -350,7 +417,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             }
         });
 
-        btn7.setOnClickListener(new View.OnClickListener() {
+        bDigit7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (tvInput.getText().toString().equals("0")) {
@@ -360,7 +427,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             }
         });
 
-        btn8.setOnClickListener(new View.OnClickListener() {
+        bDigit8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (tvInput.getText().toString().equals("0")) {
@@ -370,7 +437,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             }
         });
 
-        btn9.setOnClickListener(new View.OnClickListener() {
+        bDigit9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (tvInput.getText().toString().equals("0")) {
@@ -380,7 +447,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             }
         });
 
-        btBksp.setOnClickListener(new View.OnClickListener() {
+        bDigitBcksp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!tvInput.getText().toString().isEmpty()) {
@@ -389,7 +456,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             }
         });
 
-        btDecimal.setOnClickListener(new View.OnClickListener() {
+        bDigitComma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!tvInput.getText().toString().contains(".")) {
@@ -565,5 +632,9 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         adapter = new HorizontalSubcatRecylerviewAdapter(getActivity(), items);
         adapter.setClickListener(this);
         subcatListRV.setAdapter(adapter);
+    }
+
+    public void openNotesDialog() {
+
     }
 }
