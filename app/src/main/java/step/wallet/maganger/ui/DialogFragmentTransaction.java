@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -52,6 +53,8 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
     public void onItemClick(View view, int position, String subcatName) {
         Toast.makeText(getContext(), "You clicked number: " + (position + 1) + ", selected subcategory:  " + subcatName, Toast.LENGTH_SHORT).show();
         selectedSubcategory = subcatName;
+        InfoRepository repository = new InfoRepository();
+        writeIdSubcategory = repository.getIdSubcategory(subcatName, writeIdCategory);
     }
 
     @Override
@@ -62,11 +65,14 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         List<String> list = repository.getSubcategories(repository.getIdCategory(catName));
         String[] array = list.toArray(new String[0]);
         loadSubcatRecycleViewer(getContext(), array);
+        writeIdCategory = repository.getIdCategory(catName);
+        writeIdSubcategory = repository.getIdSubcategory(repository.getSubcategories(writeIdCategory).get(0), writeIdCategory);
     }
 
     @Override
     public void sendNotes(String sendNotes) {
         notesTv.setText(sendNotes);
+        writeNote1 = sendNotes;
     }
 
 
@@ -79,7 +85,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
     //widgets
     private ImageView lResultImg, iconCategorySelected;
     private TextView lResultTv, categoryNameSelected, plusMinusTv;
-    private TextView tvInput, expensesTv, incomeTv, notesTv;
+    private TextView tvInput, expensesTv, incomeTv, notesTv, tvInputCache, tvInputAlgerba;
     private TextView bDigit0, bDigit1, bDigit2, bDigit3, bDigit4, bDigit5, bDigit6, bDigit7, bDigit8, bDigit9, bDigitBcksp, bDigitDivide, bDigitMultiply, bDigitPlus, bDigitMinus, bDigitEqual, bDigitComma;
     private TextView btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btn00;
     private TextView btBksp, btDecimal, btClr, dateTv1, dateTv2;
@@ -89,6 +95,10 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
     private ConstraintLayout conLayTrDatePick, conLayTrCatSelct;
     private HorizontalSubcatRecylerviewAdapter adapter;
     private AlertDialog alertDialogNotes;
+
+    private String oldAlgebraSymbol, transactionType;
+    private String writeIdCategory, writeIdSubcategory, writeDate, writeAmount, writeAccount, writeNote1, writeNote2, writePhoto, writeType;
+
 
     @Override
     public void onStart() {
@@ -112,6 +122,8 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 
 //        mActionOk = view.findViewById(R.id.action_ok);
         tvInput = (TextView) view.findViewById(R.id.tvInput);
+        tvInputCache = (TextView) view.findViewById(R.id.tvInputCache);
+        tvInputAlgerba = (TextView) view.findViewById(R.id.tvInputAlgebra);
         dateTv1 = (TextView) view.findViewById(R.id.dateTxt1);
         dateTv2 = (TextView) view.findViewById(R.id.dateTxt2);
         lResultImg = (ImageView) view.findViewById(R.id.lResultImg);
@@ -126,6 +138,8 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         List<String> subcategoriesList = repository.getSubcategories(repository.getIdCategory(cats.get(0)));
         String[] subcats = subcategoriesList.toArray(new String[0]);
         loadSubcatRecycleViewer(getActivity(), subcats);
+
+        transactionType = "expense";
 
         btn0 = (TextView) view.findViewById(R.id.btn0);
         btn1 = (TextView) view.findViewById(R.id.btn1);
@@ -142,6 +156,17 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         btBksp = (TextView) view.findViewById(R.id.btnbksp);
         btDecimal = (TextView) view.findViewById(R.id.btndecimal);
         btClr = (TextView) view.findViewById(R.id.btnclr);
+
+        writeIdCategory = repository.getIdCategory(repository.getAllCategories().get(0));
+        writeIdSubcategory = repository.getIdSubcategory(repository.getSubcategories(writeIdCategory).get(0), writeIdCategory);
+        Calendar calendarWriting = Calendar.getInstance();
+        writeDate = calendarWriting.get(Calendar.DATE) + "." + calendarWriting.get(Calendar.MONTH) + 1 + "." + calendarWriting.get(Calendar.YEAR);
+        writeAmount = "1000";
+        writeAccount = "0";
+        writeNote1 = "Notatki....";
+        writeNote2 = "note 2";
+        writePhoto = "photo1";
+        writeType = "expense";
 
         bDigit0 = (TextView) view.findViewById(R.id.trDigit0);
         bDigit1 = (TextView) view.findViewById(R.id.trDigit1);
@@ -224,22 +249,13 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
                         month = month + 1;
-                        String dayTwoDigit = "";
-                        SimpleDateFormat format=new SimpleDateFormat("MMMM");// also you can use: "yyyy-MMMM-dd"
+                        SimpleDateFormat format = new SimpleDateFormat("MMMM");// also you can use: "yyyy-MMMM-dd"
                         Calendar calendar1 = Calendar.getInstance();
                         calendar1.set(year, month - 1, dayOfMonth);
-                        String monthTwoDigit=format.format(calendar1.getTime());
-//                        if (dayOfMonth < 10)
-//                            dayTwoDigit = "0" + dayOfMonth;
-//                        else dayTwoDigit = "" + dayOfMonth;
-//                        if (month < 10)
-//                            monthTwoDigit = "0" + month;
-//                        else
-//                            monthTwoDigit = "" + month;
-//                        String date = dayTwoDigit + " " + monthTwoDigit + " " + year;
+                        String monthTwoDigit = format.format(calendar1.getTime());
                         dateTv1.setText(dayOfMonth + "");
                         dateTv2.setText(monthTwoDigit + " " + year);
-
+                        writeDate = dayOfMonth + "." + month + "." + year;
                     }
                 }, year, month, day);
                 dialog.show();
@@ -250,8 +266,8 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), "" + finalCategories.get(dTCatSpinner.getSelectedItemPosition()), Toast.LENGTH_SHORT).show();
-                repository.writeTransaction(repository.getIdCategory(finalCategories.get(dTCatSpinner.getSelectedItemPosition())), repository.getIdSubcategory(selectedSubcategory, repository.getIdCategory(finalCategories.get(dTCatSpinner.getSelectedItemPosition()))),
-                        dateTv1.getText().toString(), tvInput.getText().toString(), "0", "note 1", "note 2", "photo1");
+//                repository.writeTransaction(repository.getIdCategory(finalCategories.get(dTCatSpinner.getSelectedItemPosition())), repository.getIdSubcategory(selectedSubcategory, repository.getIdCategory(finalCategories.get(dTCatSpinner.getSelectedItemPosition()))),
+//                        dateTv1.getText().toString(), tvInput.getText().toString(), "0", "note 1", "note 2", "photo1", "expense");
             }
         });
 
@@ -273,6 +289,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                 incomeTv.setTextColor(Color.parseColor("#C1BFBF"));
                 conLayTrCatSelct.setVisibility(View.VISIBLE);
                 plusMinusTv.setText("-");
+                writeType = "expense";
             }
         });
 
@@ -285,6 +302,44 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                 expensesTv.setTextColor(Color.parseColor("#C1BFBF"));
                 conLayTrCatSelct.setVisibility(View.GONE);
                 plusMinusTv.setText("+");
+                writeType = "income";
+            }
+        });
+
+        bDigitDivide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeAlgebraSymbol("÷");
+            }
+        });
+        bDigitMultiply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeAlgebraSymbol("×");
+            }
+        });
+        bDigitPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeAlgebraSymbol("+");
+            }
+        });
+        bDigitMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeAlgebraSymbol("-");
+            }
+        });
+        bDigitEqual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                if (bDigitEqual.getText().toString().equals("✓"))
+//                    repository.writeTransaction();
+                makeAlgebraSymbol("=");
+                if (bDigitEqual.getText().toString().equals("✓"))
+                    writeTransaction(getContext());
+                if (bDigitEqual.getText().toString().equals("="))
+                    bDigitEqual.setText("✓");
             }
         });
 
@@ -450,8 +505,16 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         bDigitBcksp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!tvInput.getText().toString().isEmpty()) {
+                if (!tvInput.getText().toString().isEmpty() && !tvInput.getText().toString().equals("0")) {
                     tvInput.setText(tvInput.getText().toString().substring(0, (tvInput.getText().toString().length()) - 1));
+                }
+                if (tvInput.getText().toString().endsWith("."))
+                    bDigitEqual.setText("=");
+                if (tvInput.getText().toString().equals(""))
+                    tvInput.setText("0");
+                else if (tvInput.getText().toString().equals("0")) {
+                    tvInputAlgerba.setText("");
+                    tvInputCache.setText("");
                 }
             }
         });
@@ -464,6 +527,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                         tvInput.setText("0.");
                     else
                         tvInput.append(".");
+                    bDigitEqual.setText("=");
                 }
             }
         });
@@ -634,7 +698,127 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         subcatListRV.setAdapter(adapter);
     }
 
-    public void openNotesDialog() {
+    public void makeAlgebraSymbol(String newAlgebraSymbol) {
+        String inputValue = tvInput.getText().toString();
+        inputValue = inputValue.replace(",", "");
+        if (inputValue.endsWith("."))
+            inputValue = inputValue.replace(".", "");
+        if (!inputValue.equals(""))
+            inputValue = makeRound(inputValue);
+        String cacheValue = tvInputCache.getText().toString();
+        oldAlgebraSymbol = tvInputAlgerba.getText().toString();
 
+        if (!inputValue.equals("") && cacheValue.equals("") && !newAlgebraSymbol.equals("=")) {
+            tvInputCache.setText(inputValue);
+            tvInputAlgerba.setText(newAlgebraSymbol);
+            tvInput.setText("");
+            bDigitEqual.setText("=");
+        }
+        if (!inputValue.equals("") && cacheValue.equals("") && newAlgebraSymbol.equals("=")) {
+            tvInputAlgerba.setText("");
+            bDigitEqual.setText("✓");
+        }
+        if (!inputValue.equals("") && !cacheValue.equals("") && !newAlgebraSymbol.equals("=")) {
+            tvInputCache.setText(makeMath(cacheValue, inputValue, oldAlgebraSymbol));
+            tvInput.setText("");
+            tvInputAlgerba.setText(newAlgebraSymbol);
+            bDigitEqual.setText("=");
+        }
+        if (!inputValue.equals("") && !cacheValue.equals("") && newAlgebraSymbol.equals("=")) {
+            tvInputCache.setText("");
+            tvInput.setText(makeMath(cacheValue, inputValue, oldAlgebraSymbol));
+            tvInputAlgerba.setText("");
+            bDigitEqual.setText("✓");
+        }
+        if (inputValue.equals("") && cacheValue.equals("")) {
+            tvInputAlgerba.setText("");
+            bDigitEqual.setText("=");
+        }
+        if (inputValue.equals("") && !cacheValue.equals("") && !newAlgebraSymbol.equals("=")) {
+            tvInputAlgerba.setText(newAlgebraSymbol);
+            bDigitEqual.setText("=");
+        }
+        if (inputValue.equals("") && !cacheValue.equals("") && newAlgebraSymbol.equals("=")) {
+            tvInputCache.setText("");
+            tvInputAlgerba.setText("");
+            tvInput.setText(cacheValue);
+            bDigitEqual.setText("✓");
+        }
+        if (!inputValue.equals("") && cacheValue.equals("") && oldAlgebraSymbol.equals("") && newAlgebraSymbol.equals("=")) {
+            tvInput.setText(makeRound(inputValue));
+            bDigitEqual.setText("✓");
+        }
     }
+
+    public String makeMath(String variableA, String variableB, String algebraSymb) {
+        float mResult = 0;
+        String resultString;
+        float a = Float.parseFloat(variableA);
+        float b = Float.parseFloat(variableB);
+        switch (algebraSymb) {
+            case "÷":
+                if (b != 0)
+                    mResult = a / b;
+                else
+                    mResult = 0;
+                break;
+            case "×":
+                mResult = a * b;
+                break;
+
+            case "+":
+                mResult = a + b;
+                break;
+            case "-":
+                mResult = a - b;
+                break;
+        }
+        String decimalPart = String.format("%.2f", mResult % 1);
+        decimalPart = decimalPart.substring(decimalPart.length() - 2);
+        String integerPart = String.format("%.0f", mResult / 1);
+        if (decimalPart.equals("00"))
+            resultString = integerPart;
+        else
+            resultString = integerPart + "." + decimalPart;
+        return resultString;
+    }
+
+    public String makeRound(String variable) {
+        String resultString;
+        float a = Float.parseFloat(variable);
+        String decimalPart = String.format("%.2f", a % 1);
+        decimalPart = decimalPart.substring(decimalPart.length() - 2);
+        String integerPart = String.format("%.0f", a / 1);
+        if (decimalPart.equals("00"))
+            resultString = integerPart;
+        else
+            resultString = integerPart + "." + decimalPart;
+
+        plusMinusTv.setText(integerPart + " - " + decimalPart);
+
+        return resultString;
+    }
+
+    public void writeTransaction(Context context) {
+        AlertDialog.Builder alertWriteTransactionConfirm = new AlertDialog.Builder(context);
+
+        //message
+        alertWriteTransactionConfirm.setMessage("Save?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(context, "Successfully saved!", Toast.LENGTH_SHORT).show();
+
+                        InfoRepository repository = new InfoRepository();
+                        repository.writeTransaction(writeIdCategory, writeIdSubcategory, writeDate, tvInput.getText().toString(), writeAccount, notesTv.getText().toString(), writeNote2, writePhoto, writeType);
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(context, "Entry cancelled!", Toast.LENGTH_SHORT).show();
+//                        getDialog().cancel();
+                    }
+                }).show();
+    }
+
 }

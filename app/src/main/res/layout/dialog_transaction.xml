@@ -166,11 +166,11 @@
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:layout_marginHorizontal="60dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="90dp"
         android:gravity="center"
         android:lines="1"
         android:maxLength="7"
-        android:text="13"
+        android:text="0"
         android:textColor="@color/white"
         android:textSize="70sp"
         android:autoSizeTextType="uniform"
@@ -179,13 +179,39 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"></TextView>
 
     <TextView
+        android:id="@+id/tvInputCache"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvInput"
+        app:layout_constraintEnd_toEndOf="@+id/tvInput"
+        app:layout_constraintStart_toStartOf="@+id/tvInput"
+        app:layout_constraintTop_toTopOf="@+id/tvInput"></TextView>
+
+    <TextView
+        android:id="@+id/tvInputAlgebra"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvInputCache"
+        app:layout_constraintStart_toEndOf="@+id/tvInputCache"
+        app:layout_constraintTop_toTopOf="@+id/tvInputCache"></TextView>
+
+    <TextView
         android:id="@+id/trPlusMinusTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
-        android:text="-"
+        android:text="symbol"
+        android:visibility="invisible"
         android:textColor="@color/white"
-        android:textSize="70sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/tvInput"
         app:layout_constraintEnd_toStartOf="@+id/tvInput"
         app:layout_constraintTop_toTopOf="@+id/tvInput"></TextView>
@@ -292,6 +318,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:paddingBottom="10dp"
             android:orientation="vertical"
             android:weightSum="4">
 
@@ -330,7 +357,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text=","
+                android:text="."
                 android:textSize="40sp"></TextView>
 
         </LinearLayout>
@@ -338,6 +365,7 @@
         <LinearLayout
             android:id="@+id/constraintLayout2"
             android:layout_width="0dp"
+            android:paddingBottom="10dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
@@ -382,6 +410,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:paddingBottom="10dp"
             android:id="@+id/constraintLayout7"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -432,6 +461,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#D8D8D8"
+            android:paddingBottom="10dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -475,9 +505,10 @@
                 android:id="@+id/trDigitEqual"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:textColor="@color/colorApp1"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="="
+                android:text="✓"
                 android:textSize="40sp"></TextView>
 
         </LinearLayout>

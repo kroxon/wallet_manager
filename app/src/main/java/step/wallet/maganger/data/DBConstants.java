@@ -35,6 +35,7 @@ public class DBConstants {
     static final String COL_TRANSACTION_NOTE_1 = "TRANSACTION_NOTE_1";
     static final String COL_TRANSACTION_NOTE_2 = "TRANSACTION_NOTE_2";
     static final String COL_TRANSACTION_PHOTO = "TRANSACTION_PHOTO";
+    static final String COL_TRANSACTION_TYPE = "TRANSACTION_TYPE";
 
     static final String COL_GENERAL_ID = "GENERAL_ID";
     static final String COL_GENERAL_SYNCHRONISED = "GENERAL_SYNCHRONISED";
@@ -75,7 +76,7 @@ public class DBConstants {
                 + " (" + COL_TRANSACTION_ID + " INTEGER PRIMARY KEY, " + COL_TRANSACTION_VALUE + " INTEGER, "
                 + COL_TRANSACTION_ID_CAT + " INTEGER, " + COL_TRANSACTION_ID_SUBCAT + " INTEGER, "
                 + COL_TRANSACTION_DATE + " INTEGER, " + COL_TRANSACTION_ID_ACC + " INTEGER, " +
-                COL_TRANSACTION_NOTE_1 + " TEXT, " + COL_TRANSACTION_NOTE_2 + " TEXT, " + COL_TRANSACTION_PHOTO + " TEXT);";
+                COL_TRANSACTION_NOTE_1 + " TEXT, " + COL_TRANSACTION_NOTE_2 + " TEXT, " + COL_TRANSACTION_PHOTO + " TEXT, " + COL_TRANSACTION_TYPE + " TEXT);";
     }
 
     static {

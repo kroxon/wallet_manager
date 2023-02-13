@@ -77,7 +77,7 @@ public class FirstFragment extends Fragment implements DialogFragmentTransaction
 
                 InfoRepository repository = new InfoRepository();
                 repository.writeTransaction("" + i, "" + i + 2, "" + i + 3, "" + i + 100,
-                        "" + i + 4, "" + i + 5, "" + i + 6, "" + i + 7);
+                        "" + i + 4, "" + i + 5, "" + i + 6, "" + i + 7, "" + i + 9);
                 text_example.setText("" + i + " " + (i + 2) + " " + (i + 3) +
                         " " + (i + 4) + " " + (i + 5) + " " + (i + 6) + " " + (i + 7));
                 i++;
