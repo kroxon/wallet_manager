@@ -407,11 +407,11 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 //        loadListViewSubcat(spinner_toolbar!!.selectedItemPosition)
     }
 
-    override fun sendInput(input: Int) {
+    override fun sendInput(input: String) {
         Toast.makeText(this, "send: " + input, Toast.LENGTH_SHORT).show()
-        imgCategoryIcon?.setImageResource(input)
         val repository = InfoRepository()
-        repository.updateCategoryIcon(input.toString(), etCatName?.text.toString())
+        imgCategoryIcon?.setImageResource(repository.getIdDrawable(input))
+        repository.updateCategoryIcon(input, etCatName?.text.toString())
     }
 
     private fun setSpinnerToolbarSelectedValue(spinner: Spinner, value: Any) {
@@ -465,17 +465,6 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         dialog.show()
     }
 
-    fun getIdDrawable(resourceName: String, c: Class<*>): Int {
-        try {
-            val idField = c.getDeclaredField(resourceName)
-            return idField.getInt(idField)
-        } catch (e: java.lang.Exception) {
-            throw RuntimeException(
-                "No resource ID found for: "
-                        + resourceName + " / " + c, e
-            )
-        }
-    }
 
 }
 

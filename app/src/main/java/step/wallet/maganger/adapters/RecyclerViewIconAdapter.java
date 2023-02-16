@@ -2,13 +2,11 @@ package step.wallet.maganger.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -86,7 +84,7 @@ public class RecyclerViewIconAdapter extends RecyclerView.Adapter<RecyclerViewIc
 //                notifyItemChanged(previousItem);
                 notifyDataSetChanged();
                 notifyItemChanged(position);
-                mClickListener.onItemClick(v, getIdDrawable(mData[position], R.drawable.class));
+                mClickListener.onItemClick(v, getIdDrawable(mData[position], R.drawable.class), mData[position]);
 
 
             }
@@ -117,7 +115,7 @@ public class RecyclerViewIconAdapter extends RecyclerView.Adapter<RecyclerViewIc
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, position);
+            if (mClickListener != null) mClickListener.onItemClick(view, position, mData[position]);
 //            myLinearLayout.setBackgroundColor(Color.parseColor("#00743D"));
         }
     }
@@ -135,7 +133,7 @@ public class RecyclerViewIconAdapter extends RecyclerView.Adapter<RecyclerViewIc
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(View view, int position, String iconName);
     }
 
     public static int getIdDrawable(String resourceName, Class<?> c) {

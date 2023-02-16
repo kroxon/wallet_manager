@@ -7,9 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import step.wallet.maganger.R;
 import step.wallet.maganger.classes.Transaction;
 
 public class InfoRepository {
@@ -257,8 +259,9 @@ public class InfoRepository {
         // looping through all rows and search for ID Category name
         if (cursor.moveToFirst()) {
             do {
-                if (cursor.getString(1).equals(cateoryName))
-                    idCategoryIcon = Integer.parseInt(cursor.getString(2));
+                if (cursor.getString(1).equals(cateoryName)) {
+                    idCategoryIcon = getIdDrawable(cursor.getString(2));
+                }
             } while (cursor.moveToNext());
         }
 //        db.close();
@@ -275,12 +278,24 @@ public class InfoRepository {
         // looping through all rows and search for ID Category name
         if (cursor.moveToFirst()) {
             do {
-                if (cursor.getString(0).equals(categoryId))
+                if (cursor.getString(0).equals(categoryId)) {
                     idCategoryIcon = cursor.getString(2);
+                    idCategoryIcon = String.valueOf(getIdDrawable(idCategoryIcon));
+                }
             } while (cursor.moveToNext());
         }
 //        db.close();
         return idCategoryIcon;
+    }
+
+    public int getIdDrawable(String resourceName) {
+        try {
+            Field idField = R.drawable.class.getDeclaredField(resourceName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            throw new RuntimeException("No resource ID found for: "
+                    + resourceName + " / " + R.drawable.class, e);
+        }
     }
 
 //    public Transactions
