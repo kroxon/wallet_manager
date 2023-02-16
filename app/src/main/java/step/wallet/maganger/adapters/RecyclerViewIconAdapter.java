@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.lang.reflect.Field;
@@ -25,12 +26,24 @@ public class RecyclerViewIconAdapter extends RecyclerView.Adapter<RecyclerViewIc
     public String[] idDrawable;
     private static int lastClickedPosition = -1;
     private int selectedItem;
+    private Context contextIcon;
 
     // data is passed into the constructor
     public RecyclerViewIconAdapter(Context context, String[] data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
         int selectedItem = 0;
+        contextIcon = context;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
@@ -47,9 +60,20 @@ public class RecyclerViewIconAdapter extends RecyclerView.Adapter<RecyclerViewIc
         holder.myImage.setImageResource(getIdDrawable(mData[position], R.drawable.class));
 
         if (selectedItem == position) {
-            holder.myLinearLayout.setBackgroundColor(Color.parseColor("#00743D"));
+            final float scale = holder.myImage.getResources().getDisplayMetrics().density;
+            int dpWidthInPx  = (int) (55 * scale);
+            int dpHeightInPx = (int) (55 * scale);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(dpWidthInPx, dpHeightInPx);
+            holder.myImage.setLayoutParams(layoutParams);
+            holder.myImage.setColorFilter(ContextCompat.getColor(contextIcon, R.color.colorApp1), android.graphics.PorterDuff.Mode.SRC_IN);
+        } else {
+            final float scale = holder.myImage.getResources().getDisplayMetrics().density;
+            int dpWidthInPx  = (int) (45 * scale);
+            int dpHeightInPx = (int) (45 * scale);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(dpWidthInPx, dpHeightInPx);
+            holder.myImage.setLayoutParams(layoutParams);
+            holder.myImage.setColorFilter(ContextCompat.getColor(contextIcon, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
         }
-
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +103,7 @@ public class RecyclerViewIconAdapter extends RecyclerView.Adapter<RecyclerViewIc
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-//        ImageView myImage;
+        //        ImageView myImage;
         ImageView myImage;
         LinearLayout myLinearLayout;
         int position = getAdapterPosition();
@@ -94,7 +118,7 @@ public class RecyclerViewIconAdapter extends RecyclerView.Adapter<RecyclerViewIc
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, position);
-            myLinearLayout.setBackgroundColor(Color.parseColor("#00743D"));
+//            myLinearLayout.setBackgroundColor(Color.parseColor("#00743D"));
         }
     }
 

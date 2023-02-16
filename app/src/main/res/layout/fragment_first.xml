@@ -156,6 +156,14 @@
                 android:layout_marginTop="20sp"
                 android:text="open dialog" />
 
+            <Button
+                android:id="@+id/open_dialog_bundle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/open_dialog"
+                android:layout_centerHorizontal="true"
+                android:text="open dialog with bundle" />
+
             <TextView
                 android:id="@+id/input_display"
                 android:layout_width="wrap_content"
