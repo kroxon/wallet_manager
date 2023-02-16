@@ -2,19 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/acCatIconlayoutAdapter"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:background="#00FFFFFF"
     android:layout_margin="8dp"
-    android:background="#FDDDE8"
-    android:orientation="horizontal"
-    android:padding="5dp">
+    android:padding="2dp"
+    android:orientation="horizontal">
 
     <ImageView
+        android:elevation="10dp"
         android:id="@+id/acCatIconAdapter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/ic_star"
-        app:tint="#7B1FA2"></ImageView>
+        app:tint="#000000"></ImageView>
 
 
 </LinearLayout>

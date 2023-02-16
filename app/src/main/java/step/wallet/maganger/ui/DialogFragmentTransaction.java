@@ -119,7 +119,6 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 
         InfoRepository repository = new InfoRepository();
 
-
 //        mActionOk = view.findViewById(R.id.action_ok);
         tvInput = (TextView) view.findViewById(R.id.tvInput);
         tvInputCache = (TextView) view.findViewById(R.id.tvInputCache);
@@ -198,6 +197,18 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         expensesUnderline = (LinearLayout) view.findViewById(R.id.trExpensesUnderline);
         incomeUnderline = (LinearLayout) view.findViewById(R.id.trIncomeUnderline);
         notesTv = (TextView) view.findViewById(R.id.trNotesTv);
+
+        Bundle data = getArguments();
+        if (data != null) {
+            Toast.makeText(getContext(), data.getString("key"), Toast.LENGTH_SHORT).show();
+            expensesUnderline.setVisibility(View.INVISIBLE);
+            incomeUnderline.setVisibility(View.VISIBLE);
+            incomeTv.setTextColor(Color.WHITE);
+            expensesTv.setTextColor(Color.parseColor("#C1BFBF"));
+            conLayTrCatSelct.setVisibility(View.GONE);
+            plusMinusTv.setText("+");
+            writeType = "income";
+        }
 
 
         iconCategorySelected.setImageResource(repository.getIdCategoryIcon(repository.getAllCategories().get(0)));

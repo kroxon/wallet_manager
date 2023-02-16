@@ -200,26 +200,28 @@
 
         <LinearLayout
             android:id="@+id/layoutIconSelect"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/bg_round"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/bg_round_light"
             android:elevation="12dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@+id/acIconCategory"
-            app:layout_constraintEnd_toEndOf="@+id/acIconCategory"
-            app:layout_constraintStart_toStartOf="@+id/acIconCategory"
-            app:layout_constraintTop_toTopOf="@+id/acIconCategory"></LinearLayout>
-
-        <ImageView
-            android:id="@+id/acIconCategory"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_margin="8dp"
-            android:elevation="8dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_home"
+            app:layout_constraintEnd_toEndOf="@+id/acNameEt"
             app:layout_constraintStart_toStartOf="@+id/acNameEt"
-            app:layout_constraintTop_toBottomOf="@+id/acNameEt" />
+            app:layout_constraintTop_toBottomOf="@+id/acNameEt">
+
+            <ImageView
+                android:id="@+id/acIconCategory"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="12dp"
+                android:elevation="18dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_home"
+                app:tint="@color/colorApp1" />
+
+        </LinearLayout>
+
+
 
         <TextView
             android:id="@+id/acNameSubcatLabel"
@@ -289,14 +291,14 @@
                 app:layout_constraintTop_toTopOf="@+id/acEtNewSubcat"></ImageView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"></Button>
+<!--        <Button-->
+<!--            android:id="@+id/button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="20dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"></Button>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -36,7 +36,7 @@ public class FirstFragment extends Fragment implements DialogFragmentTransaction
     public Button bexample4;
     public Button bStartDialog;
     public TextView text_example;
-    private Button mOpenDialog;
+    private Button mOpenDialog, mOpenDialogBundle;
     public TextView mInputDisplay;
     public TextView tIdIcon;
     public Button bIdIcon;
@@ -65,6 +65,7 @@ public class FirstFragment extends Fragment implements DialogFragmentTransaction
         bStartDialog = (Button) view.findViewById(R.id.button_dialog);
         text_example = (TextView) view.findViewById(R.id.first_example);
         mOpenDialog = view.findViewById(R.id.open_dialog);
+        mOpenDialogBundle = view.findViewById(R.id.open_dialog_bundle);
         mInputDisplay = view.findViewById(R.id.input_display);
         tIdIcon = view.findViewById(R.id.tIdIcon);
         bIdIcon = view.findViewById(R.id.bIdIcon);
@@ -121,6 +122,20 @@ public class FirstFragment extends Fragment implements DialogFragmentTransaction
 
                 DialogFragmentTransaction dialog = new DialogFragmentTransaction();
                 dialog.setTargetFragment(FirstFragment.this, 1);
+                dialog.show(getFragmentManager(), "DialogFragmentTransaction");
+
+            }
+        });
+
+        mOpenDialogBundle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                DialogFragmentTransaction dialog = new DialogFragmentTransaction();
+                dialog.setTargetFragment(FirstFragment.this, 1);
+                Bundle data = new Bundle();
+                data.putString("key", "income");
+                dialog.setArguments(data);
                 dialog.show(getFragmentManager(), "DialogFragmentTransaction");
 
             }

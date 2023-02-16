@@ -21,6 +21,7 @@ import androidx.core.view.get
 import step.wallet.maganger.adapters.ListViewVerticalAdapter
 import java.util.ArrayList
 import android.widget.EditText
+import java.lang.RuntimeException
 
 
 class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
@@ -462,6 +463,18 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             .setNegativeButton("Cancel", null)
             .create()
         dialog.show()
+    }
+
+    fun getIdDrawable(resourceName: String, c: Class<*>): Int {
+        try {
+            val idField = c.getDeclaredField(resourceName)
+            return idField.getInt(idField)
+        } catch (e: java.lang.Exception) {
+            throw RuntimeException(
+                "No resource ID found for: "
+                        + resourceName + " / " + c, e
+            )
+        }
     }
 
 }

@@ -95,7 +95,7 @@ public class InfoRepository {
     public void addCategory(@NonNull String nameCategory) {
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_CAT_NAME, nameCategory);
-        values.put(DBConstants.COL_CAT_ICON, "2131165357");
+        values.put(DBConstants.COL_CAT_ICON, "k76");
         db.insert(DBConstants.TABLE_CATEGORY, null, values);
 //        db.close();
     }

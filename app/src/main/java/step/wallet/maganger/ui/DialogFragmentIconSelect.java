@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import step.wallet.maganger.R;
 import step.wallet.maganger.adapters.RecyclerViewIconAdapter;
@@ -43,6 +47,7 @@ public class DialogFragmentIconSelect extends DialogFragment implements Recycler
     public interface OnInputListener {
         void sendInput(int input);
     }
+
     public OnInputListener mOnInputListener;
 
     //widgets
@@ -76,12 +81,28 @@ public class DialogFragmentIconSelect extends DialogFragment implements Recycler
         bCancel = view.findViewById(R.id.bIconCancel);
         bigSelectedIcon = view.findViewById(R.id.acIconCategory);
 
-        // data to populate the RecyclerView with
-        data = new String[]{"ic_home", "ic_add", "ic_coffee", "ic_email", "ic_home", "ic_add", "ic_coffee", "ic_email", "ic_home", "ic_add", "ic_coffee", "ic_email", "ic_home", "ic_add", "ic_coffee", "ic_email"};
+        /*
+        List<String> stockList = new ArrayList<String>();
+stockList.add("stock1");
+stockList.add("stock2");
 
+String[] stockArr = new String[stockList.size()];
+stockArr = stockList.toArray(stockArr);
+         */
+
+        // data to populate the RecyclerView with
+//        data = new String[]{"ic_home", "ic_add", "ic_coffee", "ic_email", "ic_home", "ic_add", "ic_coffee", "ic_email", "ic_home", "ic_add", "ic_coffee", "ic_email", "ic_home", "ic_add", "ic_coffee", "ic_email"};
+        List<String> dataArrayString = new ArrayList<String>();
+        for (int i = 1; i < 127; i++) {
+            dataArrayString.add("x" + i + "");
+        }
+        data = new String[dataArrayString.size()];
+        data = dataArrayString.toArray(data);
         // set up the RecyclerView
         recyclerView = view.findViewById(R.id.acRVIconSelect);
-        int numberOfColumns = 6;
+        DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        int numberOfColumns = (int) (dpWidth / 65);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
         loadRecycleViewer(data, getActivity());
 
@@ -97,7 +118,7 @@ public class DialogFragmentIconSelect extends DialogFragment implements Recycler
         bSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (imageResource != 0);
+                if (imageResource != 0) ;
                 mOnInputListener.sendInput(imageResource);
                 getDialog().dismiss();
             }
@@ -106,20 +127,19 @@ public class DialogFragmentIconSelect extends DialogFragment implements Recycler
         return view;
     }
 
-    public void loadRecycleViewer (String[] icons, Context context) {
+    public void loadRecycleViewer(String[] icons, Context context) {
         adapter = new RecyclerViewIconAdapter(getContext(), icons);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
     }
 
-    @Override public void onAttach(Context context)
-    {
+    @Override
+    public void onAttach(Context context) {
         super.onAttach(context);
         try {
             mOnInputListener
-                    = (OnInputListener)getActivity();
-        }
-        catch (ClassCastException e) {
+                    = (OnInputListener) getActivity();
+        } catch (ClassCastException e) {
             Log.e(TAG, "onAttach: ClassCastException: "
                     + e.getMessage());
         }
