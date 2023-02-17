@@ -97,7 +97,7 @@ public class InfoRepository {
     public void addCategory(@NonNull String nameCategory) {
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_CAT_NAME, nameCategory);
-        values.put(DBConstants.COL_CAT_ICON, "k76");
+        values.put(DBConstants.COL_CAT_ICON, "x76");
         db.insert(DBConstants.TABLE_CATEGORY, null, values);
 //        db.close();
     }
@@ -319,6 +319,7 @@ public class InfoRepository {
                     transaction.setTransactionNote1(cursor.getString(6));
                     transaction.setTransactionNote2(cursor.getString(7));
                     transaction.setTransactionPhoto(cursor.getString(8));
+                    transaction.setTransactionType(cursor.getString(9));
                     transactionsList.add(transaction);
                 }
             } while (cursor.moveToNext());

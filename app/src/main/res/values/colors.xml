@@ -15,4 +15,6 @@
     <color name="colorButton">#1E88E5</color>
     <color name="colorApp1">#1E88E5</color>
     <color name="colorAppText1">#A4C2DD</color>
+    <color name="color_red_light">#D84040</color>
+    <color name="color_green_light">#689F38</color>
 </resources>

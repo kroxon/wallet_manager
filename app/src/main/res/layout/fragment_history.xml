@@ -6,10 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.HistoryFragment">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -28,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="#F8BBD0"
+                android:background="@color/white"
                 app:layout_constraintTop_toBottomOf="@+id/historyTitle"></androidx.recyclerview.widget.RecyclerView>
 
             <TextView
@@ -41,5 +37,4 @@
                 app:layout_constraintTop_toBottomOf="@+id/historyTransactionList"></TextView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
 </FrameLayout>

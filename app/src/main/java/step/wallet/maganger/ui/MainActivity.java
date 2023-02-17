@@ -27,6 +27,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.api.services.drive.Drive;
 import com.squareup.picasso.Picasso;
@@ -62,6 +63,7 @@ public class MainActivity extends GoogleDriveActivity {
     private MaterialToolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private BottomNavigationView bottomNavigationView;
 
     MeowBottomNavigation bottomNavigation;
 
@@ -103,7 +105,7 @@ public class MainActivity extends GoogleDriveActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
         bottomNavigation = findViewById(R.id.bottom_navigation);
-
+        bottomNavigationView = findViewById(R.id.bottom_nav_menu);
 
     }
 
@@ -231,9 +233,9 @@ public class MainActivity extends GoogleDriveActivity {
                         db.delete();
                         repository.downloadFile(db, GOOGLE_DRIVE_DB_LOCATION)
                                 .addOnSuccessListener(r -> {
-                                    InfoRepository repository = new InfoRepository();
-                                    String infoText = repository.getInfo();
-                                    inputToDb.setText(infoText);
+//                                    InfoRepository repository = new InfoRepository();
+//                                    String infoText = repository.getInfo();
+//                                    inputToDb.setText(infoText);
                                     showMessage("Retrieved");
                                 })
                                 .addOnFailureListener(e -> {
@@ -262,7 +264,7 @@ public class MainActivity extends GoogleDriveActivity {
         bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_home));
         bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_history));
         bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_wallet));
-//        bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_charts));
+        bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_person));
         bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {
@@ -270,32 +272,27 @@ public class MainActivity extends GoogleDriveActivity {
                 //check condition
                 switch (item.getId()) {
                     case 1:
-                        //when id i 1
-                        //initialize first fragment
                         fragment = new FirstFragment();
                         break;
                     case 2:
-                        //when id i 2
-                        //initialize second fragment
                         fragment = new SecondFragment();
                         break;
                     case 3:
-                        //when id i 3
-                        //initialize third fragment
                         fragment = new ThirdFragment();
                         loadAccountInfo();
                         break;
-//                    case 4:
-//                        //when id i 3
-//                        //initialize third fragment
-//                        fragment = new FourthFragment();
-//                        break;
+                    case 4:
+                        fragment = new FourthFragment();
+                        break;
+                    case 5:
+                        fragment = new FourthFragment();
+                        break;
                 }
                 loadfragment(fragment);
             }
         });
 
-        bottomNavigation.setCount(1, "");
+//        bottomNavigation.setCount(1, "");
 
         bottomNavigation.show(1, true);
 
@@ -313,6 +310,26 @@ public class MainActivity extends GoogleDriveActivity {
                 //display toast
                 Toast.makeText(getApplicationContext(), item.getId() + " is reselected", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+
+            switch (item.getItemId()) {
+                case R.id.bnmHome:
+                    loadfragment(new FirstFragment());
+                    break;
+                case R.id.bnmHistory:
+                    loadfragment(new SecondFragment());
+                    break;
+                case R.id.bnmOverview:
+                    loadfragment(new ThirdFragment());
+                    break;
+                case R.id.bnmProfile:
+                    loadfragment(new FourthFragment());
+                    break;
+            }
+
+            return true;
         });
 
 //        loadAccountInfo();

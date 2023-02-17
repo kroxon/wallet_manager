@@ -346,11 +346,11 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             public void onClick(View view) {
 //                if (bDigitEqual.getText().toString().equals("✓"))
 //                    repository.writeTransaction();
-                makeAlgebraSymbol("=");
                 if (bDigitEqual.getText().toString().equals("✓"))
                     writeTransaction(getContext());
                 if (bDigitEqual.getText().toString().equals("="))
                     bDigitEqual.setText("✓");
+                makeAlgebraSymbol("=");
             }
         });
 
@@ -516,6 +516,8 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         bDigitBcksp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (tvInput.getText().toString().endsWith("."))
+                    bDigitEqual.setText("✓");
                 if (!tvInput.getText().toString().isEmpty() && !tvInput.getText().toString().equals("0")) {
                     tvInput.setText(tvInput.getText().toString().substring(0, (tvInput.getText().toString().length()) - 1));
                 }

@@ -17,6 +17,7 @@ public class Transaction {
     private String transactionNote1;
     private String transactionNote2;
     private String transactionPhoto;
+    private String transactionType;
 
     public Transaction() {
         this.idAccount = new String();
@@ -28,6 +29,7 @@ public class Transaction {
         this.transactionNote1 = new String();
         this.transactionNote2 = new String();
         this.transactionPhoto = new String();
+        this.transactionType = new String();
     }
 
     public void setTransactionId(String transactionId) {
@@ -66,6 +68,12 @@ public class Transaction {
         this.transactionPhoto = transactionPhoto;
     }
 
+
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
+    }
+
     public String getTransactionId() {
         return transactionId;
     }
@@ -100,6 +108,10 @@ public class Transaction {
 
     public String getTransactionPhoto() {
         return transactionPhoto;
+    }
+
+    public String getTransactionType() {
+        return transactionType;
     }
 
     public Date getDateFormat() throws ParseException {

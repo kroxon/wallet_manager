@@ -2,34 +2,21 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/historyListlayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#EAE7E7"
     android:padding="10dp">
 
-    <TextView
-        android:id="@+id/transactionSubcatRvTest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="6dp"
-        android:layout_marginHorizontal="4dp"
-        android:background="@drawable/subcat_recycleview_selected_background"
-        android:gravity="center"
-        android:padding="4dp"
-        android:paddingHorizontal="5dp"
-        android:text="Android"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
 
     <TextView
         android:id="@+id/historyDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="20.01.2023"
         android:layout_marginLeft="12dp"
+        android:paddingBottom="4dp"
+        android:text="20.01.2023"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -37,30 +24,32 @@
 
     <ImageView
         android:id="@+id/historyIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_centerVertical="true"
-        android:layout_margin="4dp"
         android:src="@drawable/ic_home"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/historyDate">
-        >
+        app:layout_constraintTop_toBottomOf="@id/historyDate"
+        app:tint="@color/colorApp1">
 
     </ImageView>
+
 
     <TextView
         android:id="@+id/historyCategoryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="4dp"
-        android:text="Chemia"
+        android:maxWidth="200dp"
+        android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:maxLength="30"
+        android:maxLines="2"
+        android:text="Chemiargrggreger hgfhgf hgfh  hfg hgfgrhr  tr  gerhtrhg"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/historyIcon"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/historyIcon"
-        app:layout_constraintTop_toTopOf="@+id/historyIcon"></TextView>
-
+        app:layout_constraintTop_toTopOf="@+id/historyIcon"
+        app:layout_constraintVertical_bias="0.0"></TextView>
 
     <TextView
         android:id="@+id/historyValue"
@@ -68,9 +57,10 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="4dp"
         android:text="18,78"
-        app:layout_constraintBottom_toBottomOf="@+id/historyCategoryName"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/historyCurrency"
         app:layout_constraintEnd_toStartOf="@+id/historyCurrency"
-        app:layout_constraintTop_toTopOf="@+id/historyIcon" />
+        app:layout_constraintTop_toTopOf="@+id/historyCurrency" />
 
 
     <TextView
@@ -78,9 +68,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="zł"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@+id/historyCategoryName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/historyCategoryName" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
