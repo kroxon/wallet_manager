@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import step.wallet.maganger.R;
@@ -152,6 +154,49 @@ public class InfoRepository {
     public List<String> getAllCategories() {
         List<String> list = new ArrayList<String>();
         String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY;
+        // on below line we are creating a new array list.
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(1));//adding 2nd column data
+            } while (cursor.moveToNext());
+        }
+//        // closing connection
+//        cursor.close();
+//        db.close();
+        // returning lables
+//        db.close();
+        return list;
+
+    }
+
+    @Nullable
+    public List<String> getAllExpenseCategories() {
+        List<String> list = new ArrayList<String>();
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_TYPE + " = 'expense'" ;
+        // on below line we are creating a new array list.
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(1));//adding 2nd column data
+            } while (cursor.moveToNext());
+        }
+//        // closing connection
+//        cursor.close();
+//        db.close();
+        // returning lables
+//        db.close();
+        return list;
+
+    }
+    @Nullable
+    public List<String> getAllIncomeCategories() {
+        List<String> list = new ArrayList<String>();
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_TYPE + " = 'income'" ;
         // on below line we are creating a new array list.
         Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
 
@@ -324,6 +369,7 @@ public class InfoRepository {
                 }
             } while (cursor.moveToNext());
         }
+        Collections.sort(transactionsList, Collections.reverseOrder());
         return transactionsList;
     }
 }

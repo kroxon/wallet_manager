@@ -1,17 +1,28 @@
 package step.wallet.maganger.ui;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.accounts.AuthenticatorDescription;
+import android.app.Dialog;
 import android.app.FragmentTransaction;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +31,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Group;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.app.Fragment;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
@@ -44,6 +56,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -64,6 +77,7 @@ public class MainActivity extends GoogleDriveActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
+    private ImageView btnPlus;
 
     MeowBottomNavigation bottomNavigation;
 
@@ -106,6 +120,7 @@ public class MainActivity extends GoogleDriveActivity {
         navigationView = findViewById(R.id.navigation_view);
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigationView = findViewById(R.id.bottom_nav_menu);
+        btnPlus = findViewById(R.id.plusButton);
 
     }
 
@@ -113,6 +128,13 @@ public class MainActivity extends GoogleDriveActivity {
 //        googleSignIn.setOnClickListener(v -> {
 //            startGoogleDriveSignIn();
 //        });
+
+        GoogleSignInAccount acctStart = GoogleSignIn.getLastSignedInAccount(this.getApplicationContext());
+        if (acctStart == null) {
+            startGoogleDriveSignIn();
+        } else
+            loadAccountInfo();
+
 
 //        googleSignOut.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -209,7 +231,7 @@ public class MainActivity extends GoogleDriveActivity {
                         unloadAccountInfo();
                         Toast.makeText(MainActivity.this, "LOGOUT is Clicked", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.nav_upload:{
+                    case R.id.nav_upload: {
                         Toast.makeText(MainActivity.this, "UPLOAD is Clicked", Toast.LENGTH_SHORT).show();
                         if (repository == null) {
                             showMessage(R.string.message_google_sign_in_failed);
@@ -221,8 +243,9 @@ public class MainActivity extends GoogleDriveActivity {
                                 .addOnFailureListener(e -> {
                                     Log.e(LOG_TAG, "error upload file", e);
                                     showMessage("Error upload");
-                                });}
-                        break;
+                                });
+                    }
+                    break;
                     case R.id.nav_download: {
                         Toast.makeText(MainActivity.this, "DOWNLOAD is Clicked", Toast.LENGTH_SHORT).show();
                         if (repository == null) {
@@ -332,7 +355,14 @@ public class MainActivity extends GoogleDriveActivity {
             return true;
         });
 
-//        loadAccountInfo();
+        btnPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBottomSheetDialog();
+            }
+        });
+
+        loadAccountInfo();
     }
 
     private void loadAccountInfo() {
@@ -350,6 +380,7 @@ public class MainActivity extends GoogleDriveActivity {
             TextView tvUsername = (TextView) headerView.findViewById(R.id.userName);
             TextView tvMail = (TextView) headerView.findViewById(R.id.userMail);
             TextView tvIcon = (TextView) headerView.findViewById(R.id.icon_text);
+            ImageView imgAccount = (ImageView) headerView.findViewById(R.id.account_icon);
             RelativeLayout relativeLayoutIcon = (RelativeLayout) headerView.findViewById(R.id.icon_container);
 
             tvMail.setVisibility(View.VISIBLE);
@@ -358,7 +389,6 @@ public class MainActivity extends GoogleDriveActivity {
             tvUsername.setText(personName);
             relativeLayoutIcon.setVisibility(View.VISIBLE);
             tvIcon.setVisibility(View.VISIBLE);
-            tvIcon.setText(String.valueOf(String.valueOf(personGivenName.charAt(0))));
         }
     }
 
@@ -383,6 +413,45 @@ public class MainActivity extends GoogleDriveActivity {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment);
         transaction.commit();
+    }
+
+    private void showBottomSheetDialog() {
+        final Dialog bsDialog = new Dialog(this);
+        bsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        bsDialog.setContentView(R.layout.bottom_sheet_layout);
+
+        LinearLayout incomelayout = bsDialog.findViewById(R.id.bSheetIncome);
+        LinearLayout expenseLayout = bsDialog.findViewById(R.id.bSheetExpense);
+        ImageView closeBSheet = bsDialog.findViewById(R.id.closeBottmSheet);
+
+        incomelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Income", Toast.LENGTH_SHORT).show();
+                bsDialog.dismiss();
+            }
+        });
+
+        expenseLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Expense", Toast.LENGTH_SHORT).show();
+                bsDialog.dismiss();
+            }
+        });
+
+        closeBSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bsDialog.dismiss();
+            }
+        });
+
+        bsDialog.show();
+        bsDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        bsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        bsDialog.getWindow().getAttributes().windowAnimations = R.style.DialogSheetAnimation;
+        bsDialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 
 

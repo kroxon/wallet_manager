@@ -1,5 +1,6 @@
 package step.wallet.maganger.classes;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,12 +8,13 @@ import java.util.Date;
 
 import step.wallet.maganger.data.InfoRepository;
 
-public class Transaction {
+public class Transaction implements Comparable<Transaction> {
     private String transactionId;
     private String transactionValue;
     private String transactionIdCategory;
     private String transactionIdSubcategory;
     private String transactionDate;
+    private Date transactionDateFormat;
     private String idAccount;
     private String transactionNote1;
     private String transactionNote2;
@@ -50,6 +52,17 @@ public class Transaction {
 
     public void setTransactionDate(String transactionDate) {
         this.transactionDate = transactionDate;
+        setTransactionDateFormat(transactionDate);
+    }
+
+    public void setTransactionDateFormat(String transactionDateFormat) {
+        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        try {
+            Date date = formatter.parse(transactionDateFormat);
+            this.transactionDateFormat = date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setIdAccount(String idAccount) {
@@ -67,7 +80,6 @@ public class Transaction {
     public void setTransactionPhoto(String transactionPhoto) {
         this.transactionPhoto = transactionPhoto;
     }
-
 
 
     public void setTransactionType(String transactionType) {
@@ -94,6 +106,10 @@ public class Transaction {
         return transactionDate;
     }
 
+    public Date getTransactionDateFormat() {
+        return transactionDateFormat;
+    }
+
     public String getIdAccount() {
         return idAccount;
     }
@@ -118,5 +134,10 @@ public class Transaction {
         SimpleDateFormat sdformat = new SimpleDateFormat("dd.MM.yyyy");
         Date d1 = sdformat.parse(transactionDate);
         return d1;
+    }
+
+    @Override
+    public int compareTo(Transaction transaction) {
+        return getTransactionDateFormat().compareTo(transaction.getTransactionDateFormat());
     }
 }

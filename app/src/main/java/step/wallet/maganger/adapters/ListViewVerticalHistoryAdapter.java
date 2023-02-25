@@ -59,10 +59,6 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (position % 2 != 0) {
-            holder.myHistoryList.setBackgroundColor(Color.parseColor("#FFEEECEC"));
-        } else
-            holder.myHistoryList.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
         InfoRepository infoRepository = new InfoRepository();
         if (transactionsList.get(position).getTransactionDate().equals(currentDate)) {
@@ -75,15 +71,15 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
         holder.myValue.setText(transactionsList.get(position).getTransactionValue());
         holder.myCurrency.setText("zł");
         if (transactionsList.get(position).getTransactionType().equals("expense")) {
-            holder.myValue.setTextColor(Color.parseColor("#D84040"));
-            holder.myCurrency.setTextColor(Color.parseColor("#D84040"));
+            holder.myValue.setText("- " + holder.myValue.getText().toString());
             holder.myIcon.setImageResource(Integer.parseInt(infoRepository.getIdCategoryIconById(transactionsList.get(position).getTransactionIdCategory())));
             holder.myCategory.setText(infoRepository.getCategoryName(transactionsList.get(position).getTransactionIdCategory()));
         } else {
             holder.myValue.setTextColor(Color.parseColor("#689F38"));
             holder.myCurrency.setTextColor(Color.parseColor("#689F38"));
             holder.myIcon.setVisibility(View.INVISIBLE);
-            holder.myCategory.setVisibility(View.INVISIBLE);
+//            holder.myCategory.setVisibility(View.GONE);
+            holder.myCategory.setText("Income");
         }
 
     }

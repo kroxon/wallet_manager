@@ -5,16 +5,16 @@
     android:id="@+id/historyListlayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#EAE7E7"
-    android:padding="10dp">
+    android:paddingLeft="10dp"
+    android:paddingRight="20dp"
+    >
 
 
     <TextView
         android:id="@+id/historyDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:paddingBottom="4dp"
+        android:paddingBottom="10dp"
         android:text="20.01.2023"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,56 +22,79 @@
 
     </TextView>
 
-    <ImageView
-        android:id="@+id/historyIcon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_home"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/historyDate"
-        app:tint="@color/colorApp1">
-
-    </ImageView>
-
-
-    <TextView
-        android:id="@+id/historyCategoryName"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout5"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxWidth="200dp"
-        android:layout_marginStart="8dp"
-        android:ellipsize="end"
-        android:maxLength="30"
-        android:maxLines="2"
-        android:text="Chemiargrggreger hgfhgf hgfh  hfg hgfgrhr  tr  gerhtrhg"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/historyIcon"
-        app:layout_constraintTop_toTopOf="@+id/historyIcon"
-        app:layout_constraintVertical_bias="0.0"></TextView>
+        android:paddingBottom="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/historyDate">
 
-    <TextView
-        android:id="@+id/historyValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="4dp"
-        android:text="18,78"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/historyCurrency"
-        app:layout_constraintEnd_toStartOf="@+id/historyCurrency"
-        app:layout_constraintTop_toTopOf="@+id/historyCurrency" />
+        <ImageView
+            android:id="@+id/historyIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_home"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorApp1">
+
+        </ImageView>
 
 
-    <TextView
-        android:id="@+id/historyCurrency"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="zł"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/historyCategoryName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/historyCategoryName" />
+        <TextView
+            android:id="@+id/historyCategoryName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ellipsize="end"
+            android:maxWidth="200dp"
+            android:maxLength="30"
+            android:maxLines="2"
+            android:text="Chemiargrggreger hgfhgf hgfh  hfg hgfgrhr  tr  gerhtrhg"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            android:textColor="@color/darkgrey"
+            app:layout_constraintStart_toEndOf="@+id/historyIcon"
+            app:layout_constraintTop_toTopOf="@+id/historyIcon"
+            app:layout_constraintVertical_bias="0.0"></TextView>
+
+
+        <TextView
+            android:id="@+id/historyValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:text="18,78"
+            android:textColor="@color/olx_color_1"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/historyCurrency"
+            app:layout_constraintTop_toTopOf="@+id/historyCategoryName" />
+
+
+        <TextView
+            android:id="@+id/historyCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="zł"
+            android:textColor="@color/olx_color_1"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/historyValue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/historyValue" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/olx_color_1"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/historyCategoryName" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 

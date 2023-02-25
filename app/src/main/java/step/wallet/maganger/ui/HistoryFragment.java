@@ -66,16 +66,6 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         InfoRepository infoRepository = new InfoRepository();
         transactions = infoRepository.readTransactions("0");
 
-        Collections.sort(transactions, new Comparator<Transaction>() {
-            public int compare(Transaction m1, Transaction m2) {
-                try {
-                    return m1.getDateFormat().compareTo(m2.getDateFormat());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                return 0;
-            }
-        });
 
         //start test
         recyclerViewTransactions = (RecyclerView) view.findViewById(R.id.historyTransactionList);
