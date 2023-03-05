@@ -2,30 +2,41 @@ package step.wallet.maganger.ui
 
 import android.content.Context
 import android.content.DialogInterface
-import androidx.appcompat.app.AppCompatActivity
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.TextView
-import step.wallet.maganger.R
-import android.widget.*
-import step.wallet.maganger.data.InfoRepository
-import android.widget.Toast
 import android.view.inputmethod.EditorInfo
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.get
-
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import step.wallet.maganger.R
 import step.wallet.maganger.adapters.ListViewVerticalAdapter
-import java.util.ArrayList
-import android.widget.EditText
-import java.lang.RuntimeException
+import step.wallet.maganger.adapters.RecyclerViewCategoryActivityAdapter
+import step.wallet.maganger.data.InfoRepository
+import java.util.*
 
 
 class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
-    ListViewVerticalAdapter.OnShareClickedListener, DialogFragmentIconSelect.OnInputListener {
+    ListViewVerticalAdapter.OnShareClickedListener, DialogFragmentIconSelect.OnInputListener,
+    RecyclerViewCategoryActivityAdapter.OnCategoryListener {
+
+    // new view of Activity
+
+    lateinit var recyclerViewCategories: RecyclerView
+    lateinit var categoriesRVAdapter: RecyclerViewCategoryActivityAdapter
+    var btnShowExpenses: TextView? = null
+    var btnShowIncome: TextView? = null
+    lateinit var listViewSubcategories: ListView
+    lateinit var subcategoriesLVAdapter: ListViewVerticalAdapter
+    var txtCategoryName: TextView? = null
+    var mainCatInfoLayout: ConstraintLayout? = null
+    //end new view
 
     var spinner: Spinner? = null
     var spinner_toolbar: Spinner? = null
@@ -57,6 +68,10 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category)
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+
+        init()
+        loadRVExpenseCategories()
+        generateItem()
 
 
         layoutIcon = findViewById(R.id.layoutIconSelect)
@@ -124,6 +139,7 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         bAdd!!.setOnClickListener {
             addCategory(etNewCategory!!.text.toString())
             loadSpinnerData()
+
         }
 
         bUpdate!!.setOnClickListener {
@@ -163,6 +179,7 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         }
 
         imgAddnewCategory!!.setOnClickListener {
+
             val repository = InfoRepository()
             val labels: List<String> = repository.allCategories as List<String>
             var i = 1
@@ -178,6 +195,7 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             loadToolbarSpinnerData()
             setSpinnerToolbarSelectedValue(spinner_toolbar!!, selectegCategory!!)
             addSubcategory("subcategory")
+            loadRVExpenseCategories()
         }
 
         imgMenuOption!!.setOnClickListener {
@@ -229,6 +247,7 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             popupMenu.show()
         }
     }
+
 
     /**
      * Function to load the spinner data from SQLite database
@@ -465,6 +484,76 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         dialog.show()
     }
 
+    private fun init() {
+        recyclerViewCategories = findViewById<RecyclerView>(R.id.ac_categories_rv)
+        val layoutManager = GridLayoutManager(this, 5)
+        recyclerViewCategories.layoutManager = layoutManager
+        btnShowExpenses = findViewById(R.id.btnShowExpense)
+        btnShowIncome = findViewById(R.id.btnShowIncome)
+        listViewSubcategories = findViewById(R.id.ac_subcat_listView)
+        txtCategoryName = findViewById(R.id.ac_info_layout_cat_name)
+        mainCatInfoLayout = findViewById(R.id.ac_info_layout)
+    }
+
+    private fun loadRVExpenseCategories() {
+        // on below line we are initializing adapter
+        val repository = InfoRepository()
+        categoriesRVAdapter =
+            RecyclerViewCategoryActivityAdapter(this, repository.allExpenseCategories, this)
+        recyclerViewCategories!!.adapter = categoriesRVAdapter
+        mainCatInfoLayout!!.visibility = View.GONE
+        listViewSubcategories!!.visibility = View.GONE
+//        categoriesRVAdapter.notifyDataSetChanged()
+    }
+
+    private fun loadRVIncomeCategories() {
+        val repository = InfoRepository()
+        categoriesRVAdapter =
+            RecyclerViewCategoryActivityAdapter(this, repository.allIncomeCategories, this)
+        recyclerViewCategories!!.adapter = categoriesRVAdapter
+        mainCatInfoLayout!!.visibility = View.GONE
+        listViewSubcategories!!.visibility = View.GONE
+//        categoriesRVAdapter.notifyDataSetChanged()
+    }
+
+    private fun loadLVSubcategories(catName: String) {
+        val arrayAdapter: ListViewVerticalAdapter
+        val repository = InfoRepository()
+        var id = (repository.allCategories!!.indexOf(repository.getIdCategory(catName))).toString()
+        val labels: List<String> =
+            repository.getSubcategories(repository.getIdCategory(catName)) as List<String>
+        arrayAdapter =
+            ListViewVerticalAdapter(
+                this,
+                labels as ArrayList<String>?,
+                (repository.allCategories!!.indexOf(repository.getIdCategory(catName))).toString()
+            )
+        arrayAdapter.setOnShareClickedListener(this)
+        listViewSubcategories!!.adapter = arrayAdapter
+    }
+
+    // interface from Categories Recycleview
+    override fun onCategoryClick(catName: String) {
+        Toast.makeText(this, "category: " + catName, Toast.LENGTH_SHORT).show()
+        loadLVSubcategories(catName)
+        mainCatInfoLayout!!.visibility = View.VISIBLE
+        listViewSubcategories!!.visibility = View.VISIBLE
+        txtCategoryName!!.setText(catName)
+    }
+
+    private fun generateItem() {
+        btnShowExpenses!!.setOnClickListener {
+            loadRVExpenseCategories()
+        }
+        btnShowIncome!!.setOnClickListener {
+            loadRVIncomeCategories()
+            val testLayout: LinearLayout
+            testLayout = findViewById(R.id.ac_layoutIconSelect)
+            val hex = Integer.toString(2813300, 16)
+//            testLayout.setBackgroundColor(Color.parseColor("#$hex"))
+            testLayout.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#$hex")))
+        }
+    }
 
 }
 

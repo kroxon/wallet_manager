@@ -77,8 +77,9 @@ public class DBConstants {
                 + TABLE_TRANSACTION
                 + " (" + COL_TRANSACTION_ID + " INTEGER PRIMARY KEY, " + COL_TRANSACTION_VALUE + " INTEGER, "
                 + COL_TRANSACTION_ID_CAT + " INTEGER, " + COL_TRANSACTION_ID_SUBCAT + " INTEGER, "
-                + COL_TRANSACTION_DATE + " INTEGER, " + COL_TRANSACTION_ID_ACC + " INTEGER, " +
-                COL_TRANSACTION_NOTE_1 + " TEXT, " + COL_TRANSACTION_NOTE_2 + " TEXT, " + COL_TRANSACTION_PHOTO + " TEXT, " + COL_TRANSACTION_TYPE + " TEXT);";
+                + COL_TRANSACTION_DATE + " INTEGER, " + COL_TRANSACTION_ID_ACC + " INTEGER, "
+                + COL_TRANSACTION_NOTE_1 + " TEXT, " + COL_TRANSACTION_NOTE_2
+                + " TEXT, " + COL_TRANSACTION_PHOTO + " TEXT, " + COL_TRANSACTION_TYPE + " TEXT);";
     }
 
     static {

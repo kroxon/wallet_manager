@@ -31,6 +31,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Group;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Fragment;
 
@@ -47,6 +49,9 @@ import com.squareup.picasso.Picasso;
 import org.apache.http.util.ByteArrayBuffer;
 
 import step.wallet.maganger.R;
+import step.wallet.maganger.adapters.DragAndDropCategoryHelper.CategoryRecycleAdapter;
+import step.wallet.maganger.adapters.DragAndDropCategoryHelper.MyItemTouchHelperCallback;
+import step.wallet.maganger.adapters.DragAndDropCategoryHelper.OnStartDragListener;
 import step.wallet.maganger.data.DBConstants;
 import step.wallet.maganger.data.InfoRepository;
 import step.wallet.maganger.google.GoogleDriveActivity;
@@ -134,6 +139,8 @@ public class MainActivity extends GoogleDriveActivity {
             startGoogleDriveSignIn();
         } else
             loadAccountInfo();
+
+
 
 
 //        googleSignOut.setOnClickListener(new View.OnClickListener() {

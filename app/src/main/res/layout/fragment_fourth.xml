@@ -17,8 +17,8 @@
         <RelativeLayout
             android:id="@+id/account_container"
             android:layout_width="wrap_content"
-            android:layout_marginLeft="40dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="40dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -59,18 +59,28 @@
             app:layout_constraintTop_toBottomOf="@+id/textView3"></TextView>
 
         <com.google.android.gms.common.SignInButton
-            android:background="@drawable/button_background_black"
-            android:layout_marginTop="10dp"
-            android:padding="-59dp"
-            android:elevation="10dp"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_background_black"
+            android:elevation="10dp"
+            android:padding="-59dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4"></com.google.android.gms.common.SignInButton>
 
 
-
+        <Button
+            android:id="@+id/btnDefaultDb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp"
+            android:background="@color/olx_color_1"
+            android:text="defaultDb"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"></Button>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

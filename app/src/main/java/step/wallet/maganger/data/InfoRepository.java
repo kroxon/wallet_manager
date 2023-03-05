@@ -1,6 +1,8 @@
 package step.wallet.maganger.data;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import step.wallet.maganger.R;
 import step.wallet.maganger.classes.Transaction;
@@ -99,9 +102,40 @@ public class InfoRepository {
     public void addCategory(@NonNull String nameCategory) {
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_CAT_NAME, nameCategory);
-        values.put(DBConstants.COL_CAT_ICON, "x76");
+        Random ran = new Random();
+        int x = ran.nextInt(125) + 1;
+        values.put(DBConstants.COL_CAT_ICON, "x" + String.valueOf(x));
+        if (x % 2 == 0)
+            values.put(DBConstants.COL_CAT_TYPE, "expense");
+        else
+            values.put(DBConstants.COL_CAT_TYPE, "income");
         db.insert(DBConstants.TABLE_CATEGORY, null, values);
 //        db.close();
+    }
+
+
+    public void addDefaultDatabase(String[] categories, List<String[]> subcategories, String[] icons) {
+        if (getAllCategories().size() == 0) {
+            for (int i = 0; i < categories.length; i++) {
+                ContentValues valuesCat = new ContentValues();
+                valuesCat.put(DBConstants.COL_CAT_NAME, categories[i]);
+                if (i < 10)
+                    valuesCat.put(DBConstants.COL_CAT_TYPE, "expense");
+                else
+                    valuesCat.put(DBConstants.COL_CAT_TYPE, "income");
+                valuesCat.put(DBConstants.COL_CAT_ICON, icons[i]);
+                db.insert(DBConstants.TABLE_CATEGORY, null, valuesCat);
+            }
+            for (int k = 0; k < subcategories.size(); k++) {
+                String[] subcats = subcategories.get(k);
+                for (int j = 0; j < subcats.length; j++) {
+                    ContentValues valuesSubcat = new ContentValues();
+                    valuesSubcat.put(DBConstants.COL_SUBCAT_NAME, subcats[j]);
+                    valuesSubcat.put(DBConstants.COL_SUBCAT_SUPERCAT_ID, getIdCategory(categories[k]));
+                    db.insert(DBConstants.TABLE_SUBCATEGORY, null, valuesSubcat);
+                }
+            }
+        }
     }
 
     public void removeSubategoryByName(String nameSubcategory, String idCategory) {
@@ -175,7 +209,7 @@ public class InfoRepository {
     @Nullable
     public List<String> getAllExpenseCategories() {
         List<String> list = new ArrayList<String>();
-        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_TYPE + " = 'expense'" ;
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_TYPE + " = 'expense'";
         // on below line we are creating a new array list.
         Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
 
@@ -193,10 +227,11 @@ public class InfoRepository {
         return list;
 
     }
+
     @Nullable
     public List<String> getAllIncomeCategories() {
         List<String> list = new ArrayList<String>();
-        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_TYPE + " = 'income'" ;
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_TYPE + " = 'income'";
         // on below line we are creating a new array list.
         Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
 
@@ -236,7 +271,7 @@ public class InfoRepository {
     }
 
     @Nullable
-    public String getCategoryName (String idCategory) {
+    public String getCategoryName(String idCategory) {
         String categoryName = "0";
         String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_ID + " = '" + idCategory + "'";
         // on below line we are creating a new array list.

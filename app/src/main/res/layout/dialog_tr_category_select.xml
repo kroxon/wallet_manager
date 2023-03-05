@@ -16,6 +16,6 @@
         android:layout_marginHorizontal="30dp"
         android:background="@drawable/dialog_background"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="38dp" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

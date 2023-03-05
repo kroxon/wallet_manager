@@ -18,8 +18,8 @@
         <activity
             android:name=".ui.Category_Activity"
             android:exported="true"
-            android:parentActivityName=".ui.MainActivity"
             android:label="@string/title_activity_category2"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.MainActivity"

@@ -45,8 +45,8 @@ public class ListViewVerticalAdapter extends ArrayAdapter<String>  {
             convertView = layoutInflater.inflate(R.layout.list_row_ac_subcat, null);
         }
 
-        TextView number = convertView.findViewById(R.id.acAdapterSubcatIdNo);
-        number.setText(position + 1 + ".");
+//        TextView number = convertView.findViewById(R.id.acAdapterSubcatIdNo);
+//        number.setText(position + 1 + ".");
 
         TextView name = convertView.findViewById(R.id.acAdapterSubcatName);
         name.setText(list.get(position));

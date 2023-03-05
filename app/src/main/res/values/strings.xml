@@ -19,4 +19,130 @@
     <string name="history">History</string>
     <string name="profile">Profile</string>
     <string name="overview">Overview</string>
+
+    <string-array name="categories">
+        <item>żywność i napoje</item>
+        <item>mieszkanie</item>
+        <item>transport</item>
+        <item>higiena i uroda</item>
+        <item>opieka zdrowotna</item>
+        <item>rozrywka i wypoczynek</item>
+        <item>odzież i obuwie</item>
+        <item>komunikacja i technologia</item>
+        <item>finanse i ubezpieczenie</item>
+        <item>edukacja</item>
+
+        <item>praca</item>
+        <item>inwestycje</item>
+        <item>zasiłki</item>
+        <item>darowizny</item>
+        <item>inne</item>
+    </string-array>
+
+    <string-array name="category_icon">
+        <item>x22</item>
+        <item>x51</item>
+        <item>x28</item>
+        <item>x23</item>
+        <item>x92</item>
+        <item>x48</item>
+        <item>x115</item>
+        <item>x34</item>
+        <item>x118</item>
+        <item>x14</item>
+        <item>x15</item>
+        <item>x7</item>
+        <item>x25</item>
+        <item>x50</item>
+        <item>x36</item>
+    </string-array>
+
+    <string-array name="subcategories1">
+        <item>artykuły spożywcze i napoje</item>
+        <item>restauracje i jedzenie na wynos</item>
+        <item>przekąski i słodycze</item>
+    </string-array>
+
+    <string-array name="subcategories2">
+        <item>czynsz</item>
+        <item>rachunki za media</item>
+        <item>remonty i naprawy</item>
+        <item>wyposażenie domu</item>
+    </string-array>
+
+    <string-array name="subcategories3">
+        <item>paliwo</item>
+        <item>bilety</item>
+        <item>parkingi</item>
+        <item>utrzymanie i naprawy samochodu</item>
+    </string-array>
+
+    <string-array name="subcategories4">
+        <item>leki i suplementy</item>
+        <item>wizyty u lekarza i opieki medycznej</item>
+        <item>opieka dentystyczna</item>
+    </string-array>
+
+    <string-array name="subcategories5">
+        <item>pielęgnacja</item>
+        <item>makijaż</item>
+        <item>higiena osobista</item>
+    </string-array>
+
+    <string-array name="subcategories6">
+        <item>kino, teatr i inne wyjścia</item>
+        <item>zabawki i gry</item>
+        <item>wakacje i wyjazdy</item>
+        <item>książki i inne produkty kultury</item>
+    </string-array>
+
+    <string-array name="subcategories7">
+        <item>ubrania</item>
+        <item>obuwie</item>
+        <item>dodatki</item>
+    </string-array>
+
+    <string-array name="subcategories8">
+        <item>sprzęt elektroniczny</item>
+        <item>abonamenty i opłaty za multimedia</item>
+        <item>internet</item>
+    </string-array>
+
+    <string-array name="subcategories9">
+        <item>opłaty bankowe i karty kredytowe</item>
+        <item>ubezpieczenia</item>
+    </string-array>
+
+    <string-array name="subcategories10">
+        <item>kursy i szkolenia</item>
+        <item>książki i materiały edukacyjne</item>
+    </string-array>
+
+    <string-array name="subcategories11">
+        <item>wynagrodzenie</item>
+        <item>dodatki, premie</item>
+        <item>nadgodziny</item>
+    </string-array>
+
+    <string-array name="subcategories12">
+        <item>odsetki</item>
+        <item>dywidendy</item>
+        <item>zyski z inwestycji</item>
+    </string-array>
+
+    <string-array name="subcategories13">
+        <item>zasiłki rodzinne</item>
+        <item>zasiłki dla bezrobotnych</item>
+        <item>zasiłki pielęgnacyjne</item>
+    </string-array>
+
+    <string-array name="subcategories14">
+        <item>prezenty</item>
+        <item>spadki</item>
+    </string-array>
+
+    <string-array name="subcategories15">
+        <item>inne</item>
+    </string-array>
+
 </resources>

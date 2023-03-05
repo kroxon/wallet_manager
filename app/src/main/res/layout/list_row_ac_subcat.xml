@@ -3,31 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:padding="4dp">
 
-    <TextView
-        android:id="@+id/acAdapterSubcatIdNo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="4dp"
-        android:layout_marginBottom="2sp"
-        android:text="1"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="22sp"
-        android:textStyle="bold">
+<!--    <TextView-->
+<!--        android:id="@+id/acAdapterSubcatIdNo"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginLeft="4dp"-->
+<!--        android:layout_marginBottom="2sp"-->
+<!--        android:text="1"-->
+<!--        android:textColor="@color/colorPrimaryDark"-->
+<!--        android:textSize="22sp"-->
+<!--        android:textStyle="bold">-->
 
-    </TextView>
+<!--    </TextView>-->
 
     <TextView
         android:id="@+id/acAdapterSubcatName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="40dp"
         android:text="Chemia"
-        android:textColor="@color/black"
-        android:textSize="28sp"></TextView>
+        android:textColor="@color/olx_color_1"
+        android:textSize="20sp"></TextView>
 
     <ImageView
         android:id="@+id/acAdapterSubcatOption"
@@ -37,6 +36,6 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="20dp"
         android:src="@drawable/ic_more_options"
-        app:tint="@color/black"></ImageView>
+        app:tint="@color/olx_color_1"></ImageView>
 
 </RelativeLayout>
