@@ -15,6 +15,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.get
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import petrov.kristiyan.colorpicker.ColorPicker
+import petrov.kristiyan.colorpicker.ColorPicker.OnChooseColorListener
 import step.wallet.maganger.R
 import step.wallet.maganger.adapters.ListViewVerticalAdapter
 import step.wallet.maganger.adapters.RecyclerViewCategoryActivityAdapter
@@ -549,9 +551,42 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             loadRVIncomeCategories()
             val testLayout: LinearLayout
             testLayout = findViewById(R.id.ac_layoutIconSelect)
-            val hex = Integer.toString(2813300, 16)
-//            testLayout.setBackgroundColor(Color.parseColor("#$hex"))
-            testLayout.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#$hex")))
+            val colorPicker = ColorPicker(this@Category_Activity)
+            val colors: ArrayList<String> = ArrayList()
+            colors.add("#82B926")
+            colors.add("#a276eb")
+            colors.add("#6a3ab2")
+            colors.add("#666666")
+            colors.add("#FFFF00")
+            colors.add("#3C8D2F")
+            colors.add("#FA9F00")
+            colors.add("#FF0000")
+
+            colorPicker
+                .setDefaultColorButton(Color.parseColor("#f84c44"))
+                .setColors(colors)
+                .setColumns(5)
+                .setTitle("wybierz kolor")
+                .setRoundColorButton(true)
+                .disableDefaultButtons(true)
+//                .setOnChooseColorListener(object : OnChooseColorListener {
+//                    override fun onChooseColor(position: Int, color: Int) {
+//                        Toast.makeText(this@Category_Activity, "" + position + " + " + color, Toast.LENGTH_SHORT).show()
+//                        val hex = Integer.toString(color, 16)
+//                        testLayout.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#$hex")))
+//                    }
+//
+//                    override fun onCancel() {}
+//                })
+                .addListenerButton(
+                    "newButton"
+                ) { v, position, color ->
+                    Toast.makeText(this, "" + position + " + " + color, Toast.LENGTH_SHORT).show()
+                    val hex = Integer.toString(color, 16)
+                    testLayout.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#$hex")))
+                    colorPicker.dismissDialog()
+                }
+                .show()
         }
     }
 
