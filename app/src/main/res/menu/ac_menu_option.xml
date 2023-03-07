@@ -13,5 +13,9 @@
         android:title="merge"
         app:showAsAction="never"></item>
 
+    <item
+        android:id="@+id/ac_mo_archive"
+        android:title="archive"
+        app:showAsAction="never"></item>
 
 </menu>

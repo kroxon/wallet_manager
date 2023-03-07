@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +19,7 @@ import step.wallet.maganger.data.InfoRepository;
 public class FourthFragment extends Fragment {
 
     private Button defaultDb;
+    private Button btnArchived;
 
     public FourthFragment() {
         // Required empty public constructor
@@ -61,9 +60,17 @@ public class FourthFragment extends Fragment {
                 subcategories.add(getResources().getStringArray(R.array.subcategories14));
                 subcategories.add(getResources().getStringArray(R.array.subcategories15));
                 String[] icons = getResources().getStringArray(R.array.category_icon);
+                String[] colors = getResources().getStringArray(R.array.category_colors);
                 InfoRepository repository = new InfoRepository();
-                repository.addDefaultDatabase(categories, subcategories, icons);
+                repository.addDefaultDatabase(categories, subcategories, icons, colors);
 
+                btnArchived.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        InfoRepository infoRepository = new InfoRepository();
+                        infoRepository.setCategoryArchived(infoRepository.getAllExpenseCategories().get(0));
+                    }
+                });
             }
         });
 
@@ -73,5 +80,6 @@ public class FourthFragment extends Fragment {
 
     private void init(View view) {
         defaultDb = view.findViewById(R.id.btnDefaultDb);
+        btnArchived = view.findViewById(R.id.btnRandomArchived);
     }
 }

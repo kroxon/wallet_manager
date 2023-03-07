@@ -21,7 +21,6 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 import step.wallet.maganger.R;
-import step.wallet.maganger.data.InfoRepository;
 
 public class ListViewVerticalAdapter extends ArrayAdapter<String>  {
 
@@ -60,7 +59,7 @@ public class ListViewVerticalAdapter extends ArrayAdapter<String>  {
                 switch (view.getId()) {
                     case R.id.acAdapterSubcatOption:
                         PopupMenu popup = new PopupMenu(context, view);
-                        popup.getMenuInflater().inflate(R.menu.menu_ac,
+                        popup.getMenuInflater().inflate(R.menu.menu_ac_subcats,
                                 popup.getMenu());
                         popup.show();
                         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {

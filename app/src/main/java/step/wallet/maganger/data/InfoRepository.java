@@ -1,8 +1,6 @@
 package step.wallet.maganger.data;
 
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -11,7 +9,6 @@ import androidx.annotation.Nullable;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -99,22 +96,30 @@ public class InfoRepository {
         db.update(DBConstants.TABLE_CATEGORY, values, DBConstants.COL_CAT_NAME + "=?", whereArgs);
     }
 
-    public void addCategory(@NonNull String nameCategory) {
+    public void updateCategoryColor(String categoryColor, String NameCategory) {
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.COL_CAT_COLOR, categoryColor);
+        String[] whereArgs = new String[]{String.valueOf(NameCategory)};
+        db.update(DBConstants.TABLE_CATEGORY, values, DBConstants.COL_CAT_NAME + "=?", whereArgs);
+    }
+
+    public void addCategory(@NonNull String nameCategory, String type) {
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_CAT_NAME, nameCategory);
         Random ran = new Random();
         int x = ran.nextInt(125) + 1;
         values.put(DBConstants.COL_CAT_ICON, "x" + String.valueOf(x));
-        if (x % 2 == 0)
-            values.put(DBConstants.COL_CAT_TYPE, "expense");
-        else
-            values.put(DBConstants.COL_CAT_TYPE, "income");
+        values.put(DBConstants.COL_CAT_TYPE, type);
+        String[] colors = new String[]{"#ef9a9a", "#f44336", "#f48fb1", "#ad1457", "#1976d2", "#0097a7", "#43a047", "#ffea00", "#ff6f00", "#3e2723"};
+        x = ran.nextInt(colors.length - 1);
+        values.put(DBConstants.COL_CAT_COLOR, colors[x]);
+        values.put(DBConstants.COL_CAT_ARCHIVED, "active");
         db.insert(DBConstants.TABLE_CATEGORY, null, values);
 //        db.close();
     }
 
 
-    public void addDefaultDatabase(String[] categories, List<String[]> subcategories, String[] icons) {
+    public void addDefaultDatabase(String[] categories, List<String[]> subcategories, String[] icons, String[] colors) {
         if (getAllCategories().size() == 0) {
             for (int i = 0; i < categories.length; i++) {
                 ContentValues valuesCat = new ContentValues();
@@ -124,6 +129,8 @@ public class InfoRepository {
                 else
                     valuesCat.put(DBConstants.COL_CAT_TYPE, "income");
                 valuesCat.put(DBConstants.COL_CAT_ICON, icons[i]);
+                valuesCat.put(DBConstants.COL_CAT_COLOR, colors[i]);
+                valuesCat.put(DBConstants.COL_CAT_ARCHIVED, "active");
                 db.insert(DBConstants.TABLE_CATEGORY, null, valuesCat);
             }
             for (int k = 0; k < subcategories.size(); k++) {
@@ -161,6 +168,20 @@ public class InfoRepository {
         values.put(DBConstants.COL_SUBCAT_NAME, newNameSubcategory);
         String[] whereArgs = new String[]{String.valueOf(oldNameSubcategory), String.valueOf(idCategory)};
         db.update(DBConstants.TABLE_SUBCATEGORY, values, DBConstants.COL_SUBCAT_NAME + "=? AND " + DBConstants.COL_SUBCAT_SUPERCAT_ID + "=?", whereArgs);
+    }
+
+    public void setCategoryArchived(String categoryName) {
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.COL_CAT_ARCHIVED, "archive");
+        String[] whereArgs = new String[]{String.valueOf(categoryName)};
+        db.update(DBConstants.TABLE_CATEGORY, values, DBConstants.COL_CAT_NAME + "=?", whereArgs);
+    }
+
+    public void setCategoryActive(String categoryName) {
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.COL_CAT_ARCHIVED, "active");
+        String[] whereArgs = new String[]{String.valueOf(categoryName)};
+        db.update(DBConstants.TABLE_CATEGORY, values, DBConstants.COL_CAT_NAME + "=?", whereArgs);
     }
 
     @Nullable
@@ -209,7 +230,7 @@ public class InfoRepository {
     @Nullable
     public List<String> getAllExpenseCategories() {
         List<String> list = new ArrayList<String>();
-        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_TYPE + " = 'expense'";
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_TYPE + " = 'expense' AND " + DBConstants.COL_CAT_ARCHIVED + " = 'active'";
         // on below line we are creating a new array list.
         Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
 
@@ -225,7 +246,6 @@ public class InfoRepository {
         // returning lables
 //        db.close();
         return list;
-
     }
 
     @Nullable
@@ -346,6 +366,24 @@ public class InfoRepository {
         }
 //        db.close();
         return idCategoryIcon;
+    }
+
+    @Nullable
+    public String getCategoryColor(String cateoryName) {
+        String categoryColor = "";
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_CATEGORY + " WHERE " + DBConstants.COL_CAT_NAME + " = '" + cateoryName + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and search for ID Category name
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(1).equals(cateoryName)) {
+                    categoryColor = cursor.getString(4);
+                }
+            } while (cursor.moveToNext());
+        }
+//        db.close();
+        return categoryColor;
     }
 
 

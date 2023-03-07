@@ -79,8 +79,20 @@
             android:text="defaultDb"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnRandomArchived"
             app:layout_constraintStart_toStartOf="parent"></Button>
+
+        <Button
+            android:id="@+id/btnRandomArchived"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp"
+            android:background="@color/olx_color_1"
+            android:text="archived"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnDefaultDb"></Button>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

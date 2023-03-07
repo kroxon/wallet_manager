@@ -20,6 +20,14 @@
     <string name="profile">Profile</string>
     <string name="overview">Overview</string>
 
+    //color picker
+    <string name="colorpicker_dialog_cancel">Cancel</string>
+    <string name="colorpicker_dialog_ok">SAve</string>
+
+
+
+    // default categories
+
     <string-array name="categories">
         <item>żywność i napoje</item>
         <item>mieszkanie</item>
@@ -143,6 +151,24 @@
 
     <string-array name="subcategories15">
         <item>inne</item>
+    </string-array>
+
+    <string-array name="category_colors">
+        <item>#ef9a9a</item>
+        <item>#f44336</item>
+        <item>#f48fb1</item>
+        <item>#ad1457</item>
+        <item>#ce93d8</item>
+        <item>#1976d2</item>
+        <item>#26c6da</item>
+        <item>#0097a7</item>
+        <item>#66bb6a</item>
+        <item>#43a047</item>
+        <item>#1b5e20</item>
+        <item>#ffea00</item>
+        <item>#ffca28</item>
+        <item>#ff6f00</item>
+        <item>#3e2723</item>
     </string-array>
 
 </resources>

@@ -11,9 +11,8 @@
         android:id="@+id/topLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFE082"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
+        android:background="#E6F5FF"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView6"
@@ -35,20 +34,24 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="2dp"
             android:orientation="horizontal"
+            android:padding="4dp"
             app:layout_constraintTop_toBottomOf="@+id/textView6">
 
             <TextView
                 android:id="@+id/btnShowExpense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="6dp"
                 android:layout_marginHorizontal="2dp"
                 android:layout_weight="1"
                 android:background="@drawable/dialog_background"
+                android:backgroundTint="@color/olx_color_1"
                 android:clickable="true"
+                android:elevation="6dp"
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="Wydatki"
-                android:textColor="@color/olx_color_1"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -56,10 +59,12 @@
                 android:id="@+id/btnShowIncome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="6dp"
                 android:layout_marginHorizontal="2dp"
                 android:layout_weight="1"
                 android:background="@drawable/dialog_background"
                 android:clickable="true"
+                android:elevation="6dp"
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="Dochody"
@@ -74,9 +79,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="8dp"
             android:background="@drawable/dialog_background"
-            android:elevation="10dp"
+            android:elevation="8dp"
             android:padding="4dp"
             app:layout_constraintTop_toBottomOf="@+id/cat_tyes_layout" />
 
@@ -101,6 +105,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/dialog_background"
+            android:elevation="6dp"
             app:layout_constraintTop_toBottomOf="@+id/ac_btn_addCategory">
 
             <TextView
@@ -113,9 +119,22 @@
                 android:textColor="@color/olx_color_1"
                 android:textSize="25sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/ac_buttom_color_picker"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></TextView>
+
+            <Button
+                android:id="@+id/ac_buttom_color_picker"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginVertical="6dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/bg_circle"
+                android:elevation="10dp"
+                app:backgroundTint="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ac_info_layout_cat_name"></Button>
 
             <LinearLayout
                 android:id="@+id/ac_layoutIconSelect"
@@ -123,7 +142,7 @@
                 android:layout_height="70dp"
                 android:layout_marginVertical="12dp"
                 android:layout_marginRight="40dp"
-                android:background="@drawable/dialog_background"
+                android:background="@drawable/bg_circle"
                 android:elevation="4dp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -131,37 +150,38 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/ac_info_layout_icon"
+                    android:id="@+id/ac_info_icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="12dp"
                     android:elevation="18dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_home"
-                    app:tint="@color/colorApp1" />
+                    app:tint="@color/white" />
 
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/ac_info_layout_option"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
                 android:src="@drawable/ic_more_options"
                 app:layout_constraintBottom_toBottomOf="@+id/ac_layoutIconSelect"
                 app:layout_constraintStart_toEndOf="@+id/ac_layoutIconSelect"
                 app:layout_constraintTop_toTopOf="@+id/ac_layoutIconSelect"
-                app:tint="@color/white"></ImageView>
+                app:tint="@color/olx_color_1"></ImageView>
 
             <ImageView
                 android:id="@+id/ac_info_layout_name_edit"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="15dp"
                 android:src="@drawable/ic_edit"
-                app:layout_constraintBottom_toBottomOf="@+id/ac_info_layout_cat_name"
-                app:layout_constraintStart_toEndOf="@+id/ac_info_layout_cat_name"
-                app:layout_constraintTop_toTopOf="@+id/ac_info_layout_cat_name"
-                app:tint="@color/white" />
+                app:layout_constraintBottom_toBottomOf="@+id/ac_buttom_color_picker"
+                app:layout_constraintStart_toEndOf="@+id/ac_buttom_color_picker"
+                app:layout_constraintTop_toTopOf="@+id/ac_buttom_color_picker"
+                app:tint="@color/olx_color_1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -180,7 +200,7 @@
     <include
         android:id="@+id/spintoolbar"
         layout="@layout/toolbar_activity_category"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -307,7 +327,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="50dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topLayout">
 
