@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import petrov.kristiyan.colorpicker.ColorPicker
 import petrov.kristiyan.colorpicker.ColorPicker.OnFastChooseColorListener
 import step.wallet.maganger.R
@@ -38,12 +41,16 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     var btnShowExpenses: TextView? = null
     var btnShowIncome: TextView? = null
     var txtCategoryName: TextView? = null
+    var etSubcategoryName: TextInputEditText? = null
+    var etLayoutSubcategoryName: TextInputLayout? = null
     lateinit var listViewSubcategories: ListView
     lateinit var subcategoriesLVAdapter: ListViewVerticalAdapter
     var mainCatInfoLayout: ConstraintLayout? = null
+    var subcatListLayout: ConstraintLayout? = null
     var iconBckglayout: LinearLayout? = null
     var btnColorPicker: Button? = null
-    var btnAddCategory: Button? = null
+    var btnAddSubcategory: ImageButton? = null
+    var btnAddSubcategoryClear: ImageButton? = null
     var imgCatIcon: ImageView? = null
     var imgCatMoreOption: ImageView? = null
     //end new view
@@ -434,6 +441,7 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 //            loadListViewSubcat(spinner_toolbar!!.selectedItemPosition)
         }
 //        loadListViewSubcat(spinner_toolbar!!.selectedItemPosition)
+        loadLVSubcategories(txtCategoryName!!.text.toString())
     }
 
     override fun sendInput(input: String) {
@@ -504,10 +512,14 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         txtCategoryName = findViewById(R.id.ac_info_layout_cat_name)
         mainCatInfoLayout = findViewById(R.id.ac_info_layout)
         btnColorPicker = findViewById(R.id.ac_buttom_color_picker)
-        btnAddCategory = findViewById(R.id.ac_btn_addCategory)
         iconBckglayout = findViewById(R.id.ac_layoutIconSelect)
         imgCatIcon = findViewById(R.id.ac_info_icon)
         imgCatMoreOption = findViewById(R.id.ac_info_layout_option)
+        etSubcategoryName = findViewById(R.id.ac_newSubcategory_et)
+        etLayoutSubcategoryName = findViewById(R.id.ac_newSubcategory_et_layout)
+        btnAddSubcategory = findViewById(R.id.ac_btnAddSubcategory)
+        btnAddSubcategoryClear = findViewById(R.id.ac_btnAddSubcategoryClear)
+        subcatListLayout = findViewById(R.id.subcatListLayout)
     }
 
     private fun loadRVExpenseCategories() {
@@ -518,7 +530,7 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         recyclerViewCategories!!.adapter = categoriesRVAdapter
 //        mainCatInfoLayout!!.visibility = View.GONE
 //        listViewSubcategories!!.visibility = View.GONE
-//        categoriesRVAdapter.notifyDataSetChanged()
+        categoriesRVAdapter.notifyDataSetChanged()
     }
 
     private fun loadRVIncomeCategories() {
@@ -528,7 +540,7 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         recyclerViewCategories!!.adapter = categoriesRVAdapter
 //        mainCatInfoLayout!!.visibility = View.GONE
 //        listViewSubcategories!!.visibility = View.GONE
-//        categoriesRVAdapter.notifyDataSetChanged()
+        categoriesRVAdapter.notifyDataSetChanged()
     }
 
     private fun loadLVSubcategories(catName: String) {
@@ -549,36 +561,40 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     // interface from Categories Recycleview
     override fun onCategoryClick(catName: String) {
-        Toast.makeText(this, "category: " + catName, Toast.LENGTH_SHORT).show()
-        loadLVSubcategories(catName)
-        mainCatInfoLayout!!.visibility = View.VISIBLE
-        listViewSubcategories!!.visibility = View.VISIBLE
-        txtCategoryName!!.setText(catName)
-        val repository = InfoRepository()
-        btnColorPicker!!.setBackgroundTintList(
-            ColorStateList.valueOf(
-                Color.parseColor(
-                    repository.getCategoryColor(
-                        catName
+        if (catName.equals("")) {
+            showAlertDialogButtonClicked()
+        } else {
+            Toast.makeText(this, "category: " + catName, Toast.LENGTH_SHORT).show()
+            loadLVSubcategories(catName)
+            mainCatInfoLayout!!.visibility = View.VISIBLE
+            subcatListLayout!!.visibility = View.VISIBLE
+            txtCategoryName!!.setText(catName)
+            val repository = InfoRepository()
+            btnColorPicker!!.setBackgroundTintList(
+                ColorStateList.valueOf(
+                    Color.parseColor(
+                        repository.getCategoryColor(
+                            catName
+                        )
                     )
                 )
             )
-        )
-        iconBckglayout!!.setBackgroundTintList(
-            ColorStateList.valueOf(
-                Color.parseColor(
-                    repository.getCategoryColor(
-                        catName
+            iconBckglayout!!.setBackgroundTintList(
+                ColorStateList.valueOf(
+                    Color.parseColor(
+                        repository.getCategoryColor(
+                            catName
+                        )
                     )
                 )
             )
-        )
-        imgCatIcon!!.setImageResource(repository.getIdCategoryIcon(catName))
+            imgCatIcon!!.setImageResource(repository.getIdCategoryIcon(catName))
+        }
     }
 
     private fun generateItem() {
         mainCatInfoLayout?.visibility = View.INVISIBLE
-        listViewSubcategories!!.visibility = View.INVISIBLE
+        subcatListLayout!!.visibility = View.INVISIBLE
         btnShowExpenses!!.setOnClickListener {
             btnShowExpenses!!.setBackgroundTintList(
                 ColorStateList.valueOf(
@@ -748,9 +764,6 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                 .setColors(colors)
                 .show()
         }
-        btnAddCategory!!.setOnClickListener {
-            showAlertDialogButtonClicked()
-        }
         imgCatMoreOption!!.setOnClickListener {
             val popupMenu = PopupMenu(this, imgCatMoreOption)
             popupMenu.menuInflater.inflate(R.menu.ac_menu_option, popupMenu.menu)
@@ -766,16 +779,19 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                                     dialog.cancel()
                                     val repository = InfoRepository()
                                     mainCatInfoLayout!!.visibility = View.GONE
-                                    listViewSubcategories!!.visibility = View.GONE
+                                    subcatListLayout!!.visibility = View.GONE
                                     if (repository.allExpenseCategories!!.contains(txtCategoryName!!.text.toString())) {
                                         repository.removeCategory(txtCategoryName!!.text.toString())
                                         loadRVExpenseCategories()
-                                    }
-                                    else{
+                                    } else {
                                         repository.removeCategory(txtCategoryName!!.text.toString())
                                         loadRVIncomeCategories()
                                     }
-                                    Toast.makeText(this,"Category \"" + txtCategoryName!!.text.toString() + "\" has been reommved!", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(
+                                        this,
+                                        "Category \"" + txtCategoryName!!.text.toString() + "\" has been reommved!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 })
                             .setNegativeButton(
                                 "No",
@@ -796,16 +812,23 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                                     dialog.cancel()
                                     val repository = InfoRepository()
                                     mainCatInfoLayout!!.visibility = View.GONE
-                                    listViewSubcategories!!.visibility = View.GONE
-                                    if (repository.allExpenseCategories!!.contains(txtCategoryName!!.text.toString())){
+                                    subcatListLayout!!.visibility = View.GONE
+                                    if (repository.allExpenseCategories!!.contains(txtCategoryName!!.text.toString())) {
                                         repository.setCategoryArchived(txtCategoryName!!.text.toString())
                                         loadRVExpenseCategories()
-                                        Toast.makeText(this,"Expense category \"" + txtCategoryName!!.text.toString() + "\" has been archived!", Toast.LENGTH_SHORT).show()
-                                    }
-                                    else{
+                                        Toast.makeText(
+                                            this,
+                                            "Expense category \"" + txtCategoryName!!.text.toString() + "\" has been archived!",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    } else {
                                         repository.setCategoryArchived(txtCategoryName!!.text.toString())
                                         loadRVIncomeCategories()
-                                        Toast.makeText(this,"Income category \"" + txtCategoryName!!.text.toString() + "\" has been archived!", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(
+                                            this,
+                                            "Income category \"" + txtCategoryName!!.text.toString() + "\" has been archived!",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     }
                                 })
                             .setNegativeButton(
@@ -819,6 +842,27 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             })
             popupMenu.show()
         }
+        etLayoutSubcategoryName!!.setEndIconOnClickListener {
+            addSubcategory()
+            btnAddSubcategoryClear!!.performClick()
+        }
+        btnAddSubcategory!!.setOnClickListener {
+            etLayoutSubcategoryName?.visibility = View.VISIBLE
+            btnAddSubcategoryClear?.visibility = View.VISIBLE
+            btnAddSubcategory?.visibility = View.GONE
+        }
+        btnAddSubcategoryClear!!.setOnClickListener {
+            etLayoutSubcategoryName?.visibility = View.INVISIBLE
+            btnAddSubcategory?.visibility = View.VISIBLE
+            btnAddSubcategoryClear?.visibility = View.GONE
+            val imm: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(btnAddSubcategoryClear!!.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN)
+        }
+        iconBckglayout!!.setOnClickListener {
+            val dialog = DialogFragmentIconSelect()
+            val fm = this@Category_Activity.fragmentManager
+            dialog.show(fm, "DialogFragmentIconSelect")
+        }
     }
 
     fun showAlertDialogButtonClicked() {
@@ -831,7 +875,11 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
         builder.setPositiveButton("OK") { dialog: DialogInterface?, which: Int ->
             val editText = customLayout.findViewById<EditText>(R.id.ac_add_category_et)
-            sendAddCategoryDialogResult(editText.text.toString())
+            val etText = editText.text.toString()
+            if (!etText.equals(""))
+                sendAddCategoryDialogResult(etText)
+            else
+                Toast.makeText(this, "Use longer category name!", Toast.LENGTH_SHORT).show()
         }
         val dialog = builder.create()
         dialog.show()
@@ -864,6 +912,16 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             } else
                 Toast.makeText(this, "To much Income categories", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun addSubcategory() {
+        val repository = InfoRepository()
+        repository.addSubcategory(
+            etSubcategoryName!!.text.toString(),
+            repository.getIdCategory(txtCategoryName!!.text.toString())
+        )
+        etSubcategoryName!!.setText("")
+        loadLVSubcategories(txtCategoryName!!.text.toString())
     }
 
 }
