@@ -9,6 +9,7 @@
     android:background="@drawable/subcat_recycleview_selected_background"
     android:gravity="center"
     android:padding="6dp"
+    android:maxLength="12"
     android:paddingHorizontal="5dp"
     android:text="Android"
     android:textColor="@color/colorApp1"

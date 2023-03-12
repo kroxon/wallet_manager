@@ -1,17 +1,28 @@
 package step.wallet.maganger.ui;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.accounts.AuthenticatorDescription;
+import android.app.Dialog;
 import android.app.FragmentTransaction;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +31,9 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Group;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.app.Fragment;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
@@ -27,6 +41,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.api.services.drive.Drive;
 import com.squareup.picasso.Picasso;
@@ -34,6 +49,9 @@ import com.squareup.picasso.Picasso;
 import org.apache.http.util.ByteArrayBuffer;
 
 import step.wallet.maganger.R;
+import step.wallet.maganger.adapters.DragAndDropCategoryHelper.CategoryRecycleAdapter;
+import step.wallet.maganger.adapters.DragAndDropCategoryHelper.MyItemTouchHelperCallback;
+import step.wallet.maganger.adapters.DragAndDropCategoryHelper.OnStartDragListener;
 import step.wallet.maganger.data.DBConstants;
 import step.wallet.maganger.data.InfoRepository;
 import step.wallet.maganger.google.GoogleDriveActivity;
@@ -43,6 +61,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -62,6 +81,8 @@ public class MainActivity extends GoogleDriveActivity {
     private MaterialToolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private BottomNavigationView bottomNavigationView;
+    private ImageView btnPlus;
 
     MeowBottomNavigation bottomNavigation;
 
@@ -103,7 +124,8 @@ public class MainActivity extends GoogleDriveActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
         bottomNavigation = findViewById(R.id.bottom_navigation);
-
+        bottomNavigationView = findViewById(R.id.bottom_nav_menu);
+        btnPlus = findViewById(R.id.plusButton);
 
     }
 
@@ -111,6 +133,15 @@ public class MainActivity extends GoogleDriveActivity {
 //        googleSignIn.setOnClickListener(v -> {
 //            startGoogleDriveSignIn();
 //        });
+
+        GoogleSignInAccount acctStart = GoogleSignIn.getLastSignedInAccount(this.getApplicationContext());
+        if (acctStart == null) {
+            startGoogleDriveSignIn();
+        } else
+            loadAccountInfo();
+
+
+
 
 //        googleSignOut.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -207,7 +238,7 @@ public class MainActivity extends GoogleDriveActivity {
                         unloadAccountInfo();
                         Toast.makeText(MainActivity.this, "LOGOUT is Clicked", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.nav_upload:{
+                    case R.id.nav_upload: {
                         Toast.makeText(MainActivity.this, "UPLOAD is Clicked", Toast.LENGTH_SHORT).show();
                         if (repository == null) {
                             showMessage(R.string.message_google_sign_in_failed);
@@ -219,8 +250,9 @@ public class MainActivity extends GoogleDriveActivity {
                                 .addOnFailureListener(e -> {
                                     Log.e(LOG_TAG, "error upload file", e);
                                     showMessage("Error upload");
-                                });}
-                        break;
+                                });
+                    }
+                    break;
                     case R.id.nav_download: {
                         Toast.makeText(MainActivity.this, "DOWNLOAD is Clicked", Toast.LENGTH_SHORT).show();
                         if (repository == null) {
@@ -231,9 +263,9 @@ public class MainActivity extends GoogleDriveActivity {
                         db.delete();
                         repository.downloadFile(db, GOOGLE_DRIVE_DB_LOCATION)
                                 .addOnSuccessListener(r -> {
-                                    InfoRepository repository = new InfoRepository();
-                                    String infoText = repository.getInfo();
-                                    inputToDb.setText(infoText);
+//                                    InfoRepository repository = new InfoRepository();
+//                                    String infoText = repository.getInfo();
+//                                    inputToDb.setText(infoText);
                                     showMessage("Retrieved");
                                 })
                                 .addOnFailureListener(e -> {
@@ -262,7 +294,7 @@ public class MainActivity extends GoogleDriveActivity {
         bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_home));
         bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_history));
         bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_wallet));
-//        bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_charts));
+        bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_person));
         bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {
@@ -270,32 +302,27 @@ public class MainActivity extends GoogleDriveActivity {
                 //check condition
                 switch (item.getId()) {
                     case 1:
-                        //when id i 1
-                        //initialize first fragment
                         fragment = new FirstFragment();
                         break;
                     case 2:
-                        //when id i 2
-                        //initialize second fragment
                         fragment = new SecondFragment();
                         break;
                     case 3:
-                        //when id i 3
-                        //initialize third fragment
                         fragment = new ThirdFragment();
                         loadAccountInfo();
                         break;
-//                    case 4:
-//                        //when id i 3
-//                        //initialize third fragment
-//                        fragment = new FourthFragment();
-//                        break;
+                    case 4:
+                        fragment = new FourthFragment();
+                        break;
+                    case 5:
+                        fragment = new FourthFragment();
+                        break;
                 }
                 loadfragment(fragment);
             }
         });
 
-        bottomNavigation.setCount(1, "");
+//        bottomNavigation.setCount(1, "");
 
         bottomNavigation.show(1, true);
 
@@ -315,7 +342,34 @@ public class MainActivity extends GoogleDriveActivity {
             }
         });
 
-//        loadAccountInfo();
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+
+            switch (item.getItemId()) {
+                case R.id.bnmHome:
+                    loadfragment(new FirstFragment());
+                    break;
+                case R.id.bnmHistory:
+                    loadfragment(new SecondFragment());
+                    break;
+                case R.id.bnmOverview:
+                    loadfragment(new ThirdFragment());
+                    break;
+                case R.id.bnmProfile:
+                    loadfragment(new FourthFragment());
+                    break;
+            }
+
+            return true;
+        });
+
+        btnPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBottomSheetDialog();
+            }
+        });
+
+        loadAccountInfo();
     }
 
     private void loadAccountInfo() {
@@ -333,6 +387,7 @@ public class MainActivity extends GoogleDriveActivity {
             TextView tvUsername = (TextView) headerView.findViewById(R.id.userName);
             TextView tvMail = (TextView) headerView.findViewById(R.id.userMail);
             TextView tvIcon = (TextView) headerView.findViewById(R.id.icon_text);
+            ImageView imgAccount = (ImageView) headerView.findViewById(R.id.account_icon);
             RelativeLayout relativeLayoutIcon = (RelativeLayout) headerView.findViewById(R.id.icon_container);
 
             tvMail.setVisibility(View.VISIBLE);
@@ -341,7 +396,6 @@ public class MainActivity extends GoogleDriveActivity {
             tvUsername.setText(personName);
             relativeLayoutIcon.setVisibility(View.VISIBLE);
             tvIcon.setVisibility(View.VISIBLE);
-            tvIcon.setText(String.valueOf(String.valueOf(personGivenName.charAt(0))));
         }
     }
 
@@ -366,6 +420,45 @@ public class MainActivity extends GoogleDriveActivity {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment);
         transaction.commit();
+    }
+
+    private void showBottomSheetDialog() {
+        final Dialog bsDialog = new Dialog(this);
+        bsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        bsDialog.setContentView(R.layout.bottom_sheet_layout);
+
+        LinearLayout incomelayout = bsDialog.findViewById(R.id.bSheetIncome);
+        LinearLayout expenseLayout = bsDialog.findViewById(R.id.bSheetExpense);
+        ImageView closeBSheet = bsDialog.findViewById(R.id.closeBottmSheet);
+
+        incomelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Income", Toast.LENGTH_SHORT).show();
+                bsDialog.dismiss();
+            }
+        });
+
+        expenseLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Expense", Toast.LENGTH_SHORT).show();
+                bsDialog.dismiss();
+            }
+        });
+
+        closeBSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bsDialog.dismiss();
+            }
+        });
+
+        bsDialog.show();
+        bsDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        bsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        bsDialog.getWindow().getAttributes().windowAnimations = R.style.DialogSheetAnimation;
+        bsDialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 
 

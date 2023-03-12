@@ -6,9 +6,266 @@
     android:layout_height="match_parent"
     tools:context=".ui.Category_Activity">
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E6F5FF"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Categories"
+            android:textColor="@color/olx_color_1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/cat_tyes_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="2dp"
+            android:orientation="horizontal"
+            android:padding="4dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView6">
+
+            <TextView
+                android:id="@+id/btnShowExpense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:layout_marginHorizontal="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/dialog_background"
+                android:backgroundTint="@color/olx_color_1"
+                android:clickable="true"
+                android:elevation="6dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Wydatki"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btnShowIncome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:layout_marginHorizontal="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/dialog_background"
+                android:clickable="true"
+                android:elevation="6dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Dochody"
+                android:textColor="@color/olx_color_1"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ac_categories_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:background="@drawable/dialog_background"
+            android:elevation="8dp"
+            android:padding="4dp"
+            app:layout_constraintTop_toBottomOf="@+id/cat_tyes_layout" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ac_info_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/dialog_background"
+            android:elevation="6dp"
+            app:layout_constraintTop_toBottomOf="@+id/ac_categories_rv">
+
+            <TextView
+                android:id="@+id/ac_info_layout_cat_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:maxWidth="200dp"
+                android:text="Kategoria"
+                android:textColor="@color/olx_color_1"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/ac_buttom_color_picker"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
+
+            <Button
+                android:id="@+id/ac_buttom_color_picker"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginVertical="6dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/bg_circle"
+                android:elevation="10dp"
+                app:backgroundTint="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ac_info_layout_cat_name"></Button>
+
+            <LinearLayout
+                android:id="@+id/ac_layoutIconSelect"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:clickable="true"
+                android:layout_marginVertical="12dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/bg_circle"
+                android:elevation="4dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/ac_info_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="12dp"
+                    android:elevation="18dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_home"
+                    app:tint="@color/white" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ac_info_layout_option"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_more_options"
+                app:layout_constraintBottom_toBottomOf="@+id/ac_layoutIconSelect"
+                app:layout_constraintStart_toEndOf="@+id/ac_layoutIconSelect"
+                app:layout_constraintTop_toTopOf="@+id/ac_layoutIconSelect"
+                app:tint="@color/olx_color_1"></ImageView>
+
+            <ImageView
+                android:id="@+id/ac_info_layout_name_edit"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/ic_edit"
+                app:layout_constraintBottom_toBottomOf="@+id/ac_buttom_color_picker"
+                app:layout_constraintStart_toEndOf="@+id/ac_buttom_color_picker"
+                app:layout_constraintTop_toTopOf="@+id/ac_buttom_color_picker"
+                app:tint="@color/olx_color_1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            android:fillViewport="true"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ac_info_layout"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="8dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/subcatListLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ListView
+                    android:id="@+id/ac_subcat_listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ac_newSubcategory_et_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="70dp"
+                    android:outlineAmbientShadowColor="@color/color_red_light"
+                    android:outlineSpotShadowColor="@color/colorApp1"
+                    android:visibility="invisible"
+                    app:boxStrokeColor="@color/olx_color_1"
+                    app:endIconDrawable="@drawable/ic_check"
+                    app:endIconMode="custom"
+                    app:endIconTint="@color/olx_color_1"
+                    app:hintTextColor="@color/olx_color_1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ac_subcat_listView">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ac_newSubcategory_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nowa podkategoria"
+                        android:imeOptions="actionDone"
+                        android:maxLength="20"
+                        android:maxLines="1"
+                        android:textColorHighlight="@color/olx_color_1"
+                        android:textCursorDrawable="@color/olx_color_1" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageButton
+                    android:id="@+id/ac_btnAddSubcategory"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_add_circle"
+                    app:layout_constraintBottom_toBottomOf="@+id/ac_newSubcategory_et_layout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ac_newSubcategory_et_layout"
+                    app:tint="@color/olx_color_1"></ImageButton>
+
+                <ImageButton
+                    android:id="@+id/ac_btnAddSubcategoryClear"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_clear"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/ac_newSubcategory_et_layout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ac_newSubcategory_et_layout"
+                    app:tint="@color/olx_color_1"></ImageButton>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <include
         android:id="@+id/spintoolbar"
-        layout="@layout/toolbar_activity_category" />
+        layout="@layout/toolbar_activity_category"
+        android:visibility="gone" />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -129,121 +386,126 @@
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="50dp"
-        app:layout_constraintTop_toBottomOf="@+id/spintoolbar">
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topLayout">
 
-        <TextView
-            android:id="@+id/acNameCatLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="Nazwa"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></TextView>
-
-        <EditText
-            android:id="@+id/acNameEt"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:maxLines="1"
-            android:text="DOM"
-            android:textSize="24sp"
-            app:layout_constraintTop_toBottomOf="@+id/acNameCatLabel"
-            tools:layout_editor_absoluteX="16dp"></EditText>
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/acEditIconCatName"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:clickable="true"
-            android:src="@drawable/ic_edit"
-            app:layout_constraintBottom_toBottomOf="@+id/acNameEt"
-            app:layout_constraintEnd_toEndOf="@+id/acNameEt"
-            app:layout_constraintTop_toTopOf="@+id/acNameEt"></ImageView>
+            <TextView
+                android:id="@+id/acNameCatLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="Nazwa"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:id="@+id/loButtonsChangeCatName"
-            android:layout_height="50dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/acNameEt"
-            app:layout_constraintEnd_toEndOf="@+id/acNameEt"
-            app:layout_constraintTop_toTopOf="@+id/acNameEt"
-            android:orientation="horizontal">
-            <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_check"
-                android:layout_margin="4dp"
-                android:background="#5B43A047"
-                android:id="@+id/bSaveNewCatName"
-                app:tint="#101010">
-            </ImageButton>
-            <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_clear"
-                android:layout_margin="4dp"
-                android:background="#48F65F5F"
-                android:id="@+id/bCancelNewCatName"
-                app:tint="#101010">
-            </ImageButton>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layoutIconSelect"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@drawable/bg_round_light"
-            android:elevation="12dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/acNameEt"
-            app:layout_constraintStart_toStartOf="@+id/acNameEt"
-            app:layout_constraintTop_toBottomOf="@+id/acNameEt">
+            <EditText
+                android:id="@+id/acNameEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:maxLines="1"
+                android:text="DOM"
+                android:textSize="24sp"
+                app:layout_constraintTop_toBottomOf="@+id/acNameCatLabel"
+                tools:layout_editor_absoluteX="16dp"></EditText>
 
             <ImageView
-                android:id="@+id/acIconCategory"
+                android:id="@+id/acEditIconCatName"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:clickable="true"
+                android:src="@drawable/ic_edit"
+                app:layout_constraintBottom_toBottomOf="@+id/acNameEt"
+                app:layout_constraintEnd_toEndOf="@+id/acNameEt"
+                app:layout_constraintTop_toTopOf="@+id/acNameEt"></ImageView>
+
+            <LinearLayout
+                android:id="@+id/loButtonsChangeCatName"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/acNameEt"
+                app:layout_constraintEnd_toEndOf="@+id/acNameEt"
+                app:layout_constraintTop_toTopOf="@+id/acNameEt">
+
+                <ImageButton
+                    android:id="@+id/bSaveNewCatName"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="4dp"
+                    android:background="#5B43A047"
+                    android:src="@drawable/ic_check"
+                    app:tint="#101010"></ImageButton>
+
+                <ImageButton
+                    android:id="@+id/bCancelNewCatName"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="4dp"
+                    android:background="#48F65F5F"
+                    android:src="@drawable/ic_clear"
+                    app:tint="#101010"></ImageButton>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutIconSelect"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/bg_round_light"
+                android:elevation="12dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/acNameEt"
+                app:layout_constraintStart_toStartOf="@+id/acNameEt"
+                app:layout_constraintTop_toBottomOf="@+id/acNameEt">
+
+                <ImageView
+                    android:id="@+id/acIconCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="12dp"
+                    android:elevation="18dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_home"
+                    app:tint="@color/colorApp1" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/acNameSubcatLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Podkategoria"
+                app:layout_constraintStart_toStartOf="@+id/acNameCatLabel"
+                app:layout_constraintTop_toBottomOf="@+id/layoutIconSelect"></TextView>
+
+            <LinearLayout
+                android:id="@+id/ac_Llayout_Subcat"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="12dp"
-                android:elevation="18dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_home"
-                app:tint="@color/colorApp1" />
-
-        </LinearLayout>
-
-
-
-        <TextView
-            android:id="@+id/acNameSubcatLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Podkategoria"
-            app:layout_constraintStart_toStartOf="@+id/acNameCatLabel"
-            app:layout_constraintTop_toBottomOf="@+id/layoutIconSelect"></TextView>
-
-        <LinearLayout
-            android:id="@+id/ac_Llayout_Subcat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="30dp"
-            app:layout_constrainedHeight="true"
-            app:layout_constraintHeight_max="300dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/acNameSubcatLabel"
-            tools:layout_editor_absoluteX="8dp">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="30dp"
+                android:orientation="vertical"
+                app:layout_constrainedHeight="true"
+                app:layout_constraintHeight_max="300dp"
+                app:layout_constraintTop_toBottomOf="@+id/acNameSubcatLabel"
+                tools:layout_editor_absoluteX="8dp">
 
                 <ListView
                     android:id="@+id/acListview"
@@ -254,53 +516,53 @@
 
                 </ListView>
 
-        </LinearLayout>
+            </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:elevation="4dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="@+id/ac_Llayout_Subcat"
-            app:layout_constraintStart_toStartOf="@+id/ac_Llayout_Subcat"
-            app:layout_constraintTop_toBottomOf="@+id/ac_Llayout_Subcat">
-
-            <EditText
-                android:id="@+id/acEtNewSubcat"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginVertical="4dp"
-                android:hint="Wpisz nazwę podkategorii"
-                android:maxLength="20"
-                android:maxLines="1"
-                android:textAllCaps="false"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></EditText>
+                android:elevation="4dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="@+id/ac_Llayout_Subcat"
+                app:layout_constraintStart_toStartOf="@+id/ac_Llayout_Subcat"
+                app:layout_constraintTop_toBottomOf="@+id/ac_Llayout_Subcat">
 
-            <ImageView
-                android:id="@+id/acImgAddSubcat"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="16dp"
-                android:clickable="true"
-                android:src="@drawable/ic_add_list_item"
-                app:layout_constraintBottom_toBottomOf="@+id/acEtNewSubcat"
-                app:layout_constraintStart_toEndOf="@+id/acEtNewSubcat"
-                app:layout_constraintTop_toTopOf="@+id/acEtNewSubcat"></ImageView>
+                <EditText
+                    android:id="@+id/acEtNewSubcat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginVertical="4dp"
+                    android:hint="Wpisz nazwę podkategorii"
+                    android:maxLength="20"
+                    android:maxLines="1"
+                    android:textAllCaps="false"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></EditText>
+
+                <ImageView
+                    android:id="@+id/acImgAddSubcat"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="16dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_add_list_item"
+                    app:layout_constraintBottom_toBottomOf="@+id/acEtNewSubcat"
+                    app:layout_constraintStart_toEndOf="@+id/acEtNewSubcat"
+                    app:layout_constraintTop_toTopOf="@+id/acEtNewSubcat"></ImageView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--        <Button-->
-<!--            android:id="@+id/button"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginBottom="20dp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"></Button>-->
+        <!--        <Button-->
+        <!--            android:id="@+id/button"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginBottom="20dp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"></Button>-->
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

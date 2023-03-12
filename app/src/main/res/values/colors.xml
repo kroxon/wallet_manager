@@ -11,8 +11,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="lighgrey">#989797</color>
+    <color name="darkgrey">#4E4E4E</color>
     <color name="underline">#D8D6D6</color>
     <color name="colorButton">#1E88E5</color>
     <color name="colorApp1">#1E88E5</color>
     <color name="colorAppText1">#A4C2DD</color>
+    <color name="color_red_light">#D84040</color>
+    <color name="color_green_light">#689F38</color>
+    <color name="olx_color_1">#054949</color>
 </resources>

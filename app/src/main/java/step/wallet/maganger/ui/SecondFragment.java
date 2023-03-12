@@ -27,7 +27,6 @@ public class SecondFragment extends Fragment {
     }
 
     private OnFragmentInteractionListener mListener;
-    private TextView testTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,15 +39,12 @@ public class SecondFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_second, container, false);
 
-        testTextView = (TextView) view.findViewById(R.id.testTextView2);
 
         InfoRepository infoRepository = new InfoRepository();
 
         ArrayList<Transaction> transactions = infoRepository.readTransactions("0");
 
-        for (int i = 0; i < 2; i++){
-            testTextView.setText(testTextView.getText().toString() + "transaction value: " + transactions.get(i).getTransactionValue() + "\n");
-        }
+
 
 //        //child fragment
 //        FragmentManager childFragMan = getChildFragmentManager();

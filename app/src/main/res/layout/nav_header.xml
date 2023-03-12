@@ -13,6 +13,7 @@
         android:layout_marginTop="16dp">
 
         <ImageView
+            android:id="@+id/account_icon"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/bg_circle" />
@@ -23,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="XX"
-            android:textColor="@android:color/white"
+            android:textColor="@color/black"
             android:textSize="24sp" />
     </RelativeLayout>
 

@@ -29,13 +29,13 @@ import step.wallet.maganger.adapters.RecyclerViewIconAdapter;
 public class DialogFragmentIconSelect extends DialogFragment implements RecyclerViewIconAdapter.ItemClickListener {
 
     private static final String TAG = "DialogFragmentIconSelect";
-    public int imageResource;
+    public String imageResource;
 
     @Override
-    public void onItemClick(View view, int position) {
+    public void onItemClick(View view, int position, String iconName) {
         Toast.makeText(getContext(), "You clicked number " + position, Toast.LENGTH_SHORT).show();
         bigSelectedIcon.setImageResource(position);
-        imageResource = position;
+        imageResource = iconName;
     }
 
     public interface OnInputSelected {
@@ -45,7 +45,7 @@ public class DialogFragmentIconSelect extends DialogFragment implements Recycler
     public OnInputSelected mOnInputSelected;
 
     public interface OnInputListener {
-        void sendInput(int input);
+        void sendInput(String input);
     }
 
     public OnInputListener mOnInputListener;
@@ -118,7 +118,7 @@ stockArr = stockList.toArray(stockArr);
         bSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (imageResource != 0) ;
+                if (!imageResource.equals("")) ;
                 mOnInputListener.sendInput(imageResource);
                 getDialog().dismiss();
             }

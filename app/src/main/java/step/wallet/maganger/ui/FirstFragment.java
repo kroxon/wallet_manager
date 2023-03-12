@@ -105,6 +105,7 @@ public class FirstFragment extends Fragment implements DialogFragmentTransaction
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), Category_Activity.class);
+//                Intent i = new Intent(getActivity(), Categories_Activity.class);
                 startActivity(i);
             }
         });

@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -57,6 +59,7 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         InfoRepository infoRepository = new InfoRepository();
         if (transactionsList.get(position).getTransactionDate().equals(currentDate)) {
             holder.myDate.setVisibility(View.GONE);
@@ -65,12 +68,19 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
             currentDate = transactionsList.get(position).getTransactionDate();
         }
         holder.myDate.setText(transactionsList.get(position).getTransactionDate());
-        holder.myIcon.setImageResource(Integer.parseInt(infoRepository.getIdCategoryIconById(transactionsList.get(position).getTransactionIdCategory())));
-        holder.myCategory.setText(infoRepository.getCategoryName(transactionsList.get(position).getTransactionIdCategory()));
         holder.myValue.setText(transactionsList.get(position).getTransactionValue());
         holder.myCurrency.setText("zł");
-
-        holder.myText.setText(infoRepository.getIdCategoryIconById(transactionsList.get(position).getTransactionIdCategory()));
+        if (transactionsList.get(position).getTransactionType().equals("expense")) {
+            holder.myValue.setText("- " + holder.myValue.getText().toString());
+            holder.myIcon.setImageResource(Integer.parseInt(infoRepository.getIdCategoryIconById(transactionsList.get(position).getTransactionIdCategory())));
+            holder.myCategory.setText(infoRepository.getCategoryName(transactionsList.get(position).getTransactionIdCategory()));
+        } else {
+            holder.myValue.setTextColor(Color.parseColor("#689F38"));
+            holder.myCurrency.setTextColor(Color.parseColor("#689F38"));
+            holder.myIcon.setVisibility(View.INVISIBLE);
+//            holder.myCategory.setVisibility(View.GONE);
+            holder.myCategory.setText("Income");
+        }
 
     }
 
@@ -93,9 +103,9 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
         TextView myCategory;
         TextView myValue;
         TextView myCurrency;
+        ConstraintLayout myHistoryList;
 //        int position = getAdapterPosition();
 
-        TextView myText;
         int position = getLayoutPosition();
         String s = "";
 
@@ -107,14 +117,13 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
             myValue = itemView.findViewById(R.id.historyValue);
             myCurrency = itemView.findViewById(R.id.historyCurrency);
             myIcon = itemView.findViewById(R.id.historyIcon);
-            myText = (TextView) itemView.findViewById(R.id.transactionSubcatRvTest);
+            myHistoryList = itemView.findViewById(R.id.historyListlayout);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, position, s);
-            myText.setBackgroundResource(R.drawable.subcat_recycleview_background_selected);
             notifyItemChanged(position);
         }
     }
