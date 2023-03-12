@@ -415,40 +415,19 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             Toast.makeText(this, "\"$newName\" already exists", Toast.LENGTH_SHORT).show()
     }
 
-    override fun ShareClicked(url: String?) {
-        var newUrl = url!!.substring(1)
-        val repository = InfoRepository()
-        if (url!!.get(0).equals('0')) {
-            Toast.makeText(
-                this,
-                newUrl + " " + spinner_toolbar!!.selectedItem.toString(), Toast.LENGTH_SHORT
-            ).show()
-            val repository = InfoRepository()
-            repository.removeSubategoryByName(
-                newUrl, repository.getIdCategory(spinner_toolbar!!.selectedItem.toString())
-            )
-            loadListViewSubcat(spinner_toolbar!!.selectedItemPosition)
-        } else {
-            Toast.makeText(
-                this,
-                newUrl + " edit " + spinner_toolbar!!.selectedItem.toString(), Toast.LENGTH_SHORT
-            ).show()
-
-            showEditItemDialog(
-                this@Category_Activity, newUrl,
-                repository.getIdCategory(spinner_toolbar!!.selectedItem.toString())!!
-            )
-//            loadListViewSubcat(spinner_toolbar!!.selectedItemPosition)
-        }
-//        loadListViewSubcat(spinner_toolbar!!.selectedItemPosition)
+    override fun ShareClicked(subcategorycatName: String?) {
         loadLVSubcategories(txtCategoryName!!.text.toString())
     }
 
     override fun sendInput(input: String) {
-        Toast.makeText(this, "send: " + input, Toast.LENGTH_SHORT).show()
         val repository = InfoRepository()
-        imgCategoryIcon?.setImageResource(repository.getIdDrawable(input))
-        repository.updateCategoryIcon(input, etCatName?.text.toString())
+        imgCatIcon?.setImageResource(repository.getIdDrawable(input))
+        repository.updateCategoryIcon(input, txtCategoryName?.text.toString())
+        loadLVSubcategories(txtCategoryName?.text.toString())
+        if (repository.allExpenseCategories!!.contains(txtCategoryName?.text.toString()))
+            loadRVExpenseCategories()
+        else
+            loadRVIncomeCategories()
     }
 
     private fun setSpinnerToolbarSelectedValue(spinner: Spinner, value: Any) {
@@ -462,40 +441,18 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     private fun showEditItemDialog(c: Context, oldSubcatrgory: String, idCategory: String) {
         val taskEditText = EditText(c)
+        taskEditText.setText(oldSubcatrgory)
         val dialog = AlertDialog.Builder(c)
             .setTitle("Edit subcategory name")
-            .setMessage("What do you want to do next?")
             .setView(taskEditText)
-            .setPositiveButton("Add") { dialog, which ->
-                val task = taskEditText.text.toString()
+            .setPositiveButton("Ok") { dialog, which ->
                 val repository = InfoRepository()
-
-                val labels: List<String> =
-                    repository.getSubcategories(repository.getIdCategory(spinner_toolbar!!.selectedItem.toString())) as List<String>
-                var flag = true
-                for (i in labels)
-                    if (i.equals(taskEditText.text.toString()))
-                        flag = false
-                if (flag == true) {
-                    repository.updateSubcategoryName(
-                        taskEditText.text.toString(),
-                        oldSubcatrgory,
-                        idCategory
-                    )
-                    Toast.makeText(
-                        this,
-                        taskEditText.text.toString() + " added",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                val labels: List<String> = repository.getSubcategories(repository.getIdCategory(txtCategoryName!!.toString())) as List<String>
+                if (!labels.contains(oldSubcatrgory)) {
+                    repository.updateSubcategoryName(taskEditText.text.toString(), oldSubcatrgory, idCategory)
+                    Toast.makeText(this, "Changed!", Toast.LENGTH_SHORT).show()
                 } else
-                    Toast.makeText(
-                        this,
-                        taskEditText.text.toString() + " already exists",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-//                repository.updateSubcategoryName(taskEditText.text.toString(), oldSubcatrgory, idCategory)
-                loadListViewSubcat(spinner_toolbar!!.selectedItemPosition)
+                    Toast.makeText(this, taskEditText.text.toString() + " already exists!", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("Cancel", null)
             .create()
@@ -528,9 +485,6 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         categoriesRVAdapter =
             RecyclerViewCategoryActivityAdapter(this, repository.allExpenseCategories, this)
         recyclerViewCategories!!.adapter = categoriesRVAdapter
-//        mainCatInfoLayout!!.visibility = View.GONE
-//        listViewSubcategories!!.visibility = View.GONE
-        categoriesRVAdapter.notifyDataSetChanged()
     }
 
     private fun loadRVIncomeCategories() {
@@ -538,9 +492,6 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         categoriesRVAdapter =
             RecyclerViewCategoryActivityAdapter(this, repository.allIncomeCategories, this)
         recyclerViewCategories!!.adapter = categoriesRVAdapter
-//        mainCatInfoLayout!!.visibility = View.GONE
-//        listViewSubcategories!!.visibility = View.GONE
-        categoriesRVAdapter.notifyDataSetChanged()
     }
 
     private fun loadLVSubcategories(catName: String) {
@@ -549,12 +500,7 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         var id = (repository.allCategories!!.indexOf(repository.getIdCategory(catName))).toString()
         val labels: List<String> =
             repository.getSubcategories(repository.getIdCategory(catName)) as List<String>
-        arrayAdapter =
-            ListViewVerticalAdapter(
-                this,
-                labels as ArrayList<String>?,
-                (repository.allCategories!!.indexOf(repository.getIdCategory(catName))).toString()
-            )
+        arrayAdapter = ListViewVerticalAdapter(this, labels as ArrayList<String>?, repository.getIdCategory(txtCategoryName!!.text.toString()))
         arrayAdapter.setOnShareClickedListener(this)
         listViewSubcategories!!.adapter = arrayAdapter
     }
@@ -848,6 +794,7 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         }
         btnAddSubcategory!!.setOnClickListener {
             etLayoutSubcategoryName?.visibility = View.VISIBLE
+            etSubcategoryName?.setText("")
             btnAddSubcategoryClear?.visibility = View.VISIBLE
             btnAddSubcategory?.visibility = View.GONE
         }
@@ -855,8 +802,12 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             etLayoutSubcategoryName?.visibility = View.INVISIBLE
             btnAddSubcategory?.visibility = View.VISIBLE
             btnAddSubcategoryClear?.visibility = View.GONE
-            val imm: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(btnAddSubcategoryClear!!.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN)
+            val imm: InputMethodManager =
+                getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(
+                btnAddSubcategoryClear!!.getWindowToken(),
+                InputMethodManager.RESULT_UNCHANGED_SHOWN
+            )
         }
         iconBckglayout!!.setOnClickListener {
             val dialog = DialogFragmentIconSelect()
@@ -869,7 +820,6 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         // Create an alert builder
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Nowa kategoria")
-
         val customLayout: View = layoutInflater.inflate(R.layout.ac_add_category_dialog, null)
         builder.setView(customLayout)
 
