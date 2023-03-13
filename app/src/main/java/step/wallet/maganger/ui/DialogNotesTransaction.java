@@ -63,7 +63,7 @@ public class DialogNotesTransaction extends DialogFragment {
             @Override
             public void onClick(View view) {
                 if (notesEt.getText().toString().equals(""))
-                    mOnInputSend.sendNotes("Notatki...");
+                    mOnInputSend.sendNotes(String.valueOf(R.string.d_tr_notes));
                 mOnInputSend.sendNotes(notesEt.getText().toString());
                 getDialog().dismiss();
             }

@@ -20,9 +20,15 @@
     <string name="profile">Profile</string>
     <string name="overview">Overview</string>
 
+    <string name="dialog_catname_rename">Category name:</string>
+
+    //dialog transaction
+    <string name="d_tr_notes">Notes...</string>
+
+
     //color picker
     <string name="colorpicker_dialog_cancel">Cancel</string>
-    <string name="colorpicker_dialog_ok">SAve</string>
+    <string name="colorpicker_dialog_ok">Save</string>
 
 
 

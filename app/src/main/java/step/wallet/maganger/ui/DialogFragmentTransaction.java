@@ -211,8 +211,8 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         }
 
 
-        iconCategorySelected.setImageResource(repository.getIdCategoryIcon(repository.getAllCategories().get(0)));
-        categoryNameSelected.setText(repository.getAllCategories().get(0));
+        categoryNameSelected.setText(repository.getAllExpenseCategories().get(0));
+        iconCategorySelected.setImageResource(repository.getIdCategoryIcon(categoryNameSelected.getText().toString()));
 
         // Category Spinner Drop down elements
         dTCatSpinner = (Spinner) view.findViewById(R.id.dTransactionCatSpinner);
@@ -286,6 +286,10 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             @Override
             public void onClick(View view) {
                 DialogFragmentCategorySelect dialog = new DialogFragmentCategorySelect();
+                if (expensesTv.getCurrentTextColor() == getResources().getColor(R.color.white))
+                    dialog.setValue("expense");
+                else
+                    dialog.setValue("income");
                 dialog.setTargetFragment(DialogFragmentTransaction.this, 1);
                 dialog.show(getFragmentManager(), "DialogFragmentCategorySelect");
             }
@@ -296,9 +300,16 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             public void onClick(View view) {
                 incomeUnderline.setVisibility(View.INVISIBLE);
                 expensesUnderline.setVisibility(View.VISIBLE);
-                expensesTv.setTextColor(Color.WHITE);
                 incomeTv.setTextColor(Color.parseColor("#C1BFBF"));
                 conLayTrCatSelct.setVisibility(View.VISIBLE);
+                if (expensesTv.getCurrentTextColor() != getResources().getColor(R.color.white)) {
+                    categoryNameSelected.setText(repository.getAllExpenseCategories().get(0));
+                    iconCategorySelected.setImageResource(repository.getIdCategoryIcon(categoryNameSelected.getText().toString()));
+                    List<String> list = repository.getSubcategories(repository.getIdCategory(categoryNameSelected.getText().toString()));
+                    String[] array = list.toArray(new String[0]);
+                    loadSubcatRecycleViewer(getContext(), array);
+                }
+                expensesTv.setTextColor(Color.WHITE);
                 plusMinusTv.setText("-");
                 writeType = "expense";
             }
@@ -309,9 +320,16 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             public void onClick(View view) {
                 expensesUnderline.setVisibility(View.INVISIBLE);
                 incomeUnderline.setVisibility(View.VISIBLE);
-                incomeTv.setTextColor(Color.WHITE);
                 expensesTv.setTextColor(Color.parseColor("#C1BFBF"));
-                conLayTrCatSelct.setVisibility(View.GONE);
+                conLayTrCatSelct.setVisibility(View.VISIBLE);
+                if (incomeTv.getCurrentTextColor() != getResources().getColor(R.color.white)) {
+                    categoryNameSelected.setText(repository.getAllIncomeCategories().get(0));
+                    iconCategorySelected.setImageResource(repository.getIdCategoryIcon(categoryNameSelected.getText().toString()));
+                    List<String> list = repository.getSubcategories(repository.getIdCategory(categoryNameSelected.getText().toString()));
+                    String[] array = list.toArray(new String[0]);
+                    loadSubcatRecycleViewer(getContext(), array);
+                }
+                incomeTv.setTextColor(Color.WHITE);
                 plusMinusTv.setText("+");
                 writeType = "income";
             }
