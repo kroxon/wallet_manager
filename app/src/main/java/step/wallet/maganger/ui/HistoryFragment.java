@@ -81,12 +81,6 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
 
 
 
-        testTextView = (TextView) view.findViewById(R.id.testTextView);
-
-        for (int i = 0; i < 2; i++){
-            testTextView.setText(testTextView.getText().toString() + "transaction Id: " + transactions.get(i).getTransactionId());
-        }
-
 //        recyclerViewTransactions = (RecyclerView) view.findViewById(R.id.historyTransactionList);
 //        recyclerViewTransactions.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 //        adapter = new ListViewVerticalHistoryAdapter(getContext(), transactions);

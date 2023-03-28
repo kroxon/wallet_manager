@@ -29,14 +29,6 @@
             android:background="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/historyFilter"></androidx.recyclerview.widget.RecyclerView>
 
-        <TextView
-            android:id="@+id/testTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="test"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/historyTransactionList"></TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

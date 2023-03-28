@@ -281,10 +281,11 @@
             android:layout_width="wrap_content"
             android:layout_height="70dp"
             android:layout_gravity="center_horizontal"
-            android:padding="5dp"
+            android:paddingTop="5dp"
+            android:foregroundGravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/trIconCategory"></androidx.recyclerview.widget.RecyclerView>
+            app:layout_constraintTop_toBottomOf="@+id/trNameCategory"></androidx.recyclerview.widget.RecyclerView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -293,15 +294,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
+        android:elevation="2dp"
         android:clickable="true"
         android:gravity="center"
         android:maxLines="3"
         android:minHeight="40dp"
-        android:text="Notatki..."
         android:textColor="@color/white"
         android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4">
+    </TextView>
 
+    <TextView
+        android:id="@+id/trNotesTvBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:maxLines="3"
+        android:minHeight="40dp"
+        android:text="@string/d_tr_notes"
+        android:textColor="@color/white"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4">
     </TextView>
 
 

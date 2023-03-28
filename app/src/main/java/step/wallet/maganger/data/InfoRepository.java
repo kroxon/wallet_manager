@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -442,7 +443,13 @@ public class InfoRepository {
                 }
             } while (cursor.moveToNext());
         }
-        Collections.sort(transactionsList, Collections.reverseOrder());
+
+//        Collections.sort(transactionsList, new Comparator<Transaction>() {
+//            public int compare(Transaction lhs, Transaction rhs) {
+//                return (lhs.getTransactionDateFormat().compareTo(rhs.getTransactionDateFormat()));
+//            }
+//        });
+        Collections.sort(transactionsList);
         return transactionsList;
     }
 }

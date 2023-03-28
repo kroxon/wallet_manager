@@ -31,7 +31,7 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
     ArrayList<Transaction> transactionsList;
     Context context;
     private LayoutInflater mInflater;
-    public String currentDate;
+    public String currentDate = "";
     private int selectedItem;
     private ItemClickListener mClickListener;
 
@@ -77,9 +77,8 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
         } else {
             holder.myValue.setTextColor(Color.parseColor("#689F38"));
             holder.myCurrency.setTextColor(Color.parseColor("#689F38"));
-            holder.myIcon.setVisibility(View.INVISIBLE);
-//            holder.myCategory.setVisibility(View.GONE);
-            holder.myCategory.setText("Income");
+            holder.myIcon.setImageResource(Integer.parseInt(infoRepository.getIdCategoryIconById(transactionsList.get(position).getTransactionIdCategory())));
+            holder.myCategory.setText(infoRepository.getCategoryName(transactionsList.get(position).getTransactionIdCategory()));
         }
 
     }
