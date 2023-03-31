@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -42,9 +44,9 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
 
     private OnFragmentInteractionListener mListener;
     private ListViewVerticalHistoryAdapter adapter;
-//    private HorizontalSubcatRecylerviewAdapter adapter;
     private RecyclerView recyclerViewTransactions;
     ArrayList<Transaction> transactions;
+    private ImageView btnFilter;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -66,6 +68,7 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         InfoRepository infoRepository = new InfoRepository();
         transactions = infoRepository.readTransactions("0");
 
+        btnFilter = view.findViewById(R.id.btnHistoryFilter);
 
         //start test
         recyclerViewTransactions = (RecyclerView) view.findViewById(R.id.historyTransactionList);
@@ -80,39 +83,18 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         recyclerViewTransactions.setAdapter(adapter);
 
 
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragmentFilterTransaction dialog = new DialogFragmentFilterTransaction();
+                dialog.setTargetFragment(HistoryFragment.this, 1);
+                dialog.show(getFragmentManager(), "DialogFragmentFilterTra");
+            }
+        });
 
-//        recyclerViewTransactions = (RecyclerView) view.findViewById(R.id.historyTransactionList);
-//        recyclerViewTransactions.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-//        adapter = new ListViewVerticalHistoryAdapter(getContext(), transactions);
-////        adapter.setClickListener(this);
-//        recyclerViewTransactions.setAdapter(adapter);
 
         return view;
     }
-
-//    @Override
-//    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//
-//    }
-
-    //    public void loadListTransaction(Context context, ArrayAdapter<Transaction> arrayList) {
-//        adapter = new ListViewVerticalHistoryAdapter(context, arrayList);
-//        recyclerViewTransactions.setAdapter(adapter);
-//
-//    }
-    /*
-        fun loadListViewSubcat(position: Int) {
-        val arrayAdapter: ListViewVerticalAdapter
-        val repository = InfoRepository()
-        val labels: List<String> =
-            repository.getSubcategories(repository.getIdCategory(selectegCategory)) as List<String>
-        arrayAdapter =
-            ListViewVerticalAdapter(this, labels as ArrayList<String>?, "" + (position + 1))
-        arrayAdapter.setOnShareClickedListener(this)
-        listView!!.adapter = arrayAdapter
-    }
-     */
 
     @Override
     public void onAttach(Context context) {
@@ -120,10 +102,7 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         }
-//        else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
+
     }
 
     @Override
@@ -142,16 +121,5 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         void messageFromChildFragment(Uri uri);
     }
 
-    public void loadListTransactions() {
-//            adapter = new ListViewVerticalHistoryAdapter();
 
-//        val arrayAdapter:ListViewVerticalAdapter
-//        val repository = InfoRepository()
-//        val labels:List<String> =
-//        repository.getSubcategories(repository.getIdCategory(selectegCategory)) as List<String>
-//                arrayAdapter =
-//                ListViewVerticalAdapter(this, labels as ArrayList<String>?, "" + (position + 1))
-//        arrayAdapter.setOnShareClickedListener(this)
-//        listView!!.adapter = arrayAdapter
-    }
 }

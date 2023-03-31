@@ -281,7 +281,7 @@
             android:layout_width="wrap_content"
             android:layout_height="70dp"
             android:layout_gravity="center_horizontal"
-            android:paddingTop="5dp"
+            android:padding="5dp"
             android:foregroundGravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

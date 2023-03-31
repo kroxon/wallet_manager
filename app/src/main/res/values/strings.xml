@@ -31,6 +31,24 @@
     <string name="colorpicker_dialog_ok">Save</string>
 
 
+    //history transaction
+    <string name="filter_save">Save</string>
+    <string name="filter_cancel">Cancel</string>
+    <string name="filter_amount">Amount</string>
+    <string name="filter_currency">Currency</string>
+    <string name="filter_period">Period</string>
+    <string name="filter_type_operation">Type of operation</string>
+    <string name="filter_account">Account</string>
+    <string name="filter_from">From</string>
+    <string name="filter_to">To</string>
+    <string name="filter_date_start">Start</string>
+    <string name="filter_date_end">End</string>
+    <string name="filter_type_debits">Debits</string>
+    <string name="filter_type_all">All</string>
+    <string name="filter_type_credits">Credits</string>
+
+
+
 
     // default categories
 
