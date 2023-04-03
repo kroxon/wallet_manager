@@ -47,7 +47,12 @@
     <string name="filter_type_all">All</string>
     <string name="filter_type_credits">Credits</string>
 
-
+    <string-array name="periods">
+        <item>LAST WEEK</item>
+        <item>LAST MONTH</item>
+        <item>LAST YEAR</item>
+        <item>CUSTOM SELECTION</item>
+    </string-array>
 
 
     // default categories
