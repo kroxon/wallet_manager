@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import step.wallet.maganger.R;
@@ -34,7 +35,6 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
     private OnFragmentInteractionListener mListener;
     private ListViewVerticalHistoryAdapter adapter;
     private RecyclerView recyclerViewTransactions;
-    ArrayList<Transaction> transactions;
     private ImageView btnFilter;
     private Button btnTest;
 
@@ -65,24 +65,14 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
-        InfoRepository infoRepository = new InfoRepository();
-        transactions = infoRepository.readTransactions("0");
-
         btnFilter = view.findViewById(R.id.btnHistoryFilter);
         btnTest = view.findViewById(R.id.btnHistoryTest);
 
         //start test
         recyclerViewTransactions = (RecyclerView) view.findViewById(R.id.historyTransactionList);
         recyclerViewTransactions.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-//
-        List<String> cats = new ArrayList<String>();
-        cats = infoRepository.getAllCategories();
-        List <String> subcategoriesList = infoRepository.getSubcategories(infoRepository.getIdCategory(cats.get(0)));
-        String [] subcats = subcategoriesList.toArray(new String[0]);
-        adapter = new ListViewVerticalHistoryAdapter(getActivity(), transactions);
-        adapter.setClickListener(this);
-        recyclerViewTransactions.setAdapter(adapter);
 
+        loadTransaciotns();
 
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,8 +87,7 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "received: " + pAmountFrom +"\n" + pAmountTo +"\n" + pCurrency +"\n" + pPeriod +"\n"
-                        + pPeriodFrom +"\n" + pPeriodTo +"\n" + pTypeOperation +"\n" + pAccount, Toast.LENGTH_LONG);
+                loadTransaciotns();
             }
         });
 
@@ -136,7 +125,8 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         pPeriodTo = sPeriodTo;
         pTypeOperation = sTypeOper;
         pAccount = sAccount;
-        Toast.makeText(getContext(), "received: " + pAmountFrom  + pAmountTo + pCurrency + pPeriod + pPeriodFrom + pPeriodTo + pTypeOperation + pAccount, Toast.LENGTH_LONG);
+        Toast.makeText(getContext(), "received: " + pAmountFrom + pAmountTo + pCurrency + pPeriod + pPeriodFrom + pPeriodTo + pTypeOperation + pAccount, Toast.LENGTH_LONG);
+        loadSpecificTransaciotns();
     }
 
     public interface OnFragmentInteractionListener {
@@ -144,5 +134,45 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         void messageFromChildFragment(Uri uri);
     }
 
+    private void loadTransaciotns() {
+        // on below line we are initializing adapter
+        List<String> cats = new ArrayList<String>();
+        InfoRepository infoRepository = new InfoRepository();
+        ArrayList<Transaction> transactions;
+        transactions = infoRepository.readTransactions("0");
+
+        adapter = new ListViewVerticalHistoryAdapter(getActivity(), transactions);
+        adapter.setClickListener(this);
+        recyclerViewTransactions.setAdapter(adapter);
+    }
+
+    private void loadSpecificTransaciotns() {
+        // on below line we are initializing adapter
+        List<String> cats = new ArrayList<String>();
+        InfoRepository infoRepository = new InfoRepository();
+        ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+        ArrayList<Transaction> transactions2;
+
+        if (pTypeOperation.equals("All")) {
+            transactions = infoRepository.getSpecificTransactions("0", pAmountFrom, pAmountTo, "PLN", pPeriodFrom, pPeriodTo, "expense");
+            transactions2 = infoRepository.getSpecificTransactions("0", pAmountFrom, pAmountTo, "PLN", pPeriodFrom, pPeriodTo, "income");
+            transactions.addAll(transactions2);
+
+            transactions.sort((e1, e2) -> new Long(e1.getTransactionDateFormat()).compareTo(new Long(e2.getTransactionDateFormat())));
+            Collections.reverse(transactions);
+        }
+        if (pTypeOperation.equals("debit")) {
+            transactions = infoRepository.getSpecificTransactions("0", pAmountFrom, pAmountTo, "PLN", pPeriodFrom, pPeriodTo, "expense");
+        }
+        if (pTypeOperation.equals("credit")) {
+            transactions = infoRepository.getSpecificTransactions("0", pAmountFrom, pAmountTo, "PLN", pPeriodFrom, pPeriodTo, "income");
+        }
+
+
+
+        adapter = new ListViewVerticalHistoryAdapter(getActivity(), transactions);
+        adapter.setClickListener(this);
+        recyclerViewTransactions.setAdapter(adapter);
+    }
 
 }

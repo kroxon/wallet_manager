@@ -1,13 +1,9 @@
 package step.wallet.maganger.classes;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
-import step.wallet.maganger.data.InfoRepository;
 
 public class Transaction {
     private String transactionId;
@@ -17,6 +13,7 @@ public class Transaction {
     private String transactionDate;
     private String transactionDateFormat;
     private String idAccount;
+    private String curency;
     private String transactionNote1;
     private String transactionNote2;
     private String transactionPhoto;
@@ -24,6 +21,7 @@ public class Transaction {
 
     public Transaction() {
         this.idAccount = new String();
+        this.curency = new String();
         this.transactionId = new String();
         this.transactionValue = new String();
         this.transactionIdCategory = new String();
@@ -55,9 +53,12 @@ public class Transaction {
         this.transactionDate = transactionDate;
     }
 
-
     public void setIdAccount(String idAccount) {
         this.idAccount = idAccount;
+    }
+
+    public void setTransactionCurency(String curency) {
+        this.curency = curency;
     }
 
     public void setTransactionNote1(String transactionNote1) {
@@ -103,6 +104,10 @@ public class Transaction {
 
     public String getIdAccount() {
         return idAccount;
+    }
+
+    public String getCurency() {
+        return curency;
     }
 
     public String getTransactionNote1() {

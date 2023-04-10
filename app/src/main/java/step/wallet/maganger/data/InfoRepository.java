@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -37,6 +36,7 @@ public class InfoRepository {
         values.put(DBConstants.COL_TRANSACTION_DATE, date);
         values.put(DBConstants.COL_TRANSACTION_VALUE, amount);
         values.put(DBConstants.COL_TRANSACTION_ID_ACC, id_account);
+        values.put(DBConstants.COL_TRANSACTION_CURRENCY, "PLN");
         values.put(DBConstants.COL_TRANSACTION_NOTE_1, note_1);
         values.put(DBConstants.COL_TRANSACTION_NOTE_2, note_2);
         values.put(DBConstants.COL_TRANSACTION_PHOTO, photo);
@@ -436,20 +436,52 @@ public class InfoRepository {
                     transaction.setTransactionIdCategory(cursor.getString(2));
                     transaction.setTransactionIdSubcategory(cursor.getString(3));
                     transaction.setTransactionDate(cursor.getString(4));
-                    transaction.setTransactionNote1(cursor.getString(6));
-                    transaction.setTransactionNote2(cursor.getString(7));
-                    transaction.setTransactionPhoto(cursor.getString(8));
-                    transaction.setTransactionType(cursor.getString(9));
+                    transaction.setTransactionCurency(cursor.getString(6));
+                    transaction.setTransactionNote1(cursor.getString(7));
+                    transaction.setTransactionNote2(cursor.getString(8));
+                    transaction.setTransactionPhoto(cursor.getString(9));
+                    transaction.setTransactionType(cursor.getString(10));
                     transactionsList.add(transaction);
                 }
             } while (cursor.moveToNext());
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            transactionsList.sort((e1, e2) -> new Long(e1.getTransactionDateFormat()).compareTo(new Long(e2.getTransactionDateFormat())));
+        }
+        Collections.reverse(transactionsList);
+        return transactionsList;
+    }
 
-//        Collections.sort(transactionsList, new Comparator<Transaction>() {
-//            public int compare(Transaction lhs, Transaction rhs) {
-//                return (lhs.getTransactionDateFormat().compareTo(rhs.getTransactionDateFormat()));
-//            }
-//        });
+    // getting specific transactions
+    public ArrayList<Transaction> getSpecificTransactions(String idAccount, double amountFrom, double amountTo, String currency, long startDate, long endDate, String typeOperation) {
+        ArrayList<Transaction> transactionsList = new ArrayList<Transaction>();
+
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_TRANSACTION + " WHERE " + DBConstants.COL_TRANSACTION_ID_ACC + " = '" + idAccount
+                + "' AND " + DBConstants.COL_TRANSACTION_VALUE + " > '"  + amountFrom + "' AND " + DBConstants.COL_TRANSACTION_VALUE + " < '" + amountTo
+                + "' AND " + DBConstants.COL_TRANSACTION_CURRENCY + " = '" + currency + "' AND " + DBConstants.COL_TRANSACTION_DATE + " > '" + startDate
+                + "' AND " + DBConstants.COL_TRANSACTION_DATE + " < '" + endDate + "' AND " + DBConstants.COL_TRANSACTION_TYPE + " = '" + typeOperation + "'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and search for ID Accout
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(5).equals(idAccount)) {
+                    Transaction transaction = new Transaction();
+                    transaction.setTransactionId(cursor.getString(0));
+                    transaction.setTransactionValue(cursor.getString(1));
+                    transaction.setTransactionIdCategory(cursor.getString(2));
+                    transaction.setTransactionIdSubcategory(cursor.getString(3));
+                    transaction.setTransactionDate(cursor.getString(4));
+                    transaction.setTransactionCurency(cursor.getString(6));
+                    transaction.setTransactionNote1(cursor.getString(7));
+                    transaction.setTransactionNote2(cursor.getString(8));
+                    transaction.setTransactionPhoto(cursor.getString(9));
+                    transaction.setTransactionType(cursor.getString(10));
+                    transactionsList.add(transaction);
+                }
+            } while (cursor.moveToNext());
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             transactionsList.sort((e1, e2) -> new Long(e1.getTransactionDateFormat()).compareTo(new Long(e2.getTransactionDateFormat())));
         }
