@@ -2,51 +2,51 @@ package step.wallet.maganger.ui;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.graphics.Movie;
-import android.icu.text.IDNA;
 import android.net.Uri;
 import android.os.Bundle;
 
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.api.client.util.DateTime;
+import org.jetbrains.annotations.NotNull;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import step.wallet.maganger.R;
-import step.wallet.maganger.adapters.HorizontalSubcatRecylerviewAdapter;
-import step.wallet.maganger.adapters.ListViewVerticalAdapter;
 import step.wallet.maganger.adapters.ListViewVerticalHistoryAdapter;
 import step.wallet.maganger.classes.Transaction;
 import step.wallet.maganger.data.InfoRepository;
 
-public class HistoryFragment extends Fragment implements ListViewVerticalHistoryAdapter.ItemClickListener {
+public class HistoryFragment extends Fragment implements ListViewVerticalHistoryAdapter.ItemClickListener, DialogFragmentFilterHistoryTransaction.OnInputSend {
 
     private OnFragmentInteractionListener mListener;
     private ListViewVerticalHistoryAdapter adapter;
     private RecyclerView recyclerViewTransactions;
     ArrayList<Transaction> transactions;
     private ImageView btnFilter;
+    private Button btnTest;
+
+    // ititial filter
+    private double pAmountFrom = 0.0;
+    private double pAmountTo = 99999999.99;
+    private String pCurrency = "0";
+    private String pPeriod = "0";
+    private Long pPeriodFrom = Long.valueOf(0);
+    private Long pPeriodTo = Long.valueOf(0);
+    private String pTypeOperation = "All";
+    private String pAccount = "0";
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -69,6 +69,7 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         transactions = infoRepository.readTransactions("0");
 
         btnFilter = view.findViewById(R.id.btnHistoryFilter);
+        btnTest = view.findViewById(R.id.btnHistoryTest);
 
         //start test
         recyclerViewTransactions = (RecyclerView) view.findViewById(R.id.historyTransactionList);
@@ -86,9 +87,18 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragmentFilterTransaction dialog = new DialogFragmentFilterTransaction();
+                DialogFragmentFilterHistoryTransaction dialog = new DialogFragmentFilterHistoryTransaction();
+                dialog.setValue(pAmountFrom, pAmountTo, pCurrency, pPeriod, pPeriodFrom, pPeriodTo, pTypeOperation, pAccount);
                 dialog.setTargetFragment(HistoryFragment.this, 1);
                 dialog.show(getFragmentManager(), "DialogFragmentFilterTra");
+            }
+        });
+
+        btnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "received: " + pAmountFrom +"\n" + pAmountTo +"\n" + pCurrency +"\n" + pPeriod +"\n"
+                        + pPeriodFrom +"\n" + pPeriodTo +"\n" + pTypeOperation +"\n" + pAccount, Toast.LENGTH_LONG);
             }
         });
 
@@ -114,6 +124,19 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
     @Override
     public void onItemClick(View view, int position, String s) {
 
+    }
+
+    @Override
+    public void sendData(double sAmountFrom, double sAmountTo, @NotNull String sCurrency, @NonNull String sPeriod, @org.jetbrains.annotations.Nullable Long sPeriodFrom, @org.jetbrains.annotations.Nullable Long sPeriodTo, @NotNull String sTypeOper, @NotNull String sAccount) {
+        pAmountFrom = sAmountFrom;
+        pAmountTo = sAmountTo;
+        pCurrency = sCurrency;
+        pPeriod = sPeriod;
+        pPeriodFrom = sPeriodFrom;
+        pPeriodTo = sPeriodTo;
+        pTypeOperation = sTypeOper;
+        pAccount = sAccount;
+        Toast.makeText(getContext(), "received: " + pAmountFrom  + pAmountTo + pCurrency + pPeriod + pPeriodFrom + pPeriodTo + pTypeOperation + pAccount, Toast.LENGTH_LONG);
     }
 
     public interface OnFragmentInteractionListener {

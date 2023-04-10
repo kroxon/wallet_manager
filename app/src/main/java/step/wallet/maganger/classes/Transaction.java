@@ -9,7 +9,7 @@ import java.util.Date;
 
 import step.wallet.maganger.data.InfoRepository;
 
-public class Transaction implements Comparable<Transaction> {
+public class Transaction {
     private String transactionId;
     private String transactionValue;
     private String transactionIdCategory;
@@ -53,18 +53,8 @@ public class Transaction implements Comparable<Transaction> {
 
     public void setTransactionDate(String transactionDate) {
         this.transactionDate = transactionDate;
-//        setTransactionDateFormat(transactionDate);
     }
 
-//    public void setTransactionDateFormat(String transactionDateFormat) {
-//        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-//        try {
-//            Date date = formatter.parse(transactionDateFormat);
-//            this.transactionDateFormat = date;
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     public void setIdAccount(String idAccount) {
         this.idAccount = idAccount;
@@ -108,7 +98,7 @@ public class Transaction implements Comparable<Transaction> {
     }
 
     public long getTransactionDateFormat() {
-        return Integer.parseInt(transactionDate);
+        return Long.parseLong(transactionDate);
     }
 
     public String getIdAccount() {
@@ -155,11 +145,5 @@ public class Transaction implements Comparable<Transaction> {
         return formatter.format(calendar.getTime());
     }
 
-    @Override
-    public int compareTo(Transaction transaction) {
-        long compareDate = Long.parseLong(((Transaction)transaction).transactionDate);
-        long compareDate0 =  Long.parseLong(this.transactionDate);
-        return (int) (compareDate - compareDate0);
-    }
 
 }

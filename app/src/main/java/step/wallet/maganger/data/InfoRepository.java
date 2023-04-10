@@ -3,6 +3,7 @@ package step.wallet.maganger.data;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -449,7 +450,10 @@ public class InfoRepository {
 //                return (lhs.getTransactionDateFormat().compareTo(rhs.getTransactionDateFormat()));
 //            }
 //        });
-        Collections.sort(transactionsList);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            transactionsList.sort((e1, e2) -> new Long(e1.getTransactionDateFormat()).compareTo(new Long(e2.getTransactionDateFormat())));
+        }
+        Collections.reverse(transactionsList);
         return transactionsList;
     }
 }

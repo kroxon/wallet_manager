@@ -34,8 +34,10 @@
     //history transaction
     <string name="filter_save">Save</string>
     <string name="filter_cancel">Cancel</string>
+    <string name="filter_clear">Clear</string>
     <string name="filter_amount">Amount</string>
     <string name="filter_currency">Currency</string>
+    <string name="filter_currency_all">All</string>
     <string name="filter_period">Period</string>
     <string name="filter_type_operation">Type of operation</string>
     <string name="filter_account">Account</string>
@@ -48,10 +50,11 @@
     <string name="filter_type_credits">Credits</string>
 
     <string-array name="periods">
+        <item>FULL TIME</item>
         <item>LAST WEEK</item>
         <item>LAST MONTH</item>
         <item>LAST YEAR</item>
-        <item>CUSTOM SELECTION</item>
+        <item>OTHER</item>
     </string-array>
 
 
