@@ -58,6 +58,12 @@
     </string-array>
 
 
+    // account fragment
+    <string name="account">Accounts</string>
+    <string name="new_account">New account</string>
+    <string name="primary_account">Primary account</string>
+
+
     // default categories
 
     <string-array name="categories">
