@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutDialogContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        android:descendantFocusability="beforeDescendants"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/hTrFilterSavingLayout"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <AutoCompleteTextView
+                android:layout_width="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="0dp"
+                android:focusableInTouchMode="true"
+                android:focusable="true">
+            </AutoCompleteTextView>
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filter_amount"
+                android:textColor="@color/olx_color_1"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/hTrFilterAmountFrom"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:textCursorDrawable="@color/colorApp1"
+                app:hintTextColor="@color/olx_color_1"
+                app:boxStrokeColor="@color/olx_color_1"
+                app:layout_constraintEnd_toStartOf="@+id/textView7"
+                app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/hTrEtAmountFrom"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/filter_from"
+                    android:backgroundTint="@color/olx_color_1"
+                    android:inputType="numberDecimal"
+                    android:maxLength="7"
+                    android:maxLines="3"
+                    android:paddingLeft="10dp"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/hTrFilterAmountFrom"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView5"
+                app:layout_constraintTop_toTopOf="@+id/hTrFilterAmountFrom"></TextView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/hTrFilterAmountTo"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:textCursorDrawable="@color/colorApp1"
+                app:hintTextColor="@color/olx_color_1"
+                android:backgroundTint="@color/olx_color_1"
+                app:layout_constraintStart_toEndOf="@+id/textView7"
+                app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/hTrEtAmountTo"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/filter_to"
+                    android:backgroundTint="@color/olx_color_1"
+                    android:inputType="numberDecimal"
+                    android:maxLength="7"
+                    android:maxLines="3"
+                    android:paddingLeft="10dp"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:elevation="5dp"
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/filter_currency"
+                android:textColor="@color/olx_color_1"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hTrFilterAmountFrom"></TextView>
+
+            <Spinner
+                android:id="@+id/hTrFilterCurrencyACTv"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                app:boxStrokeColor="@color/olx_color_1"
+                app:layout_constraintTop_toBottomOf="@+id/textView8">
+
+<!--                <AutoCompleteTextView-->
+<!--                    android:id="@+id/hTrFilterCurrencyACTv"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:backgroundTint="@color/olx_color_1"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="center"-->
+<!--                    android:inputType="none"/>-->
+            </Spinner>
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/hTrFilterCurrency"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="20dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:boxStrokeColor="@color/olx_color_1"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/textView8">-->
+
+<!--                <AutoCompleteTextView-->
+<!--                    android:id="@+id/hTrFilterCurrencyACTv"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:backgroundTint="@color/olx_color_1"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="center"-->
+<!--                    android:inputType="none"/>-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/filter_period"
+                android:textColor="@color/olx_color_1"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hTrFilterCurrencyACTv"></TextView>
+
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/hTrFilterPeriod"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:boxStrokeColor="@color/olx_color_1"-->
+<!--                android:layout_marginHorizontal="20dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/textView9">-->
+
+<!--                <AutoCompleteTextView-->
+<!--                    android:id="@+id/hTrFilterPeriodACTv"-->
+<!--                    android:backgroundTint="@color/olx_color_1"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="center"-->
+<!--                    android:inputType="none"/>-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+            <Spinner
+                android:elevation="10dp"
+                android:id="@+id/hTrFilterPeriodACTv"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                app:boxStrokeColor="@color/olx_color_1"
+                app:layout_constraintTop_toBottomOf="@+id/textView9"
+                tools:layout_editor_absoluteX="20dp">
+
+                <!--                <AutoCompleteTextView-->
+                <!--                    android:id="@+id/hTrFilterPeriodACTv"-->
+                <!--                    android:backgroundTint="@color/olx_color_1"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:gravity="center"-->
+                <!--                    android:inputType="none"/>-->
+            </Spinner>
+
+            <LinearLayout
+                android:id="@+id/hTrFilterCustomDateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="5dp"
+                android:weightSum="21"
+                app:layout_constraintTop_toBottomOf="@+id/hTrFilterPeriodACTv">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/hTrFilterDateStart"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="10"
+                    android:clickable="true"
+                    android:textCursorDrawable="@color/olx_color_1"
+                    app:boxStrokeColor="@color/olx_color_1"
+                    app:startIconDrawable="@drawable/ic_calendar"
+                    app:startIconTint="@color/olx_color_1">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/hTrFilterDateStartInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:clickable="true"
+                        android:inputType="none"
+                        android:text="-"
+                        android:textColor="@color/olx_color_1"
+                        android:textSize="12sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textSize="24sp"></TextView>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/hTrFilterDateEnd"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="10"
+                    android:clickable="true"
+                    android:textCursorDrawable="@color/olx_color_1"
+                    app:boxStrokeColor="@color/olx_color_1"
+                    app:startIconDrawable="@drawable/ic_calendar"
+                    app:startIconTint="@color/olx_color_1">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/hTrFilterDateEndInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:inputType="none"
+                        android:text="-"
+                        android:textColor="@color/olx_color_1"
+                        android:textSize="12sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/filter_type_operation"
+                android:textColor="@color/olx_color_1"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hTrFilterCustomDateLayout"></TextView>
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/filter_type_all"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView11"></TextView>
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/filter_type_debits"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView12"></TextView>
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/filter_type_credits"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView13"></TextView>
+
+            <CheckBox
+                android:id="@+id/hTrCheckBoxAll"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginRight="30dp"
+                android:buttonTint="@color/olx_color_1"
+                app:layout_constraintBottom_toBottomOf="@+id/textView12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView12" />
+
+            <CheckBox
+                android:id="@+id/hTrCheckBoxDebits"
+                android:buttonTint="@color/olx_color_1"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginRight="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView13" />
+
+            <CheckBox
+                android:id="@+id/hTrCheckBoxCredits"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:buttonTint="@color/olx_color_1"
+                android:layout_marginRight="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView14" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/filter_account"
+                android:textColor="@color/olx_color_1"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView14"></TextView>
+
+            <Spinner
+                android:elevation="3dp"
+                android:id="@+id/hTrFilterAccountACTv"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:gravity="center"
+                app:boxStrokeColor="@color/olx_color_1"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/textView15">
+
+<!--                <AutoCompleteTextView-->
+<!--                    android:id="@+id/hTrFilterAccountACTv"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:inputType="none" />-->
+            </Spinner>
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/hTrFilterAccount"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="20dp"-->
+<!--                android:hint="Account 1"-->
+<!--                app:boxStrokeColor="@color/olx_color_1"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/textView15">-->
+
+<!--                <AutoCompleteTextView-->
+<!--                    android:id="@+id/hTrFilterAccountACTv"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:inputType="none" />-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+            <LinearLayout
+                android:layout_marginTop="100dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/hTrFilterAccountACTv"></LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/hTrFilterSavingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/olx_color_1">
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginLeft="50dp"
+            android:id="@+id/hTrFilterClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_clear"
+            android:textAllCaps="true"
+            android:textColor="#D50000"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <TextView
+            android:id="@+id/hTrFilterCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:text="@string/filter_cancel"
+            android:textAllCaps="true"
+            android:textColor="@color/olx_color_1"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/hTrFilterSave"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+
+        <TextView
+            android:id="@+id/hTrFilterSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="40dp"
+            android:text="@string/filter_save"
+            android:textAllCaps="true"
+            android:textColor="@color/olx_color_1"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
