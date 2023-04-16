@@ -14,32 +14,63 @@
         android:layout_centerVertical="true"
         android:text="@string/primary_account"
         android:textColor="@color/olx_color_1"
-        android:textSize="20sp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></TextView>
 
     <ImageView
-        android:clickable="true"
         android:id="@+id/accountOption"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:clickable="true"
         android:src="@drawable/ic_more_options"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/olx_color_1"></ImageView>
 
+
+    <TextView
+        android:id="@+id/accountDescriptionTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="@string/description"
+        android:maxLength="30"
+        android:maxLines="1"
+        android:maxWidth="200dp"
+        android:textColor="@color/olx_color_1"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountNameTxt"></TextView>
+
+
     <TextView
         android:id="@+id/accountBalanceTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_centerVertical="true"
-        android:text="-104 567 PLN"
+        android:text="-104 567"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accountNameTxt"></TextView>
+        app:layout_constraintTop_toBottomOf="@+id/accountDescriptionTxt"></TextView>
+
+    <TextView
+        android:id="@+id/accountCurrencyTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8dp"
+        android:text=" zł"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/accountBalanceTxt"
+        app:layout_constraintStart_toEndOf="@+id/accountBalanceTxt"
+        app:layout_constraintTop_toTopOf="@+id/accountBalanceTxt"></TextView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

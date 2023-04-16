@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Random;
 
 import step.wallet.maganger.R;
+import step.wallet.maganger.classes.Account;
 import step.wallet.maganger.classes.Transaction;
 
 public class InfoRepository {
@@ -105,6 +106,18 @@ public class InfoRepository {
         db.update(DBConstants.TABLE_CATEGORY, values, DBConstants.COL_CAT_NAME + "=?", whereArgs);
     }
 
+    // update Account
+    public void updateAccout(@NonNull String nameAccount, String currencyAccount, String descAccount, String balanceAccount, String IDAccount) {
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.COL_ACC_NAME, nameAccount);
+        values.put(DBConstants.COL_ACC_DESC, descAccount);
+        values.put(DBConstants.COL_ACC_CURRENCY, currencyAccount);
+        values.put(DBConstants.COL_ACC_BALANCE, balanceAccount);
+        String[] whereArgs = new String[]{String.valueOf(IDAccount)};
+        db.update(DBConstants.TABLE_ACCOUNT, values, DBConstants.COL_ACC_ID + "=?", whereArgs);
+
+    }
+
     public void addCategory(@NonNull String nameCategory, String type) {
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_CAT_NAME, nameCategory);
@@ -145,6 +158,17 @@ public class InfoRepository {
                 }
             }
         }
+    }
+
+    // add Account
+    public void addAccount(@NonNull String nameAccount, String currencyAccount, String descAccount, String balanceAccount) {
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.COL_ACC_NAME, nameAccount);
+        values.put(DBConstants.COL_ACC_DESC, descAccount);
+        values.put(DBConstants.COL_ACC_CURRENCY, currencyAccount);
+        values.put(DBConstants.COL_ACC_BALANCE, balanceAccount);
+        db.insert(DBConstants.TABLE_ACCOUNT, null, values);
+        db.close();
     }
 
     public void removeSubategoryByName(String nameSubcategory, String idCategory) {
@@ -272,6 +296,24 @@ public class InfoRepository {
 
     }
 
+
+    // get all Acconts
+    @Nullable
+    public List<String> getAllAccountsNames() {
+        List<String> list = new ArrayList<String>();
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_ACCOUNT;
+        // on below line we are creating a new array list.
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(1));//adding 2nd column data
+            } while (cursor.moveToNext());
+        }
+        return list;
+    }
+
     // to do - returning ID category
 
     @Nullable
@@ -289,6 +331,23 @@ public class InfoRepository {
             } while (cursor.moveToNext());
         }
 //        db.close();
+        return idCategory;
+    }
+
+    // get ID Account
+    @Nullable
+    public String getIdAccount(String accountName) {
+        String idCategory = "0";
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_ACCOUNT + " WHERE " + DBConstants.COL_ACC_NAME + " = '" + accountName + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and search for ID Account name
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(1).equals(accountName))
+                    idCategory = cursor.getString(0);
+            } while (cursor.moveToNext());
+        }
         return idCategory;
     }
 
@@ -452,12 +511,36 @@ public class InfoRepository {
         return transactionsList;
     }
 
+    //    read Accounts
+
+    public ArrayList<Account> readAccounts() {
+        ArrayList<Account> accountsList = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_ACCOUNT;
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and search for ID Accout
+        if (cursor.moveToFirst()) {
+            do {
+                Account account = new Account();
+                account.setAccountId(cursor.getString(0));
+                account.setAccountName(cursor.getString(1));
+                account.setAccountCurrency(cursor.getString(3));
+                account.setAccountDescription(cursor.getString(4));
+                account.setAccountBalance(cursor.getString(5));
+                accountsList.add(account);
+
+            } while (cursor.moveToNext());
+        }
+        return accountsList;
+    }
+
     // getting specific transactions
     public ArrayList<Transaction> getSpecificTransactions(String idAccount, double amountFrom, double amountTo, String currency, long startDate, long endDate, String typeOperation) {
         ArrayList<Transaction> transactionsList = new ArrayList<Transaction>();
 
         String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_TRANSACTION + " WHERE " + DBConstants.COL_TRANSACTION_ID_ACC + " = '" + idAccount
-                + "' AND " + DBConstants.COL_TRANSACTION_VALUE + " > '"  + amountFrom + "' AND " + DBConstants.COL_TRANSACTION_VALUE + " < '" + amountTo
+                + "' AND " + DBConstants.COL_TRANSACTION_VALUE + " > '" + amountFrom + "' AND " + DBConstants.COL_TRANSACTION_VALUE + " < '" + amountTo
                 + "' AND " + DBConstants.COL_TRANSACTION_CURRENCY + " = '" + currency + "' AND " + DBConstants.COL_TRANSACTION_DATE + " > '" + startDate
                 + "' AND " + DBConstants.COL_TRANSACTION_DATE + " < '" + endDate + "' AND " + DBConstants.COL_TRANSACTION_TYPE + " = '" + typeOperation + "'";
 

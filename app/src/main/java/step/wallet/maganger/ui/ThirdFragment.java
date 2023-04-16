@@ -4,23 +4,31 @@ import android.os.Bundle;
 
 import android.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import step.wallet.maganger.R;
+import step.wallet.maganger.adapters.RecyclerViewAccountsAdapter;
 import step.wallet.maganger.data.CurrencyDatabase;
+import step.wallet.maganger.data.InfoRepository;
 
 
-public class ThirdFragment extends Fragment {
+public class ThirdFragment extends Fragment implements RecyclerViewAccountsAdapter.ItemClickListener{
 
     public ThirdFragment() {
         // Required empty public constructor
     }
 
     private ImageView addAccountImg;
+    private RecyclerView rvAccount;
+    private RecyclerViewAccountsAdapter rvAccountsAdapter;
 
 
     @Override
@@ -43,6 +51,14 @@ public class ThirdFragment extends Fragment {
         findViews(view);
         initiateViews();
 
+//        InfoRepository repository = new InfoRepository();
+//        rvAccountsAdapter = new RecyclerViewAccountsAdapter(getContext(), repository.readAccounts());
+//        rvAccount.setAdapter(rvAccountsAdapter);
+//        Log.d("adapter", "onCreateView: " + rvAccountsAdapter.getItemCount());
+//        Log.d("adapter", "accountns: " + repository.readAccounts().get(1).getAccountCurrency());
+
+        loadRVAccounts();
+
         return view;
     }
 
@@ -60,6 +76,20 @@ public class ThirdFragment extends Fragment {
 
     private void findViews(View view) {
         addAccountImg = view.findViewById(R.id.addAccountImg_facc);
+        rvAccount = view.findViewById(R.id.rVAccounts_facc);
     }
 
+    private void loadRVAccounts() {
+        // on below line we are initializing adapter
+        InfoRepository repository = new InfoRepository();
+        rvAccountsAdapter = new RecyclerViewAccountsAdapter(getContext(), repository.readAccounts());
+        rvAccount.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        rvAccount.setAdapter(rvAccountsAdapter);
+    }
+
+
+    @Override
+    public void onItemClick(String categoryName, int categoryIcon) {
+
+    }
 }

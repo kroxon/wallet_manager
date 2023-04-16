@@ -36,15 +36,6 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
     private ItemClickListener mClickListener;
 
 
-    // View lookup cache
-//    private static class ViewHolder {
-//        TextView txtDate;
-//        TextView txtCategory;
-//        TextView txtValue;
-//        TextView txtCurrency;
-//        ImageView icon;
-//    }
-
     public ListViewVerticalHistoryAdapter(Context context, ArrayList<Transaction> items) {
         this.mInflater = LayoutInflater.from(context);
         transactionsList = items;
@@ -126,37 +117,6 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
             notifyItemChanged(position);
         }
     }
-
-//    // convenience method for getting data at click position
-//    public String getItem(int id) {
-//
-//        return transactionsList.get(id);
-//    }
-
-    // parent activity will implement this method to respond to click events
-//    public interface ItemClickListener {
-//        void onItemClick(View view, int position);
-//    }
-//
-////    @Override
-////    public void onClick(View v) {
-////
-////        int position = (Integer) v.getTag();
-////        Object object = getItem(position);
-////        Transaction transaction = (Transaction) object;
-////
-////        switch (v.getId()) {
-////            case R.id.historyIcon:
-////                Snackbar.make(v, "Release date " + transaction.getTransactionDate(), Snackbar.LENGTH_LONG)
-////                        .setAction("No action", null).show();
-////                break;
-////        }
-////    }
-//
-//    // allows clicks events to be caught
-//    public void setClickListener(ItemClickListener itemClickListener) {
-//        this.mClickListener = itemClickListener;
-//    }
 
     public static int getIdDrawable(String resourceName, Class<?> c) {
         try {

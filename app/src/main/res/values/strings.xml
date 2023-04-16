@@ -67,6 +67,9 @@
     <string name="select_currency">Select currency</string>
     <string name="new_account">New account</string>
     <string name="write">Write...</string>
+    <string name="to_many_acc">To many accounts!</string>
+    <string name="exists">Such a name already exists</string>
+    <string name="write_name">Write account name</string>
     <string name="primary_account">Primary account</string>
 
 

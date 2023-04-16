@@ -3,6 +3,7 @@ package step.wallet.maganger.ui;
 import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 
@@ -158,7 +159,9 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
             transactions2 = infoRepository.getSpecificTransactions("0", pAmountFrom, pAmountTo, "PLN", pPeriodFrom, pPeriodTo, "income");
             transactions.addAll(transactions2);
 
-            transactions.sort((e1, e2) -> new Long(e1.getTransactionDateFormat()).compareTo(new Long(e2.getTransactionDateFormat())));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                transactions.sort((e1, e2) -> new Long(e1.getTransactionDateFormat()).compareTo(new Long(e2.getTransactionDateFormat())));
+            }
             Collections.reverse(transactions);
         }
         if (pTypeOperation.equals("debit")) {

@@ -42,7 +42,7 @@
 
     <EditText
         android:id="@+id/dAccDBalanceEt"
-        android:inputType="numberDecimal"
+        android:inputType="numberDecimal|numberSigned"
         android:imeOptions="actionDone"
         android:layout_width="match_parent"
         android:textColor="@color/olx_color_1"
