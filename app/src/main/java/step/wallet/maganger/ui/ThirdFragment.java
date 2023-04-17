@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import android.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,7 @@ import step.wallet.maganger.data.CurrencyDatabase;
 import step.wallet.maganger.data.InfoRepository;
 
 
-public class ThirdFragment extends Fragment implements RecyclerViewAccountsAdapter.ItemClickListener {
+public class ThirdFragment extends Fragment {
 
     public ThirdFragment() {
         // Required empty public constructor
@@ -40,8 +39,6 @@ public class ThirdFragment extends Fragment implements RecyclerViewAccountsAdapt
 //        init();
 //        generateItem();
 
-        CurrencyDatabase currencyDatabase = new CurrencyDatabase(getContext());
-        Toast.makeText(getContext(), currencyDatabase.getCurrenciesList().get(99).getSymbol(), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -90,13 +87,24 @@ public class ThirdFragment extends Fragment implements RecyclerViewAccountsAdapt
             rvAccountsAdapter = new RecyclerViewAccountsAdapter(getContext(), arrayAccountList);
             rvAccount.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
             rvAccount.setAdapter(rvAccountsAdapter);
+            rvAccountsAdapter.setOnClickListener(new RecyclerViewAccountsAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    // open account dialog with extra input
+                    Toast.makeText(getContext(), arrayAccountList.get(position).getAccountName() + " " + arrayAccountList.get(position).getAccountCurrency(), Toast.LENGTH_SHORT).show();
+                    DialogFragmentAccount dialog = new DialogFragmentAccount();
+                    dialog.setTargetFragment(ThirdFragment.this, 1);
+                    Bundle data = new Bundle();
+                    data.putString("name", arrayAccountList.get(position).getAccountName());
+                    data.putString("description", arrayAccountList.get(position).getAccountDescription());
+                    data.putString("balance", arrayAccountList.get(position).getAccountBalance());
+                    data.putString("currency", arrayAccountList.get(position).getAccountCurrency());
+
+                    dialog.setArguments(data);
+                    dialog.show(getFragmentManager(), "DialogFragmentAccount");
+                }
+            });
         } else
             Toast.makeText(getContext(), "no accounts", Toast.LENGTH_SHORT).show();
-    }
-
-
-    @Override
-    public void onItemClick(String categoryName, int categoryIcon) {
-
     }
 }

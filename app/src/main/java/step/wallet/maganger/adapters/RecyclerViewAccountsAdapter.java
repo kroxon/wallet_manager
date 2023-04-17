@@ -1,26 +1,21 @@
 package step.wallet.maganger.adapters;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,15 +31,23 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
 
     private ArrayList<Account> accountsList;
     private Context context;
+    private OnItemClickListener mListener;
 
 
     // old
     private List<String> mData;
     private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
+//    private ItemClickListener mClickListener;
     private static int lastClickedPosition = -1;
     private int selectedItem;
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+     public void setOnClickListener(OnItemClickListener listener) {
+        mListener = listener;
+     }
 
     // data is passed into the constructor
     public RecyclerViewAccountsAdapter(Context context, ArrayList<Account> data) {
@@ -57,7 +60,7 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.list_row_account, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mListener);
     }
 
     // binds the data
@@ -85,20 +88,21 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
 
 
     // stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+//    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView myImage;
         TextView myNameTxt;
         TextView myBalanceTxt;
         TextView myCurrencyTxt;
         int position = getLayoutPosition();
 
-        ViewHolder(View itemView) {
+        ViewHolder(View itemView, OnItemClickListener listner) {
             super(itemView);
             myImage = itemView.findViewById(R.id.accountOption);
             myNameTxt = itemView.findViewById(R.id.accountNameTxt);
             myBalanceTxt = itemView.findViewById(R.id.accountBalanceTxt);
             myCurrencyTxt = itemView.findViewById(R.id.accountCurrencyTxt);
-            itemView.setOnClickListener(this);
+//            itemView.setOnClickListener(this);
 
             myImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -114,6 +118,9 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
                             switch (item.getItemId()) {
                                 case R.id.menu_acc_edit:
                                     //handle menu1 click
+                                    if (listner != null && getPosition() != RecyclerView.NO_POSITION) {
+                                        listner.onItemClick(getAdapterPosition());
+                                    }
                                     break;
                                 case R.id.menu_acc_delete:
                                     //handle delete click
@@ -146,14 +153,15 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
                     popup.show();
                 }
             });
+
         }
 
-        @Override
-        public void onClick(View view) {
-            InfoRepository repository = new InfoRepository();
-            if (mClickListener != null)
-                mClickListener.onItemClick(mData.get(position), repository.getIdCategoryIcon(mData.get(position)));
-        }
+//        @Override
+//        public void onClick(View view) {
+//            InfoRepository repository = new InfoRepository();
+//            if (mClickListener != null)
+//                mClickListener.onItemClick(mData.get(position), repository.getIdCategoryIcon(mData.get(position)));
+//        }
     }
 
     // convenience method for getting data at click position
@@ -163,14 +171,14 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     // allows clicks events to be caught
-    public void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
-    }
+//    public void setClickListener(ItemClickListener itemClickListener) {
+//        this.mClickListener = itemClickListener;
+//    }
 
     // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
-        void onItemClick(String categoryName, int categoryIcon);
-    }
+//    public interface ItemClickListener {
+//        void onItemClick(String categoryName, int categoryIcon);
+//    }
 
     private void displayDeleteDialog(String name) {
         Dialog descpriptionDialog = new Dialog(context);

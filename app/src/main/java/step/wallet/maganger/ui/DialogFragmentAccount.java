@@ -44,6 +44,7 @@ public class DialogFragmentAccount extends DialogFragment {
     private ImageView cancelImg;
     private ImageView saveImg;
     private TextView selectCurrencyTxt;
+    private TextView titleTxt;
     private TextView currencyTxt;
     private TextView descriptionTxt;
     private TextView balanceTxt;
@@ -53,6 +54,7 @@ public class DialogFragmentAccount extends DialogFragment {
     private ArrayList<String> currencyNames;
     private LinearLayout descLayout;
     private LinearLayout balanceLayout;
+    private Bundle data;
 
 
     @Override
@@ -89,9 +91,9 @@ public class DialogFragmentAccount extends DialogFragment {
 //        Toast.makeText(getContext(),"" + currencyNames.indexOf(currency.getCurrencyCode()), Toast.LENGTH_SHORT).show();
 //        Toast.makeText(getContext(),"" + currency.getCurrencyCode(), Toast.LENGTH_SHORT).show();
 
-        Bundle data = getArguments();
+        data = getArguments();
         if (data != null) {
-            Toast.makeText(getContext(), data.getString("key"), Toast.LENGTH_SHORT).show();
+            loadBundle(data);
         }
 
 
@@ -109,7 +111,10 @@ public class DialogFragmentAccount extends DialogFragment {
         saveImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addAccount();
+                if (data != null)
+                    updateAccount(data);
+                else
+                    addAccount();
             }
         });
 
@@ -174,8 +179,10 @@ public class DialogFragmentAccount extends DialogFragment {
 
                 EditText descriptionEt = descpriptionDialog.findViewById(R.id.dAccDDescEt);
                 String defaultString = getContext().getString(R.string.description);
-                if (descriptionTxt.getText().toString().equals(defaultString))
+                if (descriptionTxt.getText().toString().equals(defaultString)) {
                     descriptionEt.setHint(defaultString);
+                    descriptionEt.setSelection(descriptionEt.getText().length());
+                }
                 else
                     descriptionEt.setText(descriptionTxt.getText().toString());
                 ImageView cancelDescImg = descpriptionDialog.findViewById(R.id.dAccDescCancel);
@@ -213,8 +220,10 @@ public class DialogFragmentAccount extends DialogFragment {
                 descpriptionDialog.show();
 
                 EditText balanceEt = descpriptionDialog.findViewById(R.id.dAccDBalanceEt);
-                if (!balanceTxt.getText().toString().equals("0"))
+                if (!balanceTxt.getText().toString().equals("0")) {
                     balanceEt.setText(balanceTxt.getText().toString());
+                    balanceEt.setSelection(balanceEt.getText().length());
+                }
                 ImageView cancelDescImg = descpriptionDialog.findViewById(R.id.dAccBalanceCancel);
                 ImageView saveDescImg = descpriptionDialog.findViewById(R.id.dAccBalanceSave);
 
@@ -248,6 +257,7 @@ public class DialogFragmentAccount extends DialogFragment {
         cancelImg = view.findViewById(R.id.dAccCancel);
         saveImg = view.findViewById(R.id.dAccSave);
         selectCurrencyTxt = view.findViewById(R.id.dAccCurrSelect);
+        titleTxt = view.findViewById(R.id.dAccTitleTxt);
         currencyTxt = view.findViewById(R.id.dAccCurrSymbolTxt);
         descriptionTxt = view.findViewById(R.id.dAccDescTxt);
         balanceTxt = view.findViewById(R.id.dAccBalanceTxt);
@@ -270,7 +280,35 @@ public class DialogFragmentAccount extends DialogFragment {
 
         } else
             Toast.makeText(getContext(), getContext().getString(R.string.write_name), Toast.LENGTH_SHORT).show();
+    }
 
+    private void updateAccount(Bundle bundle) {
+        InfoRepository repo = new InfoRepository();
+        if (accNameEt.getText().toString().length() != 0) {
+            if (!repo.getAllAccountsNames().contains((accNameEt.getText().toString())) || accNameEt.getText().toString().equals(bundle.getString("name"))) {
+
+                //  update in Infrorepository
+
+                //    repo.addAccount(accNameEt.getText().toString(), currencyCode, descriptionTxt.getText().toString(), balanceTxt.getText().toString());
+                    getDialog().dismiss();
+            } else
+                Toast.makeText(getContext(), getContext().getString(R.string.exists), Toast.LENGTH_SHORT).show();
+
+        } else
+            Toast.makeText(getContext(), getContext().getString(R.string.write_name), Toast.LENGTH_SHORT).show();
+    }
+
+    private void loadBundle(Bundle bundle) {
+        titleTxt.setText(getContext().getResources().getString(R.string.edit));
+        accNameEt.setText(bundle.getString("name"));
+        accNameEt.setSelection(accNameEt.getText().length());
+        descriptionTxt.setText(bundle.getString("description"));
+        balanceTxt.setText(bundle.getString("balance"));
+        CurrencyDatabase currencyDb = new CurrencyDatabase(getContext());
+        int indexCurency = currencyDb.getCurrenciesNameList().indexOf(bundle.getString("currency"));
+        String curSymbol = currencyDb.getCurrenciesSymbolList().get(indexCurency);
+        currencyTxt.setText(curSymbol);
+        selectCurrencyTxt.setText(bundle.getString("currency") + " " + curSymbol);
     }
 
 }

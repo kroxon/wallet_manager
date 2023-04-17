@@ -14,7 +14,7 @@
         android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/dAccTitleTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -32,9 +32,9 @@
         android:layout_marginLeft="15dp"
         android:clickable="true"
         android:src="@drawable/ic_close"
-        app:layout_constraintBottom_toBottomOf="@+id/textView17"
+        app:layout_constraintBottom_toBottomOf="@+id/dAccTitleTxt"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView17"
+        app:layout_constraintTop_toTopOf="@+id/dAccTitleTxt"
         app:tint="@color/olx_color_1"></ImageView>
 
     <ImageView
@@ -44,9 +44,9 @@
         android:layout_marginRight="15dp"
         android:clickable="true"
         android:src="@drawable/ic_check2"
-        app:layout_constraintBottom_toBottomOf="@+id/textView17"
+        app:layout_constraintBottom_toBottomOf="@+id/dAccTitleTxt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView17"
+        app:layout_constraintTop_toTopOf="@+id/dAccTitleTxt"
         app:tint="@color/olx_color_1"></ImageView>
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -60,7 +60,7 @@
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17"></androidx.appcompat.widget.AppCompatEditText>
+        app:layout_constraintTop_toBottomOf="@+id/dAccTitleTxt"></androidx.appcompat.widget.AppCompatEditText>
 
     <TextView
         android:id="@+id/dAccCurrSelect"

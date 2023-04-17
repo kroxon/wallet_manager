@@ -136,6 +136,7 @@ public class FirstFragment extends Fragment implements DialogFragmentTransaction
                 dialog.setTargetFragment(FirstFragment.this, 1);
                 Bundle data = new Bundle();
                 data.putString("key", "income");
+                data.putString("key2", "qpa");
                 dialog.setArguments(data);
                 dialog.show(getFragmentManager(), "DialogFragmentTransaction");
 
