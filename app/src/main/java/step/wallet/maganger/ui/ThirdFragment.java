@@ -14,13 +14,16 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 import step.wallet.maganger.R;
 import step.wallet.maganger.adapters.RecyclerViewAccountsAdapter;
+import step.wallet.maganger.classes.Account;
 import step.wallet.maganger.data.CurrencyDatabase;
 import step.wallet.maganger.data.InfoRepository;
 
 
-public class ThirdFragment extends Fragment implements RecyclerViewAccountsAdapter.ItemClickListener{
+public class ThirdFragment extends Fragment implements RecyclerViewAccountsAdapter.ItemClickListener {
 
     public ThirdFragment() {
         // Required empty public constructor
@@ -82,9 +85,13 @@ public class ThirdFragment extends Fragment implements RecyclerViewAccountsAdapt
     private void loadRVAccounts() {
         // on below line we are initializing adapter
         InfoRepository repository = new InfoRepository();
-        rvAccountsAdapter = new RecyclerViewAccountsAdapter(getContext(), repository.readAccounts());
-        rvAccount.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        rvAccount.setAdapter(rvAccountsAdapter);
+        ArrayList<Account> arrayAccountList = repository.readAccounts();
+        if (arrayAccountList.size() != 0) {
+            rvAccountsAdapter = new RecyclerViewAccountsAdapter(getContext(), arrayAccountList);
+            rvAccount.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            rvAccount.setAdapter(rvAccountsAdapter);
+        } else
+            Toast.makeText(getContext(), "no accounts", Toast.LENGTH_SHORT).show();
     }
 
 

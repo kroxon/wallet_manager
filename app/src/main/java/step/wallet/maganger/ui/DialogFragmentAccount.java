@@ -150,10 +150,11 @@ public class DialogFragmentAccount extends DialogFragment {
                 listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        String curSymbol = currencyDatabase.getCurrenciesSymbolList().get(currencyDatabase.getCurrenciesNameList().indexOf(adapter.getItem(i)));
+                        int indexCur = currencyDatabase.getCurrenciesNameList().indexOf(adapter.getItem(i));
+                        String curSymbol = currencyDatabase.getCurrenciesSymbolList().get(indexCur);
                         selectCurrencyTxt.setText(adapter.getItem(i) + "  " + curSymbol);
                         currencyTxt.setText(curSymbol);
-                        currencyCode = curSymbol;
+                        currencyCode = currencyDatabase.getCurrenciesList().get(indexCur).getName();
                         currencySelectDialog.dismiss();
                     }
                 });

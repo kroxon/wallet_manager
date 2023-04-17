@@ -31,40 +31,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/olx_color_1"></ImageView>
 
-
-    <TextView
-        android:id="@+id/accountDescriptionTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:text="@string/description"
-        android:maxLength="30"
-        android:maxLines="1"
-        android:maxWidth="200dp"
-        android:textColor="@color/olx_color_1"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accountNameTxt"></TextView>
-
-
     <TextView
         android:id="@+id/accountBalanceTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
         android:text="-104 567"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accountDescriptionTxt"></TextView>
+        app:layout_constraintTop_toBottomOf="@+id/accountNameTxt"></TextView>
 
     <TextView
         android:id="@+id/accountCurrencyTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="4dp"
         android:text=" zł"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="24sp"

@@ -1,11 +1,19 @@
 package step.wallet.maganger.adapters;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -57,10 +65,6 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         InfoRepository repository = new InfoRepository();
         holder.myNameTxt.setText(accountsList.get(position).getAccountName());
-        String myDescription = accountsList.get(position).getAccountDescription();
-        if (myDescription.length() > 30)
-            myDescription = myDescription.substring(0, 28) + "...";
-        holder.myDescriptionTxt.setText(myDescription);
         holder.myBalanceTxt.setText(accountsList.get(position).getAccountBalance());
         CurrencyDatabase currencyDatabase = new CurrencyDatabase(context);
         ArrayList<CurrencyStrings> currentList = currencyDatabase.getCurrenciesList();
@@ -84,7 +88,6 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView myImage;
         TextView myNameTxt;
-        TextView myDescriptionTxt;
         TextView myBalanceTxt;
         TextView myCurrencyTxt;
         int position = getLayoutPosition();
@@ -93,10 +96,56 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
             super(itemView);
             myImage = itemView.findViewById(R.id.accountOption);
             myNameTxt = itemView.findViewById(R.id.accountNameTxt);
-            myDescriptionTxt = itemView.findViewById(R.id.accountDescriptionTxt);
             myBalanceTxt = itemView.findViewById(R.id.accountBalanceTxt);
             myCurrencyTxt = itemView.findViewById(R.id.accountCurrencyTxt);
             itemView.setOnClickListener(this);
+
+            myImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //creating a popup menu
+                    PopupMenu popup = new PopupMenu(context, myImage);
+                    //inflating menu from xml resource
+                    popup.inflate(R.menu.menu_account);
+                    //adding click listener
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.menu_acc_edit:
+                                    //handle menu1 click
+                                    break;
+                                case R.id.menu_acc_delete:
+                                    //handle delete click
+//
+//                                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+//                                    alertDialogBuilder.setTitle(context.getResources().getString(R.string.delete_ask_1) + " \"" + accountsList.get(getAdapterPosition()).getAccountName() + "\"\n"
+//                                            + context.getResources().getString(R.string.delete_ask_2));
+//                                    alertDialogBuilder
+//                                            .setCancelable(false)
+//                                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                                                public void onClick(DialogInterface dialog, int id) {
+//                                                }
+//                                            })
+//                                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+//                                                public void onClick(DialogInterface dialog, int id) {
+//                                                    // if this button is clicked, just close
+//                                                    // the dialog box and do nothing
+//                                                    dialog.cancel();
+//                                                }
+//                                            });
+//                                    AlertDialog alertDialog = alertDialogBuilder.create();
+//                                    alertDialog.show();
+                                    displayDeleteDialog(accountsList.get(getAdapterPosition()).getAccountName());
+                                    break;
+                            }
+                            return false;
+                        }
+                    });
+                    //displaying the popup
+                    popup.show();
+                }
+            });
         }
 
         @Override
@@ -121,6 +170,39 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onItemClick(String categoryName, int categoryIcon);
+    }
+
+    private void displayDeleteDialog(String name) {
+        Dialog descpriptionDialog = new Dialog(context);
+        descpriptionDialog.setContentView(R.layout.dialog_acc_dialog_delete);
+//        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
+//        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.40);
+//        descpriptionDialog.getWindow().setLayout(width, height);
+        descpriptionDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        descpriptionDialog.show();
+
+        TextView dDeleteTitle = descpriptionDialog.findViewById(R.id.dAccDeletTitle);
+        TextView dDeleteNo = descpriptionDialog.findViewById(R.id.dAccDeletDNo);
+        TextView dDeleteYes = descpriptionDialog.findViewById(R.id.dAccDeletDYes);
+        String deleteString1 = context.getString(R.string.delete_ask_1);
+        String deleteString2 = context.getString(R.string.delete_ask_2);
+
+        dDeleteTitle.setText(deleteString1 + " \"" + name + "\" " + deleteString2);
+
+
+        dDeleteNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                descpriptionDialog.dismiss();
+            }
+        });
+
+        dDeleteYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                descpriptionDialog.dismiss();
+            }
+        });
     }
 
 }
