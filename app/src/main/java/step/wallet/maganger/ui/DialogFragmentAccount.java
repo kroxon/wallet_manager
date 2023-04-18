@@ -3,6 +3,7 @@ package step.wallet.maganger.ui;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -55,6 +56,15 @@ public class DialogFragmentAccount extends DialogFragment {
     private LinearLayout descLayout;
     private LinearLayout balanceLayout;
     private Bundle data;
+
+    private OnSaveListener saveListener;
+
+    // test interface
+    public interface OnInputListener {
+        void sendInput(String input);
+    }
+    public OnInputListener onInputListener;
+
 
 
     @Override
@@ -111,9 +121,9 @@ public class DialogFragmentAccount extends DialogFragment {
         saveImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (data != null)
+                if (data != null) {
                     updateAccount(data);
-                else
+                } else
                     addAccount();
             }
         });
@@ -182,8 +192,7 @@ public class DialogFragmentAccount extends DialogFragment {
                 if (descriptionTxt.getText().toString().equals(defaultString)) {
                     descriptionEt.setHint(defaultString);
                     descriptionEt.setSelection(descriptionEt.getText().length());
-                }
-                else
+                } else
                     descriptionEt.setText(descriptionTxt.getText().toString());
                 ImageView cancelDescImg = descpriptionDialog.findViewById(R.id.dAccDescCancel);
                 ImageView saveDescImg = descpriptionDialog.findViewById(R.id.dAccDescSave);
@@ -272,12 +281,13 @@ public class DialogFragmentAccount extends DialogFragment {
             if (!repo.getAllAccountsNames().contains((accNameEt.getText().toString()))) {
                 if (repo.getAllAccountsNames().size() < 6) {
                     repo.addAccount(accNameEt.getText().toString(), currencyCode, descriptionTxt.getText().toString(), balanceTxt.getText().toString());
+//                    saveListener.onSaveClick("add");
+                    onInputListener.sendInput("test");
                     getDialog().dismiss();
                 } else
                     Toast.makeText(getContext(), getContext().getString(R.string.to_many_acc), Toast.LENGTH_SHORT).show();
             } else
                 Toast.makeText(getContext(), getContext().getString(R.string.exists), Toast.LENGTH_SHORT).show();
-
         } else
             Toast.makeText(getContext(), getContext().getString(R.string.write_name), Toast.LENGTH_SHORT).show();
     }
@@ -286,14 +296,13 @@ public class DialogFragmentAccount extends DialogFragment {
         InfoRepository repo = new InfoRepository();
         if (accNameEt.getText().toString().length() != 0) {
             if (!repo.getAllAccountsNames().contains((accNameEt.getText().toString())) || accNameEt.getText().toString().equals(bundle.getString("name"))) {
-
-                //  update in Infrorepository
-
-                //    repo.addAccount(accNameEt.getText().toString(), currencyCode, descriptionTxt.getText().toString(), balanceTxt.getText().toString());
-                    getDialog().dismiss();
+                repo.updateAccout(accNameEt.getText().toString(), currencyCode, descriptionTxt.getText().toString(), balanceTxt.getText().toString(), bundle.getString("name"));
+                Toast.makeText(getContext(), getContext().getString(R.string.updated), Toast.LENGTH_SHORT).show();
+//                saveListener.onSaveClick("update");
+                onInputListener.sendInput("test");
+                getDialog().dismiss();
             } else
                 Toast.makeText(getContext(), getContext().getString(R.string.exists), Toast.LENGTH_SHORT).show();
-
         } else
             Toast.makeText(getContext(), getContext().getString(R.string.write_name), Toast.LENGTH_SHORT).show();
     }
@@ -304,11 +313,40 @@ public class DialogFragmentAccount extends DialogFragment {
         accNameEt.setSelection(accNameEt.getText().length());
         descriptionTxt.setText(bundle.getString("description"));
         balanceTxt.setText(bundle.getString("balance"));
+        currencyCode = bundle.getString("currency");
         CurrencyDatabase currencyDb = new CurrencyDatabase(getContext());
-        int indexCurency = currencyDb.getCurrenciesNameList().indexOf(bundle.getString("currency"));
+        int indexCurency = currencyDb.getCurrenciesNameList().indexOf(currencyCode);
         String curSymbol = currencyDb.getCurrenciesSymbolList().get(indexCurency);
         currencyTxt.setText(curSymbol);
         selectCurrencyTxt.setText(bundle.getString("currency") + " " + curSymbol);
+    }
+
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//
+//        try {
+//            saveListener = (OnSaveListener) context;
+//        } catch (ClassCastException e) {
+//            throw new ClassCastException(context.toString() +
+//                    "must implement OnSaveListener");
+//        }
+//
+//    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            onInputListener = (OnInputListener) getTargetFragment();
+        } catch (ClassCastException e) {
+            Log.e(TAG, "onAttach: ClassCastException: "
+                    + e.getMessage());
+        }
+    }
+
+    public interface OnSaveListener {
+        void onSaveClick(String s);
     }
 
 }

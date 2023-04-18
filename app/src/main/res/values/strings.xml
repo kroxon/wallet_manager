@@ -79,6 +79,7 @@
     <string name="primary_account">Primary account</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="updated">Updated!</string>
     <string name="delete_ask_1">Do you want to delete account</string>
     <string name="delete_ask_2">and all transactions associated with it?</string>
 

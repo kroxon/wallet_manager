@@ -107,13 +107,13 @@ public class InfoRepository {
     }
 
     // update Account
-    public void updateAccout(@NonNull String nameAccount, String currencyAccount, String descAccount, String balanceAccount, String IDAccount) {
+    public void updateAccout(@NonNull String nameAccount, String currencyAccount, String descAccount, String balanceAccount, String oldName) {
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_ACC_NAME, nameAccount);
         values.put(DBConstants.COL_ACC_DESC, descAccount);
         values.put(DBConstants.COL_ACC_CURRENCY, currencyAccount);
         values.put(DBConstants.COL_ACC_BALANCE, balanceAccount);
-        String[] whereArgs = new String[]{String.valueOf(IDAccount)};
+        String[] whereArgs = new String[]{String.valueOf(getIdAccount(oldName))};
         db.update(DBConstants.TABLE_ACCOUNT, values, DBConstants.COL_ACC_ID + "=?", whereArgs);
 
     }

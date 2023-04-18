@@ -22,7 +22,7 @@ import step.wallet.maganger.data.CurrencyDatabase;
 import step.wallet.maganger.data.InfoRepository;
 
 
-public class ThirdFragment extends Fragment {
+public class ThirdFragment extends Fragment implements DialogFragmentAccount.OnSaveListener, DialogFragmentAccount.OnInputListener{
 
     public ThirdFragment() {
         // Required empty public constructor
@@ -87,6 +87,9 @@ public class ThirdFragment extends Fragment {
             rvAccountsAdapter = new RecyclerViewAccountsAdapter(getContext(), arrayAccountList);
             rvAccount.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
             rvAccount.setAdapter(rvAccountsAdapter);
+
+            // interface item click
+
             rvAccountsAdapter.setOnClickListener(new RecyclerViewAccountsAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
@@ -99,12 +102,21 @@ public class ThirdFragment extends Fragment {
                     data.putString("description", arrayAccountList.get(position).getAccountDescription());
                     data.putString("balance", arrayAccountList.get(position).getAccountBalance());
                     data.putString("currency", arrayAccountList.get(position).getAccountCurrency());
-
                     dialog.setArguments(data);
                     dialog.show(getFragmentManager(), "DialogFragmentAccount");
                 }
             });
         } else
             Toast.makeText(getContext(), "no accounts", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSaveClick(String s) {
+        Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void sendInput(String input) {
+        loadRVAccounts();
     }
 }

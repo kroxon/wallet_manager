@@ -33,7 +33,6 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
     private Context context;
     private OnItemClickListener mListener;
 
-
     // old
     private List<String> mData;
     private LayoutInflater mInflater;
@@ -45,9 +44,10 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
         void onItemClick(int position);
     }
 
-     public void setOnClickListener(OnItemClickListener listener) {
+    public void setOnClickListener(OnItemClickListener listener) {
         mListener = listener;
      }
+
 
     // data is passed into the constructor
     public RecyclerViewAccountsAdapter(Context context, ArrayList<Account> data) {
