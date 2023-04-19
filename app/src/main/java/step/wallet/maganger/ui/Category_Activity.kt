@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
@@ -53,6 +54,7 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     var btnAddSubcategoryClear: ImageButton? = null
     var imgCatIcon: ImageView? = null
     var imgCatMoreOption: ImageView? = null
+    var btnEditCatName: ImageView? = null
     //end new view
 
     var spinner: Spinner? = null
@@ -447,12 +449,21 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             .setView(taskEditText)
             .setPositiveButton("Ok") { dialog, which ->
                 val repository = InfoRepository()
-                val labels: List<String> = repository.getSubcategories(repository.getIdCategory(txtCategoryName!!.toString())) as List<String>
+                val labels: List<String> =
+                    repository.getSubcategories(repository.getIdCategory(txtCategoryName!!.toString())) as List<String>
                 if (!labels.contains(oldSubcatrgory)) {
-                    repository.updateSubcategoryName(taskEditText.text.toString(), oldSubcatrgory, idCategory)
+                    repository.updateSubcategoryName(
+                        taskEditText.text.toString(),
+                        oldSubcatrgory,
+                        idCategory
+                    )
                     Toast.makeText(this, "Changed!", Toast.LENGTH_SHORT).show()
                 } else
-                    Toast.makeText(this, taskEditText.text.toString() + " already exists!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        taskEditText.text.toString() + " already exists!",
+                        Toast.LENGTH_SHORT
+                    ).show()
             }
             .setNegativeButton("Cancel", null)
             .create()
@@ -477,6 +488,7 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         btnAddSubcategory = findViewById(R.id.ac_btnAddSubcategory)
         btnAddSubcategoryClear = findViewById(R.id.ac_btnAddSubcategoryClear)
         subcatListLayout = findViewById(R.id.subcatListLayout)
+        btnEditCatName = findViewById(R.id.ac_info_layout_name_edit)
     }
 
     private fun loadRVExpenseCategories() {
@@ -500,7 +512,11 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         var id = (repository.allCategories!!.indexOf(repository.getIdCategory(catName))).toString()
         val labels: List<String> =
             repository.getSubcategories(repository.getIdCategory(catName)) as List<String>
-        arrayAdapter = ListViewVerticalAdapter(this, labels as ArrayList<String>?, repository.getIdCategory(txtCategoryName!!.text.toString()))
+        arrayAdapter = ListViewVerticalAdapter(
+            this,
+            labels as ArrayList<String>?,
+            repository.getIdCategory(txtCategoryName!!.text.toString())
+        )
         arrayAdapter.setOnShareClickedListener(this)
         listViewSubcategories!!.adapter = arrayAdapter
     }
@@ -792,6 +808,18 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             addSubcategory()
             btnAddSubcategoryClear!!.performClick()
         }
+
+        etSubcategoryName!!.doOnTextChanged { text, start, before, count ->
+            val repository = InfoRepository()
+            var listSUbs = repository.getSubcategories(repository.getIdCategory(txtCategoryName!!.text.toString()))
+            for (item: String in listSUbs!!) {
+                if (item.equals(text))
+                    etLayoutSubcategoryName!!.error = "Already exists"
+                else
+                    etLayoutSubcategoryName!!.error = null
+            }
+        }
+
         btnAddSubcategory!!.setOnClickListener {
             etLayoutSubcategoryName?.visibility = View.VISIBLE
             etSubcategoryName?.setText("")
@@ -813,6 +841,34 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             val dialog = DialogFragmentIconSelect()
             val fm = this@Category_Activity.fragmentManager
             dialog.show(fm, "DialogFragmentIconSelect")
+        }
+        btnEditCatName!!.setOnClickListener {
+            val repository = InfoRepository()
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(R.string.dialog_catname_rename)
+            val customLayout: View = layoutInflater.inflate(R.layout.dialog_et, null)
+            builder.setView(customLayout)
+
+            builder.setPositiveButton("OK") {dialogInterface , which ->
+                val editText = customLayout.findViewById<EditText>(R.id.dialog_edittext)
+                val etText = editText.text.toString()
+                if (etText.equals("") || repository.allCategories!!.contains(etText))
+                    Toast.makeText(this, "Use a different category name!", Toast.LENGTH_SHORT).show()
+                else{
+                    repository.updateCategoryName(etText, txtCategoryName!!.text.toString())
+                    txtCategoryName!!.setText(etText)
+                    if (repository.allExpenseCategories!!.contains(etText))
+                        loadRVExpenseCategories()
+                    else
+                        loadRVIncomeCategories()
+                    Toast.makeText(this, "Changed!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            builder.setNeutralButton("Cancel"){dialogInterface , which ->
+                Toast.makeText(applicationContext,"Cancel",Toast.LENGTH_LONG).show()
+            }
+            val dialog = builder.create()
+            dialog.show()
         }
     }
 
@@ -866,11 +922,10 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     private fun addSubcategory() {
         val repository = InfoRepository()
-        repository.addSubcategory(
-            etSubcategoryName!!.text.toString(),
-            repository.getIdCategory(txtCategoryName!!.text.toString())
-        )
-        etSubcategoryName!!.setText("")
+        if (!repository.getSubcategories(repository.getIdCategory(txtCategoryName!!.text.toString()))!!.contains(etSubcategoryName!!.text.toString()))
+            repository.addSubcategory(etSubcategoryName!!.text.toString(), repository.getIdCategory(txtCategoryName!!.text.toString()))
+        else
+            Toast.makeText(this, "\"" + etSubcategoryName!!.text.toString() + "\" already exists!", Toast.LENGTH_SHORT).show()
         loadLVSubcategories(txtCategoryName!!.text.toString())
     }
 

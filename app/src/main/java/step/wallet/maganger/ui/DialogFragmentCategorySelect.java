@@ -32,6 +32,7 @@ public class DialogFragmentCategorySelect extends DialogFragment implements Recy
     private static final String TAG = "DialogFragmentCategorySelect";
     public int imageResource;
     public String categoryName = "";
+    public String type;
 
     public interface OnInputSelected {
         void sendInput(String catName, int catIcon);
@@ -51,6 +52,10 @@ public class DialogFragmentCategorySelect extends DialogFragment implements Recy
         }
 
         getDialog().dismiss();
+    }
+
+    public void setValue(String type) {
+        this.type = type;
     }
 
 
@@ -77,7 +82,10 @@ public class DialogFragmentCategorySelect extends DialogFragment implements Recy
 
         // data to populate the RecyclerView with
         InfoRepository infoRepository = new InfoRepository();
-        data = infoRepository.getAllCategories();
+        if (type.equals("expense"))
+            data = infoRepository.getAllExpenseCategories();
+        else
+            data = infoRepository.getAllIncomeCategories();
 
 //        data = new String[]{"ic_home", "ic_add", "ic_coffee", "ic_email", "ic_home", "ic_add", "ic_coffee", "ic_email", "ic_home", "ic_add", "ic_coffee", "ic_email", "ic_home", "ic_add", "ic_coffee", "ic_email"};
 

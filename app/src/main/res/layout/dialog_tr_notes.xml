@@ -3,32 +3,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#00054949"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:layout_marginHorizontal="32dp"
-        android:minHeight="150dp"
+        android:background="@drawable/dialog_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
-        <EditText
-            android:id="@+id/trEtNotes"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/trEtNotesLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:layout_marginBottom="36dp"
-            android:hint="Notes"
-            android:maxLength="100"
-            android:maxLines="3"
-            style="@style/MyEditText"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="56dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginBottom="20dp"
             android:textCursorDrawable="@color/colorApp1"
+            app:layout_constraintBottom_toTopOf="@+id/trNotesOk"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></EditText>
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/trEtNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Notes"
+                android:maxLength="100"
+                android:maxLines="3"
+                android:paddingLeft="10dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton
             android:id="@+id/trNotesCancel"
@@ -50,7 +59,8 @@
             android:text="OK"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"></Button>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trEtNotesLayout"></Button>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

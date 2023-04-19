@@ -20,13 +20,71 @@
     <string name="profile">Profile</string>
     <string name="overview">Overview</string>
 
+    <string name="dialog_catname_rename">Category name:</string>
+
+    // general
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+
+
+    //dialog transaction
+    <string name="d_tr_notes">Notes...</string>
+
+
     //color picker
     <string name="colorpicker_dialog_cancel">Cancel</string>
-    <string name="colorpicker_dialog_ok">SAve</string>
+    <string name="colorpicker_dialog_ok">Save</string>
 
 
+    //history transaction
+    <string name="filter_save">Save</string>
+    <string name="filter_cancel">Cancel</string>
+    <string name="filter_clear">Clear</string>
+    <string name="filter_amount">Amount</string>
+    <string name="filter_currency">Currency</string>
+    <string name="filter_currency_all">All</string>
+    <string name="filter_period">Period</string>
+    <string name="filter_type_operation">Type of operation</string>
+    <string name="filter_account">Account</string>
+    <string name="filter_from">From</string>
+    <string name="filter_to">To</string>
+    <string name="filter_date_start">Start</string>
+    <string name="filter_date_end">End</string>
+    <string name="filter_type_debits">Debits</string>
+    <string name="filter_type_all">All</string>
+    <string name="filter_type_credits">Credits</string>
 
-    // default categories
+    <string-array name="periods">
+        <item>FULL TIME</item>
+        <item>LAST WEEK</item>
+        <item>LAST MONTH</item>
+        <item>LAST YEAR</item>
+        <item>OTHER</item>
+    </string-array>
+
+
+    // account fragment
+    <string name="account">Accounts</string>
+    <string name="search">Search...</string>
+    <string name="description">Description</string>
+    <string name="account_balance">Account balance</string>
+    <string name="lack_description">No description</string>
+    <string name="select_currency">Select currency</string>
+    <string name="new_account">New account</string>
+    <string name="write">Write...</string>
+    <string name="to_many_acc">To many accounts!</string>
+    <string name="exists">Such a name already exists</string>
+    <string name="write_name">Write account name</string>
+    <string name="primary_account">Primary account</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="updated">Updated!</string>
+    <string name="delete_ask_1">Do you want to delete account</string>
+    <string name="delete_ask_2">and all transactions associated with it?</string>
+
+
+    // default database: categories
 
     <string-array name="categories">
         <item>żywność i napoje</item>
@@ -170,5 +228,17 @@
         <item>#ff6f00</item>
         <item>#3e2723</item>
     </string-array>
+
+    // default database: accounts
+
+    <string-array name="accounts_names">
+        <item>basic account</item>
+        <item>second account</item>
+        <item>credit account</item>
+        <item>savings account</item>
+        <item>foreign currency account</item>
+        <item>piggy bank</item>
+    </string-array>
+
 
 </resources>

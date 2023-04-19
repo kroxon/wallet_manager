@@ -3,6 +3,7 @@ package step.wallet.maganger.data;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,10 +11,13 @@ import androidx.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import step.wallet.maganger.R;
+import step.wallet.maganger.classes.Account;
 import step.wallet.maganger.classes.Transaction;
 
 public class InfoRepository {
@@ -35,6 +39,7 @@ public class InfoRepository {
         values.put(DBConstants.COL_TRANSACTION_DATE, date);
         values.put(DBConstants.COL_TRANSACTION_VALUE, amount);
         values.put(DBConstants.COL_TRANSACTION_ID_ACC, id_account);
+        values.put(DBConstants.COL_TRANSACTION_CURRENCY, "PLN");
         values.put(DBConstants.COL_TRANSACTION_NOTE_1, note_1);
         values.put(DBConstants.COL_TRANSACTION_NOTE_2, note_2);
         values.put(DBConstants.COL_TRANSACTION_PHOTO, photo);
@@ -103,6 +108,18 @@ public class InfoRepository {
         db.update(DBConstants.TABLE_CATEGORY, values, DBConstants.COL_CAT_NAME + "=?", whereArgs);
     }
 
+    // update Account
+    public void updateAccout(@NonNull String nameAccount, String currencyAccount, String descAccount, String balanceAccount, String oldName) {
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.COL_ACC_NAME, nameAccount);
+        values.put(DBConstants.COL_ACC_DESC, descAccount);
+        values.put(DBConstants.COL_ACC_CURRENCY, currencyAccount);
+        values.put(DBConstants.COL_ACC_BALANCE, balanceAccount);
+        String[] whereArgs = new String[]{String.valueOf(getIdAccount(oldName))};
+        db.update(DBConstants.TABLE_ACCOUNT, values, DBConstants.COL_ACC_ID + "=?", whereArgs);
+
+    }
+
     public void addCategory(@NonNull String nameCategory, String type) {
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_CAT_NAME, nameCategory);
@@ -119,7 +136,7 @@ public class InfoRepository {
     }
 
 
-    public void addDefaultDatabase(String[] categories, List<String[]> subcategories, String[] icons, String[] colors) {
+    public void addDefaultDatabase(String[] categories, List<String[]> subcategories, String[] icons, String[] colors, String[] accountNames) {
         if (getAllCategories().size() == 0) {
             for (int i = 0; i < categories.length; i++) {
                 ContentValues valuesCat = new ContentValues();
@@ -143,6 +160,28 @@ public class InfoRepository {
                 }
             }
         }
+        if (getAllAccountsNames().size() == 0) {
+            for (int i = 0; i < accountNames.length; i++) {
+                ContentValues valuesAcc = new ContentValues();
+                valuesAcc.put(DBConstants.COL_ACC_NAME, accountNames[i]);
+                valuesAcc.put(DBConstants.COL_ACC_BALANCE, 0);
+                Currency currency = Currency.getInstance(Locale.getDefault());
+                valuesAcc.put(DBConstants.COL_ACC_CURRENCY, currency.getCurrencyCode());
+                valuesAcc.put(DBConstants.COL_ACC_TYPE, currency.getCurrencyCode());
+                db.insert(DBConstants.TABLE_ACCOUNT, null, valuesAcc);
+            }
+        }
+    }
+
+    // add Account
+    public void addAccount(@NonNull String nameAccount, String currencyAccount, String descAccount, String balanceAccount) {
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.COL_ACC_NAME, nameAccount);
+        values.put(DBConstants.COL_ACC_DESC, descAccount);
+        values.put(DBConstants.COL_ACC_CURRENCY, currencyAccount);
+        values.put(DBConstants.COL_ACC_BALANCE, balanceAccount);
+        db.insert(DBConstants.TABLE_ACCOUNT, null, values);
+        db.close();
     }
 
     public void removeSubategoryByName(String nameSubcategory, String idCategory) {
@@ -270,6 +309,24 @@ public class InfoRepository {
 
     }
 
+
+    // get all Acconts
+    @Nullable
+    public List<String> getAllAccountsNames() {
+        List<String> list = new ArrayList<String>();
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_ACCOUNT;
+        // on below line we are creating a new array list.
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(1));//adding 2nd column data
+            } while (cursor.moveToNext());
+        }
+        return list;
+    }
+
     // to do - returning ID category
 
     @Nullable
@@ -287,6 +344,23 @@ public class InfoRepository {
             } while (cursor.moveToNext());
         }
 //        db.close();
+        return idCategory;
+    }
+
+    // get ID Account
+    @Nullable
+    public String getIdAccount(String accountName) {
+        String idCategory = "0";
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_ACCOUNT + " WHERE " + DBConstants.COL_ACC_NAME + " = '" + accountName + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and search for ID Account name
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(1).equals(accountName))
+                    idCategory = cursor.getString(0);
+            } while (cursor.moveToNext());
+        }
         return idCategory;
     }
 
@@ -434,15 +508,80 @@ public class InfoRepository {
                     transaction.setTransactionIdCategory(cursor.getString(2));
                     transaction.setTransactionIdSubcategory(cursor.getString(3));
                     transaction.setTransactionDate(cursor.getString(4));
-                    transaction.setTransactionNote1(cursor.getString(6));
-                    transaction.setTransactionNote2(cursor.getString(7));
-                    transaction.setTransactionPhoto(cursor.getString(8));
-                    transaction.setTransactionType(cursor.getString(9));
+                    transaction.setTransactionCurency(cursor.getString(6));
+                    transaction.setTransactionNote1(cursor.getString(7));
+                    transaction.setTransactionNote2(cursor.getString(8));
+                    transaction.setTransactionPhoto(cursor.getString(9));
+                    transaction.setTransactionType(cursor.getString(10));
                     transactionsList.add(transaction);
                 }
             } while (cursor.moveToNext());
         }
-        Collections.sort(transactionsList, Collections.reverseOrder());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            transactionsList.sort((e1, e2) -> new Long(e1.getTransactionDateFormat()).compareTo(new Long(e2.getTransactionDateFormat())));
+        }
+        Collections.reverse(transactionsList);
+        return transactionsList;
+    }
+
+    //    read Accounts
+
+    public ArrayList<Account> readAccounts() {
+        ArrayList<Account> accountsList = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_ACCOUNT;
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and search for ID Accout
+        if (cursor.moveToFirst()) {
+            do {
+                Account account = new Account();
+                account.setAccountId(cursor.getString(0));
+                account.setAccountName(cursor.getString(1));
+                account.setAccountCurrency(cursor.getString(3));
+                account.setAccountDescription(cursor.getString(4));
+                account.setAccountBalance(cursor.getString(5));
+                accountsList.add(account);
+
+            } while (cursor.moveToNext());
+        }
+        return accountsList;
+    }
+
+    // getting specific transactions
+    public ArrayList<Transaction> getSpecificTransactions(String idAccount, double amountFrom, double amountTo, String currency, long startDate, long endDate, String typeOperation) {
+        ArrayList<Transaction> transactionsList = new ArrayList<Transaction>();
+
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_TRANSACTION + " WHERE " + DBConstants.COL_TRANSACTION_ID_ACC + " = '" + idAccount
+                + "' AND " + DBConstants.COL_TRANSACTION_VALUE + " > '" + amountFrom + "' AND " + DBConstants.COL_TRANSACTION_VALUE + " < '" + amountTo
+                + "' AND " + DBConstants.COL_TRANSACTION_CURRENCY + " = '" + currency + "' AND " + DBConstants.COL_TRANSACTION_DATE + " > '" + startDate
+                + "' AND " + DBConstants.COL_TRANSACTION_DATE + " < '" + endDate + "' AND " + DBConstants.COL_TRANSACTION_TYPE + " = '" + typeOperation + "'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and search for ID Accout
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(5).equals(idAccount)) {
+                    Transaction transaction = new Transaction();
+                    transaction.setTransactionId(cursor.getString(0));
+                    transaction.setTransactionValue(cursor.getString(1));
+                    transaction.setTransactionIdCategory(cursor.getString(2));
+                    transaction.setTransactionIdSubcategory(cursor.getString(3));
+                    transaction.setTransactionDate(cursor.getString(4));
+                    transaction.setTransactionCurency(cursor.getString(6));
+                    transaction.setTransactionNote1(cursor.getString(7));
+                    transaction.setTransactionNote2(cursor.getString(8));
+                    transaction.setTransactionPhoto(cursor.getString(9));
+                    transaction.setTransactionType(cursor.getString(10));
+                    transactionsList.add(transaction);
+                }
+            } while (cursor.moveToNext());
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            transactionsList.sort((e1, e2) -> new Long(e1.getTransactionDateFormat()).compareTo(new Long(e2.getTransactionDateFormat())));
+        }
+        Collections.reverse(transactionsList);
         return transactionsList;
     }
 }

@@ -2,49 +2,52 @@ package step.wallet.maganger.ui;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.graphics.Movie;
-import android.icu.text.IDNA;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.api.client.util.DateTime;
+import org.jetbrains.annotations.NotNull;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import step.wallet.maganger.R;
-import step.wallet.maganger.adapters.HorizontalSubcatRecylerviewAdapter;
-import step.wallet.maganger.adapters.ListViewVerticalAdapter;
 import step.wallet.maganger.adapters.ListViewVerticalHistoryAdapter;
 import step.wallet.maganger.classes.Transaction;
 import step.wallet.maganger.data.InfoRepository;
 
-public class HistoryFragment extends Fragment implements ListViewVerticalHistoryAdapter.ItemClickListener {
+public class HistoryFragment extends Fragment implements ListViewVerticalHistoryAdapter.ItemClickListener, DialogFragmentFilterHistoryTransaction.OnInputSend {
 
     private OnFragmentInteractionListener mListener;
     private ListViewVerticalHistoryAdapter adapter;
-//    private HorizontalSubcatRecylerviewAdapter adapter;
     private RecyclerView recyclerViewTransactions;
-    ArrayList<Transaction> transactions;
+    private ImageView btnFilter;
+    private Button btnTest;
+
+    // ititial filter
+    private double pAmountFrom = 0.0;
+    private double pAmountTo = 99999999.99;
+    private String pCurrency = "0";
+    private String pPeriod = "0";
+    private Long pPeriodFrom = Long.valueOf(0);
+    private Long pPeriodTo = Long.valueOf(0);
+    private String pTypeOperation = "All";
+    private String pAccount = "0";
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -63,62 +66,35 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
-        InfoRepository infoRepository = new InfoRepository();
-        transactions = infoRepository.readTransactions("0");
-
+        btnFilter = view.findViewById(R.id.btnHistoryFilter);
+        btnTest = view.findViewById(R.id.btnHistoryTest);
 
         //start test
         recyclerViewTransactions = (RecyclerView) view.findViewById(R.id.historyTransactionList);
         recyclerViewTransactions.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-//
-        List<String> cats = new ArrayList<String>();
-        cats = infoRepository.getAllCategories();
-        List <String> subcategoriesList = infoRepository.getSubcategories(infoRepository.getIdCategory(cats.get(0)));
-        String [] subcats = subcategoriesList.toArray(new String[0]);
-        adapter = new ListViewVerticalHistoryAdapter(getActivity(), transactions);
-        adapter.setClickListener(this);
-        recyclerViewTransactions.setAdapter(adapter);
 
+        loadTransaciotns();
 
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragmentFilterHistoryTransaction dialog = new DialogFragmentFilterHistoryTransaction();
+                dialog.setValue(pAmountFrom, pAmountTo, pCurrency, pPeriod, pPeriodFrom, pPeriodTo, pTypeOperation, pAccount);
+                dialog.setTargetFragment(HistoryFragment.this, 1);
+                dialog.show(getFragmentManager(), "DialogFragmentFilterTra");
+            }
+        });
 
-        testTextView = (TextView) view.findViewById(R.id.testTextView);
+        btnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadTransaciotns();
+            }
+        });
 
-        for (int i = 0; i < 2; i++){
-            testTextView.setText(testTextView.getText().toString() + "transaction Id: " + transactions.get(i).getTransactionId());
-        }
-
-//        recyclerViewTransactions = (RecyclerView) view.findViewById(R.id.historyTransactionList);
-//        recyclerViewTransactions.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-//        adapter = new ListViewVerticalHistoryAdapter(getContext(), transactions);
-////        adapter.setClickListener(this);
-//        recyclerViewTransactions.setAdapter(adapter);
 
         return view;
     }
-
-//    @Override
-//    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//
-//    }
-
-    //    public void loadListTransaction(Context context, ArrayAdapter<Transaction> arrayList) {
-//        adapter = new ListViewVerticalHistoryAdapter(context, arrayList);
-//        recyclerViewTransactions.setAdapter(adapter);
-//
-//    }
-    /*
-        fun loadListViewSubcat(position: Int) {
-        val arrayAdapter: ListViewVerticalAdapter
-        val repository = InfoRepository()
-        val labels: List<String> =
-            repository.getSubcategories(repository.getIdCategory(selectegCategory)) as List<String>
-        arrayAdapter =
-            ListViewVerticalAdapter(this, labels as ArrayList<String>?, "" + (position + 1))
-        arrayAdapter.setOnShareClickedListener(this)
-        listView!!.adapter = arrayAdapter
-    }
-     */
 
     @Override
     public void onAttach(Context context) {
@@ -126,10 +102,7 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         }
-//        else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
+
     }
 
     @Override
@@ -143,21 +116,68 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
 
     }
 
+    @Override
+    public void sendData(double sAmountFrom, double sAmountTo, @NotNull String sCurrency, @NonNull String sPeriod, @org.jetbrains.annotations.Nullable Long sPeriodFrom, @org.jetbrains.annotations.Nullable Long sPeriodTo, @NotNull String sTypeOper, @NotNull String sAccount) {
+        pAmountFrom = sAmountFrom;
+        pAmountTo = sAmountTo;
+        pCurrency = sCurrency;
+        pPeriod = sPeriod;
+        pPeriodFrom = sPeriodFrom;
+        pPeriodTo = sPeriodTo;
+        pTypeOperation = sTypeOper;
+        pAccount = sAccount;
+        Toast.makeText(getContext(), "received: " + pAmountFrom + pAmountTo + pCurrency + pPeriod + pPeriodFrom + pPeriodTo + pTypeOperation + pAccount, Toast.LENGTH_LONG);
+        loadSpecificTransaciotns();
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void messageFromChildFragment(Uri uri);
     }
 
-    public void loadListTransactions() {
-//            adapter = new ListViewVerticalHistoryAdapter();
-
-//        val arrayAdapter:ListViewVerticalAdapter
-//        val repository = InfoRepository()
-//        val labels:List<String> =
-//        repository.getSubcategories(repository.getIdCategory(selectegCategory)) as List<String>
-//                arrayAdapter =
-//                ListViewVerticalAdapter(this, labels as ArrayList<String>?, "" + (position + 1))
-//        arrayAdapter.setOnShareClickedListener(this)
-//        listView!!.adapter = arrayAdapter
+    private void loadTransaciotns() {
+        // on below line we are initializing adapter
+        List<String> cats = new ArrayList<String>();
+        InfoRepository infoRepository = new InfoRepository();
+        ArrayList<Transaction> transactions;
+        transactions = infoRepository.readTransactions("0");
+        if (transactions.size() == 0)
+            Toast.makeText(getContext(), "Empty history", Toast.LENGTH_SHORT).show();
+        else {
+            adapter = new ListViewVerticalHistoryAdapter(getActivity(), transactions);
+            adapter.setClickListener(this);
+            recyclerViewTransactions.setAdapter(adapter);
+        }
     }
+
+    private void loadSpecificTransaciotns() {
+        // on below line we are initializing adapter
+        List<String> cats = new ArrayList<String>();
+        InfoRepository infoRepository = new InfoRepository();
+        ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+        ArrayList<Transaction> transactions2;
+
+        if (pTypeOperation.equals("All")) {
+            transactions = infoRepository.getSpecificTransactions("0", pAmountFrom, pAmountTo, "PLN", pPeriodFrom, pPeriodTo, "expense");
+            transactions2 = infoRepository.getSpecificTransactions("0", pAmountFrom, pAmountTo, "PLN", pPeriodFrom, pPeriodTo, "income");
+            transactions.addAll(transactions2);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                transactions.sort((e1, e2) -> new Long(e1.getTransactionDateFormat()).compareTo(new Long(e2.getTransactionDateFormat())));
+            }
+            Collections.reverse(transactions);
+        }
+        if (pTypeOperation.equals("debit")) {
+            transactions = infoRepository.getSpecificTransactions("0", pAmountFrom, pAmountTo, "PLN", pPeriodFrom, pPeriodTo, "expense");
+        }
+        if (pTypeOperation.equals("credit")) {
+            transactions = infoRepository.getSpecificTransactions("0", pAmountFrom, pAmountTo, "PLN", pPeriodFrom, pPeriodTo, "income");
+        }
+
+
+        adapter = new ListViewVerticalHistoryAdapter(getActivity(), transactions);
+        adapter.setClickListener(this);
+        recyclerViewTransactions.setAdapter(adapter);
+    }
+
 }

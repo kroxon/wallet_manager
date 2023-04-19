@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class FourthFragment extends Fragment {
 
     private Button defaultDb;
     private Button btnArchived;
+    private Button btnDeleteDb;
 
     public FourthFragment() {
         // Required empty public constructor
@@ -61,16 +63,28 @@ public class FourthFragment extends Fragment {
                 subcategories.add(getResources().getStringArray(R.array.subcategories15));
                 String[] icons = getResources().getStringArray(R.array.category_icon);
                 String[] colors = getResources().getStringArray(R.array.category_colors);
-                InfoRepository repository = new InfoRepository();
-                repository.addDefaultDatabase(categories, subcategories, icons, colors);
+                String[] accountssList = getResources().getStringArray(R.array.accounts_names);
 
-                btnArchived.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        InfoRepository infoRepository = new InfoRepository();
-                        infoRepository.setCategoryArchived(infoRepository.getAllExpenseCategories().get(0));
-                    }
-                });
+                InfoRepository repository = new InfoRepository();
+                repository.addDefaultDatabase(categories, subcategories, icons, colors, accountssList);
+            }
+        });
+
+        btnArchived.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InfoRepository infoRepository = new InfoRepository();
+                infoRepository.setCategoryArchived(infoRepository.getAllExpenseCategories().get(0));
+            }
+        });
+
+        btnDeleteDb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InfoRepository infoRepository = new InfoRepository();
+                getContext().deleteDatabase("WalletManager.db");
+                if (infoRepository.getAllCategories().size() == 0)
+                    Toast.makeText(getContext(), "Deleted!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -81,5 +95,6 @@ public class FourthFragment extends Fragment {
     private void init(View view) {
         defaultDb = view.findViewById(R.id.btnDefaultDb);
         btnArchived = view.findViewById(R.id.btnRandomArchived);
+        btnDeleteDb = view.findViewById(R.id.btnDeleteDb);
     }
 }

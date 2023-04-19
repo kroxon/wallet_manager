@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,8 +23,6 @@ import java.util.List;
 
 import step.wallet.maganger.R;
 import step.wallet.maganger.data.InfoRepository;
-import step.wallet.maganger.ui.Category_Activity;
-import step.wallet.maganger.ui.MainActivity;
 
 public class ListViewVerticalAdapter extends ArrayAdapter<String> {
 

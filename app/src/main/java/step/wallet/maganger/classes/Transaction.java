@@ -1,21 +1,19 @@
 package step.wallet.maganger.classes;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
-import step.wallet.maganger.data.InfoRepository;
-
-public class Transaction implements Comparable<Transaction> {
+public class Transaction {
     private String transactionId;
     private String transactionValue;
     private String transactionIdCategory;
     private String transactionIdSubcategory;
     private String transactionDate;
-    private Date transactionDateFormat;
+    private String transactionDateFormat;
     private String idAccount;
+    private String curency;
     private String transactionNote1;
     private String transactionNote2;
     private String transactionPhoto;
@@ -23,6 +21,7 @@ public class Transaction implements Comparable<Transaction> {
 
     public Transaction() {
         this.idAccount = new String();
+        this.curency = new String();
         this.transactionId = new String();
         this.transactionValue = new String();
         this.transactionIdCategory = new String();
@@ -52,21 +51,14 @@ public class Transaction implements Comparable<Transaction> {
 
     public void setTransactionDate(String transactionDate) {
         this.transactionDate = transactionDate;
-        setTransactionDateFormat(transactionDate);
-    }
-
-    public void setTransactionDateFormat(String transactionDateFormat) {
-        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        try {
-            Date date = formatter.parse(transactionDateFormat);
-            this.transactionDateFormat = date;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     public void setIdAccount(String idAccount) {
         this.idAccount = idAccount;
+    }
+
+    public void setTransactionCurency(String curency) {
+        this.curency = curency;
     }
 
     public void setTransactionNote1(String transactionNote1) {
@@ -103,15 +95,19 @@ public class Transaction implements Comparable<Transaction> {
     }
 
     public String getTransactionDate() {
-        return transactionDate;
+        return getDate(Long.parseLong(transactionDate), "dd MMMM yyyy");
     }
 
-    public Date getTransactionDateFormat() {
-        return transactionDateFormat;
+    public long getTransactionDateFormat() {
+        return Long.parseLong(transactionDate);
     }
 
     public String getIdAccount() {
         return idAccount;
+    }
+
+    public String getCurency() {
+        return curency;
     }
 
     public String getTransactionNote1() {
@@ -136,8 +132,23 @@ public class Transaction implements Comparable<Transaction> {
         return d1;
     }
 
-    @Override
-    public int compareTo(Transaction transaction) {
-        return getTransactionDateFormat().compareTo(transaction.getTransactionDateFormat());
+
+    /**
+     * Return date in specified format.
+     *
+     * @param milliSeconds Date in milliseconds
+     * @param dateFormat   Date format
+     * @return String representing date in specified format
+     */
+    public static String getDate(long milliSeconds, String dateFormat) {
+        // Create a DateFormatter object for displaying date in specified format.
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+
+        // Create a calendar object that will convert the date and time value in milliseconds to date.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
     }
+
+
 }

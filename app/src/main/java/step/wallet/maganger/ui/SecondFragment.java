@@ -42,7 +42,7 @@ public class SecondFragment extends Fragment {
 
         InfoRepository infoRepository = new InfoRepository();
 
-        ArrayList<Transaction> transactions = infoRepository.readTransactions("0");
+//        ArrayList<Transaction> transactions = infoRepository.readTransactions("0");
 
 
 

@@ -31,19 +31,10 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
     ArrayList<Transaction> transactionsList;
     Context context;
     private LayoutInflater mInflater;
-    public String currentDate;
+    public String currentDate = "";
     private int selectedItem;
     private ItemClickListener mClickListener;
 
-
-    // View lookup cache
-//    private static class ViewHolder {
-//        TextView txtDate;
-//        TextView txtCategory;
-//        TextView txtValue;
-//        TextView txtCurrency;
-//        ImageView icon;
-//    }
 
     public ListViewVerticalHistoryAdapter(Context context, ArrayList<Transaction> items) {
         this.mInflater = LayoutInflater.from(context);
@@ -77,9 +68,8 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
         } else {
             holder.myValue.setTextColor(Color.parseColor("#689F38"));
             holder.myCurrency.setTextColor(Color.parseColor("#689F38"));
-            holder.myIcon.setVisibility(View.INVISIBLE);
-//            holder.myCategory.setVisibility(View.GONE);
-            holder.myCategory.setText("Income");
+            holder.myIcon.setImageResource(Integer.parseInt(infoRepository.getIdCategoryIconById(transactionsList.get(position).getTransactionIdCategory())));
+            holder.myCategory.setText(infoRepository.getCategoryName(transactionsList.get(position).getTransactionIdCategory()));
         }
 
     }
@@ -127,37 +117,6 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
             notifyItemChanged(position);
         }
     }
-
-//    // convenience method for getting data at click position
-//    public String getItem(int id) {
-//
-//        return transactionsList.get(id);
-//    }
-
-    // parent activity will implement this method to respond to click events
-//    public interface ItemClickListener {
-//        void onItemClick(View view, int position);
-//    }
-//
-////    @Override
-////    public void onClick(View v) {
-////
-////        int position = (Integer) v.getTag();
-////        Object object = getItem(position);
-////        Transaction transaction = (Transaction) object;
-////
-////        switch (v.getId()) {
-////            case R.id.historyIcon:
-////                Snackbar.make(v, "Release date " + transaction.getTransactionDate(), Snackbar.LENGTH_LONG)
-////                        .setAction("No action", null).show();
-////                break;
-////        }
-////    }
-//
-//    // allows clicks events to be caught
-//    public void setClickListener(ItemClickListener itemClickListener) {
-//        this.mClickListener = itemClickListener;
-//    }
 
     public static int getIdDrawable(String resourceName, Class<?> c) {
         try {

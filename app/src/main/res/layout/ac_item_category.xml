@@ -6,8 +6,8 @@
     android:layout_height="75dp"
     android:layout_gravity="center_horizontal"
     android:layout_marginBottom="16dp"
-    app:cardCornerRadius="8dp"
-    app:cardUseCompatPadding="true">
+
+    >
 
     <LinearLayout
         android:paddingTop="4dp"

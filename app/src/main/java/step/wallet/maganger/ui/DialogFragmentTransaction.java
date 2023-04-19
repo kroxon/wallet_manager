@@ -73,6 +73,11 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
     public void sendNotes(String sendNotes) {
         notesTv.setText(sendNotes);
         writeNote1 = sendNotes;
+        if (!notesTv.getText().toString().equals(""))
+            notesTvBckg.setText("");
+        else
+            notesTvBckg.setText(R.string.d_tr_notes);
+
     }
 
 
@@ -85,7 +90,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
     //widgets
     private ImageView lResultImg, iconCategorySelected;
     private TextView lResultTv, categoryNameSelected, plusMinusTv;
-    private TextView tvInput, expensesTv, incomeTv, notesTv, tvInputCache, tvInputAlgerba;
+    private TextView tvInput, expensesTv, incomeTv, notesTv, notesTvBckg, tvInputCache, tvInputAlgerba;
     private TextView bDigit0, bDigit1, bDigit2, bDigit3, bDigit4, bDigit5, bDigit6, bDigit7, bDigit8, bDigit9, bDigitBcksp, bDigitDivide, bDigitMultiply, bDigitPlus, bDigitMinus, bDigitEqual, bDigitComma;
     private TextView btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btn00;
     private TextView btBksp, btDecimal, btClr, dateTv1, dateTv2;
@@ -156,13 +161,13 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         btDecimal = (TextView) view.findViewById(R.id.btndecimal);
         btClr = (TextView) view.findViewById(R.id.btnclr);
 
-        writeIdCategory = repository.getIdCategory(repository.getAllCategories().get(0));
+        writeIdCategory = repository.getIdCategory(repository.getAllExpenseCategories().get(0));
         writeIdSubcategory = repository.getIdSubcategory(repository.getSubcategories(writeIdCategory).get(0), writeIdCategory);
         Calendar calendarWriting = Calendar.getInstance();
-        writeDate = calendarWriting.get(Calendar.DATE) + "." + calendarWriting.get(Calendar.MONTH) + 1 + "." + calendarWriting.get(Calendar.YEAR);
+        writeDate = calendarWriting.getTimeInMillis() + "";
         writeAmount = "1000";
         writeAccount = "0";
-        writeNote1 = "Notatki....";
+        writeNote1 = "";
         writeNote2 = "note 2";
         writePhoto = "photo1";
         writeType = "expense";
@@ -197,6 +202,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         expensesUnderline = (LinearLayout) view.findViewById(R.id.trExpensesUnderline);
         incomeUnderline = (LinearLayout) view.findViewById(R.id.trIncomeUnderline);
         notesTv = (TextView) view.findViewById(R.id.trNotesTv);
+        notesTvBckg = (TextView) view.findViewById(R.id.trNotesTvBackground);
 
         Bundle data = getArguments();
         if (data != null) {
@@ -211,8 +217,8 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         }
 
 
-        iconCategorySelected.setImageResource(repository.getIdCategoryIcon(repository.getAllCategories().get(0)));
-        categoryNameSelected.setText(repository.getAllCategories().get(0));
+        categoryNameSelected.setText(repository.getAllExpenseCategories().get(0));
+        iconCategorySelected.setImageResource(repository.getIdCategoryIcon(categoryNameSelected.getText().toString()));
 
         // Category Spinner Drop down elements
         dTCatSpinner = (Spinner) view.findViewById(R.id.dTransactionCatSpinner);
@@ -227,7 +233,6 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         SpinnerCategoryAdapter adapter = new SpinnerCategoryAdapter(getContext(), finalCategories);
         adapter.setDropDownViewResource(R.layout.dialog_transaction_category_dropdown);
         dTCatSpinner.setAdapter(adapter);
-//        textInputLayout.setStartIconDrawable(repository.getIdCategoryIcon(finalCategories.get(1)));
 
         dTCatSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -235,7 +240,6 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                 Toast.makeText(getContext(), "" + finalCategories.get(i), Toast.LENGTH_SHORT).show();
                 List<String> subcategoriesList = repository.getSubcategories(repository.getIdCategory(finalCategories.get(i)));
                 String[] subcategories = subcategoriesList.toArray(new String[0]);
-//                subcatListRV.setAdapter(new HorizontalSubcatRecylerviewAdapter(subcategories));
                 loadSubcatRecycleViewer(getActivity(), subcategories);
                 try {
                     selectedSubcategory = subcategoriesList.get(0);
@@ -250,7 +254,8 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             }
         });
 
-        dateTv1.setText(new SimpleDateFormat("dd", Locale.getDefault()).format(new Date()));
+//        dateTv1.setText(new SimpleDateFormat("dd", Locale.getDefault()).format(new Date()));
+        dateTv1.setText(getDate(Long.parseLong("1679788800136"), "dd"));
         dateTv2.setText(new SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(new Date()));
         conLayTrDatePick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,11 +267,12 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                         month = month + 1;
                         SimpleDateFormat format = new SimpleDateFormat("MMMM");// also you can use: "yyyy-MMMM-dd"
                         Calendar calendar1 = Calendar.getInstance();
-                        calendar1.set(year, month - 1, dayOfMonth);
+                        calendar1.set(year, month - 1, dayOfMonth, 0, 0, 0);
                         String monthTwoDigit = format.format(calendar1.getTime());
                         dateTv1.setText(dayOfMonth + "");
                         dateTv2.setText(monthTwoDigit + " " + year);
-                        writeDate = dayOfMonth + "." + month + "." + year;
+//                        writeDate = dayOfMonth + "." + month + "." + year;
+                        writeDate = calendar1.getTimeInMillis() + "";
                     }
                 }, year, month, day);
                 dialog.show();
@@ -277,8 +283,6 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), "" + finalCategories.get(dTCatSpinner.getSelectedItemPosition()), Toast.LENGTH_SHORT).show();
-//                repository.writeTransaction(repository.getIdCategory(finalCategories.get(dTCatSpinner.getSelectedItemPosition())), repository.getIdSubcategory(selectedSubcategory, repository.getIdCategory(finalCategories.get(dTCatSpinner.getSelectedItemPosition()))),
-//                        dateTv1.getText().toString(), tvInput.getText().toString(), "0", "note 1", "note 2", "photo1", "expense");
             }
         });
 
@@ -286,6 +290,10 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             @Override
             public void onClick(View view) {
                 DialogFragmentCategorySelect dialog = new DialogFragmentCategorySelect();
+                if (expensesTv.getCurrentTextColor() == getResources().getColor(R.color.white))
+                    dialog.setValue("expense");
+                else
+                    dialog.setValue("income");
                 dialog.setTargetFragment(DialogFragmentTransaction.this, 1);
                 dialog.show(getFragmentManager(), "DialogFragmentCategorySelect");
             }
@@ -296,11 +304,20 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             public void onClick(View view) {
                 incomeUnderline.setVisibility(View.INVISIBLE);
                 expensesUnderline.setVisibility(View.VISIBLE);
-                expensesTv.setTextColor(Color.WHITE);
                 incomeTv.setTextColor(Color.parseColor("#C1BFBF"));
                 conLayTrCatSelct.setVisibility(View.VISIBLE);
+                if (expensesTv.getCurrentTextColor() != getResources().getColor(R.color.white)) {
+                    categoryNameSelected.setText(repository.getAllExpenseCategories().get(0));
+                    iconCategorySelected.setImageResource(repository.getIdCategoryIcon(categoryNameSelected.getText().toString()));
+                    List<String> list = repository.getSubcategories(repository.getIdCategory(categoryNameSelected.getText().toString()));
+                    String[] array = list.toArray(new String[0]);
+                    loadSubcatRecycleViewer(getContext(), array);
+                }
+                expensesTv.setTextColor(Color.WHITE);
                 plusMinusTv.setText("-");
                 writeType = "expense";
+                writeIdCategory = repository.getIdCategory(repository.getAllExpenseCategories().get(0));
+                writeIdSubcategory = repository.getIdSubcategory(repository.getSubcategories(writeIdCategory).get(0), writeIdCategory);
             }
         });
 
@@ -309,11 +326,20 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             public void onClick(View view) {
                 expensesUnderline.setVisibility(View.INVISIBLE);
                 incomeUnderline.setVisibility(View.VISIBLE);
-                incomeTv.setTextColor(Color.WHITE);
                 expensesTv.setTextColor(Color.parseColor("#C1BFBF"));
-                conLayTrCatSelct.setVisibility(View.GONE);
+                conLayTrCatSelct.setVisibility(View.VISIBLE);
+                if (incomeTv.getCurrentTextColor() != getResources().getColor(R.color.white)) {
+                    categoryNameSelected.setText(repository.getAllIncomeCategories().get(0));
+                    iconCategorySelected.setImageResource(repository.getIdCategoryIcon(categoryNameSelected.getText().toString()));
+                    List<String> list = repository.getSubcategories(repository.getIdCategory(categoryNameSelected.getText().toString()));
+                    String[] array = list.toArray(new String[0]);
+                    loadSubcatRecycleViewer(getContext(), array);
+                }
+                incomeTv.setTextColor(Color.WHITE);
                 plusMinusTv.setText("+");
                 writeType = "income";
+                writeIdCategory = repository.getIdCategory(repository.getAllIncomeCategories().get(0));
+                writeIdSubcategory = repository.getIdSubcategory(repository.getSubcategories(writeIdCategory).get(0), writeIdCategory);
             }
         });
 
@@ -344,8 +370,6 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         bDigitEqual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (bDigitEqual.getText().toString().equals("✓"))
-//                    repository.writeTransaction();
                 if (bDigitEqual.getText().toString().equals("✓"))
                     writeTransaction(getContext());
                 if (bDigitEqual.getText().toString().equals("="))
@@ -354,28 +378,6 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             }
         });
 
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-//        View alertNotesView = getLayoutInflater().inflate(R.layout.dialog_tr_notes, null);
-//        EditText notesEt = (EditText) alertNotesView.findViewById(R.id.trEtNotes);
-//        ImageButton notesCancelImg = (ImageButton) alertNotesView.findViewById(R.id.trNotesCancel);
-//        Button notesOkButton = (Button) alertNotesView.findViewById(R.id.trNotesOk);
-//        notesOkButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                notesTv.setText(notesEt.getText().toString());
-//                alertDialogNotes.dismiss();
-//            }
-//        });
-//        notesCancelImg.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                alertDialogNotes.dismiss();
-//            }
-//        });
-//        builder.setView(alertNotesView);
-//        alertDialogNotes = builder.create();
-//
-//
         notesTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -385,33 +387,6 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                 dialogNotes.show(getFragmentManager(), "DialogFragmentNotes");
             }
         });
-
-
-//        mActionCancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getDialog().dismiss();
-//            }
-//        });
-//
-//        mActionOk.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String input = mInput.getText().toString();
-//                if (!input.equals("")) {
-//
-//                    //Easiest way: just set the value.
-////                    FirstFragment firstFragment = (FirstFragment) getActivity().getFragmentManager().findFragmentByTag("FirstFragment");
-////                    firstFragment.mInputDisplay.setText(input);
-//
-//                    mOnInputSelected.sendInput(input);
-//                }
-//
-//
-//                getDialog().dismiss();
-//            }
-//        });
-
 
         bDigit0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -561,149 +536,12 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             }
         });
 
-
         return view;
     }
 
     public void loadSubcategiriesList(String categoryId) {
 
     }
-
-
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        try {
-//            mOnInputSelected = (OnInputSelected) getTargetFragment();
-//        } catch (ClassCastException e) {
-//            Log.e(TAG, "onAttach: ClassCastException : " + e.getMessage());
-//        }
-//    }
-//
-//    public void onDigit(TextView textView) {                                            // This function gets executed when a number is clicked
-//        if (tvInput.getText().toString().equals("0")) {
-//            tvInput.setText("");
-//        }
-//        tvInput.append(textView.getText());
-//        num = true;
-//        dot = false;
-//    }
-//
-//    public void onBksp(TextView textView) {                                                             // Deletes the previous elements
-//        if (!tvInput.getText().toString().isEmpty()) {
-//            tvInput.setText(tvInput.getText().toString().substring(0, (tvInput.getText().toString().length()) - 1));
-//        }
-//    }
-//
-//    public void onClear(TextView textView) {                                          // Clears the screen
-//        tvInput.setText("");
-//        num = false;
-//        dot = false;
-//    }
-//
-//    public void decimalPoint(TextView textView) {                                   // Checks whether the decimal is present or not
-//        if (num && !dot) {
-//            tvInput.append(".");
-//            dot = true;
-//            num = false;
-//        }
-//    }
-//
-//    private String reducezeroes(String result) {                      // This reduces the unnecessary decimals
-//        String finalvalue = result;
-//
-//        if (result.contains(".0")) {
-//            finalvalue = result.substring(0, result.length() - 2);
-//        }
-//        return finalvalue;
-//    }
-//
-//    public void onOperator(TextView textView) {                                     // This function gets executed when operators are clicked
-//        if (num && !isoperatorthere(tvInput.getText().toString())) {
-//            tvInput.append(textView.getText().toString());
-//            num = false;
-//            dot = false;
-//        }
-//    }
-//
-//
-//    private Boolean isoperatorthere(String value) {       // This shit checks whether the no. has a - sign before it
-//        if (value.startsWith("-")) {
-//            return false;
-//        } else {
-//            return value.contains("+") || value.contains("-") || value.contains("*") || value.contains("÷") || value.contains("%");
-//        }
-//    }
-//
-//    public void onEqual() {                       // This is where the calculator does its shit
-//        if (num) {
-//
-//            String value = tvInput.getText().toString();
-//            String prefixcheckker = "";
-//
-//            try {                                      // In try block cuz some people do division by zero....
-//
-//                if (value.startsWith("-")) {
-//                    prefixcheckker = "-";
-//                    value = value.substring(1);
-//                }
-//
-//                if (value.contains("-")) {
-//                    String splitvalue[] = value.split("-");
-//                    String num1 = splitvalue[0];
-//                    String num2 = splitvalue[1];
-//
-//                    if (!prefixcheckker.isEmpty()) {
-//                        num1 = prefixcheckker + num1;
-//                    }
-//
-//                    tvInput.setText(reducezeroes(String.valueOf(Double.parseDouble(num1) - Double.parseDouble(num2))));
-//                } else if (value.contains("+")) {
-//                    String[] splitvalue = value.split("\\+");
-//                    String num1 = splitvalue[0];
-//                    String num2 = splitvalue[1];
-//
-//                    if (!prefixcheckker.isEmpty()) {
-//                        num1 = prefixcheckker + num1;
-//                        tvInput.setText(reducezeroes(String.valueOf(Double.parseDouble(num1) + Double.parseDouble(num2))));
-//                    } else {
-//                        tvInput.setText((reducezeroes(String.valueOf(Double.parseDouble(num1) + Double.parseDouble(num2)))));
-//                    }
-//                } else if (value.contains("*")) {
-//                    String splitvalue[] = value.split("\\*");
-//                    String num1 = splitvalue[0];
-//                    String num2 = splitvalue[1];
-//
-//                    if (!prefixcheckker.isEmpty()) {
-//                        num1 = prefixcheckker + num1;
-//                        tvInput.setText(reducezeroes(String.valueOf(Double.parseDouble(num1) * Double.parseDouble(num2))));
-//                    } else {
-//                        tvInput.setText(reducezeroes(String.valueOf(Double.parseDouble(num1) * Double.parseDouble(num2))));
-//                    }
-//                } else if (value.contains("÷")) {
-//                    String [] splitvalue = value.split("÷");
-//                    String num1 = splitvalue[0];
-//                    String num2 = splitvalue[1];
-//
-//                    if (!prefixcheckker.isEmpty()) {
-//                        num1 = prefixcheckker + num1;
-//                        tvInput.setText(reducezeroes(String.valueOf(Double.parseDouble(num1) / Double.parseDouble(num2))));
-//                    } else {
-//                        tvInput.setText(reducezeroes(String.valueOf(Double.parseDouble(num1) / Double.parseDouble(num2))));
-//                    }
-//                } else if (value.contains("%")) {
-//                    String [] splitvalue = value.split("%");
-//                    String num1 = splitvalue[0];
-//                    String num2 = splitvalue[1];
-//
-//                    tvInput.setText(reducezeroes(String.valueOf(Double.parseDouble(num1) * Double.parseDouble(num2) / 100)));
-//                }
-//            } catch (ArithmeticException e){
-//                e.printStackTrace();
-//            }
-//
-//        }
-//    }
 
     public void loadSubcatRecycleViewer(Context context, String[] items) {
         adapter = new HorizontalSubcatRecylerviewAdapter(getActivity(), items);
@@ -832,6 +670,23 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 //                        getDialog().cancel();
                     }
                 }).show();
+    }
+
+    /**
+     * Return date in specified format.
+     *
+     * @param milliSeconds Date in milliseconds
+     * @param dateFormat   Date format
+     * @return String representing date in specified format
+     */
+    public static String getDate(long milliSeconds, String dateFormat) {
+        // Create a DateFormatter object for displaying date in specified format.
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+
+        // Create a calendar object that will convert the date and time value in milliseconds to date.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
     }
 
 }
