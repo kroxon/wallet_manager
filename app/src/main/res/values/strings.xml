@@ -84,7 +84,7 @@
     <string name="delete_ask_2">and all transactions associated with it?</string>
 
 
-    // default categories
+    // default database: categories
 
     <string-array name="categories">
         <item>żywność i napoje</item>
@@ -228,5 +228,17 @@
         <item>#ff6f00</item>
         <item>#3e2723</item>
     </string-array>
+
+    // default database: accounts
+
+    <string-array name="accounts_names">
+        <item>basic account</item>
+        <item>second account</item>
+        <item>credit account</item>
+        <item>savings account</item>
+        <item>foreign currency account</item>
+        <item>piggy bank</item>
+    </string-array>
+
 
 </resources>

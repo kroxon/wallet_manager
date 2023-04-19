@@ -141,10 +141,13 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         InfoRepository infoRepository = new InfoRepository();
         ArrayList<Transaction> transactions;
         transactions = infoRepository.readTransactions("0");
-
-        adapter = new ListViewVerticalHistoryAdapter(getActivity(), transactions);
-        adapter.setClickListener(this);
-        recyclerViewTransactions.setAdapter(adapter);
+        if (transactions.size() == 0)
+            Toast.makeText(getContext(), "Empty history", Toast.LENGTH_SHORT).show();
+        else {
+            adapter = new ListViewVerticalHistoryAdapter(getActivity(), transactions);
+            adapter.setClickListener(this);
+            recyclerViewTransactions.setAdapter(adapter);
+        }
     }
 
     private void loadSpecificTransaciotns() {
@@ -170,7 +173,6 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         if (pTypeOperation.equals("credit")) {
             transactions = infoRepository.getSpecificTransactions("0", pAmountFrom, pAmountTo, "PLN", pPeriodFrom, pPeriodTo, "income");
         }
-
 
 
         adapter = new ListViewVerticalHistoryAdapter(getActivity(), transactions);

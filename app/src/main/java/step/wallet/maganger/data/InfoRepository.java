@@ -11,7 +11,9 @@ import androidx.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import step.wallet.maganger.R;
@@ -134,7 +136,7 @@ public class InfoRepository {
     }
 
 
-    public void addDefaultDatabase(String[] categories, List<String[]> subcategories, String[] icons, String[] colors) {
+    public void addDefaultDatabase(String[] categories, List<String[]> subcategories, String[] icons, String[] colors, String[] accountNames) {
         if (getAllCategories().size() == 0) {
             for (int i = 0; i < categories.length; i++) {
                 ContentValues valuesCat = new ContentValues();
@@ -156,6 +158,17 @@ public class InfoRepository {
                     valuesSubcat.put(DBConstants.COL_SUBCAT_SUPERCAT_ID, getIdCategory(categories[k]));
                     db.insert(DBConstants.TABLE_SUBCATEGORY, null, valuesSubcat);
                 }
+            }
+        }
+        if (getAllAccountsNames().size() == 0) {
+            for (int i = 0; i < accountNames.length; i++) {
+                ContentValues valuesAcc = new ContentValues();
+                valuesAcc.put(DBConstants.COL_ACC_NAME, accountNames[i]);
+                valuesAcc.put(DBConstants.COL_ACC_BALANCE, 0);
+                Currency currency = Currency.getInstance(Locale.getDefault());
+                valuesAcc.put(DBConstants.COL_ACC_CURRENCY, currency.getCurrencyCode());
+                valuesAcc.put(DBConstants.COL_ACC_TYPE, currency.getCurrencyCode());
+                db.insert(DBConstants.TABLE_ACCOUNT, null, valuesAcc);
             }
         }
     }
