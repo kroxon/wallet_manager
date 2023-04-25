@@ -112,7 +112,29 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
     }
 
     @Override
-    public void onItemClick(View view, int position, String s) {
+    public void onItemClick(View view, int position, String s, List<Transaction> tr) {
+//        Toast.makeText(getContext(), "position: " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "ID transaction: " + tr.get(position).getTransactionId(), Toast.LENGTH_SHORT).show();
+
+        Transaction sendTransaction = tr.get(position);
+
+        // display selected transaction
+        DialogFragmentTransaction dialog = new DialogFragmentTransaction();
+        dialog.setTargetFragment(HistoryFragment.this, 1);
+//        repository.writeTransaction(writeIdCategory, writeIdSubcategory, writeDate, tvInput.getText().toString(), writeAccount, notesTv.getText().toString(), writeNote2, writePhoto, writeType);
+
+        Bundle data = new Bundle();
+        data.putString("category", sendTransaction.getTransactionIdCategory());
+        data.putString("subcategory", sendTransaction.getTransactionIdSubcategory());
+        data.putString("value", sendTransaction.getTransactionValue());
+        data.putString("date", String.valueOf(sendTransaction.getTransactionDateFormat()));
+        data.putString("account", sendTransaction.getIdAccount());
+        data.putString("currency", sendTransaction.getCurency());
+        data.putString("note1", sendTransaction.getTransactionNote1());
+        data.putString("type", sendTransaction.getTransactionType());
+        data.putString("ID_transaction", sendTransaction.getTransactionId());
+        dialog.setArguments(data);
+        dialog.show(getFragmentManager(), "DialogFragmentTransaction");
 
     }
 

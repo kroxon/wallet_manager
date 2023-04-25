@@ -80,9 +80,19 @@ public class InfoRepository {
 
     }
 
-    public void updateTransaction(String idTransaction, String date) {
+    public void updateTransaction(String idTransaction, String id_category, String id_subcategory, String date, String amount, String id_account,
+                                  String note_1, String note_2, String photo, String type) {
         ContentValues values = new ContentValues();
-        values.put(DBConstants.COL_TRANSACTION_VALUE, date);
+        values.put(DBConstants.COL_TRANSACTION_ID_CAT, id_category);
+        values.put(DBConstants.COL_TRANSACTION_ID_SUBCAT, id_subcategory);
+        values.put(DBConstants.COL_TRANSACTION_DATE, date);
+        values.put(DBConstants.COL_TRANSACTION_VALUE, amount);
+        values.put(DBConstants.COL_TRANSACTION_ID_ACC, id_account);
+        values.put(DBConstants.COL_TRANSACTION_NOTE_1, note_1);
+        values.put(DBConstants.COL_TRANSACTION_NOTE_2, note_2);
+        values.put(DBConstants.COL_TRANSACTION_PHOTO, photo);
+        values.put(DBConstants.COL_TRANSACTION_TYPE, type);
+
         String[] whereArgs = new String[]{String.valueOf(idTransaction)};
         db.update(DBConstants.TABLE_TRANSACTION, values, DBConstants.COL_TRANSACTION_ID + "=?", whereArgs);
     }
@@ -327,7 +337,28 @@ public class InfoRepository {
         return list;
     }
 
-    // to do - returning ID category
+    // getting currency
+    @Nullable
+    public Account getAccount(String accountId) {
+        Account account = new Account();
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_ACCOUNT + " WHERE " + DBConstants.COL_ACC_ID + " = '" + accountId + "'";
+        // on below line we are creating a new array list.
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        if (cursor.moveToFirst()) {
+                    account.setAccountId(cursor.getString(0));
+                    account.setAccountName(cursor.getString(1));
+                    account.setAccoutType(cursor.getString(2));
+                    account.setAccountCurrency(cursor.getString(3));
+                    account.setAccountDescription(cursor.getString(4));
+                    account.setAccountBalance(cursor.getString(5));
+        }
+//        db.close();
+        return account;
+    }
+
+
+    //  returning ID category
 
     @Nullable
     public String getIdCategory(String cateoryName) {
@@ -380,6 +411,24 @@ public class InfoRepository {
         }
 //        db.close();
         return categoryName;
+    }
+
+    @Nullable
+    public String getSubcategoryName(String idSUbcategory) {
+        String subcategoryName = "0";
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_SUBCATEGORY + " WHERE " + DBConstants.COL_SUBCAT_ID + " = '" + idSUbcategory + "'";
+        // on below line we are creating a new array list.
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and search for ID Category name
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(0).equals(idSUbcategory))
+                    subcategoryName = cursor.getString(2);
+            } while (cursor.moveToNext());
+        }
+//        db.close();
+        return subcategoryName;
     }
 
     @Nullable
@@ -489,6 +538,7 @@ public class InfoRepository {
                     + resourceName + " / " + R.drawable.class, e);
         }
     }
+
 
 //    public Transactions
 

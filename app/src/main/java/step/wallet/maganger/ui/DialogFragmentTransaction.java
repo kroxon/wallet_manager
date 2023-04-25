@@ -2,6 +2,7 @@ package step.wallet.maganger.ui;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,13 +14,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +46,9 @@ import java.util.Locale;
 import step.wallet.maganger.R;
 import step.wallet.maganger.adapters.HorizontalSubcatRecylerviewAdapter;
 import step.wallet.maganger.adapters.SpinnerCategoryAdapter;
+import step.wallet.maganger.classes.CurrencyStrings;
+import step.wallet.maganger.classes.Transaction;
+import step.wallet.maganger.data.CurrencyDatabase;
 import step.wallet.maganger.data.InfoRepository;
 
 public class DialogFragmentTransaction extends DialogFragment implements HorizontalSubcatRecylerviewAdapter.ItemClickListener, DialogFragmentCategorySelect.OnInputSelected, DialogNotesTransaction.OnInputSend {
@@ -89,20 +96,20 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 
     //widgets
     private ImageView lResultImg, iconCategorySelected;
-    private TextView lResultTv, categoryNameSelected, plusMinusTv;
-    private TextView tvInput, expensesTv, incomeTv, notesTv, notesTvBckg, tvInputCache, tvInputAlgerba;
+    private TextView lResultTv, categoryNameSelected, plusMinusTv, currencyTv;
+    private TextView tvInput, expensesTv, incomeTv, notesTv, notesTvBckg, tvInputCache, tvInputAlgerba, tvAccount;
     private TextView bDigit0, bDigit1, bDigit2, bDigit3, bDigit4, bDigit5, bDigit6, bDigit7, bDigit8, bDigit9, bDigitBcksp, bDigitDivide, bDigitMultiply, bDigitPlus, bDigitMinus, bDigitEqual, bDigitComma;
     private TextView btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btn00;
     private TextView btBksp, btDecimal, btClr, dateTv1, dateTv2;
     private Spinner dTCatSpinner, actvSubCat;
     private RecyclerView subcatListRV;
-    private LinearLayout lResult, expensesUnderline, incomeUnderline;
+    private LinearLayout lResult, expensesUnderline, incomeUnderline, layoutAccountSelect;
     private ConstraintLayout conLayTrDatePick, conLayTrCatSelct;
     private HorizontalSubcatRecylerviewAdapter adapter;
     private AlertDialog alertDialogNotes;
 
     private String oldAlgebraSymbol, transactionType;
-    private String writeIdCategory, writeIdSubcategory, writeDate, writeAmount, writeAccount, writeNote1, writeNote2, writePhoto, writeType;
+    private String writeIdCategory, writeIdSubcategory, writeDate, writeAmount, writeAccount, writeNote1, writeNote2, writePhoto, writeType, writeTransactionId;
 
 
     @Override
@@ -172,6 +179,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         writePhoto = "photo1";
         writeType = "expense";
 
+
         bDigit0 = (TextView) view.findViewById(R.id.trDigit0);
         bDigit1 = (TextView) view.findViewById(R.id.trDigit1);
         bDigit2 = (TextView) view.findViewById(R.id.trDigit2);
@@ -192,33 +200,38 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 
         conLayTrDatePick = (ConstraintLayout) view.findViewById(R.id.trlayoutDatePicker);
         conLayTrCatSelct = (ConstraintLayout) view.findViewById(R.id.trCategorySelectLayout);
+        layoutAccountSelect = (LinearLayout) view.findViewById(R.id.trLayoutAccountSelect);
 
         iconCategorySelected = (ImageView) view.findViewById(R.id.trIconCategory);
         categoryNameSelected = (TextView) view.findViewById(R.id.trNameCategory);
 
         expensesTv = (TextView) view.findViewById(R.id.trExpenses);
         incomeTv = (TextView) view.findViewById(R.id.trIncome);
+        tvAccount = (TextView) view.findViewById(R.id.accNameTxt);
+        currencyTv = (TextView) view.findViewById(R.id.tvCurrency);
         plusMinusTv = (TextView) view.findViewById(R.id.trPlusMinusTv);
         expensesUnderline = (LinearLayout) view.findViewById(R.id.trExpensesUnderline);
         incomeUnderline = (LinearLayout) view.findViewById(R.id.trIncomeUnderline);
         notesTv = (TextView) view.findViewById(R.id.trNotesTv);
         notesTvBckg = (TextView) view.findViewById(R.id.trNotesTvBackground);
 
-        Bundle data = getArguments();
-        if (data != null) {
-            Toast.makeText(getContext(), data.getString("key"), Toast.LENGTH_SHORT).show();
-            expensesUnderline.setVisibility(View.INVISIBLE);
-            incomeUnderline.setVisibility(View.VISIBLE);
-            incomeTv.setTextColor(Color.WHITE);
-            expensesTv.setTextColor(Color.parseColor("#C1BFBF"));
-            conLayTrCatSelct.setVisibility(View.GONE);
-            plusMinusTv.setText("+");
-            writeType = "income";
-        }
-
-
+        // initial values
         categoryNameSelected.setText(repository.getAllExpenseCategories().get(0));
         iconCategorySelected.setImageResource(repository.getIdCategoryIcon(categoryNameSelected.getText().toString()));
+
+        String accName = repository.getAllAccountsNames().get(0);
+        writeAccount = repository.getIdAccount(accName);
+        if (accName.length() > 15)
+            accName = accName.substring(0, 12) + "...";
+        tvAccount.setText(accName);
+        CurrencyDatabase currencyDatabase = new CurrencyDatabase(getContext());
+        ArrayList<CurrencyStrings> currentList = currencyDatabase.getCurrenciesList();
+        for (int j = 0; j < currentList.size(); j++) {
+            if (currentList.get(j).getName().equals(repository.getAccount(writeAccount).getAccountCurrency())) {
+                currencyTv.setText(currentList.get(j).getSymbol());
+                break;
+            }
+        }
 
         // Category Spinner Drop down elements
         dTCatSpinner = (Spinner) view.findViewById(R.id.dTransactionCatSpinner);
@@ -254,9 +267,48 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             }
         });
 
-//        dateTv1.setText(new SimpleDateFormat("dd", Locale.getDefault()).format(new Date()));
-        dateTv1.setText(getDate(Long.parseLong("1679788800136"), "dd"));
+        dateTv1.setText(new SimpleDateFormat("dd", Locale.getDefault()).format(new Date()));
+//        dateTv1.setText(getDate(Long.parseLong("1679788800136"), "dd"));
         dateTv2.setText(new SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(new Date()));
+
+// data from History Fragment
+        Bundle data = getArguments();
+        if (data != null) {
+            if (data.getString("type").equals("expense"))
+                expenseClick(data.getString("category"));
+            else
+                incomeClick(data.getString("category"));
+
+            categoryNameSelected.setText(repository.getCategoryName(data.getString("category")));
+            iconCategorySelected.setImageResource(repository.getIdCategoryIcon(repository.getCategoryName(data.getString("category"))));
+            List<String> list = repository.getSubcategories(repository.getIdCategory(categoryNameSelected.getText().toString()));
+            int subIndex = list.indexOf(repository.getSubcategoryName(data.getString("subcategory")));
+            list.set(subIndex, list.get(0));
+            list.set(0, repository.getSubcategoryName(data.getString("subcategory")));
+            String[] array = list.toArray(new String[0]);
+            loadSubcatRecycleViewer(getContext(), array);
+
+            Transaction tran = new Transaction();
+            dateTv1.setText(tran.getDate(Long.parseLong(data.getString("date")), "dd"));
+            dateTv2.setText(tran.getDate(Long.parseLong(data.getString("date")), "MMMM yyyy"));
+
+            tvInput.setText(data.getString("value"));
+
+            notesTv.setText(data.getString("note1"));
+
+            writeIdCategory = data.getString("category");
+            writeIdSubcategory = data.getString("subcategory");
+            writeDate = data.getString("date");
+            writeAmount = data.getString("value");
+            writeAccount = data.getString("account");
+            writeNote1 = data.getString("note1");
+            writeNote2 = data.getString("note2");
+            writePhoto = data.getString("photo");
+            writeType = data.getString("type");
+            writeTransactionId = data.getString("ID_transaction");
+
+        }
+
         conLayTrDatePick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -296,6 +348,47 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                     dialog.setValue("income");
                 dialog.setTargetFragment(DialogFragmentTransaction.this, 1);
                 dialog.show(getFragmentManager(), "DialogFragmentCategorySelect");
+            }
+        });
+
+        layoutAccountSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog descpriptionDialog = new Dialog(getContext());
+                descpriptionDialog.setContentView(R.layout.dialog_tr_account_select);
+                int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
+                int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.40);
+                descpriptionDialog.getWindow().setLayout(width, height);
+                descpriptionDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                descpriptionDialog.show();
+
+                ListView accountListView = descpriptionDialog.findViewById(R.id.d_tr_acc_list);
+                List<String> accList = new ArrayList<>();
+                accList = repository.getAllAccountsNames();
+                ArrayAdapter accountAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_activated_1, accList);
+                accountListView.setAdapter(accountAdapter);
+                List<String> finalAccList = accList;
+                accountListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        String accNameTxt = finalAccList.get(i);
+                        writeAccount = repository.getIdAccount(accNameTxt);
+                        if (accNameTxt.length() > 15)
+                            accNameTxt = accNameTxt.substring(0, 12) + "...";
+                        tvAccount.setText(accNameTxt);
+
+                        CurrencyDatabase currencyDatabase = new CurrencyDatabase(getContext());
+                        ArrayList<CurrencyStrings> currentList = currencyDatabase.getCurrenciesList();
+                        for (int j = 0; j < currentList.size(); j++) {
+                            if (currentList.get(j).getName().equals(repository.getAccount(writeAccount).getAccountCurrency())) {
+                                currencyTv.setText(currentList.get(j).getSymbol());
+                                break;
+                            }
+                        }
+                        Toast.makeText(getContext(), "Currency: " + repository.getAccount(writeAccount).getAccountCurrency(), Toast.LENGTH_SHORT).show();
+                        descpriptionDialog.dismiss();
+                    }
+                });
             }
         });
 
@@ -371,7 +464,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             @Override
             public void onClick(View view) {
                 if (bDigitEqual.getText().toString().equals("✓"))
-                    writeTransaction(getContext());
+                    writeTransaction(getContext(), data);
                 if (bDigitEqual.getText().toString().equals("="))
                     bDigitEqual.setText("✓");
                 makeAlgebraSymbol("=");
@@ -650,7 +743,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         return resultString;
     }
 
-    public void writeTransaction(Context context) {
+    public void writeTransaction(Context context, Bundle bundle) {
         AlertDialog.Builder alertWriteTransactionConfirm = new AlertDialog.Builder(context);
 
         //message
@@ -661,7 +754,10 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                         Toast.makeText(context, "Successfully saved!", Toast.LENGTH_SHORT).show();
 
                         InfoRepository repository = new InfoRepository();
-                        repository.writeTransaction(writeIdCategory, writeIdSubcategory, writeDate, tvInput.getText().toString(), writeAccount, notesTv.getText().toString(), writeNote2, writePhoto, writeType);
+                        if (bundle == null)
+                            repository.writeTransaction(writeIdCategory, writeIdSubcategory, writeDate, tvInput.getText().toString(), writeAccount, notesTv.getText().toString(), writeNote2, writePhoto, writeType);
+                        else
+                            repository.updateTransaction(writeTransactionId, writeIdCategory, writeIdSubcategory, writeDate, tvInput.getText().toString(), writeAccount, notesTv.getText().toString(), writeNote2, writePhoto, writeType);
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -687,6 +783,46 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(milliSeconds);
         return formatter.format(calendar.getTime());
+    }
+
+    private void expenseClick(String idCategory) {
+        InfoRepository repository = new InfoRepository();
+        incomeUnderline.setVisibility(View.INVISIBLE);
+        expensesUnderline.setVisibility(View.VISIBLE);
+        incomeTv.setTextColor(Color.parseColor("#C1BFBF"));
+        conLayTrCatSelct.setVisibility(View.VISIBLE);
+        if (expensesTv.getCurrentTextColor() != getResources().getColor(R.color.white)) {
+            categoryNameSelected.setText(repository.getCategoryName(idCategory));
+            iconCategorySelected.setImageResource(repository.getIdCategoryIcon(repository.getCategoryName(idCategory)));
+            List<String> list = repository.getSubcategories(repository.getIdCategory(categoryNameSelected.getText().toString()));
+            String[] array = list.toArray(new String[0]);
+            loadSubcatRecycleViewer(getContext(), array);
+        }
+        expensesTv.setTextColor(Color.WHITE);
+        plusMinusTv.setText("-");
+        writeType = "expense";
+        writeIdCategory = repository.getIdCategory(repository.getAllExpenseCategories().get(0));
+        writeIdSubcategory = repository.getIdSubcategory(repository.getSubcategories(writeIdCategory).get(0), writeIdCategory);
+    }
+
+    private void incomeClick(String idCategory) {
+        InfoRepository repository = new InfoRepository();
+        expensesUnderline.setVisibility(View.INVISIBLE);
+        incomeUnderline.setVisibility(View.VISIBLE);
+        expensesTv.setTextColor(Color.parseColor("#C1BFBF"));
+        conLayTrCatSelct.setVisibility(View.VISIBLE);
+        if (incomeTv.getCurrentTextColor() != getResources().getColor(R.color.white)) {
+            categoryNameSelected.setText(repository.getCategoryName(idCategory));
+            iconCategorySelected.setImageResource(repository.getIdCategoryIcon(categoryNameSelected.getText().toString()));
+            List<String> list = repository.getSubcategories(repository.getIdCategory(categoryNameSelected.getText().toString()));
+            String[] array = list.toArray(new String[0]);
+            loadSubcatRecycleViewer(getContext(), array);
+        }
+        incomeTv.setTextColor(Color.WHITE);
+        plusMinusTv.setText("+");
+        writeType = "income";
+        writeIdCategory = repository.getIdCategory(repository.getAllIncomeCategories().get(0));
+        writeIdSubcategory = repository.getIdSubcategory(repository.getSubcategories(writeIdCategory).get(0), writeIdCategory);
     }
 
 }

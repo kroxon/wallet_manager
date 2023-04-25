@@ -102,6 +102,11 @@ public class Transaction {
         return Long.parseLong(transactionDate);
     }
 
+    public Long getTransactionDateInMilis() {
+        return Long.parseLong(transactionDate);
+    }
+
+
     public String getIdAccount() {
         return idAccount;
     }

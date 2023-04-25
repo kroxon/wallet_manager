@@ -113,7 +113,7 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, position, s);
+            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition(), s, transactionsList);
             notifyItemChanged(position);
         }
     }
@@ -135,7 +135,7 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(View view, int position, String s);
+        void onItemClick(View view, int position, String s, List<Transaction> tr);
     }
 }
 

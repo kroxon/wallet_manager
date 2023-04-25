@@ -30,6 +30,12 @@
 
     //dialog transaction
     <string name="d_tr_notes">Notes...</string>
+    <string name="d_tr_acc_select">Select account</string>
+    <string name="d_tr_acc">Account</string>
+    <string name="d_tr_date">Date</string>
+    <string name="d_tr_expense">Expenses</string>
+    <string name="d_tr_income">Income</string>
+    <string name="d_tr_category">Category</string>
 
 
     //color picker

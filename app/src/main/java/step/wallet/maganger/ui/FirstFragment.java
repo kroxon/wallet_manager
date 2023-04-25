@@ -65,7 +65,7 @@ public class FirstFragment extends Fragment implements DialogFragmentTransaction
         bStartDialog = (Button) view.findViewById(R.id.button_dialog);
         text_example = (TextView) view.findViewById(R.id.first_example);
         mOpenDialog = view.findViewById(R.id.open_dialog);
-        mOpenDialogBundle = view.findViewById(R.id.open_dialog_bundle);
+//        mOpenDialogBundle = view.findViewById(R.id.open_dialog_bundle);
         mInputDisplay = view.findViewById(R.id.input_display);
         tIdIcon = view.findViewById(R.id.tIdIcon);
         bIdIcon = view.findViewById(R.id.bIdIcon);
@@ -93,13 +93,13 @@ public class FirstFragment extends Fragment implements DialogFragmentTransaction
             }
         });
 
-        bexample3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                InfoRepository repository = new InfoRepository();
-                repository.updateTransaction("4", "24");
-            }
-        });
+//        bexample3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                InfoRepository repository = new InfoRepository();
+//                repository.updateTransaction("4", "24");
+//            }
+//        });
 
         bexample4.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,20 +128,20 @@ public class FirstFragment extends Fragment implements DialogFragmentTransaction
             }
         });
 
-        mOpenDialogBundle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                DialogFragmentTransaction dialog = new DialogFragmentTransaction();
-                dialog.setTargetFragment(FirstFragment.this, 1);
-                Bundle data = new Bundle();
-                data.putString("key", "income");
-                data.putString("key2", "qpa");
-                dialog.setArguments(data);
-                dialog.show(getFragmentManager(), "DialogFragmentTransaction");
-
-            }
-        });
+//        mOpenDialogBundle.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                DialogFragmentTransaction dialog = new DialogFragmentTransaction();
+//                dialog.setTargetFragment(FirstFragment.this, 1);
+//                Bundle data = new Bundle();
+//                data.putString("key", "income");
+//                data.putString("key2", "qpa");
+//                dialog.setArguments(data);
+//                dialog.show(getFragmentManager(), "DialogFragmentTransaction");
+//
+//            }
+//        });
 
         bIdIcon.setOnClickListener(new View.OnClickListener() {
             @Override
