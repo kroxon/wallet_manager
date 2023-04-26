@@ -25,6 +25,7 @@
     // general
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="cancel">Cancel</string>
 
 
 
@@ -36,6 +37,10 @@
     <string name="d_tr_expense">Expenses</string>
     <string name="d_tr_income">Income</string>
     <string name="d_tr_category">Category</string>
+    <string name="d_tr_save">Save a transaction?</string>
+    <string name="d_tr_update">Update a transaction?</string>
+    <string name="d_tr_suss_saved">Successfully saved!</string>
+    <string name="d_tr_suss_updated">Successfully updated!</string>
 
 
     //color picker

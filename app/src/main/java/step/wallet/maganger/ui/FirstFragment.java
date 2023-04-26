@@ -24,10 +24,6 @@ public class FirstFragment extends Fragment implements DialogFragmentTransaction
 
     private static final String TAG = "FirstFragment";
 
-    @Override
-    public void sendInput(String input) {
-        mInputDisplay.setText(input);
-    }
 
 
     public Button bexample;
@@ -180,6 +176,11 @@ public class FirstFragment extends Fragment implements DialogFragmentTransaction
             throw new RuntimeException("No resource ID found for: "
                     + resourceName + " / " + c, e);
         }
+    }
+
+    @Override
+    public void sendSelected() {
+
     }
 
 

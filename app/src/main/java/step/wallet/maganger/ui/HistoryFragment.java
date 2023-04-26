@@ -31,7 +31,7 @@ import step.wallet.maganger.adapters.ListViewVerticalHistoryAdapter;
 import step.wallet.maganger.classes.Transaction;
 import step.wallet.maganger.data.InfoRepository;
 
-public class HistoryFragment extends Fragment implements ListViewVerticalHistoryAdapter.ItemClickListener, DialogFragmentFilterHistoryTransaction.OnInputSend {
+public class HistoryFragment extends Fragment implements ListViewVerticalHistoryAdapter.ItemClickListener, DialogFragmentFilterHistoryTransaction.OnInputSend, DialogFragmentTransaction.OnInputSelected {
 
     private OnFragmentInteractionListener mListener;
     private ListViewVerticalHistoryAdapter adapter;
@@ -152,6 +152,11 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         loadSpecificTransaciotns();
     }
 
+    @Override
+    public void sendSelected() {
+        loadTransaciotns();
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void messageFromChildFragment(Uri uri);
@@ -162,7 +167,7 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         List<String> cats = new ArrayList<String>();
         InfoRepository infoRepository = new InfoRepository();
         ArrayList<Transaction> transactions;
-        transactions = infoRepository.readTransactions("0");
+        transactions = infoRepository.readTransactions();
         if (transactions.size() == 0)
             Toast.makeText(getContext(), "Empty history", Toast.LENGTH_SHORT).show();
         else {

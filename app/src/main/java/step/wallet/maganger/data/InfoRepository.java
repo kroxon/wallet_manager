@@ -542,16 +542,15 @@ public class InfoRepository {
 
 //    public Transactions
 
-    public ArrayList<Transaction> readTransactions(String idAccount) {
+    public ArrayList<Transaction> readTransactions() {
         ArrayList<Transaction> transactionsList = new ArrayList<Transaction>();
 
-        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_TRANSACTION + " WHERE " + DBConstants.COL_TRANSACTION_ID_ACC + " = '" + idAccount + "'";
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_TRANSACTION;
         Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
 
         // looping through all rows and search for ID Accout
         if (cursor.moveToFirst()) {
             do {
-                if (cursor.getString(5).equals(idAccount)) {
                     Transaction transaction = new Transaction();
                     transaction.setTransactionId(cursor.getString(0));
                     transaction.setTransactionValue(cursor.getString(1));
@@ -564,7 +563,6 @@ public class InfoRepository {
                     transaction.setTransactionPhoto(cursor.getString(9));
                     transaction.setTransactionType(cursor.getString(10));
                     transactionsList.add(transaction);
-                }
             } while (cursor.moveToNext());
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

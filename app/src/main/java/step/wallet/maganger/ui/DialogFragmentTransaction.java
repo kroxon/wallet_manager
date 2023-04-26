@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ import java.util.Locale;
 
 import step.wallet.maganger.R;
 import step.wallet.maganger.adapters.HorizontalSubcatRecylerviewAdapter;
+import step.wallet.maganger.adapters.RecyclerViewAccountsAdapter;
 import step.wallet.maganger.adapters.SpinnerCategoryAdapter;
 import step.wallet.maganger.classes.CurrencyStrings;
 import step.wallet.maganger.classes.Transaction;
@@ -87,12 +89,15 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 
     }
 
+    public OnInputSelected mOnInputSelected;
+
 
     public interface OnInputSelected {
-        void sendInput(String input);
+        void sendSelected();
     }
 
-    public OnInputSelected mOnInputSelected;
+
+
 
     //widgets
     private ImageView lResultImg, iconCategorySelected;
@@ -747,19 +752,33 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         AlertDialog.Builder alertWriteTransactionConfirm = new AlertDialog.Builder(context);
 
         //message
-        alertWriteTransactionConfirm.setMessage("Save?")
-                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        String message;
+        if (bundle == null)
+            message = getResources().getString(R.string.d_tr_save);
+        else
+            message = getResources().getString(R.string.d_tr_update);
+
+        String yes = getResources().getString(R.string.yes);
+        String cancel = getResources().getString(R.string.cancel);
+
+        alertWriteTransactionConfirm.setMessage(message)
+                .setPositiveButton(yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(context, "Successfully saved!", Toast.LENGTH_SHORT).show();
 
                         InfoRepository repository = new InfoRepository();
-                        if (bundle == null)
+                        if (bundle == null) {
                             repository.writeTransaction(writeIdCategory, writeIdSubcategory, writeDate, tvInput.getText().toString(), writeAccount, notesTv.getText().toString(), writeNote2, writePhoto, writeType);
-                        else
+                            Toast.makeText(context, getResources().getString(R.string.d_tr_suss_saved), Toast.LENGTH_SHORT).show();
+                        }
+                        else {
                             repository.updateTransaction(writeTransactionId, writeIdCategory, writeIdSubcategory, writeDate, tvInput.getText().toString(), writeAccount, notesTv.getText().toString(), writeNote2, writePhoto, writeType);
+                            Toast.makeText(context, getResources().getString(R.string.d_tr_suss_updated), Toast.LENGTH_SHORT).show();
+                            getDialog().dismiss();
+                        }
+                        mOnInputSelected.sendSelected();
                     }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                }).setNegativeButton(cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(context, "Entry cancelled!", Toast.LENGTH_SHORT).show();
@@ -823,6 +842,18 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         writeType = "income";
         writeIdCategory = repository.getIdCategory(repository.getAllIncomeCategories().get(0));
         writeIdSubcategory = repository.getIdSubcategory(repository.getSubcategories(writeIdCategory).get(0), writeIdCategory);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mOnInputSelected
+                    = (OnInputSelected) getTargetFragment();
+        } catch (ClassCastException e) {
+            Log.e(TAG, "onAttach: ClassCastException: "
+                    + e.getMessage());
+        }
     }
 
 }
