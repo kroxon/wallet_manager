@@ -557,6 +557,7 @@ public class InfoRepository {
                     transaction.setTransactionIdCategory(cursor.getString(2));
                     transaction.setTransactionIdSubcategory(cursor.getString(3));
                     transaction.setTransactionDate(cursor.getString(4));
+                    transaction.setIdAccount(cursor.getString(5));
                     transaction.setTransactionCurency(cursor.getString(6));
                     transaction.setTransactionNote1(cursor.getString(7));
                     transaction.setTransactionNote2(cursor.getString(8));
@@ -617,6 +618,7 @@ public class InfoRepository {
                     transaction.setTransactionIdCategory(cursor.getString(2));
                     transaction.setTransactionIdSubcategory(cursor.getString(3));
                     transaction.setTransactionDate(cursor.getString(4));
+                    transaction.setIdAccount(cursor.getString(5));
                     transaction.setTransactionCurency(cursor.getString(6));
                     transaction.setTransactionNote1(cursor.getString(7));
                     transaction.setTransactionNote2(cursor.getString(8));

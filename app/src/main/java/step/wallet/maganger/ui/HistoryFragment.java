@@ -28,7 +28,9 @@ import java.util.List;
 
 import step.wallet.maganger.R;
 import step.wallet.maganger.adapters.ListViewVerticalHistoryAdapter;
+import step.wallet.maganger.classes.CurrencyStrings;
 import step.wallet.maganger.classes.Transaction;
+import step.wallet.maganger.data.CurrencyDatabase;
 import step.wallet.maganger.data.InfoRepository;
 
 public class HistoryFragment extends Fragment implements ListViewVerticalHistoryAdapter.ItemClickListener, DialogFragmentFilterHistoryTransaction.OnInputSend, DialogFragmentTransaction.OnInputSelected {
@@ -171,7 +173,9 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         if (transactions.size() == 0)
             Toast.makeText(getContext(), "Empty history", Toast.LENGTH_SHORT).show();
         else {
-            adapter = new ListViewVerticalHistoryAdapter(getActivity(), transactions);
+            CurrencyDatabase currencyDatabase = new CurrencyDatabase(getContext());
+            ArrayList<CurrencyStrings> currentList = currencyDatabase.getCurrenciesList();
+            adapter = new ListViewVerticalHistoryAdapter(getActivity(), transactions, currentList);
             adapter.setClickListener(this);
             recyclerViewTransactions.setAdapter(adapter);
         }
@@ -201,8 +205,9 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
             transactions = infoRepository.getSpecificTransactions("0", pAmountFrom, pAmountTo, "PLN", pPeriodFrom, pPeriodTo, "income");
         }
 
-
-        adapter = new ListViewVerticalHistoryAdapter(getActivity(), transactions);
+        CurrencyDatabase currencyDatabase = new CurrencyDatabase(getContext());
+        ArrayList<CurrencyStrings> currentList = currencyDatabase.getCurrenciesList();
+        adapter = new ListViewVerticalHistoryAdapter(getActivity(), transactions, currentList);
         adapter.setClickListener(this);
         recyclerViewTransactions.setAdapter(adapter);
     }

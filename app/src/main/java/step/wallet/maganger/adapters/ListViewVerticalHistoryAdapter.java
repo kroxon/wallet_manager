@@ -23,12 +23,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import step.wallet.maganger.R;
+import step.wallet.maganger.classes.CurrencyStrings;
 import step.wallet.maganger.classes.Transaction;
+import step.wallet.maganger.data.CurrencyDatabase;
 import step.wallet.maganger.data.InfoRepository;
 
 public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListViewVerticalHistoryAdapter.ViewHolder> implements View.OnClickListener {
 
     ArrayList<Transaction> transactionsList;
+    ArrayList<CurrencyStrings> currencytList;
     Context context;
     private LayoutInflater mInflater;
     public String currentDate = "";
@@ -36,9 +39,10 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
     private ItemClickListener mClickListener;
 
 
-    public ListViewVerticalHistoryAdapter(Context context, ArrayList<Transaction> items) {
+    public ListViewVerticalHistoryAdapter(Context context, ArrayList<Transaction> items, ArrayList<CurrencyStrings> currencytList) {
         this.mInflater = LayoutInflater.from(context);
         transactionsList = items;
+        this.currencytList = currencytList;
     }
 
     @Override
@@ -60,7 +64,13 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
         }
         holder.myDate.setText(transactionsList.get(position).getTransactionDate());
         holder.myValue.setText(transactionsList.get(position).getTransactionValue());
-        holder.myCurrency.setText("zł");
+
+        for (int j = 0; j < currencytList.size(); j++) {
+            if (currencytList.get(j).getName().equals(infoRepository.getAccount(transactionsList.get(position).getIdAccount()).getAccountCurrency())) {
+                holder.myCurrency.setText(currencytList.get(j).getSymbol());
+                break;
+            }
+        }
         if (transactionsList.get(position).getTransactionType().equals("expense")) {
             holder.myValue.setText("- " + holder.myValue.getText().toString());
             holder.myIcon.setImageResource(Integer.parseInt(infoRepository.getIdCategoryIconById(transactionsList.get(position).getTransactionIdCategory())));
