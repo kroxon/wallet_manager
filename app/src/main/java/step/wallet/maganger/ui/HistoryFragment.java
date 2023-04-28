@@ -2,6 +2,7 @@ package step.wallet.maganger.ui;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,8 +18,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -26,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 import step.wallet.maganger.R;
 import step.wallet.maganger.adapters.ListViewVerticalHistoryAdapter;
 import step.wallet.maganger.classes.CurrencyStrings;
@@ -40,6 +46,9 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
     private RecyclerView recyclerViewTransactions;
     private ImageView btnFilter;
     private Button btnTest;
+
+    ArrayList<Transaction> transactions;
+
 
     // ititial filter
     private double pAmountFrom = 0.0;
@@ -75,6 +84,7 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         recyclerViewTransactions = (RecyclerView) view.findViewById(R.id.historyTransactionList);
         recyclerViewTransactions.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
+
         loadTransaciotns();
 
         btnFilter.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +104,60 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
             }
         });
 
+        Transaction[] deleteTransaction = new Transaction[1];
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                deleteTransaction[0] = transactions.get(position);
+                InfoRepository repository = new InfoRepository();
+                repository.removeTransaction(deleteTransaction[0].getTransactionId());
+                transactions.remove(position);
+                adapter.notifyDataSetChanged();
+
+                // below line is to display our snackbar with action.
+                Snackbar.make(recyclerViewTransactions, getResources().getString(R.string.delete), Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.undo), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // adding on click listener to our action of snack bar.
+                        // below line is to add our item to array list with a position.
+
+                        repository.writeTransaction(deleteTransaction[0].getTransactionIdCategory(), deleteTransaction[0].getTransactionIdSubcategory(), String.valueOf(deleteTransaction[0].getTransactionDateInMilis()),
+                                deleteTransaction[0].getTransactionValue(), deleteTransaction[0].getIdAccount(), deleteTransaction[0].getTransactionNote1(),
+                                deleteTransaction[0].getTransactionNote2(), deleteTransaction[0].getTransactionPhoto(), deleteTransaction[0].getTransactionType());
+                        transactions.add(position, deleteTransaction[0]);
+
+                        // below line is to notify item is
+                        // added to our adapter class.
+                        adapter.notifyItemChanged(position);
+                        adapter.notifyDataSetChanged();
+
+                    }
+                }).show();
+
+            }
+
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+                new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                        .addSwipeRightBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_red_light))
+                        .addSwipeRightActionIcon(R.drawable.ic_delete)
+                        .setSwipeRightActionIconTint(ContextCompat.getColor(getActivity(), R.color.white))
+                        .addSwipeRightLabel(getResources().getString(R.string.delete))
+                        .setSwipeRightLabelColor(ContextCompat.getColor(getActivity(), R.color.white))
+                        .create()
+                        .decorate();
+
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+        }).attachToRecyclerView(recyclerViewTransactions);
 
         return view;
     }
@@ -168,7 +232,6 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         // on below line we are initializing adapter
         List<String> cats = new ArrayList<String>();
         InfoRepository infoRepository = new InfoRepository();
-        ArrayList<Transaction> transactions;
         transactions = infoRepository.readTransactions();
         if (transactions.size() == 0)
             Toast.makeText(getContext(), "Empty history", Toast.LENGTH_SHORT).show();
@@ -185,7 +248,6 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         // on below line we are initializing adapter
         List<String> cats = new ArrayList<String>();
         InfoRepository infoRepository = new InfoRepository();
-        ArrayList<Transaction> transactions = new ArrayList<Transaction>();
         ArrayList<Transaction> transactions2;
 
         if (pTypeOperation.equals("All")) {

@@ -114,7 +114,8 @@ dependencies {
     //color picker
     implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
 
-
+    // swipe action
+    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.4'
 
 }
 

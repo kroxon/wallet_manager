@@ -56,13 +56,15 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         InfoRepository infoRepository = new InfoRepository();
-        if (transactionsList.get(position).getTransactionDate().equals(currentDate)) {
+        if (position == 0)
+            currentDate = transactionsList.get(0).getTransactionDate();
+        if (transactionsList.get(position).getTransactionDate().equals(currentDate) && position != 0) {
             holder.myDate.setVisibility(View.GONE);
         } else {
             holder.myDate.setVisibility(View.VISIBLE);
             currentDate = transactionsList.get(position).getTransactionDate();
         }
-        holder.myDate.setText(transactionsList.get(position).getTransactionDate());
+        holder.myDate.setText(currentDate);
         holder.myValue.setText(transactionsList.get(position).getTransactionValue());
 
         for (int j = 0; j < currencytList.size(); j++) {
@@ -72,10 +74,13 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
             }
         }
         if (transactionsList.get(position).getTransactionType().equals("expense")) {
+            holder.myValue.setTextColor(Color.parseColor("#004d40"));
+            holder.myCurrency.setTextColor(Color.parseColor("#004d40"));
             holder.myValue.setText("- " + holder.myValue.getText().toString());
             holder.myIcon.setImageResource(Integer.parseInt(infoRepository.getIdCategoryIconById(transactionsList.get(position).getTransactionIdCategory())));
             holder.myCategory.setText(infoRepository.getCategoryName(transactionsList.get(position).getTransactionIdCategory()));
-        } else {
+        }
+        if (transactionsList.get(position).getTransactionType().equals("income")) {
             holder.myValue.setTextColor(Color.parseColor("#689F38"));
             holder.myCurrency.setTextColor(Color.parseColor("#689F38"));
             holder.myIcon.setImageResource(Integer.parseInt(infoRepository.getIdCategoryIconById(transactionsList.get(position).getTransactionIdCategory())));
@@ -123,7 +128,8 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition(), s, transactionsList);
+            if (mClickListener != null)
+                mClickListener.onItemClick(view, getAdapterPosition(), s, transactionsList);
             notifyItemChanged(position);
         }
     }
@@ -147,6 +153,7 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
     public interface ItemClickListener {
         void onItemClick(View view, int position, String s, List<Transaction> tr);
     }
+
 }
 
 
