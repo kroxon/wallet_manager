@@ -15,8 +15,10 @@ import android.widget.*
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import step.wallet.maganger.R
+import step.wallet.maganger.data.InfoRepository
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class DialogFragmentFilterHistoryTransaction : DialogFragment() {
 
@@ -94,9 +96,12 @@ class DialogFragmentFilterHistoryTransaction : DialogFragment() {
 
         currenciesList = ArrayList()
         (currenciesList as ArrayList<String>).add(getString(R.string.filter_currency_all))
-        (currenciesList as ArrayList<String>).add("PLN")
-        (currenciesList as ArrayList<String>).add("EUR")
-        (currenciesList as ArrayList<String>).add("USD")
+
+        var repo = InfoRepository()
+        for (i in repo.readAccounts()!!) {
+            if (!currenciesList.contains(i.accountCurrency))
+                (currenciesList as ArrayList<String>).add(i.accountCurrency)
+        }
 
         findViews(view)
         initializeViews()
@@ -317,7 +322,7 @@ class DialogFragmentFilterHistoryTransaction : DialogFragment() {
 
         checkBoxDebit!!.setOnCheckedChangeListener { buttonView, isChecked ->
             if (checkBoxDebit?.isChecked == true)
-                typeOperation = "debit"
+                typeOperation = "expense"
             if (checkBoxDebit?.isChecked == true && checkBoxCredit?.isChecked == true) {
                 checkBoxAll?.isChecked = true
             } else if (checkBoxCredit?.isChecked == true) {
@@ -328,7 +333,7 @@ class DialogFragmentFilterHistoryTransaction : DialogFragment() {
 
         checkBoxCredit!!.setOnCheckedChangeListener { buttonView, isChecked ->
             if (checkBoxCredit?.isChecked == true)
-                typeOperation = "credit"
+                typeOperation = "income"
             if (checkBoxDebit?.isChecked == true && checkBoxCredit?.isChecked == true) {
                 checkBoxAll?.isChecked = true
             } else if (checkBoxDebit?.isChecked == true) {
@@ -348,7 +353,12 @@ class DialogFragmentFilterHistoryTransaction : DialogFragment() {
                 position: Int,
                 id: Long
             ) {
-                account = position.toString()
+                val accountsList: List<String>
+                var repo = InfoRepository()
+                if (position != 0)
+                    account = repo.getIdAccount(repo.allAccountsNames?.get(position)).toString()
+                else
+                    account = position.toString()
             }
         }
 
@@ -418,11 +428,11 @@ class DialogFragmentFilterHistoryTransaction : DialogFragment() {
     private fun loadAccountSpinner() {
         // on below line we are initializing adapter
         // Account spinner
-        val accountsList: List<String>
-        accountsList = ArrayList()
-        accountsList.add("Account 1")
-        accountsList.add("Account 2")
-        accountsList.add("Account 3")
+        var accountsList: MutableList<String>
+        var repo = InfoRepository()
+        val nameAll = resources.getString(R.string.filter_currency_all)
+        accountsList = repo.allAccountsNames!!
+        accountsList.add(0, nameAll)
         val arrayAdapterAccount =
             ArrayAdapter(context, R.layout.dialog_filter_tr_currency_dropdown_item, accountsList)
         arrayAdapterAccount.notifyDataSetChanged()

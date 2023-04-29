@@ -214,7 +214,8 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         pPeriodTo = sPeriodTo;
         pTypeOperation = sTypeOper;
         pAccount = sAccount;
-        Toast.makeText(getContext(), "received: " + pAmountFrom + pAmountTo + pCurrency + pPeriod + pPeriodFrom + pPeriodTo + pTypeOperation + pAccount, Toast.LENGTH_LONG);
+        Toast.makeText(getContext(), "received: " + pAmountFrom + " " + pAmountTo + " " + pCurrency + " " + pPeriod
+                + " " + pPeriodFrom + " " + pPeriodTo + " " + pTypeOperation + " " + pAccount, Toast.LENGTH_LONG).show();
         loadSpecificTransaciotns();
     }
 
@@ -250,22 +251,12 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         InfoRepository infoRepository = new InfoRepository();
         ArrayList<Transaction> transactions2;
 
-        if (pTypeOperation.equals("All")) {
-            transactions = infoRepository.getSpecificTransactions("0", pAmountFrom, pAmountTo, "PLN", pPeriodFrom, pPeriodTo, "expense");
-            transactions2 = infoRepository.getSpecificTransactions("0", pAmountFrom, pAmountTo, "PLN", pPeriodFrom, pPeriodTo, "income");
-            transactions.addAll(transactions2);
+            transactions = infoRepository.getSpecificTransactions(pAccount, pAmountFrom, pAmountTo, pCurrency, pPeriodFrom, pPeriodTo, pTypeOperation);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 transactions.sort((e1, e2) -> new Long(e1.getTransactionDateFormat()).compareTo(new Long(e2.getTransactionDateFormat())));
             }
             Collections.reverse(transactions);
-        }
-        if (pTypeOperation.equals("debit")) {
-            transactions = infoRepository.getSpecificTransactions("0", pAmountFrom, pAmountTo, "PLN", pPeriodFrom, pPeriodTo, "expense");
-        }
-        if (pTypeOperation.equals("credit")) {
-            transactions = infoRepository.getSpecificTransactions("0", pAmountFrom, pAmountTo, "PLN", pPeriodFrom, pPeriodTo, "income");
-        }
 
         CurrencyDatabase currencyDatabase = new CurrencyDatabase(getContext());
         ArrayList<CurrencyStrings> currentList = currencyDatabase.getCurrenciesList();

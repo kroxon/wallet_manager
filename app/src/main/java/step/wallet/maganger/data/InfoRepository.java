@@ -88,6 +88,8 @@ public class InfoRepository {
         values.put(DBConstants.COL_TRANSACTION_DATE, date);
         values.put(DBConstants.COL_TRANSACTION_VALUE, amount);
         values.put(DBConstants.COL_TRANSACTION_ID_ACC, id_account);
+        Account account = getAccount(id_account);
+        values.put(DBConstants.COL_TRANSACTION_CURRENCY, account.getAccountCurrency());
         values.put(DBConstants.COL_TRANSACTION_NOTE_1, note_1);
         values.put(DBConstants.COL_TRANSACTION_NOTE_2, note_2);
         values.put(DBConstants.COL_TRANSACTION_PHOTO, photo);
@@ -95,6 +97,15 @@ public class InfoRepository {
 
         String[] whereArgs = new String[]{String.valueOf(idTransaction)};
         db.update(DBConstants.TABLE_TRANSACTION, values, DBConstants.COL_TRANSACTION_ID + "=?", whereArgs);
+    }
+
+    public void updateCurrencyTransactions(String id_account) {
+        ContentValues values = new ContentValues();
+        Account account = getAccount(id_account);
+        values.put(DBConstants.COL_TRANSACTION_CURRENCY, account.getAccountCurrency());
+
+        String[] whereArgs = new String[]{String.valueOf(id_account)};
+        db.update(DBConstants.TABLE_TRANSACTION, values, DBConstants.COL_TRANSACTION_ID_ACC + "=?", whereArgs);
     }
 
     public void updateCategoryName(String newNameCategory, String oldNameCategory) {
@@ -127,6 +138,8 @@ public class InfoRepository {
         values.put(DBConstants.COL_ACC_BALANCE, balanceAccount);
         String[] whereArgs = new String[]{String.valueOf(getIdAccount(oldName))};
         db.update(DBConstants.TABLE_ACCOUNT, values, DBConstants.COL_ACC_ID + "=?", whereArgs);
+
+        updateCurrencyTransactions(getIdAccount(nameAccount));
 
     }
 
@@ -558,11 +571,13 @@ public class InfoRepository {
                     transaction.setTransactionIdSubcategory(cursor.getString(3));
                     transaction.setTransactionDate(cursor.getString(4));
                     transaction.setIdAccount(cursor.getString(5));
-                    transaction.setTransactionCurency(cursor.getString(6));
+//                    transaction.setTransactionCurency(cursor.getString(6));
                     transaction.setTransactionNote1(cursor.getString(7));
                     transaction.setTransactionNote2(cursor.getString(8));
                     transaction.setTransactionPhoto(cursor.getString(9));
                     transaction.setTransactionType(cursor.getString(10));
+                    Account account = getAccount(transaction.getIdAccount());
+                    transaction.setTransactionCurency(account.getAccountCurrency());
                     transactionsList.add(transaction);
             } while (cursor.moveToNext());
         }
@@ -601,17 +616,26 @@ public class InfoRepository {
     public ArrayList<Transaction> getSpecificTransactions(String idAccount, double amountFrom, double amountTo, String currency, long startDate, long endDate, String typeOperation) {
         ArrayList<Transaction> transactionsList = new ArrayList<Transaction>();
 
-        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_TRANSACTION + " WHERE " + DBConstants.COL_TRANSACTION_ID_ACC + " = '" + idAccount
-                + "' AND " + DBConstants.COL_TRANSACTION_VALUE + " > '" + amountFrom + "' AND " + DBConstants.COL_TRANSACTION_VALUE + " < '" + amountTo
-                + "' AND " + DBConstants.COL_TRANSACTION_CURRENCY + " = '" + currency + "' AND " + DBConstants.COL_TRANSACTION_DATE + " > '" + startDate
-                + "' AND " + DBConstants.COL_TRANSACTION_DATE + " < '" + endDate + "' AND " + DBConstants.COL_TRANSACTION_TYPE + " = '" + typeOperation + "'";
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_TRANSACTION + " WHERE " + DBConstants.COL_TRANSACTION_VALUE + " > '" + amountFrom + "' AND "
+                + DBConstants.COL_TRANSACTION_VALUE + " < '" + amountTo + "' AND " + DBConstants.COL_TRANSACTION_DATE + " > '" + startDate
+                + "' AND " + DBConstants.COL_TRANSACTION_DATE + " < '" + endDate + "'";
 
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (!idAccount.equals("0")) {
+            selectQuery += " AND " + DBConstants.COL_TRANSACTION_ID_ACC + " = '" + idAccount + "'";
+        }
+        if (!currency.equals("All")) {
+            selectQuery += " AND " + DBConstants.COL_TRANSACTION_CURRENCY + " = '" + currency + "'";
+        }
+        if (!typeOperation.equals("All")) {
+            selectQuery += " AND " + DBConstants.COL_TRANSACTION_TYPE + " = '" + typeOperation + "'";
+        }
+
+
+            Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and search for ID Accout
         if (cursor.moveToFirst()) {
             do {
-                if (cursor.getString(5).equals(idAccount)) {
                     Transaction transaction = new Transaction();
                     transaction.setTransactionId(cursor.getString(0));
                     transaction.setTransactionValue(cursor.getString(1));
@@ -619,13 +643,14 @@ public class InfoRepository {
                     transaction.setTransactionIdSubcategory(cursor.getString(3));
                     transaction.setTransactionDate(cursor.getString(4));
                     transaction.setIdAccount(cursor.getString(5));
-                    transaction.setTransactionCurency(cursor.getString(6));
+//                    transaction.setTransactionCurency(cursor.getString(6));
                     transaction.setTransactionNote1(cursor.getString(7));
                     transaction.setTransactionNote2(cursor.getString(8));
                     transaction.setTransactionPhoto(cursor.getString(9));
                     transaction.setTransactionType(cursor.getString(10));
+                    Account account = getAccount(transaction.getIdAccount());
+                    transaction.setTransactionCurency(account.getAccountCurrency());
                     transactionsList.add(transaction);
-                }
             } while (cursor.moveToNext());
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

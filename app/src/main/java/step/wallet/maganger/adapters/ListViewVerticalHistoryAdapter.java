@@ -62,6 +62,9 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
             holder.myDate.setVisibility(View.GONE);
         } else {
             holder.myDate.setVisibility(View.VISIBLE);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0,40,0,0);
+            holder.myDate.setLayoutParams(params);
             currentDate = transactionsList.get(position).getTransactionDate();
         }
         holder.myDate.setText(currentDate);
