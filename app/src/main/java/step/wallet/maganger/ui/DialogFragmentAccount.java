@@ -246,9 +246,9 @@ public class DialogFragmentAccount extends DialogFragment {
                 saveDescImg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int valueEt = 0;
+                        float valueEt = 0;
                         try {
-                            valueEt = Integer.parseInt(balanceEt.getText().toString());
+                            valueEt = Float.parseFloat(balanceEt.getText().toString());
                         } catch (Exception e) {
                             valueEt = 0;
                         }

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
     android:padding="4dp">
 
     <TextView
@@ -14,18 +13,18 @@
         android:layout_centerVertical="true"
         android:text="@string/primary_account"
         android:textColor="@color/olx_color_1"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></TextView>
 
     <ImageView
         android:id="@+id/accountOption"
-        android:padding="5dp"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:clickable="true"
+        android:padding="5dp"
         android:src="@drawable/ic_more_options"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,12 +36,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
         android:text="-104 567"
         android:textColor="@android:color/holo_red_dark"
-        android:textSize="16sp"
+        android:textSize="20sp"
+        android:layout_marginLeft="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accountNameTxt"></TextView>
+        app:layout_constraintTop_toBottomOf="@+id/accountDescriptionTxt"></TextView>
 
     <TextView
         android:id="@+id/accountCurrencyTxt"
@@ -52,21 +51,32 @@
         android:layout_marginLeft="4dp"
         android:text=" zł"
         android:textColor="@android:color/holo_red_dark"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/accountBalanceTxt"
         app:layout_constraintStart_toEndOf="@+id/accountBalanceTxt"
         app:layout_constraintTop_toTopOf="@+id/accountBalanceTxt"></TextView>
 
     <LinearLayout
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="8dp"
+        android:id="@+id/linearBottom"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="20dp"
         android:background="@color/olx_color_1"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accountCurrencyTxt"
-        ></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/accountCurrencyTxt"></LinearLayout>
+
+    <TextView
+        android:id="@+id/accountDescriptionTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:maxLines="1"
+        android:text="Description"
+        app:layout_constraintStart_toStartOf="@+id/linearBottom"
+        app:layout_constraintTop_toBottomOf="@+id/accountNameTxt"></TextView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

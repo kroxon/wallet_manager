@@ -77,6 +77,7 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
                 break;
             }
         }
+        holder.myDescriptonTxt.setText(accountsList.get(position).getAccountDescription());
 
     }
 
@@ -94,6 +95,7 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
         TextView myNameTxt;
         TextView myBalanceTxt;
         TextView myCurrencyTxt;
+        TextView myDescriptonTxt;
         int position = getLayoutPosition();
 
         ViewHolder(View itemView, OnItemClickListener listner) {
@@ -102,6 +104,7 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
             myNameTxt = itemView.findViewById(R.id.accountNameTxt);
             myBalanceTxt = itemView.findViewById(R.id.accountBalanceTxt);
             myCurrencyTxt = itemView.findViewById(R.id.accountCurrencyTxt);
+            myDescriptonTxt = itemView.findViewById(R.id.accountDescriptionTxt);
 //            itemView.setOnClickListener(this);
 
             myImage.setOnClickListener(new View.OnClickListener() {
@@ -156,12 +159,6 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
 
         }
 
-//        @Override
-//        public void onClick(View view) {
-//            InfoRepository repository = new InfoRepository();
-//            if (mClickListener != null)
-//                mClickListener.onItemClick(mData.get(position), repository.getIdCategoryIcon(mData.get(position)));
-//        }
     }
 
     // convenience method for getting data at click position
@@ -170,15 +167,7 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
         return mData.get(id);
     }
 
-    // allows clicks events to be caught
-//    public void setClickListener(ItemClickListener itemClickListener) {
-//        this.mClickListener = itemClickListener;
-//    }
 
-    // parent activity will implement this method to respond to click events
-//    public interface ItemClickListener {
-//        void onItemClick(String categoryName, int categoryIcon);
-//    }
 
     private void displayDeleteDialog(String name) {
         Dialog descpriptionDialog = new Dialog(context);
