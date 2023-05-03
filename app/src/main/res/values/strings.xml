@@ -45,6 +45,39 @@
     <string name="d_tr_suss_updated">Successfully updated!</string>
 
 
+    //dialog date picker
+    <string name="d_date_select_month">Select a month</string>
+    <string name="jan">January</string>
+    <string name="feb">February</string>
+    <string name="mar">March</string>
+    <string name="apr">April</string>
+    <string name="may">May</string>
+    <string name="jun">June</string>
+    <string name="jul">July</string>
+    <string name="aug">August</string>
+    <string name="sep">September</string>
+    <string name="ost">October</string>
+    <string name="nov">November</string>
+    <string name="dec">December</string>
+
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+
+
+
     //color picker
     <string name="colorpicker_dialog_cancel">Cancel</string>
     <string name="colorpicker_dialog_ok">Save</string>

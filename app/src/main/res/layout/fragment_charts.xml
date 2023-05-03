@@ -3,75 +3,236 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorAppText1">
 
-<!--    <androidx.cardview.widget.CardView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:layout_marginBottom="8dp"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        android:background="@color/white"-->
-<!--        app:cardCornerRadius="8dp"-->
-<!--        app:cardElevation="4dp">-->
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:drawableEnd="@drawable/ic_arrow_down"
+        android:drawablePadding="8dp"
+        android:text="Primary account"
+        android:textColor="@color/olx_color_1"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:padding="16dp"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:gravity="center_vertical">-->
+    <TextView
+        android:id="@+id/trExpensesChart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/d_tr_expense"
+        android:textAllCaps="true"
+        android:textColor="@color/olx_color_1"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/trIncomeChart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17"></TextView>
 
-<!--            <ImageView-->
-<!--                android:id="@+id/imageViewTransactionIcon"-->
-<!--                android:layout_width="36dp"-->
-<!--                android:layout_height="36dp"-->
-<!--                android:src="@drawable/ic_coffee"-->
-<!--                app:tint="@color/colorButton" />-->
+    <LinearLayout
+        android:id="@+id/trExpensesChartUnderline"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_alignLeft="@+id/trExpensesChart"
+        android:layout_alignRight="@+id/trExpensesChart"
+        android:layout_marginTop="2dp"
+        android:background="@color/olx_color_1"
+        android:clickable="true"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/trExpensesChart"
+        app:layout_constraintStart_toStartOf="@+id/trExpensesChart"
+        app:layout_constraintTop_toBottomOf="@+id/trExpensesChart"></LinearLayout>
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:layout_marginStart="16dp"-->
-<!--                android:orientation="vertical">-->
 
-<!--                <TextView-->
-<!--                    android:id="@+id/textViewTransactionName"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Transaction Name"-->
-<!--                    android:textSize="18sp"-->
-<!--                    android:textStyle="bold" />-->
+    <TextView
+        android:id="@+id/trIncomeChart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/d_tr_income"
+        android:textAllCaps="true"
+        android:textColor="#595959"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/trExpensesChart"
+        app:layout_constraintTop_toTopOf="@+id/trExpensesChart"></TextView>
 
-<!--                <TextView-->
-<!--                    android:id="@+id/textViewTransactionDate"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Transaction Date"-->
-<!--                    android:textSize="14sp" />-->
+    <LinearLayout
+        android:id="@+id/trIncomeChartUnderline"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_alignLeft="@+id/trIncomeChart"
+        android:layout_alignRight="@+id/trIncomeChart"
+        android:layout_marginTop="2dp"
+        android:background="#FF595959"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/trIncomeChart"
+        app:layout_constraintStart_toStartOf="@+id/trIncomeChart"
+        app:layout_constraintTop_toBottomOf="@+id/trIncomeChart"></LinearLayout>
 
-<!--                <TextView-->
-<!--                    android:id="@+id/textViewTransactionAmount"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Transaction Amount"-->
-<!--                    android:textSize="20sp"-->
-<!--                    android:textColor="#388E3C"-->
-<!--                    android:textStyle="bold" />-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/dialog_background"
+        android:paddingBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView17"
+        tools:layout_editor_absoluteX="8dp">
 
-<!--            </LinearLayout>-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="8dp">
 
-<!--            <ImageView-->
-<!--                android:id="@+id/imageViewTransactionAction"-->
-<!--                android:layout_width="36dp"-->
-<!--                android:layout_height="36dp"-->
-<!--                android:src="@drawable/ic_edit"-->
-<!--                app:tint="@color/darkgrey" />-->
+            <!--            <TextView-->
+<!--                android:id="@+id/chPeriodWeekTxt"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:gravity="center"-->
+<!--                android:text="Week"-->
+<!--                android:textSize="20sp"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/chPeriodMonthTxt"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/chPeriodDayTxt"-->
+<!--                app:layout_constraintTop_toTopOf="parent"></TextView>-->
 
-<!--        </LinearLayout>-->
 
-<!--    </androidx.cardview.widget.CardView>-->
+            <TextView
+                android:id="@+id/chPeriodDayTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="Day"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/chPeriodMonthTxt"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
+
+            <TextView
+                android:id="@+id/chPeriodMonthTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:clickable="true"
+                android:text="Month"
+                android:textSize="20sp"
+
+                app:layout_constraintEnd_toStartOf="@+id/chPeriodYearTxt"
+                app:layout_constraintStart_toEndOf="@+id/chPeriodDayTxt"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
+
+            <TextView
+                android:id="@+id/chPeriodYearTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="Year"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/chPeriodCustomTxt"
+                app:layout_constraintStart_toEndOf="@+id/chPeriodMonthTxt"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
+
+            <TextView
+                android:id="@+id/chPeriodCustomTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="Period"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/chPeriodYearTxt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout8">
+
+            <ImageView
+                android:id="@+id/chPeriodLeftImg"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:clickable="true"
+                android:rotation="90"
+                android:src="@drawable/ic_arrow_down"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/olx_color_1"></ImageView>
+
+            <TextView
+                android:id="@+id/chPeriodLabelTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="January 2023"
+                android:textColor="@color/olx_color_1"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/chPeriodLeftImg"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+            <ImageView
+                android:id="@+id/chPeriodRightImg"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:clickable="true"
+                android:rotation="270"
+                android:src="@drawable/ic_arrow_down"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/olx_color_1"></ImageView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChart"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
+
+        </com.github.mikephil.charting.charts.PieChart>
+
+        <ImageView
+            android:id="@+id/chAddTransactionImg"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="20dp"
+            android:clickable="true"
+            android:src="@drawable/ic_add_circle"
+            app:layout_constraintBottom_toBottomOf="@+id/pieChart"
+            app:layout_constraintEnd_toEndOf="@+id/pieChart"
+            app:tint="@color/colorApp1"></ImageView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/dialog_background"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout10"></androidx.recyclerview.widget.RecyclerView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

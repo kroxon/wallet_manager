@@ -120,6 +120,9 @@ dependencies {
     // charts
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
+    // month picker
+    implementation 'com.github.kal72:RackMonthPicker:1.6.1'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
