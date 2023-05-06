@@ -5,20 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <TextView
+        android:id="@+id/dFrDatePickerMonth"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_background"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="May 2023"
+        android:textColor="@color/colorApp1"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout11" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:background="@drawable/button_cancel_backgroung"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="30dp">
 
         <TextView
             android:id="@+id/textView18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             android:text="@string/d_date_select_month"
             android:textColor="@color/white"
             android:textSize="20sp"
@@ -26,30 +46,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/dFrDatePickerMonth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
-            android:text="May 2023"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
         <TextView
             android:id="@+id/dFrDatePickerYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:text="2022"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dFrDatePickerMonth"></TextView>
+            app:layout_constraintTop_toBottomOf="@+id/textView18"></TextView>
 
         <ImageView
             android:id="@+id/dFrDatePickerYearLeft"
@@ -80,14 +88,53 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/dFr_date_month_rv"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="230dp"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dFrDatePickerYear"
             tools:layout_editor_absoluteX="8dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/dFrDatePickerCancel"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:background="@drawable/dialog_background"
+        android:clickable="true"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/cancel"
+        android:textColor="@color/colorApp1"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout11"
+        app:layout_constraintEnd_toStartOf="@+id/dFrDatePickerSave"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout11" />
+
+    <TextView
+        android:id="@+id/dFrDatePickerSave"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/dialog_background"
+        android:clickable="true"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/filter_save"
+        android:textColor="@color/colorApp1"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dFrDatePickerCancel"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout11" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

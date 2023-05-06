@@ -2,18 +2,15 @@ package step.wallet.maganger.ui
 
 
 import android.app.DialogFragment
-
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.opengl.Visibility
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.*
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import step.wallet.maganger.R
@@ -26,10 +23,31 @@ class DialogFragmentDatePicker : DialogFragment() {
     private var monthAdapter: RecyclerViewMonthAdapter? = null
     private var yearTxt: TextView? = null
     private var monthTxt: TextView? = null
+    private var cancelTxt: TextView? = null
+    private var saveTxt: TextView? = null
     private var monthLeftImg: ImageView? = null
     private var monthRighttImg: ImageView? = null
 
     private var selectedMonth: String? = null
+    private var selectedMonthInt: Int? = null
+    private var selectedYearInt: Int? = null
+    private val currentMonthInt = Calendar.getInstance().get(Calendar.MONTH)
+    private var monthList: Array<String>? = null
+
+    private lateinit var mDateListener: onDateRangeSelectedListene
+
+    fun setValue(month: Int, year: Int) {
+        selectedMonthInt = month
+        selectedYearInt = year
+    }
+
+    interface onDateRangeSelectedListene {
+        fun onDateRange(timeStart: Long, timeEnd: Long, monthPosition: Int, year: Int)
+    }
+
+    fun setOnDateRangeListener (listener: onDateRangeSelectedListene) {
+        mDateListener = listener
+    }
 
 
     override fun onStart() {
@@ -39,6 +57,7 @@ class DialogFragmentDatePicker : DialogFragment() {
             ViewGroup.LayoutParams.MATCH_PARENT
         )
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,33 +76,44 @@ class DialogFragmentDatePicker : DialogFragment() {
 
         initialItems()
 
-        loadMonths()
+        loadMonths(Calendar.getInstance().get(Calendar.MONTH))
 
         return view
     }
 
     private fun initialItems() {
-        selectedMonth = resources.getStringArray(R.array.months).get(Calendar.getInstance().get(Calendar.MONTH))
-        yearTxt?.setText((Calendar.getInstance().get(Calendar.YEAR)).toString())
-        monthRighttImg!!.visibility = View.GONE
+        monthList = resources.getStringArray(R.array.months)
+        selectedMonth =
+            resources.getStringArray(R.array.months).get(selectedMonthInt!!)
+//        selectedMonthInt = monthList!!.indexOf(selectedMonth)
+        yearTxt?.setText("" + selectedYearInt)
+//        monthRighttImg!!.visibility = View.GONE
         monthRighttImg!!.setOnClickListener {
             yearTxt!!.setText("" + (yearTxt!!.text.toString().toInt() + 1))
             monthTxt!!.setText(selectedMonth + " " + yearTxt!!.text.toString())
-            if (yearTxt!!.text.equals((Calendar.getInstance().get(Calendar.YEAR)).toString()))
+            if (yearTxt!!.text.equals((Calendar.getInstance().get(Calendar.YEAR) + 3).toString())) {
                 monthRighttImg!!.visibility = View.GONE
+            }
+            monthLeftImg!!.visibility = View.VISIBLE
+            loadMonths(monthList!!.indexOf(selectedMonth))
         }
         monthLeftImg!!.setOnClickListener {
             yearTxt!!.setText("" + (yearTxt!!.text.toString().toInt() - 1))
             monthTxt!!.setText(selectedMonth + " " + yearTxt!!.text.toString())
             monthRighttImg!!.visibility = View.VISIBLE
+            if (yearTxt!!.text.equals("2014")) {
+                monthLeftImg!!.visibility = View.GONE
+            }
+            loadMonths(monthList!!.indexOf(selectedMonth))
         }
     }
 
-    private fun loadMonths() {
-        val myArray = resources.getStringArray(R.array.months)
+    private fun loadMonths(selectedMonthPosiotion: Int) {
+        var myArray = resources.getStringArray(R.array.months)
         val layoutManager = GridLayoutManager(context, 3)
         rVMonth!!.layoutManager = layoutManager
-        monthAdapter = RecyclerViewMonthAdapter(myArray, context)
+        monthAdapter =
+            RecyclerViewMonthAdapter(myArray, context, selectedMonthInt!!)
         // on below line we are setting
         // adapter to our recycler view.
         rVMonth!!.adapter = monthAdapter
@@ -91,10 +121,41 @@ class DialogFragmentDatePicker : DialogFragment() {
             RecyclerViewMonthAdapter.onItemClickListener {
             override fun onItemClick(position: Int) {
                 selectedMonth = myArray.get(position)
+                selectedMonthInt = position
                 monthTxt!!.setText(selectedMonth + " " + yearTxt!!.text.toString())
             }
         })
+        cancelTxt!!.setOnClickListener {
+            dialog.dismiss()
+        }
 
+        saveTxt!!.setOnClickListener {
+            var cal = Calendar.getInstance()
+            var cal2 = Calendar.getInstance()
+            var year = yearTxt!!.text.toString().toInt()
+            var month = selectedMonthInt!!
+
+            cal.set(Calendar.YEAR, year)
+            cal.set(Calendar.MONTH, month)
+            cal.set(Calendar.DAY_OF_MONTH, 1)
+            cal.set(Calendar.HOUR, 0)
+            cal.set(Calendar.MINUTE, 0)
+            cal.set(Calendar.SECOND, 0)
+
+
+            cal2.set(Calendar.YEAR, year)
+            cal2.set(Calendar.MONTH, month)
+            cal2.add(Calendar.MONTH, 1)
+            cal2.set(Calendar.DAY_OF_MONTH, 1)
+            cal2.add(Calendar.DAY_OF_MONTH, -1)
+            cal2.set(Calendar.HOUR, 0)
+            cal2.set(Calendar.MINUTE, 0)
+            cal2.set(Calendar.SECOND, 0)
+
+            mDateListener.onDateRange(cal.timeInMillis, cal2.timeInMillis, month, year)
+
+            dialog.dismiss()
+        }
     }
 
     private fun findViews(view: View) {
@@ -103,6 +164,8 @@ class DialogFragmentDatePicker : DialogFragment() {
         monthTxt = view.findViewById(R.id.dFrDatePickerMonth)
         monthLeftImg = view.findViewById(R.id.dFrDatePickerYearLeft)
         monthRighttImg = view.findViewById(R.id.dFrDatePickerYearRight)
+        cancelTxt = view.findViewById(R.id.dFrDatePickerCancel)
+        saveTxt = view.findViewById(R.id.dFrDatePickerSave)
     }
 
     companion object {

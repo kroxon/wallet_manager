@@ -94,73 +94,132 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="4dp"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="8dp">
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioGroup
+                android:id="@+id/period_button_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <RadioButton
+                    android:id="@+id/rDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_flat_selector"
+                    android:button="@android:color/transparent"
+                    android:gravity="center"
+                    android:text="@string/day"
+                    android:textColor="@drawable/radio_flat_text_selector" />
+
+                <RadioButton
+                    android:id="@+id/rMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_flat_selector"
+                    android:button="@android:color/transparent"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="@string/month"
+                    android:textColor="@drawable/radio_flat_text_selector" />
+
+                <RadioButton
+                    android:id="@+id/rYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_flat_selector"
+                    android:button="@android:color/transparent"
+                    android:gravity="center"
+                    android:text="@string/year"
+                    android:textColor="@drawable/radio_flat_text_selector" />
+
+                <RadioButton
+                    android:id="@+id/rCustom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_flat_selector"
+                    android:button="@android:color/transparent"
+                    android:gravity="center"
+                    android:text="@string/custom"
+                    android:textColor="@drawable/radio_flat_text_selector" />
+
+            </RadioGroup>
 
             <!--            <TextView-->
-<!--                android:id="@+id/chPeriodWeekTxt"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:gravity="center"-->
-<!--                android:text="Week"-->
-<!--                android:textSize="20sp"-->
-<!--                app:layout_constraintEnd_toStartOf="@+id/chPeriodMonthTxt"-->
-<!--                app:layout_constraintStart_toEndOf="@+id/chPeriodDayTxt"-->
-<!--                app:layout_constraintTop_toTopOf="parent"></TextView>-->
+            <!--                android:id="@+id/chPeriodWeekTxt"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="30dp"-->
+            <!--                android:gravity="center"-->
+            <!--                android:text="Week"-->
+            <!--                android:textSize="20sp"-->
+            <!--                app:layout_constraintEnd_toStartOf="@+id/chPeriodMonthTxt"-->
+            <!--                app:layout_constraintStart_toEndOf="@+id/chPeriodDayTxt"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"></TextView>-->
 
 
-            <TextView
-                android:id="@+id/chPeriodDayTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:gravity="center"
-                android:text="Day"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/chPeriodMonthTxt"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></TextView>
+            <!--            <TextView-->
+            <!--                android:id="@+id/chPeriodDayTxt"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="30dp"-->
+            <!--                android:gravity="center"-->
+            <!--                android:text="Day"-->
+            <!--                android:textSize="20sp"-->
+            <!--                app:layout_constraintEnd_toStartOf="@+id/chPeriodMonthTxt"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"></TextView>-->
 
-            <TextView
-                android:id="@+id/chPeriodMonthTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:gravity="center"
-                android:clickable="true"
-                android:text="Month"
-                android:textSize="20sp"
+            <!--            <TextView-->
+            <!--                android:id="@+id/chPeriodMonthTxt"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="30dp"-->
+            <!--                android:gravity="center"-->
+            <!--                android:clickable="true"-->
+            <!--                android:text="Month"-->
+            <!--                android:textSize="20sp"-->
 
-                app:layout_constraintEnd_toStartOf="@+id/chPeriodYearTxt"
-                app:layout_constraintStart_toEndOf="@+id/chPeriodDayTxt"
-                app:layout_constraintTop_toTopOf="parent"></TextView>
+            <!--                app:layout_constraintEnd_toStartOf="@+id/chPeriodYearTxt"-->
+            <!--                app:layout_constraintStart_toEndOf="@+id/chPeriodDayTxt"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"></TextView>-->
 
-            <TextView
-                android:id="@+id/chPeriodYearTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:gravity="center"
-                android:text="Year"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/chPeriodCustomTxt"
-                app:layout_constraintStart_toEndOf="@+id/chPeriodMonthTxt"
-                app:layout_constraintTop_toTopOf="parent"></TextView>
+            <!--            <TextView-->
+            <!--                android:id="@+id/chPeriodYearTxt"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="30dp"-->
+            <!--                android:gravity="center"-->
+            <!--                android:text="Year"-->
+            <!--                android:textSize="20sp"-->
+            <!--                app:layout_constraintEnd_toStartOf="@+id/chPeriodCustomTxt"-->
+            <!--                app:layout_constraintStart_toEndOf="@+id/chPeriodMonthTxt"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"></TextView>-->
 
-            <TextView
-                android:id="@+id/chPeriodCustomTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:gravity="center"
-                android:text="Period"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/chPeriodYearTxt"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></TextView>
+            <!--            <TextView-->
+            <!--                android:id="@+id/chPeriodCustomTxt"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="30dp"-->
+            <!--                android:gravity="center"-->
+            <!--                android:text="Period"-->
+            <!--                android:textSize="20sp"-->
+            <!--                app:layout_constraintStart_toEndOf="@+id/chPeriodYearTxt"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"></TextView>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout9"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout8">
 
@@ -177,10 +236,63 @@
                 app:tint="@color/olx_color_1"></ImageView>
 
             <TextView
-                android:id="@+id/chPeriodLabelTxt"
+                android:id="@+id/chPeriodDayLabelTxt"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="day"
+                android:clickable="true"
+                android:visibility="gone"
+                android:textColor="@color/olx_color_1"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/chPeriodLeftImg"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/chPeriodMonthLabelTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
                 android:text="January 2023"
+                android:clickable="true"
+                android:textColor="@color/olx_color_1"
+                android:textSize="16sp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/chPeriodLeftImg"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/chPeriodYearLabelTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="2014"
+                android:visibility="gone"
+                android:textColor="@color/olx_color_1"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/chPeriodLeftImg"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/chPeriodCustomLabelTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="custom"
+                android:visibility="gone"
+                android:clickable="true"
                 android:textColor="@color/olx_color_1"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -213,26 +325,18 @@
 
         </com.github.mikephil.charting.charts.PieChart>
 
-        <ImageView
-            android:id="@+id/chAddTransactionImg"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginRight="20dp"
-            android:clickable="true"
-            android:src="@drawable/ic_add_circle"
-            app:layout_constraintBottom_toBottomOf="@+id/pieChart"
-            app:layout_constraintEnd_toEndOf="@+id/pieChart"
-            app:tint="@color/colorApp1"></ImageView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/dialog_background"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout10"></androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout10"
+        tools:layout_editor_absoluteX="8dp"></androidx.recyclerview.widget.RecyclerView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

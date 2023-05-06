@@ -15,7 +15,8 @@ import java.util.*
 class RecyclerViewMonthAdapter(
     // on below line we are passing variables
     private val courseList: Array<String>,
-    private val context: Context
+    private val context: Context,
+    private var selectedItem: Int
 ) : RecyclerView.Adapter<RecyclerViewMonthAdapter.MonthViewHolder>() {
 
     private lateinit var mListener: onItemClickListener
@@ -28,7 +29,6 @@ class RecyclerViewMonthAdapter(
         mListener = listener
     }
 
-    private var selectedItem: Int ?= Calendar.getInstance().get(Calendar.MONTH)
 
 
     override fun onCreateViewHolder(
