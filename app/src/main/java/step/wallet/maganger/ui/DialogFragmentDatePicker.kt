@@ -17,7 +17,7 @@ import step.wallet.maganger.R
 import step.wallet.maganger.adapters.RecyclerViewMonthAdapter
 import java.util.*
 
-class DialogFragmentDatePicker : DialogFragment() {
+class DialogFragmentDatePicker() : DialogFragment() {
 
     private var rVMonth: RecyclerView? = null
     private var monthAdapter: RecyclerViewMonthAdapter? = null
@@ -29,8 +29,8 @@ class DialogFragmentDatePicker : DialogFragment() {
     private var monthRighttImg: ImageView? = null
 
     private var selectedMonth: String? = null
-    private var selectedMonthInt: Int? = null
-    private var selectedYearInt: Int? = null
+    private var selectedMonthInt: Int = Calendar.getInstance().get(Calendar.MONTH)
+    private var selectedYearInt: Int = Calendar.getInstance().get(Calendar.YEAR)
     private val currentMonthInt = Calendar.getInstance().get(Calendar.MONTH)
     private var monthList: Array<String>? = null
 
@@ -82,12 +82,15 @@ class DialogFragmentDatePicker : DialogFragment() {
     }
 
     private fun initialItems() {
+
+
         monthList = resources.getStringArray(R.array.months)
         selectedMonth =
             resources.getStringArray(R.array.months).get(selectedMonthInt!!)
 //        selectedMonthInt = monthList!!.indexOf(selectedMonth)
         yearTxt?.setText("" + selectedYearInt)
-//        monthRighttImg!!.visibility = View.GONE
+        monthTxt!!.setText(selectedMonth + " " + yearTxt!!.text.toString())
+
         monthRighttImg!!.setOnClickListener {
             yearTxt!!.setText("" + (yearTxt!!.text.toString().toInt() + 1))
             monthTxt!!.setText(selectedMonth + " " + yearTxt!!.text.toString())
@@ -171,5 +174,7 @@ class DialogFragmentDatePicker : DialogFragment() {
     companion object {
         const val TAG = "DialogFragmentDatePicker"
     }
+
+
 
 }

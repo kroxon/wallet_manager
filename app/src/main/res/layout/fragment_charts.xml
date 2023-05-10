@@ -239,12 +239,12 @@
                 android:id="@+id/chPeriodDayLabelTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
+                android:clickable="true"
                 android:gravity="center"
                 android:text="day"
-                android:clickable="true"
-                android:visibility="gone"
                 android:textColor="@color/olx_color_1"
                 android:textSize="16sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/chPeriodLeftImg"
@@ -256,9 +256,10 @@
                 android:id="@+id/chPeriodMonthLabelTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
+                android:clickable="true"
+                android:elevation="10dp"
                 android:gravity="center"
                 android:text="January 2023"
-                android:clickable="true"
                 android:textColor="@color/olx_color_1"
                 android:textSize="16sp"
                 android:visibility="visible"
@@ -275,9 +276,9 @@
                 android:layout_height="40dp"
                 android:gravity="center"
                 android:text="2014"
-                android:visibility="gone"
                 android:textColor="@color/olx_color_1"
                 android:textSize="16sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/chPeriodLeftImg"
@@ -285,22 +286,47 @@
 
             </TextView>
 
-            <TextView
+            <LinearLayout
                 android:id="@+id/chPeriodCustomLabelTxt"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="custom"
+                android:orientation="horizontal"
                 android:visibility="gone"
-                android:clickable="true"
-                android:textColor="@color/olx_color_1"
-                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/chPeriodLeftImg"
                 app:layout_constraintTop_toTopOf="parent">
 
-            </TextView>
+                <TextView
+                    android:id="@+id/chPeriodCustomLabelTxt1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="custom"
+                    android:textColor="@color/olx_color_1"
+                    android:textSize="16sp"></TextView>
+
+                <LinearLayout
+                    android:layout_width="10dp"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@color/olx_color_1"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/chPeriodCustomLabelTxt2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="custom"
+                    android:textColor="@color/olx_color_1"
+                    android:textSize="16sp"></TextView>
+
+            </LinearLayout>
+
 
             <ImageView
                 android:id="@+id/chPeriodRightImg"
@@ -317,26 +343,67 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/pieChart"
+            android:id="@+id/pieChartFirst"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="300dp"
             android:layout_marginTop="16dp"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
 
         </com.github.mikephil.charting.charts.PieChart>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
+
+            <org.eazegraph.lib.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:padding="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pieChartFirst" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/categoryLegenRV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+            <!--            <ListView-->
+            <!--                android:id="@+id/ac_subcat_listView2"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:layout_weight="1"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent" />-->
+
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/categoryLegenRV"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="300dp"-->
+    <!--        android:layout_marginHorizontal="8dp"-->
+    <!--        android:layout_marginTop="16dp"-->
+    <!--        android:background="@drawable/dialog_background"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/constraintLayout10"-->
+    <!--        tools:layout_editor_absoluteX="8dp"></androidx.recyclerview.widget.RecyclerView>-->
+
+    <ListView
+        android:id="@+id/ac_subcat_listView2"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/dialog_background"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout10"
-        tools:layout_editor_absoluteX="8dp"></androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
