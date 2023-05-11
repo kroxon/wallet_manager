@@ -1,8 +1,10 @@
 package step.wallet.maganger.ui
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.Fragment
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,18 +14,17 @@ import androidx.recyclerview.widget.RecyclerView
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
 import step.wallet.maganger.R
-import step.wallet.maganger.adapters.ListViewVerticalAdapter
-import step.wallet.maganger.adapters.RecyclerViewCategoryActivityAdapter
 import step.wallet.maganger.adapters.RecyclerViewPieChartAdapter
+import step.wallet.maganger.classes.Transaction
 import step.wallet.maganger.data.InfoRepository
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedListene {
 
 
+    private var accountTxt: TextView? = null
     private var periodDayLabel: TextView? = null
     private var periodMonthLabel: TextView? = null
     private var periodYearLabel: TextView? = null
@@ -43,6 +44,7 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     // for filter transaction
     private var startDate: Long? = null
     private var endDate: Long? = null
+    private var selectedIdAccount: Int? = null
 
     private var monthPosition: Int? = null
     private var yearPosition: Int? = null
@@ -52,9 +54,8 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     lateinit var categoriesRVAdapter: RecyclerViewPieChartAdapter
     lateinit var recyclerViewCategories: RecyclerView
 
-
-    //test
-    lateinit var listViewSubcategories: ListView
+    // testing
+    private var btnTest: Button? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,17 +75,16 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 
         initItems()
 
-        loadPieChart()
-        loadCategorieLegend()
-//        loadLVSubcategories()
+        loadChartAndLegend()
+
 
         return view
     }
 
     private fun initItems() {
 
-
         initStartAndEndDate()
+
 
         periodMonthLabel!!.setText(
             resources.getStringArray(R.array.months)
@@ -169,6 +169,8 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 
         rbDay!!.performClick()
         rbMonth!!.performClick()
+        initStartAndEndDate()
+
 
         periodLeftImg!!.setOnClickListener {
             clickLeft()
@@ -189,6 +191,21 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         periodCustomLabel2!!.setOnClickListener {
             selectCustomDate(periodCustomLabel2!!, "end")
         }
+
+
+        accountTxt?.setOnClickListener {
+            selectAccount()
+        }
+
+
+        // testing
+        btnTest!!.setOnClickListener {
+            Toast.makeText(
+                context,
+                loadRangeTransactions("expense")?.size.toString(),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     private fun findViews(view: View) {
@@ -207,10 +224,10 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         periodRightImg = view.findViewById(R.id.chPeriodRightImg)
         pieChart = view.findViewById(R.id.pieChart)
         recyclerViewCategories = view.findViewById(R.id.categoryLegenRV)
+        accountTxt = view.findViewById(R.id.chartFrAccountTxt)
 
         //test
-        listViewSubcategories = view.findViewById(R.id.ac_subcat_listView2)
-
+        btnTest = view.findViewById(R.id.btn_test_chart)
     }
 
     override fun onDateRange(timeStart: Long, timeEnd: Long, monthPosition: Int, year: Int) {
@@ -325,7 +342,7 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
             periodYearLabel!!.setText(dateFormat.format(cal.time))
             setVisibilityLabel(periodYearLabel!!)
         }
-
+        loadChartAndLegend()
     }
 
     fun clickRight() {
@@ -402,6 +419,7 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
             periodYearLabel!!.setText(dateFormat.format(cal.time))
             setVisibilityLabel(periodYearLabel!!)
         }
+        loadChartAndLegend()
     }
 
     fun selectDay() {
@@ -513,47 +531,50 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         cal.set(Calendar.SECOND, 0)
         cal.set(Calendar.MILLISECOND, 0)
         startDate = cal.timeInMillis
-
-        cal.add(Calendar.MONTH, +1)
-        cal.add(Calendar.DAY_OF_YEAR, -1)
-        endDate = cal.timeInMillis
-
+        var cal2 = cal
+        cal2.add(Calendar.MONTH, +1)
+        cal2.add(Calendar.DAY_OF_YEAR, -1)
+        endDate = cal2.timeInMillis
+        val repository = InfoRepository()
+        selectedIdAccount = repository.getIdAccount(repository.allAccountsNames?.get(0))?.toInt()
+        accountTxt?.setText(repository.getAccount(selectedIdAccount.toString())?.accountName)
         monthPosition = cal.get(Calendar.MONTH)
         yearPosition = cal.get(Calendar.YEAR)
+
     }
 
     fun loadPieChart() {
 
+        val transactionList = loadRangeTransactions("expense")
+        val transactionSummary = arrayListOf<Pair<String, Double>>()
+
+        for (transaction in transactionList!!) {
+            val categoryId = transaction.transactionIdCategory
+            val amount = transaction.transactionValue.toDouble()
+
+            var categorySum = transactionSummary.find { it.first == categoryId }?.second ?: 0.0
+            categorySum += amount
+
+            val existingCategorySumIndex = transactionSummary.indexOfFirst { it.first == categoryId }
+            if (existingCategorySumIndex != -1) {
+                transactionSummary[existingCategorySumIndex] = categoryId to categorySum
+            } else {
+                transactionSummary.add(categoryId to categorySum)
+            }
+        }
+// testing
+//        for ((categoryId, sum) in transactionSummary) {
+//            Toast.makeText(context, "Category ID: $categoryId, Sum: $sum", Toast.LENGTH_SHORT).show()
+//        }
 
         // Set the data and color to the pie chart
+        pieChart?.clearChart()
+        val repository = InfoRepository()
 
-        // Set the data and color to the pie chart
-        pieChart?.addPieSlice(
-            PieModel(
-                "R", 3F,
-                Color.parseColor("#FFA726")
-            )
-        )
-        pieChart?.addPieSlice(
-            PieModel(
-                "Python", 10f,
-                Color.parseColor("#66BB6A")
-            )
-        )
-        pieChart?.addPieSlice(
-            PieModel(
-                "C++", 5f,
-                Color.parseColor("#EF5350")
-            )
-        )
-        pieChart?.addPieSlice(
-            PieModel(
-                "Java", 20f,
-                Color.parseColor("#29B6F6")
-            )
-        )
-
-        // To animate the pie chart
+        for ((categoryId, sum) in transactionSummary) {
+            pieChart?.addPieSlice(PieModel(repository.getCategoryName(categoryId),
+                sum.toFloat(), Color.parseColor(repository.getCategoryColor(repository.getCategoryName(categoryId)))))
+        }
 
         // To animate the pie chart
         pieChart!!.startAnimation()
@@ -563,138 +584,66 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 
     fun loadCategorieLegend() {
         val repository = InfoRepository()
-        var list: ArrayList<String>? = null
-        list?.add("jedzenie")
-        list?.add("picie")
-        list?.add("edukacja")
 
-//        categoriesRVAdapter = RecyclerViewPieChartAdapter(context, repository.allCategories)
-        categoriesRVAdapter = RecyclerViewPieChartAdapter(context, repository.allExpenseCategories)
+        val transactions = loadRangeTransactions("expense")
+        val uniqueCategories = arrayListOf<String>()
+        for (transaction in transactions!!) {
+            val category = repository.getCategoryName(transaction.transactionIdCategory)
+            if (!uniqueCategories.contains(category)) {
+                uniqueCategories.add(category!!)
+            }
+        }
+
+        categoriesRVAdapter = RecyclerViewPieChartAdapter(context, uniqueCategories)
         recyclerViewCategories!!.adapter = categoriesRVAdapter
         recyclerViewCategories.layoutManager
     }
 
-    private fun loadLVSubcategories() {
-        val arrayAdapter: ListViewVerticalAdapter
-        val repository = InfoRepository()
-        val catName = repository.allCategories!!.get(0)
 
-        var id = (repository.allCategories!!.indexOf(repository.getIdCategory(catName))).toString()
-        val labels: List<String> =
-            repository.getSubcategories(repository.getIdCategory(catName)) as List<String>
-        arrayAdapter = ListViewVerticalAdapter(
-            context,
-            labels as java.util.ArrayList<String>?,
-            repository.getIdCategory(repository.allCategories!!.get(0))
-        )
-//        arrayAdapter.setOnShareClickedListener(this)
-        listViewSubcategories!!.adapter = arrayAdapter
+    private fun selectAccount() {
+        val repository = InfoRepository()
+        val descpriptionDialog = Dialog(context)
+        descpriptionDialog.setContentView(R.layout.dialog_tr_account_select)
+        val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
+        val height = (resources.displayMetrics.heightPixels * 0.40).toInt()
+        descpriptionDialog.window!!.setLayout(width, height)
+        descpriptionDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        descpriptionDialog.show()
+
+        val accountListView = descpriptionDialog.findViewById<ListView>(R.id.d_tr_acc_list)
+        var accList: List<String?> = java.util.ArrayList()
+        accList = repository.getAllAccountsNames() as List<String?>
+        val accountAdapter: ArrayAdapter<*> =
+            ArrayAdapter<Any?>(context, android.R.layout.simple_list_item_activated_1, accList)
+        accountListView.adapter = accountAdapter
+        val finalAccList = accList
+        accountListView.onItemClickListener =
+            AdapterView.OnItemClickListener { adapterView, view, i, l ->
+                var accNameTxt = finalAccList[i]
+                selectedIdAccount = repository.getIdAccount(accNameTxt)?.toInt()
+                if (accNameTxt!!.length > 15) accNameTxt = accNameTxt!!.substring(0, 30) + "..."
+                accountTxt?.setText(accNameTxt)
+                Toast.makeText(
+                    context,
+                    "selected: " + i + ", id: " + repository.getIdAccount(accList.get(i)),
+                    Toast.LENGTH_SHORT
+                ).show()
+                descpriptionDialog.dismiss()
+            }
     }
 
-//    fun loadPieChart2() {
-//
-//        pieChart?.setUsePercentValues(true);
-//        pieChart?.getDescription()?.setEnabled(false);
-//        pieChart?.setExtraOffsets(5F, 10F, 5F, 5F);
-//
-//        pieChart?.setDragDecelerationFrictionCoef(0.95f);
-//
-////        pieChart?.setCenterTextTypeface(tfLight);
-////        pieChart?.setCenterText(generateCenterSpannableText());
-//
-//        pieChart?.setDrawHoleEnabled(true);
-//        pieChart?.setHoleColor(Color.WHITE);
-//
-//        pieChart?.setTransparentCircleColor(Color.WHITE);
-//        pieChart?.setTransparentCircleAlpha(110);
-//
-//        pieChart?.setHoleRadius(58f);
-//        pieChart?.setTransparentCircleRadius(61f);
-//
-//        pieChart?.setDrawCenterText(true);
-//
-//        pieChart?.setRotationAngle(0F);
-//        // enable rotation of the chart by touch
-//        pieChart?.setRotationEnabled(true);
-//        pieChart?.setHighlightPerTapEnabled(true);
-//
-//        // chart.setUnit(" €");
-//        // chart.setDrawUnitsInChart(true);
-//
-//        // add a selection listener
-//        pieChart?.setOnChartValueSelectedListener(this)
-//
-//
-//        val l: Legend? = pieChart?.getLegend()
-//        l?.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-//        l?.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
-//        l?.orientation = Legend.LegendOrientation.VERTICAL
-//        l?.setDrawInside(false)
-//        l?.xEntrySpace = 7f
-//        l?.yEntrySpace = 0f
-//        l?.yOffset = 0f
-//
-//        // entry label styling
-//
-//        // entry label styling
-//        pieChart?.setEntryLabelColor(Color.WHITE)
-////        pieChart?.setEntryLabelTypeface(tfRegular)
-//        pieChart?.setEntryLabelTextSize(12f)
-//
-//        // add a lot of colors
-//
-//        // add a lot of colors
-//        val colors: ArrayList<Int> = ArrayList()
-//
-//        for (c in ColorTemplate.VORDIPLOM_COLORS) colors.add(c)
-//
-//        for (c in ColorTemplate.JOYFUL_COLORS) colors.add(c)
-//
-//        for (c in ColorTemplate.COLORFUL_COLORS) colors.add(c)
-//
-//        for (c in ColorTemplate.LIBERTY_COLORS) colors.add(c)
-//
-//        for (c in ColorTemplate.PASTEL_COLORS) colors.add(c)
-//
-//        colors.add(ColorTemplate.getHoloBlue())
-//
-//
-//        var visitors = ArrayList<PieEntry>()
-//        visitors.add(PieEntry(132.5f, "jedzenie"))
-//        visitors.add(PieEntry(52.5f, "podróże"))
-//        visitors.add(PieEntry(232.5f, "edukacja"))
-//
-//        val piedataset = PieDataSet(visitors, "expense")
-//        piedataset.setColors(colors)
-//
-//
-//
-//        val data = PieData(piedataset)
-//        pieChart?.data = data
-//    }
+    fun loadRangeTransactions(transactionType: String): ArrayList<Transaction>? {
+        val repository = InfoRepository()
 
-//    override fun onValueSelected(e: Entry?, h: Highlight?) {
-//        if (e == null)
-//            return;
-//        Toast.makeText(context,
-//            "Value: " + e.getY() + ", index: " + h?.getX()
-//                    + ", DataSet index: " + h?.getDataSetIndex(), Toast.LENGTH_SHORT).show()
-//    }
-//
-//    override fun onNothingSelected() {
-//        Toast.makeText(context, "Nothing", Toast.LENGTH_SHORT).show()
-//    }
-//
-//    private fun generateCenterSpannableText(): SpannableString? {
-//        val s = SpannableString("MPAndroidChart\ndeveloped by Philipp Jahoda")
-//        s.setSpan(RelativeSizeSpan(1.7f), 0, 14, 0)
-//        s.setSpan(StyleSpan(Typeface.NORMAL), 14, s.length - 15, 0)
-//        s.setSpan(ForegroundColorSpan(Color.GRAY), 14, s.length - 15, 0)
-//        s.setSpan(RelativeSizeSpan(.8f), 14, s.length - 15, 0)
-//        s.setSpan(StyleSpan(Typeface.ITALIC), s.length - 14, s.length, 0)
-//        s.setSpan(ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length - 14, s.length, 0)
-//        return s
-//    }
+        return repository.getSpecificTransactions(
+            selectedIdAccount!!.toString(), "0".toDouble(), "999999999".toDouble(), "All",
+            startDate!!, endDate!!, transactionType
+        )
+    }
 
+    fun loadChartAndLegend() {
+        loadPieChart()
+        loadCategorieLegend()
+    }
 
 }

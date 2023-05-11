@@ -43,17 +43,16 @@
             <!--            app:layout_constraintStart_toEndOf="@id/example_button"-->
             <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
-            <!--        <Button-->
-            <!--            android:id="@+id/example_button_3"-->
-            <!--            android:layout_width="80dp"-->
-            <!--            android:layout_height="50dp"-->
-            <!--            android:layout_margin="8dp"-->
-            <!--            android:text="update db"-->
-            <!--            android:textAllCaps="false"-->
-            <!--            android:textSize="10sp"-->
-            <!--            app:layout_constraintEnd_toEndOf="parent"-->
-            <!--            app:layout_constraintStart_toEndOf="@id/example_button_2"-->
-            <!--            app:layout_constraintTop_toTopOf="parent" />-->
+            <Button
+                android:id="@+id/example_button_3"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="4dp"
+                android:text="transaction size test"
+                android:textAllCaps="false"
+                android:textSize="8sp"
+                app:layout_constraintStart_toEndOf="@+id/btnDialog"
+                app:layout_constraintTop_toTopOf="@+id/btnDialog" />
 
             <Button
                 android:id="@+id/example_button_4"
@@ -67,17 +66,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!--        <Button-->
-            <!--            android:id="@+id/button_dialog"-->
-            <!--            android:layout_width="80dp"-->
-            <!--            android:layout_height="50dp"-->
-            <!--            android:layout_margin="8dp"-->
-            <!--            android:text="start dialog"-->
-            <!--            android:textAllCaps="false"-->
-            <!--            android:textSize="10sp"-->
-            <!--            app:layout_constraintEnd_toStartOf="@id/example_button_3"-->
-            <!--            app:layout_constraintStart_toEndOf="@id/example_button"-->
-            <!--            app:layout_constraintTop_toTopOf="@id/example_button_4" />-->
+            <Button
+                android:id="@+id/btnDialog"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:layout_margin="8dp"
+                android:text="start dialog"
+                android:textAllCaps="false"
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@+id/example_button_4"
+                app:layout_constraintTop_toTopOf="@id/example_button_4" />
 
             <!--        <RelativeLayout-->
             <!--            android:id="@+id/relativeLayout"-->

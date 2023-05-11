@@ -9,17 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 import step.wallet.maganger.R;
 
-public class FirstFragment extends Fragment{
+public class FirstFragment extends Fragment implements DialogFragmentTransaction.OnInputSelected{
 
     private static final String TAG = "FirstFragment";
 
 
 
     public Button bexample4;
+    public Button bexample3;
+    public Button bexampleDialog;
 
 
 
@@ -46,7 +49,25 @@ public class FirstFragment extends Fragment{
             }
         });
 
+        bexampleDialog = view.findViewById(R.id.btnDialog);
+        bexampleDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                // display selected transaction
+                DialogFragmentTransaction dialog = new DialogFragmentTransaction();
+                dialog.setTargetFragment(FirstFragment.this, 1);
+                dialog.show(getFragmentManager(), "DialogFragmentTransaction");
+            }
+        });
+
+        bexample3 = view.findViewById(R.id.example_button_3);
+        bexample3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "Test", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         findViews(view);
@@ -71,4 +92,8 @@ public class FirstFragment extends Fragment{
         transaction.replace(R.id.chartsFrame, childFragment).commit();
     }
 
+    @Override
+    public void sendSelected() {
+        Toast.makeText(getContext(), "Added transaction successfully!", Toast.LENGTH_SHORT).show();
+    }
 }
