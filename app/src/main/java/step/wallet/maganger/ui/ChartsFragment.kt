@@ -6,6 +6,7 @@ import android.app.Fragment
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,10 @@ import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
 import step.wallet.maganger.R
 import step.wallet.maganger.adapters.RecyclerViewPieChartAdapter
+import step.wallet.maganger.adapters.RecyclerViewPieChartDetailAdapter
+import step.wallet.maganger.classes.Quad
 import step.wallet.maganger.classes.Transaction
+import step.wallet.maganger.data.CurrencyDatabase
 import step.wallet.maganger.data.InfoRepository
 import java.text.SimpleDateFormat
 import java.util.*
@@ -45,6 +49,7 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     private var startDate: Long? = null
     private var endDate: Long? = null
     private var selectedIdAccount: Int? = null
+    private var currencySymbol: String? = null
 
     private var monthPosition: Int? = null
     private var yearPosition: Int? = null
@@ -53,6 +58,9 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     private var pieChart: PieChart? = null
     lateinit var categoriesRVAdapter: RecyclerViewPieChartAdapter
     lateinit var recyclerViewCategories: RecyclerView
+    lateinit var categoriesDetailRVAdapter: RecyclerViewPieChartDetailAdapter
+    lateinit var recyclerViewCategoriesDetal: RecyclerView
+    private var centerSum: TextView? = null
 
     // testing
     private var btnTest: Button? = null
@@ -200,11 +208,7 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 
         // testing
         btnTest!!.setOnClickListener {
-            Toast.makeText(
-                context,
-                loadRangeTransactions("expense")?.size.toString(),
-                Toast.LENGTH_SHORT
-            ).show()
+            loadDetailsLegen()
         }
     }
 
@@ -225,6 +229,8 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         pieChart = view.findViewById(R.id.pieChart)
         recyclerViewCategories = view.findViewById(R.id.categoryLegenRV)
         accountTxt = view.findViewById(R.id.chartFrAccountTxt)
+        recyclerViewCategoriesDetal = view.findViewById(R.id.char_detail_RV)
+        centerSum = view.findViewById(R.id.chart_center_sum_txt)
 
         //test
         btnTest = view.findViewById(R.id.btn_test_chart)
@@ -536,7 +542,20 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         cal2.add(Calendar.DAY_OF_YEAR, -1)
         endDate = cal2.timeInMillis
         val repository = InfoRepository()
+
         selectedIdAccount = repository.getIdAccount(repository.allAccountsNames?.get(0))?.toInt()
+
+        var currency = repository.getAccount(selectedIdAccount.toString())!!.accountCurrency
+        val currencyDatabase = CurrencyDatabase(context)
+        val currentList = currencyDatabase.currenciesList
+        for (j in currentList.indices) {
+            if (currentList.get(j).getName().equals(currency)) {
+                currencySymbol = currentList.get(j).symbol
+                break
+            }
+        }
+
+
         accountTxt?.setText(repository.getAccount(selectedIdAccount.toString())?.accountName)
         monthPosition = cal.get(Calendar.MONTH)
         yearPosition = cal.get(Calendar.YEAR)
@@ -555,30 +574,46 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
             var categorySum = transactionSummary.find { it.first == categoryId }?.second ?: 0.0
             categorySum += amount
 
-            val existingCategorySumIndex = transactionSummary.indexOfFirst { it.first == categoryId }
+            val existingCategorySumIndex =
+                transactionSummary.indexOfFirst { it.first == categoryId }
             if (existingCategorySumIndex != -1) {
                 transactionSummary[existingCategorySumIndex] = categoryId to categorySum
             } else {
                 transactionSummary.add(categoryId to categorySum)
             }
         }
-// testing
-//        for ((categoryId, sum) in transactionSummary) {
-//            Toast.makeText(context, "Category ID: $categoryId, Sum: $sum", Toast.LENGTH_SHORT).show()
-//        }
 
         // Set the data and color to the pie chart
         pieChart?.clearChart()
         val repository = InfoRepository()
 
         for ((categoryId, sum) in transactionSummary) {
-            pieChart?.addPieSlice(PieModel(repository.getCategoryName(categoryId),
-                sum.toFloat(), Color.parseColor(repository.getCategoryColor(repository.getCategoryName(categoryId)))))
+            pieChart?.addPieSlice(
+                PieModel(
+                    repository.getCategoryName(categoryId),
+                    sum.toFloat(),
+                    Color.parseColor(
+                        repository.getCategoryColor(
+                            repository.getCategoryName(categoryId)
+                        )
+                    )
+                )
+            )
         }
 
         // To animate the pie chart
         pieChart!!.startAnimation()
 
+        // set general value in chart
+        var sum = 0.0
+        for (transaction in transactionList!!) {
+            sum += transaction.transactionValue.toDouble()
+        }
+        if (sum.equals(0.0))
+            centerSum?.visibility = View.INVISIBLE
+        else
+            centerSum?.visibility = View.VISIBLE
+        centerSum?.setText(sum.toString() + " " + currencySymbol)
 
     }
 
@@ -630,6 +665,15 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
                 ).show()
                 descpriptionDialog.dismiss()
             }
+        var currency = repository.getAccount(selectedIdAccount.toString())!!.accountCurrency
+        val currencyDatabase = CurrencyDatabase(context)
+        val currentList = currencyDatabase.currenciesList
+        for (j in currentList.indices) {
+            if (currentList.get(j).getName().equals(currency)) {
+                currencySymbol = currentList.get(j).symbol
+                break
+            }
+        }
     }
 
     fun loadRangeTransactions(transactionType: String): ArrayList<Transaction>? {
@@ -644,6 +688,112 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     fun loadChartAndLegend() {
         loadPieChart()
         loadCategorieLegend()
+    }
+
+    // detail legen
+    fun loadDetailsLegen() {
+
+        val transactions = loadRangeTransactions("expense")
+
+        // data for RecyclerView
+        val categorySums = arrayListOf<Triple<String, Double, Double>>()
+        var totalSum = 0.0
+
+        for (transaction in transactions!!) {
+            val categoryId = transaction.transactionIdCategory
+            val amount = transaction.transactionValue.toDouble()
+
+            totalSum += amount
+
+            val existingCategorySumIndex = categorySums.indexOfFirst { it.first == categoryId }
+            if (existingCategorySumIndex != -1) {
+                val (existingCategoryId, existingSum, _) = categorySums[existingCategorySumIndex]
+                categorySums[existingCategorySumIndex] =
+                    Triple(existingCategoryId, existingSum + amount, 0.0)
+            } else {
+                categorySums.add(Triple(categoryId, amount, 0.0))
+            }
+        }
+
+        for (index in categorySums.indices) {
+            val (categoryId, sum, _) = categorySums[index]
+            var percentage = sum / totalSum * 100.0
+            percentage = Math.round(percentage * 100.0) / 100.0
+            categorySums[index] = Triple(categoryId, sum, percentage)
+        }
+        categorySums.sortByDescending { it.third }
+
+        // test
+//        for ((categoryId, sum, percentage) in categorySums) {
+//            Toast.makeText(
+//                context,
+//                "Category ID: $categoryId, Sum: $sum, Percentage: $percentage%",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//        }
+
+
+        // data for nested RecyclerView
+        val categorySubcategorySums = arrayListOf<Quad<String, String, Double, Double>>()
+        val categoryMap = transactions?.groupBy { it.transactionIdCategory }
+        if (categoryMap != null) {
+            for ((categoryId, categoryTransactions) in categoryMap) {
+                val categorySum =
+                    categoryTransactions.sumByDouble { it.transactionValue.toDouble() }
+
+                val subcategoryMap = categoryTransactions.groupBy { it.transactionIdSubcategory }
+
+                for ((subcategoryId, subcategoryTransactions) in subcategoryMap) {
+                    val subcategorySum =
+                        subcategoryTransactions.sumByDouble { it.transactionValue.toDouble() }
+                    var percentage = (subcategorySum / categorySum) * 100.0
+                    percentage = Math.round(percentage * 100.0) / 100.0
+
+                    val quad = Quad(subcategoryId, categoryId, subcategorySum, percentage)
+                    categorySubcategorySums.add(quad)
+                }
+            }
+
+        }
+
+//        categorySubcategorySums.sortByDescending { it.third } // Sortowanie względem sumy transakcji
+//
+//        val sortedCategorySubcategorySums = categorySubcategorySums.groupBy { it.second }
+//            .mapValues { (_, list) -> list.sortedByDescending { it.fourth } } // Sortowanie względem udziału procentowego
+//
+//        for ((categoryId, subcategoryList) in sortedCategorySubcategorySums) {
+//            for (quad in subcategoryList) {
+//                Log.d("print:", "Subcategory ID: ${quad.first}, Category ID: ${quad.second}, Sum: ${quad.third}, Percentage: ${quad.fourth}%")
+//            }
+//        }
+
+        val sortedCategorySubcategorySums = categorySubcategorySums.sortedWith(
+            compareByDescending<Quad<String, String, Double, Double>> { it.third }
+                .thenByDescending { it.fourth }
+        )
+
+        val categoryGroupedSums = sortedCategorySubcategorySums.groupBy { it.second }
+
+        for ((categoryId, subcategoryList) in categoryGroupedSums) {
+            for (quad in subcategoryList) {
+                Log.d("print:", "Subcategory ID: ${quad.first}, Category ID: ${quad.second}, Sum: ${quad.third}, Percentage: ${quad.fourth}%")
+            }
+        }
+
+        categoriesDetailRVAdapter =
+            RecyclerViewPieChartDetailAdapter(context, categorySums, categorySubcategorySums, "PLN")
+        recyclerViewCategoriesDetal!!.adapter = categoriesDetailRVAdapter
+        recyclerViewCategoriesDetal.layoutManager
+
+
+//         test
+//        for (quad in categoryGroupedSums) {
+//            Toast.makeText(
+//                context,
+//                "Subcategory ID: ${quad.first}, Category ID: ${quad.second}, Sum: ${quad.third}, Percentage: ${quad.fourth}%",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//        }
     }
 
 }

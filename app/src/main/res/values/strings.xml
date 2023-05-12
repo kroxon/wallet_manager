@@ -137,6 +137,11 @@
     <string name="delete_ask_2">and all transactions associated with it?</string>
 
 
+    // charts
+    <string name="details">Details</string>
+
+
+
     // default database: categories
 
     <string-array name="categories">

@@ -6,22 +6,26 @@
     android:padding="4dp">
 
     <LinearLayout
+        android:gravity="left|top"
         android:layout_width="wrap_content"
-        android:layout_height="15dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <View
             android:id="@+id/pieChart_cat_col"
+            android:layout_marginTop="2dp"
             android:layout_width="15dp"
-            android:layout_height="match_parent"
+            android:layout_height="15dp"
             android:background="@color/olx_color_1" />
 
         <TextView
+            android:layout_gravity="top|left"
             android:id="@+id/pieChart_cat_name"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:maxWidth="100dp"
             android:layout_marginLeft="8dp"
-            android:gravity="center"
+            android:gravity="left|top"
             android:text="Żywność"
             android:textColor="@color/olx_color_1"
             android:textSize="12sp" />

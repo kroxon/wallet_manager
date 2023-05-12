@@ -7,11 +7,9 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,31 +18,42 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import kotlin.Triple;
 import step.wallet.maganger.R;
-import step.wallet.maganger.classes.Account;
 import step.wallet.maganger.classes.CurrencyStrings;
-import step.wallet.maganger.data.CurrencyDatabase;
+import step.wallet.maganger.classes.Quad;
+import step.wallet.maganger.classes.Transaction;
 import step.wallet.maganger.data.InfoRepository;
 
-public class RecyclerViewPieChartAdapter extends RecyclerView.Adapter<RecyclerViewPieChartAdapter.ViewHolder> {
+public class RecyclerViewPieChartDetailAdapter extends RecyclerView.Adapter<RecyclerViewPieChartDetailAdapter.ViewHolder> {
 
 
     private Context context;
-    private List<String> mCategoryNames;
+    private ArrayList<Triple<String, Double, Double>> categorySums;
+    private ArrayList<Quad<String, String, Double, Double>> subcategorySum;
+    String currency;
+    private RecyclerViewPieChartDetailNestedAdapter categoriesDetailNestedRVAdapter;
+
+    private ListViewVerticalHistoryAdapter.ItemClickListener mClickListener;
+
+
     private LayoutInflater mInflater;
 
 
     // data is passed into the constructor
-    public RecyclerViewPieChartAdapter(Context context, List<String> dataNames) {
+    public RecyclerViewPieChartDetailAdapter(Context context, ArrayList<Triple<String, Double, Double>> categorySums,
+                                             ArrayList<Quad<String, String, Double, Double>> subcategorySum, String currency) {
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
-        this.mCategoryNames = dataNames;
+        this.categorySums = categorySums;
+        this.subcategorySum = subcategorySum;
+        this.currency = currency;
     }
 
     @Override
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.list_row_pie_chart_item, parent, false);
+        View view = mInflater.inflate(R.layout.list_row_pie_chart_detail_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -52,38 +61,50 @@ public class RecyclerViewPieChartAdapter extends RecyclerView.Adapter<RecyclerVi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         InfoRepository repository = new InfoRepository();
-//        if (mCategoryNames.get(position).length() > 25)
-//            holder.myNameTxt.setText(mCategoryNames.get(position).substring(0, 22) + "...");
-//        else
-        holder.myNameTxt.setText(mCategoryNames.get(position));
-        holder.myColor.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(repository.getCategoryColor(mCategoryNames.get(position)))));
+        String categoryId = categorySums.get(position).getFirst();
+        holder.myImg.setImageResource(Integer.parseInt(repository.getIdCategoryIconById(categoryId)));
+        holder.myImg.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(repository.getCategoryColor(repository.getCategoryName(categoryId)))));
+        holder.myImg.setColorFilter(Color.parseColor(repository.getCategoryColor(repository.getCategoryName(categoryId))));
+        holder.myCatNameTxt.setText(repository.getCategoryName(categoryId));
+        holder.myValueSumTxt.setText(categorySums.get(position).getSecond() + "");
+        holder.myValueCurrencyTxt.setText(currency);
+        holder.myPercentageTxt.setText(categorySums.get(position).getThird() + "");
+//        holder.myRecyclerView
     }
 
     // total number of cells
     @Override
     public int getItemCount() {
-        return mCategoryNames.size();
+        return categorySums.size();
     }
 
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
-        View myColor;
-        TextView myNameTxt;
+        ImageView myImg;
+        TextView myCatNameTxt;
+        TextView myValueSumTxt;
+        TextView myValueCurrencyTxt;
+        TextView myPercentageTxt;
+        RecyclerView myRecyclerView;
         int position = getLayoutPosition();
 
         ViewHolder(View itemView) {
             super(itemView);
-            myColor = itemView.findViewById(R.id.pieChart_cat_col);
-            myNameTxt = itemView.findViewById(R.id.pieChart_cat_name);
+            myImg = itemView.findViewById(R.id.pieChart_detail_icon);
+            myCatNameTxt = itemView.findViewById(R.id.pieChart_detail_cat_name);
+            myValueSumTxt = itemView.findViewById(R.id.char_value_detail_txt);
+            myValueCurrencyTxt = itemView.findViewById(R.id.char_detail_currency_txt);
+            myPercentageTxt = itemView.findViewById(R.id.char_detail_percentage_txt);
+            myRecyclerView = itemView.findViewById(R.id.char_detail_nested_RV);
         }
 
     }
 
-    public String getItem(int id) {
-
-        return mCategoryNames.get(id);
-    }
+//    public String getItem(int id) {
+//
+//        return transactionsList.get(id);
+//    }
 
 
     private void displayDeleteDialog(String name) {
@@ -117,6 +138,16 @@ public class RecyclerViewPieChartAdapter extends RecyclerView.Adapter<RecyclerVi
                 descpriptionDialog.dismiss();
             }
         });
+    }
+
+    // allows clicks events to be caught
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = (ListViewVerticalHistoryAdapter.ItemClickListener) itemClickListener;
+    }
+
+    // parent activity will implement this method to respond to click events
+    public interface ItemClickListener {
+        void onItemClick(View view, int position, String s, List<Transaction> tr);
     }
 
 }

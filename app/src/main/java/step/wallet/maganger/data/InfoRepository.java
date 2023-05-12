@@ -366,6 +366,7 @@ public class InfoRepository {
                     account.setAccountDescription(cursor.getString(4));
                     account.setAccountBalance(cursor.getString(5));
         }
+        cursor.close();
 //        db.close();
         return account;
     }
@@ -387,7 +388,7 @@ public class InfoRepository {
                     idCategory = cursor.getString(0);
             } while (cursor.moveToNext());
         }
-//        db.close();
+        cursor.close();
         return idCategory;
     }
 
@@ -405,6 +406,7 @@ public class InfoRepository {
                     idCategory = cursor.getString(0);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         return idCategory;
     }
 
@@ -422,7 +424,7 @@ public class InfoRepository {
                     categoryName = cursor.getString(1);
             } while (cursor.moveToNext());
         }
-//        db.close();
+        cursor.close();
         return categoryName;
     }
 
@@ -440,7 +442,7 @@ public class InfoRepository {
                     subcategoryName = cursor.getString(2);
             } while (cursor.moveToNext());
         }
-//        db.close();
+        cursor.close();
         return subcategoryName;
     }
 
@@ -458,7 +460,7 @@ public class InfoRepository {
                     idSubcategory = cursor.getString(0);
             } while (cursor.moveToNext());
         }
-//        db.close();
+        cursor.close();
         return idSubcategory;
     }
 
@@ -479,7 +481,7 @@ public class InfoRepository {
             } while (cursor.moveToNext());
         }
 //        // closing connection
-//        cursor.close();
+        cursor.close();
 //        db.close();
         // returning lables
         return list;
@@ -500,7 +502,7 @@ public class InfoRepository {
                 }
             } while (cursor.moveToNext());
         }
-//        db.close();
+        cursor.close();
         return idCategoryIcon;
     }
 
@@ -518,7 +520,7 @@ public class InfoRepository {
                 }
             } while (cursor.moveToNext());
         }
-//        db.close();
+        cursor.close();
         return categoryColor;
     }
 
@@ -538,7 +540,7 @@ public class InfoRepository {
                 }
             } while (cursor.moveToNext());
         }
-//        db.close();
+        cursor.close();
         return idCategoryIcon;
     }
 
@@ -581,6 +583,7 @@ public class InfoRepository {
                     transactionsList.add(transaction);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             transactionsList.sort((e1, e2) -> new Long(e1.getTransactionDateFormat()).compareTo(new Long(e2.getTransactionDateFormat())));
         }
@@ -609,6 +612,7 @@ public class InfoRepository {
 
             } while (cursor.moveToNext());
         }
+        cursor.close();
         return accountsList;
     }
 
@@ -653,6 +657,7 @@ public class InfoRepository {
                     transactionsList.add(transaction);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             transactionsList.sort((e1, e2) -> new Long(e1.getTransactionDateFormat()).compareTo(new Long(e2.getTransactionDateFormat())));
         }
