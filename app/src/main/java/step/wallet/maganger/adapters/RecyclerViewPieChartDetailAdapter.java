@@ -13,17 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 import kotlin.Triple;
 import step.wallet.maganger.R;
-import step.wallet.maganger.classes.CurrencyStrings;
 import step.wallet.maganger.classes.Quad;
-import step.wallet.maganger.classes.Transaction;
 import step.wallet.maganger.data.InfoRepository;
 
 public class RecyclerViewPieChartDetailAdapter extends RecyclerView.Adapter<RecyclerViewPieChartDetailAdapter.ViewHolder> {
@@ -36,6 +34,9 @@ public class RecyclerViewPieChartDetailAdapter extends RecyclerView.Adapter<Recy
     private RecyclerViewPieChartDetailNestedAdapter categoriesDetailNestedRVAdapter;
 
     private ItemClickListener mClickListener;
+    private int selectedItem = -1;
+    private RecyclerViewPieChartDetailNestedAdapter adapter;
+
 
     private LayoutInflater mInflater;
 
@@ -79,7 +80,31 @@ public class RecyclerViewPieChartDetailAdapter extends RecyclerView.Adapter<Recy
         holder.myValueSumTxt.setText(format.format(categorySums.get(position).getSecond()));
         holder.myValueCurrencyTxt.setText(currency);
         holder.myPercentageTxt.setText(format.format(categorySums.get(position).getThird()) + "%");
-//        holder.myRecyclerView
+        holder.myLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectedItem = position;
+                notifyDataSetChanged();
+                notifyItemChanged(position);
+            }
+        });
+        holder.myRecyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.myRecyclerView.setVisibility(View.GONE);
+            }
+        });
+        if (selectedItem == position && holder.myRecyclerView.getVisibility() == View.GONE) {
+            holder.myRecyclerView.setVisibility(View.VISIBLE);
+            ArrayList<Quad<String, String, Double, Double>> arraySubs = new ArrayList<>();
+            for (int i = 0; i < subcategorySum.size(); i++){
+                if (categoryId.equals(subcategorySum.get(i).getSecond()))
+                    arraySubs.add(subcategorySum.get(i));
+            }
+            adapter = new RecyclerViewPieChartDetailNestedAdapter(context, arraySubs, currency);
+            holder.myRecyclerView.setAdapter(adapter);
+        } else
+            holder.myRecyclerView.setVisibility(View.GONE);
     }
 
     // total number of cells
@@ -97,6 +122,7 @@ public class RecyclerViewPieChartDetailAdapter extends RecyclerView.Adapter<Recy
         TextView myValueCurrencyTxt;
         TextView myPercentageTxt;
         RecyclerView myRecyclerView;
+        ConstraintLayout myLayout;
         int position = getLayoutPosition();
 
         ViewHolder(View itemView) {
@@ -107,48 +133,9 @@ public class RecyclerViewPieChartDetailAdapter extends RecyclerView.Adapter<Recy
             myValueCurrencyTxt = itemView.findViewById(R.id.char_detail_currency_txt);
             myPercentageTxt = itemView.findViewById(R.id.char_detail_percentage_txt);
             myRecyclerView = itemView.findViewById(R.id.char_detail_nested_RV);
+            myLayout = itemView.findViewById(R.id.pieChart_detail_top_layout);
         }
 
     }
-
-//    public String getItem(int id) {
-//
-//        return transactionsList.get(id);
-//    }
-
-
-    private void displayDeleteDialog(String name) {
-        Dialog descpriptionDialog = new Dialog(context);
-        descpriptionDialog.setContentView(R.layout.dialog_acc_dialog_delete);
-//        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
-//        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.40);
-//        descpriptionDialog.getWindow().setLayout(width, height);
-        descpriptionDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        descpriptionDialog.show();
-
-        TextView dDeleteTitle = descpriptionDialog.findViewById(R.id.dAccDeletTitle);
-        TextView dDeleteNo = descpriptionDialog.findViewById(R.id.dAccDeletDNo);
-        TextView dDeleteYes = descpriptionDialog.findViewById(R.id.dAccDeletDYes);
-        String deleteString1 = context.getString(R.string.delete_ask_1);
-        String deleteString2 = context.getString(R.string.delete_ask_2);
-
-        dDeleteTitle.setText(deleteString1 + " \"" + name + "\" " + deleteString2);
-
-
-        dDeleteNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                descpriptionDialog.dismiss();
-            }
-        });
-
-        dDeleteYes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                descpriptionDialog.dismiss();
-            }
-        });
-    }
-
 
 }
