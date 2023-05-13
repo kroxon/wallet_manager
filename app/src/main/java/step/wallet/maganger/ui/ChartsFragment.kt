@@ -21,11 +21,12 @@ import step.wallet.maganger.classes.Quad
 import step.wallet.maganger.classes.Transaction
 import step.wallet.maganger.data.CurrencyDatabase
 import step.wallet.maganger.data.InfoRepository
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedListene {
+class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedListene, RecyclerViewPieChartDetailAdapter.ItemClickListener {
 
 
     private var accountTxt: TextView? = null
@@ -613,7 +614,8 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
             centerSum?.visibility = View.INVISIBLE
         else
             centerSum?.visibility = View.VISIBLE
-        centerSum?.setText(sum.toString() + " " + currencySymbol)
+        val format = DecimalFormat("0.#")
+        centerSum?.setText(format.format(sum) + " " + currencySymbol)
 
     }
 
@@ -734,7 +736,7 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 
 
         // data for nested RecyclerView
-        val categorySubcategorySums = arrayListOf<Quad<String, String, Double, Double>>()
+        var categorySubcategorySums = arrayListOf<Quad<String, String, Double, Double>>()
         val categoryMap = transactions?.groupBy { it.transactionIdCategory }
         if (categoryMap != null) {
             for ((categoryId, categoryTransactions) in categoryMap) {
@@ -774,15 +776,24 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 
         val categoryGroupedSums = sortedCategorySubcategorySums.groupBy { it.second }
 
+        categorySubcategorySums.clear()
+
         for ((categoryId, subcategoryList) in categoryGroupedSums) {
             for (quad in subcategoryList) {
-                Log.d("print:", "Subcategory ID: ${quad.first}, Category ID: ${quad.second}, Sum: ${quad.third}, Percentage: ${quad.fourth}%")
+                categorySubcategorySums.add(quad)
+//                Log.d("print:", "Subcategory ID: ${quad.first}, Category ID: ${quad.second}, Sum: ${quad.third}, Percentage: ${quad.fourth}%")
             }
         }
 
+        // test
+        for (quad in categorySubcategorySums) {
+                Log.d("print:", "Subcategory ID: ${quad.first}, Category ID: ${quad.second}, Sum: ${quad.third}, Percentage: ${quad.fourth}%")
+        }
+
         categoriesDetailRVAdapter =
-            RecyclerViewPieChartDetailAdapter(context, categorySums, categorySubcategorySums, "PLN")
+            RecyclerViewPieChartDetailAdapter(context, categorySums, categorySubcategorySums, currencySymbol)
         recyclerViewCategoriesDetal!!.adapter = categoriesDetailRVAdapter
+        categoriesDetailRVAdapter.setClickListener(this)
         recyclerViewCategoriesDetal.layoutManager
 
 
@@ -794,6 +805,10 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 //                Toast.LENGTH_SHORT
 //            ).show()
 //        }
+    }
+
+    override fun onItemClick(position: Int) {
+        Toast.makeText(context, position.toString(), Toast.LENGTH_SHORT).show()
     }
 
 }

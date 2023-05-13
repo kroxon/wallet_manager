@@ -39,6 +39,8 @@ public class ListViewVerticalHistoryAdapter extends RecyclerView.Adapter<ListVie
     private ItemClickListener mClickListener;
 
 
+
+
     public ListViewVerticalHistoryAdapter(Context context, ArrayList<Transaction> items, ArrayList<CurrencyStrings> currencytList) {
         this.mInflater = LayoutInflater.from(context);
         transactionsList = items;

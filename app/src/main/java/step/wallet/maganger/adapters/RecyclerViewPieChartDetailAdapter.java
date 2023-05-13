@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,11 +35,19 @@ public class RecyclerViewPieChartDetailAdapter extends RecyclerView.Adapter<Recy
     String currency;
     private RecyclerViewPieChartDetailNestedAdapter categoriesDetailNestedRVAdapter;
 
-    private ListViewVerticalHistoryAdapter.ItemClickListener mClickListener;
-
+    private ItemClickListener mClickListener;
 
     private LayoutInflater mInflater;
 
+    // allows clicks events to be caught
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = (ItemClickListener) itemClickListener;
+    }
+
+    // parent activity will implement this method to respond to click events
+    public interface ItemClickListener {
+        void onItemClick(int position);
+    }
 
     // data is passed into the constructor
     public RecyclerViewPieChartDetailAdapter(Context context, ArrayList<Triple<String, Double, Double>> categorySums,
@@ -66,9 +75,10 @@ public class RecyclerViewPieChartDetailAdapter extends RecyclerView.Adapter<Recy
         holder.myImg.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(repository.getCategoryColor(repository.getCategoryName(categoryId)))));
         holder.myImg.setColorFilter(Color.parseColor(repository.getCategoryColor(repository.getCategoryName(categoryId))));
         holder.myCatNameTxt.setText(repository.getCategoryName(categoryId));
-        holder.myValueSumTxt.setText(categorySums.get(position).getSecond() + "");
+        DecimalFormat format = new DecimalFormat("0.#");
+        holder.myValueSumTxt.setText(format.format(categorySums.get(position).getSecond()));
         holder.myValueCurrencyTxt.setText(currency);
-        holder.myPercentageTxt.setText(categorySums.get(position).getThird() + "");
+        holder.myPercentageTxt.setText(format.format(categorySums.get(position).getThird()) + "%");
 //        holder.myRecyclerView
     }
 
@@ -140,14 +150,5 @@ public class RecyclerViewPieChartDetailAdapter extends RecyclerView.Adapter<Recy
         });
     }
 
-    // allows clicks events to be caught
-    public void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = (ListViewVerticalHistoryAdapter.ItemClickListener) itemClickListener;
-    }
-
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
-        void onItemClick(View view, int position, String s, List<Transaction> tr);
-    }
 
 }
