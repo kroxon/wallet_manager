@@ -291,19 +291,55 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/pieChartFirst"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:layout_marginTop="16dp"
-                    android:visibility="gone"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
 
-                </com.github.mikephil.charting.charts.PieChart>
+                    <TextView
+                        android:id="@+id/testDateStart1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date1"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/testDateEnd1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date2"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@+id/testDateStart1"
+                        app:layout_constraintTop_toBottomOf="@+id/testDateStart1" />
+
+                    <TextView
+                        android:id="@+id/testDateStart2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date1"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/testDateEnd2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date2"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/testDateStart2" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
                     android:orientation="horizontal"
                     android:weightSum="2"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">

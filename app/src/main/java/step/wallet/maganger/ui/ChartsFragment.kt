@@ -10,7 +10,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.ListView
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
@@ -23,10 +32,11 @@ import step.wallet.maganger.data.CurrencyDatabase
 import step.wallet.maganger.data.InfoRepository
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 
-class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedListene, RecyclerViewPieChartDetailAdapter.ItemClickListener {
+class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedListene {
 
 
     private var accountTxt: TextView? = null
@@ -65,6 +75,10 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 
     // testing
     private var btnTest: Button? = null
+    private var testStartDate1: TextView? = null
+    private var testStartDate2: TextView? = null
+    private var testEndDate1: TextView? = null
+    private var testEndDate2: TextView? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,10 +109,11 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         initStartAndEndDate()
 
 
-        periodMonthLabel!!.setText(
-            resources.getStringArray(R.array.months)
-                .get(monthPosition!!) + " " + Calendar.getInstance()
-                .get(Calendar.YEAR)
+        val sdf = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
+        periodMonthLabel!!.setText(sdf.format(Calendar.getInstance().time)
+//            resources.getStringArray(R.array.months)
+//                .get(monthPosition!!) + " " + Calendar.getInstance()
+//                .get(Calendar.YEAR)
         )
 
         radioPeriodGroup!!.setOnCheckedChangeListener { group, checkedId ->
@@ -122,11 +137,27 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
                 setVisibilityLabel(periodDayLabel!!)
             }
             if (R.id.rMonth == checkedId) {
+                val cal = Calendar.getInstance()
+                cal.set(Calendar.DAY_OF_MONTH, 1)
+                cal.set(Calendar.HOUR_OF_DAY, 0)
+                cal.set(Calendar.MINUTE, 0)
+                cal.set(Calendar.SECOND, 0)
+                startDate = cal.timeInMillis
+                val cal2 = Calendar.getInstance()
+                val dateFormat = SimpleDateFormat("d MMMM yyyy", Locale.getDefault())
+                cal2.set(Calendar.DAY_OF_MONTH, 1)
+                cal2.set(Calendar.HOUR_OF_DAY, 23)
+                cal2.set(Calendar.MINUTE, 59)
+                cal2.set(Calendar.SECOND, 59)
+                cal2.add(Calendar.MONTH, + 1)
+                cal2.add(Calendar.DAY_OF_YEAR, - 1)
+                endDate = cal2.timeInMillis
                 periodMonthLabel!!.setOnClickListener(View.OnClickListener {
                     val dialog = DialogFragmentDatePicker()
 ////                    dialog.setTargetFragment(this, 1)
                     dialog.setOnDateRangeListener(this)
-                    dialog.setValue(monthPosition!!, yearPosition!!)
+                    val calendar = Calendar.getInstance()
+                    dialog.setValue(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR))
 ////                    dialog.show(fragmentManager, "DialogFragmentDatePicker")
 //                    fragmentManager?.let { dialog.show(it, "DialogFragmentDatePicker") }
 
@@ -174,11 +205,13 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
                 periodCustomLabel2!!.setText(dateFormat.format(cal2.time))
                 setVisibilityLabel(periodCustomLabel!!)
             }
+
+            loadChartAndLegend()
         }
 
         rbDay!!.performClick()
         rbMonth!!.performClick()
-        initStartAndEndDate()
+//        initStartAndEndDate()
 
 
         periodLeftImg!!.setOnClickListener {
@@ -195,10 +228,12 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 
         periodCustomLabel1!!.setOnClickListener {
             selectCustomDate(periodCustomLabel1!!, "start")
+            loadChartAndLegend()
         }
 
         periodCustomLabel2!!.setOnClickListener {
             selectCustomDate(periodCustomLabel2!!, "end")
+            loadChartAndLegend()
         }
 
 
@@ -235,6 +270,10 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 
         //test
         btnTest = view.findViewById(R.id.btn_test_chart)
+        testStartDate1 = view.findViewById(R.id.testDateStart1)
+        testStartDate2 = view.findViewById(R.id.testDateStart2)
+        testEndDate1 = view.findViewById(R.id.testDateEnd1)
+        testEndDate2 = view.findViewById(R.id.testDateEnd2)
     }
 
     override fun onDateRange(timeStart: Long, timeEnd: Long, monthPosition: Int, year: Int) {
@@ -246,6 +285,7 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         )
         this.monthPosition = monthPosition
         this.yearPosition = year
+        loadChartAndLegend()
     }
 
     private fun setVisibilityLabel(view: View) {
@@ -283,14 +323,14 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
             cal.timeInMillis = startDate!!
             val cal2 = Calendar.getInstance()
             cal.add(Calendar.DAY_OF_YEAR, -1)
-            cal.set(Calendar.HOUR, 0)
+            cal.set(Calendar.HOUR_OF_DAY, 0)
             cal.set(Calendar.MINUTE, 0)
             cal.set(Calendar.SECOND, 0)
             startDate = cal.timeInMillis
             val cal3 = Calendar.getInstance()
             cal3.timeInMillis = endDate!!
             cal3.add(Calendar.DAY_OF_YEAR, -1)
-            cal3.set(Calendar.HOUR, 23)
+            cal3.set(Calendar.HOUR_OF_DAY, 23)
             cal3.set(Calendar.MINUTE, 59)
             cal3.set(Calendar.SECOND, 59)
             endDate = cal3.timeInMillis
@@ -330,7 +370,8 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
             cal.timeInMillis = startDate!!
             cal2.timeInMillis = endDate!!
             cal.add(Calendar.MONTH, -1)
-            cal2.add(Calendar.MONTH, -1)
+            cal2.set(Calendar.DAY_OF_MONTH, 1)
+            cal2.add(Calendar.DAY_OF_YEAR, - 1)
             startDate = cal.timeInMillis
             endDate = cal2.timeInMillis
             setVisibilityLabel(periodMonthLabel!!)
@@ -406,7 +447,9 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
             cal.timeInMillis = startDate!!
             cal2.timeInMillis = endDate!!
             cal.add(Calendar.MONTH, +1)
-            cal2.add(Calendar.MONTH, +1)
+            cal2.set(Calendar.DAY_OF_MONTH, 1)
+            cal2.add(Calendar.MONTH, + 2)
+            cal2.add(Calendar.DAY_OF_YEAR, - 1)
             startDate = cal.timeInMillis
             endDate = cal2.timeInMillis
             periodMonthLabel!!.setText(dateFormat.format(cal.time))
@@ -517,7 +560,7 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
                     }
 
                 }
-
+                loadChartAndLegend()
                 textView!!.setText(dateFormat.format(cal.time))
 //                textView!!.setText(cal.time.toString())
             }
@@ -690,6 +733,9 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     fun loadChartAndLegend() {
         loadPieChart()
         loadCategorieLegend()
+
+        // test dates
+        testDate()
     }
 
     // detail legen
@@ -787,13 +833,20 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 
         // test
         for (quad in categorySubcategorySums) {
-                Log.d("print:", "Subcategory ID: ${quad.first}, Category ID: ${quad.second}, Sum: ${quad.third}, Percentage: ${quad.fourth}%")
+            Log.d(
+                "print:",
+                "Subcategory ID: ${quad.first}, Category ID: ${quad.second}, Sum: ${quad.third}, Percentage: ${quad.fourth}%"
+            )
         }
 
         categoriesDetailRVAdapter =
-            RecyclerViewPieChartDetailAdapter(context, categorySums, categorySubcategorySums, currencySymbol)
+            RecyclerViewPieChartDetailAdapter(
+                context,
+                categorySums,
+                categorySubcategorySums,
+                currencySymbol
+            )
         recyclerViewCategoriesDetal!!.adapter = categoriesDetailRVAdapter
-        categoriesDetailRVAdapter.setClickListener(this)
         recyclerViewCategoriesDetal.layoutManager
 
 
@@ -807,8 +860,18 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 //        }
     }
 
-    override fun onItemClick(position: Int) {
-        Toast.makeText(context, position.toString(), Toast.LENGTH_SHORT).show()
+
+    // test fun
+    private fun testDate() {
+        val sdf = SimpleDateFormat("dd MM yyyy HH:mm:ss")
+        testStartDate2?.setText(testStartDate1?.text.toString())
+        testEndDate2?.setText(testEndDate1?.text.toString())
+        val cal = Calendar.getInstance()
+        val cal2 = Calendar.getInstance()
+        cal.timeInMillis = startDate!!
+        cal2.timeInMillis = endDate!!
+        testStartDate1?.setText(sdf.format(cal.time))
+        testEndDate1?.setText(sdf.format(cal2.time))
     }
 
 }
