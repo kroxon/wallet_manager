@@ -21,6 +21,10 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
 import step.wallet.maganger.R
@@ -72,6 +76,8 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     lateinit var categoriesDetailRVAdapter: RecyclerViewPieChartDetailAdapter
     lateinit var recyclerViewCategoriesDetal: RecyclerView
     private var centerSum: TextView? = null
+    private var barChart: BarChart? = null
+    lateinit var barEntriesList: ArrayList<BarEntry>
 
     // testing
     private var btnTest: Button? = null
@@ -267,6 +273,7 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         accountTxt = view.findViewById(R.id.chartFrAccountTxt)
         recyclerViewCategoriesDetal = view.findViewById(R.id.char_detail_RV)
         centerSum = view.findViewById(R.id.chart_center_sum_txt)
+        barChart = view.findViewById(R.id.barchart_chart)
 
         //test
         btnTest = view.findViewById(R.id.btn_test_chart)
@@ -708,17 +715,17 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
                     "selected: " + i + ", id: " + repository.getIdAccount(accList.get(i)),
                     Toast.LENGTH_SHORT
                 ).show()
+                var currency = repository.getAccount(repository.getIdAccount(accList.get(i)).toString())!!.accountCurrency
+                val currencyDatabase = CurrencyDatabase(context)
+                val currentList = currencyDatabase.currenciesList
+                for (j in currentList.indices) {
+                    if (currentList.get(j).getName().equals(currency)) {
+                        currencySymbol = currentList.get(j).symbol
+                        break
+                    }
+                }
                 descpriptionDialog.dismiss()
             }
-        var currency = repository.getAccount(selectedIdAccount.toString())!!.accountCurrency
-        val currencyDatabase = CurrencyDatabase(context)
-        val currentList = currencyDatabase.currenciesList
-        for (j in currentList.indices) {
-            if (currentList.get(j).getName().equals(currency)) {
-                currencySymbol = currentList.get(j).symbol
-                break
-            }
-        }
     }
 
     fun loadRangeTransactions(transactionType: String): ArrayList<Transaction>? {
@@ -733,6 +740,7 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     fun loadChartAndLegend() {
         loadPieChart()
         loadCategorieLegend()
+        loadDetailsLegen()
 
         // test dates
         testDate()
@@ -771,16 +779,6 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         }
         categorySums.sortByDescending { it.third }
 
-        // test
-//        for ((categoryId, sum, percentage) in categorySums) {
-//            Toast.makeText(
-//                context,
-//                "Category ID: $categoryId, Sum: $sum, Percentage: $percentage%",
-//                Toast.LENGTH_SHORT
-//            ).show()
-//        }
-
-
         // data for nested RecyclerView
         var categorySubcategorySums = arrayListOf<Quad<String, String, Double, Double>>()
         val categoryMap = transactions?.groupBy { it.transactionIdCategory }
@@ -803,17 +801,6 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
             }
 
         }
-
-//        categorySubcategorySums.sortByDescending { it.third } // Sortowanie względem sumy transakcji
-//
-//        val sortedCategorySubcategorySums = categorySubcategorySums.groupBy { it.second }
-//            .mapValues { (_, list) -> list.sortedByDescending { it.fourth } } // Sortowanie względem udziału procentowego
-//
-//        for ((categoryId, subcategoryList) in sortedCategorySubcategorySums) {
-//            for (quad in subcategoryList) {
-//                Log.d("print:", "Subcategory ID: ${quad.first}, Category ID: ${quad.second}, Sum: ${quad.third}, Percentage: ${quad.fourth}%")
-//            }
-//        }
 
         val sortedCategorySubcategorySums = categorySubcategorySums.sortedWith(
             compareByDescending<Quad<String, String, Double, Double>> { it.third }
@@ -860,6 +847,37 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 //        }
     }
 
+    // load Bar Chart
+    private fun loadBarChart() {
+        barEntriesList()
+        val barDataSet = BarDataSet(barEntriesList, "DataSet")
+        var barData = BarData(barDataSet)
+        barChart?.data = barData
+        pieChart?.invalidate()
+    }
+
+    // prepare data for bar Chart
+    private fun barEntriesList() {
+//    private fun dataBarChart() {
+        barEntriesList = ArrayList()
+        var barData: ArrayList<BarEntry>? = null
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = startDate!!
+        val numDays = calendar.getActualMaximum(Calendar.DATE)
+        val transactionList = loadRangeTransactions("expense")
+        for (i in 1..numDays) {
+            var sumDay = 0.0
+            calendar.set(Calendar.DAY_OF_MONTH, i)
+            for (transaction in transactionList!!) {
+                val calendarDay = Calendar.getInstance()
+                calendarDay.timeInMillis = transaction.transactionDateInMilis
+                if (calendarDay.get(Calendar.DAY_OF_YEAR) == calendar.get(Calendar.DAY_OF_YEAR))
+                    sumDay += transaction.transactionValue.toDouble()
+            }
+            barEntriesList?.add(BarEntry(i.toFloat(), sumDay.toFloat()))
+        }
+    }
+
 
     // test fun
     private fun testDate() {
@@ -872,6 +890,9 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         cal2.timeInMillis = endDate!!
         testStartDate1?.setText(sdf.format(cal.time))
         testEndDate1?.setText(sdf.format(cal2.time))
+
+        loadBarChart()
+
     }
 
 }

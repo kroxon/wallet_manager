@@ -8,7 +8,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="152dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -302,6 +304,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Date1"
+                        app:layout_constraintTop_toTopOf="parent"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="parent" />
 
@@ -321,15 +324,15 @@
                         android:text="Date1"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/testDateEnd2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
                         android:text="Date2"
                         android:textSize="14sp"
-                        android:layout_marginLeft="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/testDateStart2" />
 
@@ -350,8 +353,7 @@
                         android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:padding="8dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/pieChartFirst">
+                        app:layout_constraintStart_toStartOf="parent">
 
                         <org.eazegraph.lib.charts.PieChart
                             android:id="@+id/pieChart"
@@ -418,6 +420,12 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barchart_chart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout12" />
+
             <Button
                 android:id="@+id/btn_test_chart"
                 android:layout_width="wrap_content"
@@ -427,7 +435,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout12" />
+                app:layout_constraintTop_toBottomOf="@+id/barchart_chart" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
