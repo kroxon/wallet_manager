@@ -91,9 +91,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="48dp"
                 android:background="@drawable/dialog_background"
                 android:paddingBottom="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chartFrAccountTxt">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -293,63 +294,18 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
-
-                    <TextView
-                        android:id="@+id/testDateStart1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Date1"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:textSize="14sp"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-                    <TextView
-                        android:id="@+id/testDateEnd1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Date2"
-                        android:textSize="14sp"
-                        app:layout_constraintStart_toStartOf="@+id/testDateStart1"
-                        app:layout_constraintTop_toBottomOf="@+id/testDateStart1" />
-
-                    <TextView
-                        android:id="@+id/testDateStart2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Date1"
-                        android:textSize="14sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/testDateEnd2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:text="Date2"
-                        android:textSize="14sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/testDateStart2" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
-                    android:id="@+id/linearLayout2"
+                    android:id="@+id/pieChart_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
                     android:orientation="horizontal"
                     android:weightSum="2"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="0dp"
-                        android:layout_height="200dp"
+                        android:layout_height="wrap_content"
                         android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:padding="8dp"
@@ -358,7 +314,9 @@
                         <org.eazegraph.lib.charts.PieChart
                             android:id="@+id/pieChart"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_height="200dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:layout_editor_absoluteX="8dp" />
 
                         <TextView
                             android:id="@+id/chart_center_sum_txt"
@@ -389,12 +347,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout12"
+                android:id="@+id/detailLegend_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="8dp"
-                android:minHeight="200dp"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout10"
                 tools:layout_editor_absoluteX="8dp">
 
@@ -424,7 +381,7 @@
                 android:id="@+id/barchart_chart"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout12" />
+                app:layout_constraintTop_toBottomOf="@+id/detailLegend_layout" />
 
             <Button
                 android:id="@+id/btn_test_chart"

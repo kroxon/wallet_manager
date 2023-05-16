@@ -20,11 +20,17 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
 import step.wallet.maganger.R
@@ -78,13 +84,12 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     private var centerSum: TextView? = null
     private var barChart: BarChart? = null
     lateinit var barEntriesList: ArrayList<BarEntry>
+    lateinit var xAxisLabels: ArrayList<String>
+    private var pieChartLayout: LinearLayout? = null
+    private var detailLegenLayout: ConstraintLayout? = null
 
     // testing
     private var btnTest: Button? = null
-    private var testStartDate1: TextView? = null
-    private var testStartDate2: TextView? = null
-    private var testEndDate1: TextView? = null
-    private var testEndDate2: TextView? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,7 +121,8 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 
 
         val sdf = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
-        periodMonthLabel!!.setText(sdf.format(Calendar.getInstance().time)
+        periodMonthLabel!!.setText(
+            sdf.format(Calendar.getInstance().time)
 //            resources.getStringArray(R.array.months)
 //                .get(monthPosition!!) + " " + Calendar.getInstance()
 //                .get(Calendar.YEAR)
@@ -155,8 +161,8 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
                 cal2.set(Calendar.HOUR_OF_DAY, 23)
                 cal2.set(Calendar.MINUTE, 59)
                 cal2.set(Calendar.SECOND, 59)
-                cal2.add(Calendar.MONTH, + 1)
-                cal2.add(Calendar.DAY_OF_YEAR, - 1)
+                cal2.add(Calendar.MONTH, +1)
+                cal2.add(Calendar.DAY_OF_YEAR, -1)
                 endDate = cal2.timeInMillis
                 periodMonthLabel!!.setOnClickListener(View.OnClickListener {
                     val dialog = DialogFragmentDatePicker()
@@ -274,13 +280,12 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         recyclerViewCategoriesDetal = view.findViewById(R.id.char_detail_RV)
         centerSum = view.findViewById(R.id.chart_center_sum_txt)
         barChart = view.findViewById(R.id.barchart_chart)
+        pieChartLayout = view.findViewById(R.id.pieChart_layout)
+        detailLegenLayout = view.findViewById(R.id.detailLegend_layout)
 
         //test
         btnTest = view.findViewById(R.id.btn_test_chart)
-        testStartDate1 = view.findViewById(R.id.testDateStart1)
-        testStartDate2 = view.findViewById(R.id.testDateStart2)
-        testEndDate1 = view.findViewById(R.id.testDateEnd1)
-        testEndDate2 = view.findViewById(R.id.testDateEnd2)
+
     }
 
     override fun onDateRange(timeStart: Long, timeEnd: Long, monthPosition: Int, year: Int) {
@@ -378,7 +383,7 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
             cal2.timeInMillis = endDate!!
             cal.add(Calendar.MONTH, -1)
             cal2.set(Calendar.DAY_OF_MONTH, 1)
-            cal2.add(Calendar.DAY_OF_YEAR, - 1)
+            cal2.add(Calendar.DAY_OF_YEAR, -1)
             startDate = cal.timeInMillis
             endDate = cal2.timeInMillis
             setVisibilityLabel(periodMonthLabel!!)
@@ -455,8 +460,8 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
             cal2.timeInMillis = endDate!!
             cal.add(Calendar.MONTH, +1)
             cal2.set(Calendar.DAY_OF_MONTH, 1)
-            cal2.add(Calendar.MONTH, + 2)
-            cal2.add(Calendar.DAY_OF_YEAR, - 1)
+            cal2.add(Calendar.MONTH, +2)
+            cal2.add(Calendar.DAY_OF_YEAR, -1)
             startDate = cal.timeInMillis
             endDate = cal2.timeInMillis
             periodMonthLabel!!.setText(dateFormat.format(cal.time))
@@ -715,7 +720,9 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
                     "selected: " + i + ", id: " + repository.getIdAccount(accList.get(i)),
                     Toast.LENGTH_SHORT
                 ).show()
-                var currency = repository.getAccount(repository.getIdAccount(accList.get(i)).toString())!!.accountCurrency
+                var currency = repository.getAccount(
+                    repository.getIdAccount(accList.get(i)).toString()
+                )!!.accountCurrency
                 val currencyDatabase = CurrencyDatabase(context)
                 val currentList = currencyDatabase.currenciesList
                 for (j in currentList.indices) {
@@ -738,12 +745,24 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     }
 
     fun loadChartAndLegend() {
-        loadPieChart()
-        loadCategorieLegend()
-        loadDetailsLegen()
 
-        // test dates
-        testDate()
+        if (loadRangeTransactions("expense")?.size != 0) {
+            pieChartLayout!!.visibility = View.VISIBLE
+            detailLegenLayout!!.visibility = View.VISIBLE
+            barChart!!.visibility = View.VISIBLE
+            loadPieChart()
+            loadCategorieLegend()
+            loadDetailsLegen()
+            if (rbYear?.isChecked == true || rbMonth?.isChecked == true)
+                loadBarChart()
+            else
+                barChart!!.visibility = View.GONE
+        } else {
+            pieChartLayout!!.visibility = View.GONE
+            detailLegenLayout!!.visibility = View.GONE
+            barChart!!.visibility = View.GONE
+        }
+
     }
 
     // detail legen
@@ -836,63 +855,97 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         recyclerViewCategoriesDetal!!.adapter = categoriesDetailRVAdapter
         recyclerViewCategoriesDetal.layoutManager
 
-
-//         test
-//        for (quad in categoryGroupedSums) {
-//            Toast.makeText(
-//                context,
-//                "Subcategory ID: ${quad.first}, Category ID: ${quad.second}, Sum: ${quad.third}, Percentage: ${quad.fourth}%",
-//                Toast.LENGTH_SHORT
-//            ).show()
-//        }
     }
 
     // load Bar Chart
     private fun loadBarChart() {
         barEntriesList()
-        val barDataSet = BarDataSet(barEntriesList, "DataSet")
-        var barData = BarData(barDataSet)
-        barChart?.data = barData
-        pieChart?.invalidate()
+
+        val set = BarDataSet(barEntriesList, "BarDataSet")
+        set.valueTextSize = 12f
+//        set.setValueFormatter(object : ValueFormatter() {
+//            override fun getFormattedValue(value: Float): String {
+//                val format: DecimalFormat = DecimalFormat("0.#")
+//                return if (value > 0) {
+//                    return format.format(value) + " " + currencySymbol
+//                } else {
+//                    ""
+//                }
+//            }
+//        })
+        set.setDrawValues(false)
+        set.setGradientColor(Color.parseColor("#1C033838"), Color.parseColor("#054949"))
+
+        barChart?.description?.isEnabled = false
+        barChart?.legend?.isEnabled = false
+        barChart?.data = BarData(set)
+        barChart!!.setDrawGridBackground(false)
+        barChart!!.setDrawBarShadow(false)
+        barChart!!.setDrawBorders(false)
+
+        val xAxis = barChart!!.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.granularity = 1f
+        xAxis.setDrawAxisLine(false)
+        xAxis.setDrawGridLines(false)
+
+        val leftAxis = barChart!!.axisLeft
+        leftAxis.setDrawAxisLine(false)
+
+        val rightAxis = barChart!!.axisRight
+        rightAxis.setDrawAxisLine(false)
+        xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
+        barChart?.invalidate()
+        barChart?.animateY(2500)
+        barChart?.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
+            override fun onValueSelected(e: Entry, h: Highlight) {
+                val y = e.y
+                val format: DecimalFormat = DecimalFormat("0.#")
+                Toast.makeText(context, format.format(y), Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onNothingSelected() {}
+        })
+
     }
 
     // prepare data for bar Chart
     private fun barEntriesList() {
 //    private fun dataBarChart() {
         barEntriesList = ArrayList()
+        xAxisLabels = ArrayList()
         var barData: ArrayList<BarEntry>? = null
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = startDate!!
-        val numDays = calendar.getActualMaximum(Calendar.DATE)
         val transactionList = loadRangeTransactions("expense")
-        for (i in 1..numDays) {
-            var sumDay = 0.0
-            calendar.set(Calendar.DAY_OF_MONTH, i)
-            for (transaction in transactionList!!) {
-                val calendarDay = Calendar.getInstance()
-                calendarDay.timeInMillis = transaction.transactionDateInMilis
-                if (calendarDay.get(Calendar.DAY_OF_YEAR) == calendar.get(Calendar.DAY_OF_YEAR))
-                    sumDay += transaction.transactionValue.toDouble()
+        if (rbMonth?.isChecked == true) {
+            val numDays = calendar.getActualMaximum(Calendar.DATE)
+            for (i in 1..numDays) {
+                var sumDay = 0.0
+                calendar.set(Calendar.DAY_OF_MONTH, i)
+                for (transaction in transactionList!!) {
+                    val calendarDay = Calendar.getInstance()
+                    calendarDay.timeInMillis = transaction.transactionDateInMilis
+                    if (calendarDay.get(Calendar.DAY_OF_YEAR) == calendar.get(Calendar.DAY_OF_YEAR))
+                        sumDay += transaction.transactionValue.toDouble()
+                }
+                barEntriesList?.add(BarEntry(i.toFloat(), sumDay.toFloat()))
+                xAxisLabels?.add(i.toString() + "")
             }
-            barEntriesList?.add(BarEntry(i.toFloat(), sumDay.toFloat()))
+        } else if (rbYear?.isChecked == true) {
+            for (i in 0..11) {
+                var sumDay = 0.0
+                calendar.set(Calendar.MONTH, i)
+                for (transaction in transactionList!!) {
+                    val calendarMonth = Calendar.getInstance()
+                    calendarMonth.timeInMillis = transaction.transactionDateInMilis
+                    if (calendarMonth.get(Calendar.MONTH) == calendar.get(Calendar.MONTH))
+                        sumDay += transaction.transactionValue.toDouble()
+                }
+                barEntriesList?.add(BarEntry(i.toFloat(), sumDay.toFloat()))
+                xAxisLabels?.add(resources.getStringArray(R.array.months).get(i))
+            }
         }
-    }
-
-
-    // test fun
-    private fun testDate() {
-        val sdf = SimpleDateFormat("dd MM yyyy HH:mm:ss")
-        testStartDate2?.setText(testStartDate1?.text.toString())
-        testEndDate2?.setText(testEndDate1?.text.toString())
-        val cal = Calendar.getInstance()
-        val cal2 = Calendar.getInstance()
-        cal.timeInMillis = startDate!!
-        cal2.timeInMillis = endDate!!
-        testStartDate1?.setText(sdf.format(cal.time))
-        testEndDate1?.setText(sdf.format(cal2.time))
-
-        loadBarChart()
-
     }
 
 }
