@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp">
+    android:layout_marginBottom="4dp"
+    android:paddingTop="8dp">
 
     <TextView
         android:id="@+id/pieChart_detail_nested_cat_name"
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/olx_color_1"
         android:text="napoje"
+        android:layout_marginLeft="50dp"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

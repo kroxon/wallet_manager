@@ -114,7 +114,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
     private AlertDialog alertDialogNotes;
 
     private String oldAlgebraSymbol, transactionType;
-    private String writeIdCategory, writeIdSubcategory, writeDate, writeAmount, writeAccount, writeNote1, writeNote2, writePhoto, writeType, writeTransactionId;
+    private String writeIdCategory, writeIdSubcategory, writeDate, writeAmount, writeCurrency, writeAccount, writeNote1, writeNote2, writePhoto, writeType, writeTransactionId;
 
 
     @Override
@@ -178,6 +178,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         Calendar calendarWriting = Calendar.getInstance();
         writeDate = calendarWriting.getTimeInMillis() + "";
         writeAmount = "1000";
+        writeCurrency = "PLN";
         writeAccount = "0";
         writeNote1 = "";
         writeNote2 = "note 2";
@@ -234,6 +235,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         for (int j = 0; j < currentList.size(); j++) {
             if (currentList.get(j).getName().equals(repository.getAccount(writeAccount).getAccountCurrency())) {
                 currencyTv.setText(currentList.get(j).getSymbol());
+                writeCurrency = currentList.get(j).getName();
                 break;
             }
         }
@@ -306,6 +308,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             writeDate = data.getString("date");
             writeAmount = data.getString("value");
             writeAccount = data.getString("account");
+            tvAccount.setText(repository.getAccount(writeAccount).getAccountName());
             writeNote1 = data.getString("note1");
             writeNote2 = data.getString("note2");
             writePhoto = data.getString("photo");
@@ -387,6 +390,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                         for (int j = 0; j < currentList.size(); j++) {
                             if (currentList.get(j).getName().equals(repository.getAccount(writeAccount).getAccountCurrency())) {
                                 currencyTv.setText(currentList.get(j).getSymbol());
+                                writeCurrency = currentList.get(j).getName();
                                 break;
                             }
                         }
@@ -768,7 +772,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 
                         InfoRepository repository = new InfoRepository();
                         if (bundle == null) {
-                            repository.writeTransaction(writeIdCategory, writeIdSubcategory, writeDate, tvInput.getText().toString(), writeAccount, notesTv.getText().toString(), writeNote2, writePhoto, writeType);
+                            repository.writeTransaction(writeIdCategory, writeIdSubcategory, writeDate, tvInput.getText().toString(), writeCurrency, writeAccount, notesTv.getText().toString(), writeNote2, writePhoto, writeType);
                             Toast.makeText(context, getResources().getString(R.string.d_tr_suss_saved), Toast.LENGTH_SHORT).show();
                         }
                         else {

@@ -31,7 +31,7 @@ public class InfoRepository {
         db.close();
     }
 
-    public void writeTransaction(@NonNull String id_category, String id_subcategory, String date, String amount, String id_account,
+    public void writeTransaction(@NonNull String id_category, String id_subcategory, String date, String amount, String currency, String id_account,
                                  String note_1, String note_2, String photo, String type) {
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_TRANSACTION_ID_CAT, id_category);
@@ -39,7 +39,7 @@ public class InfoRepository {
         values.put(DBConstants.COL_TRANSACTION_DATE, date);
         values.put(DBConstants.COL_TRANSACTION_VALUE, amount);
         values.put(DBConstants.COL_TRANSACTION_ID_ACC, id_account);
-        values.put(DBConstants.COL_TRANSACTION_CURRENCY, "PLN");
+        values.put(DBConstants.COL_TRANSACTION_CURRENCY, currency);
         values.put(DBConstants.COL_TRANSACTION_NOTE_1, note_1);
         values.put(DBConstants.COL_TRANSACTION_NOTE_2, note_2);
         values.put(DBConstants.COL_TRANSACTION_PHOTO, photo);

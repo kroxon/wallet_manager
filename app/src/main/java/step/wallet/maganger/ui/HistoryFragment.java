@@ -45,7 +45,7 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
     private ListViewVerticalHistoryAdapter adapter;
     private RecyclerView recyclerViewTransactions;
     private ImageView btnFilter;
-    private Button btnTest;
+
 
     ArrayList<Transaction> transactions;
 
@@ -78,7 +78,6 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
         btnFilter = view.findViewById(R.id.btnHistoryFilter);
-        btnTest = view.findViewById(R.id.btnHistoryTest);
 
         //start test
         recyclerViewTransactions = (RecyclerView) view.findViewById(R.id.historyTransactionList);
@@ -94,13 +93,6 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
                 dialog.setValue(pAmountFrom, pAmountTo, pCurrency, pPeriod, pPeriodFrom, pPeriodTo, pTypeOperation, pAccount);
                 dialog.setTargetFragment(HistoryFragment.this, 1);
                 dialog.show(getFragmentManager(), "DialogFragmentFilterTra");
-            }
-        });
-
-        btnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadTransaciotns();
             }
         });
 
@@ -129,7 +121,7 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
                         // below line is to add our item to array list with a position.
 
                         repository.writeTransaction(deleteTransaction[0].getTransactionIdCategory(), deleteTransaction[0].getTransactionIdSubcategory(), String.valueOf(deleteTransaction[0].getTransactionDateInMilis()),
-                                deleteTransaction[0].getTransactionValue(), deleteTransaction[0].getIdAccount(), deleteTransaction[0].getTransactionNote1(),
+                                deleteTransaction[0].getTransactionValue(), deleteTransaction[0].getIdAccount(), deleteTransaction[0].getCurency(), deleteTransaction[0].getTransactionNote1(),
                                 deleteTransaction[0].getTransactionNote2(), deleteTransaction[0].getTransactionPhoto(), deleteTransaction[0].getTransactionType());
                         transactions.add(position, deleteTransaction[0]);
 

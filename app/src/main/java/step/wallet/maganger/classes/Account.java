@@ -1,5 +1,11 @@
 package step.wallet.maganger.classes;
 
+import android.content.Context;
+
+import java.util.ArrayList;
+
+import step.wallet.maganger.data.CurrencyDatabase;
+
 public class Account {
     private String accountId;
     private String accountName;
@@ -72,5 +78,17 @@ public class Account {
 
     public String getAccountBalance() {
         return accountBalance;
+    }
+
+    public String getAccountCurrencySymbol(Context context) {
+        CurrencyDatabase currencyDatabase = new CurrencyDatabase(context);
+        ArrayList<CurrencyStrings> currentList = currencyDatabase.getCurrenciesList();
+        String symbol = "";
+        for (int j = 0; j < currentList.size(); j++) {
+            if (currentList.get(j).getName().equals(getAccountCurrency())) {
+                 symbol = currentList.get(j).getSymbol();
+            }
+        }
+        return symbol;
     }
 }

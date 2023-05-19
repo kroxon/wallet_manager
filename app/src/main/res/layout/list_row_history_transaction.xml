@@ -9,107 +9,105 @@
 
     <TextView
         android:id="@+id/historyDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:gravity="left|bottom"
         android:text="20.01.2023"
+        android:paddingBottom="8dp"
         android:textColor="@color/olx_color_1"
+        android:textSize="14sp"
         android:visibility="visible"
-        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"></TextView>
 
-    </TextView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cVHistoryTransaction"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="20dp"
-        android:layout_marginHorizontal="5dp"
-        android:paddingTop="5dp"
-        app:cardCornerRadius="8dp"
-        app:cardUseCompatPadding="true"
         app:layout_constraintTop_toBottomOf="@+id/historyDate">
 
+        <ImageView
+            android:id="@+id/historyIcon"
+            android:layout_width="30dp"
+            android:layout_marginBottom="20dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_home"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorApp1">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout5"
-            android:padding="10dp"
-            android:layout_width="match_parent"
+        </ImageView>
+
+
+        <TextView
+            android:id="@+id/historyCategoryName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ellipsize="end"
+            android:maxWidth="200dp"
+            android:maxLength="30"
+            android:maxLines="1"
+            android:text="Chemiargrggreger hgfhgf hgfh  hfg hgfgrhr  tr  gerhtrhg"
+            android:textColor="@color/darkgrey"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/historyIcon"
+            app:layout_constraintTop_toTopOf="@+id/historyIcon"
+            ></TextView>
 
-            >
-
-            <ImageView
-                android:id="@+id/historyIcon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_home"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/colorApp1">
-
-            </ImageView>
-
-
-            <TextView
-                android:id="@+id/historyCategoryName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:ellipsize="end"
-                android:maxWidth="200dp"
-                android:maxLength="30"
-                android:maxLines="2"
-                android:text="Chemiargrggreger hgfhgf hgfh  hfg hgfgrhr  tr  gerhtrhg"
-                android:textSize="18sp"
-                android:textStyle="normal"
-                android:textColor="@color/darkgrey"
-                app:layout_constraintStart_toEndOf="@+id/historyIcon"
-                app:layout_constraintTop_toTopOf="@+id/historyIcon"
-                app:layout_constraintVertical_bias="0.0"></TextView>
+        <TextView
+            android:id="@+id/historySubcategoryName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="subcategory"
+            android:textSize="12sp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintStart_toStartOf="@+id/historyCategoryName"
+            app:layout_constraintTop_toBottomOf="@+id/historyCategoryName" />
 
 
-            <TextView
-                android:id="@+id/historyValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
-                android:text="18,78"
-                android:textColor="@color/olx_color_1"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/historyCurrency"
-                app:layout_constraintTop_toTopOf="@+id/historyCategoryName" />
+        <TextView
+            android:id="@+id/historyValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:text="18,78"
+            android:textColor="@color/olx_color_1"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/historyCurrency"
+            app:layout_constraintTop_toTopOf="@+id/historyCategoryName" />
 
 
-            <TextView
-                android:id="@+id/historyCurrency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="zł"
-                android:textColor="@color/olx_color_1"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@+id/historyValue"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/historyValue" />
+        <TextView
+            android:id="@+id/historyCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="zł"
+            android:textColor="@color/olx_color_1"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/historyValue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/historyValue" />
 
-            <!--            <LinearLayout-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="0.5dp"-->
-            <!--                android:background="@color/olx_color_1"-->
-            <!--                android:layout_marginTop="10dp"-->
-            <!--                android:layout_marginLeft="50dp"-->
-            <!--                android:layout_marginRight="10dp"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@+id/historyCategoryName" />-->
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="0.5dp"-->
+        <!--                android:background="@color/olx_color_1"-->
+        <!--                android:layout_marginTop="10dp"-->
+        <!--                android:layout_marginLeft="50dp"-->
+        <!--                android:layout_marginRight="10dp"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                app:layout_constraintTop_toBottomOf="@+id/historyCategoryName" />-->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

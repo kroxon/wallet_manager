@@ -3,6 +3,7 @@ package step.wallet.maganger.ui
 import android.app.DatePickerDialog
 import android.app.DialogFragment
 import android.content.Context
+import android.icu.text.IDNA.Info
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,6 +16,7 @@ import android.widget.*
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import step.wallet.maganger.R
+import step.wallet.maganger.classes.Account
 import step.wallet.maganger.data.InfoRepository
 import java.text.SimpleDateFormat
 import java.util.*
@@ -99,8 +101,8 @@ class DialogFragmentFilterHistoryTransaction : DialogFragment() {
 
         var repo = InfoRepository()
         for (i in repo.readAccounts()!!) {
-            if (!currenciesList.contains(i.accountCurrency))
-                (currenciesList as ArrayList<String>).add(i.accountCurrency)
+            if (!currenciesList.contains(i.getAccountCurrencySymbol(context)))
+                (currenciesList as ArrayList<String>).add(i.getAccountCurrencySymbol(context))
         }
 
         findViews(view)
@@ -160,7 +162,13 @@ class DialogFragmentFilterHistoryTransaction : DialogFragment() {
                 position: Int,
                 id: Long
             ) {
-                currency = currenciesList.get(position)
+                val repository = InfoRepository()
+                for (i in repository.readAccounts()!!) {
+                    if (i.getAccountCurrencySymbol(context).equals(currenciesList.get(position)))
+                        currency = i.accountCurrency
+                }
+                if (position == 0)
+                    currency = "All"
             }
         }
 
@@ -356,7 +364,7 @@ class DialogFragmentFilterHistoryTransaction : DialogFragment() {
                 val accountsList: List<String>
                 var repo = InfoRepository()
                 if (position != 0)
-                    account = repo.getIdAccount(repo.allAccountsNames?.get(position)).toString()
+                    account = repo.getIdAccount(repo.allAccountsNames?.get(position - 1)).toString()
                 else
                     account = position.toString()
             }
@@ -451,7 +459,13 @@ class DialogFragmentFilterHistoryTransaction : DialogFragment() {
         if (amountTo != 99999999.99)
             etAmountTo?.setText(amountFrom.toString())
 
-        aCTvCurrency?.setSelection(currenciesList.indexOf(currency))
+        var currencySymbol = ""
+        val repo = InfoRepository()
+        for (i in repo.readAccounts()) {
+            if (i.accountCurrency.equals(currency))
+                currencySymbol = i.getAccountCurrencySymbol(context)
+        }
+        aCTvCurrency?.setSelection(currenciesList.indexOf(currencySymbol))
 
         aCTvPeriod?.setSelection(period.toInt())
 
