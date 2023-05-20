@@ -96,6 +96,10 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         void sendSelected();
     }
 
+    public void setInputListener(OnInputSelected listener) {
+        this.mOnInputSelected = listener;
+    }
+
 
 
 
@@ -848,16 +852,16 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         writeIdSubcategory = repository.getIdSubcategory(repository.getSubcategories(writeIdCategory).get(0), writeIdCategory);
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            mOnInputSelected
-                    = (OnInputSelected) getTargetFragment();
-        } catch (ClassCastException e) {
-            Log.e(TAG, "onAttach: ClassCastException: "
-                    + e.getMessage());
-        }
-    }
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        try {
+//            mOnInputSelected
+//                    = (OnInputSelected) getActivity();
+//        } catch (ClassCastException e) {
+//            Log.e(TAG, "onAttach: ClassCastException: "
+//                    + e.getMessage());
+//        }
+//    }
 
 }

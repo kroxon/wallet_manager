@@ -65,7 +65,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class MainActivity extends GoogleDriveActivity {
+public class MainActivity extends GoogleDriveActivity implements DialogFragmentTransaction.OnInputSelected{
 
     private static final String LOG_TAG = "MainActivity";
 
@@ -426,6 +426,7 @@ public class MainActivity extends GoogleDriveActivity {
         final Dialog bsDialog = new Dialog(this);
         bsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         bsDialog.setContentView(R.layout.bottom_sheet_layout);
+        bsDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         LinearLayout incomelayout = bsDialog.findViewById(R.id.bSheetIncome);
         LinearLayout expenseLayout = bsDialog.findViewById(R.id.bSheetExpense);
@@ -435,6 +436,9 @@ public class MainActivity extends GoogleDriveActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "Income", Toast.LENGTH_SHORT).show();
+                DialogFragmentTransaction dialog = new DialogFragmentTransaction();
+                dialog.setInputListener(MainActivity.this);
+                dialog.show(getFragmentManager(), "DialogFragmentTransaction");
                 bsDialog.dismiss();
             }
         });
@@ -455,11 +459,17 @@ public class MainActivity extends GoogleDriveActivity {
         });
 
         bsDialog.show();
-        bsDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         bsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         bsDialog.getWindow().getAttributes().windowAnimations = R.style.DialogSheetAnimation;
         bsDialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 
 
+    @Override
+    public void sendSelected() {
+        View startView = bottomNavigationView.findViewById(bottomNavigationView.getSelectedItemId());
+        View view = bottomNavigationView.findViewById(R.id.bnmHistory);
+        view.performClick();
+        startView.performClick();
+    }
 }

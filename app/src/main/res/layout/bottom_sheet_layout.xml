@@ -2,9 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
     android:background="@drawable/sheet_bckg_add"
     android:gravity="center_horizontal"
     android:orientation="vertical"
@@ -16,12 +15,13 @@
         android:layout_height="50dp"
         android:clickable="true"
         android:src="@drawable/ic_arrow_down"
-        app:tint="@color/colorApp1"></ImageView>
+        app:tint="@color/olx_color_1"></ImageView>
 
     <LinearLayout
         android:id="@+id/bSheetIncome"
-        android:layout_width="200dp"
+        android:layout_width="3000dp"
         android:layout_height="60dp"
+        android:clickable="true"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -29,14 +29,14 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_money_income"
-            app:tint="@color/colorApp1"></ImageView>
+            app:tint="@color/olx_color_1"></ImageView>
 
         <TextView
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:text="income"
-            android:textColor="@color/colorApp1"
+            android:textColor="@color/olx_color_1"
             android:textSize="18sp"
             android:textStyle="bold"></TextView>
 
@@ -44,7 +44,7 @@
 
     <LinearLayout
         android:id="@+id/bSheetExpense"
-        android:layout_width="200dp"
+        android:layout_width="3000dp"
         android:layout_height="60dp"
         android:clickable="true"
         android:gravity="center"
@@ -54,14 +54,14 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_money_expense"
-            app:tint="@color/colorApp1"></ImageView>
+            app:tint="@color/olx_color_1"></ImageView>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:text="expense"
-            android:textColor="@color/colorApp1"
+            android:textColor="@color/olx_color_1"
             android:textSize="18sp"
             android:textStyle="bold"></TextView>
 

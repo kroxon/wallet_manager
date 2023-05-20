@@ -21,6 +21,7 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
@@ -65,6 +66,8 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     private var rbMonth: RadioButton? = null
     private var rbYear: RadioButton? = null
     private var rbCustom: RadioButton? = null
+
+    private var scrollView: NestedScrollView? = null
 
     // for filter transaction
     private var startDate: Long? = null
@@ -254,6 +257,8 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         }
 
 
+        scrollView?.isNestedScrollingEnabled = false
+
         // testing
         btnTest!!.setOnClickListener {
             loadDetailsLegen()
@@ -282,6 +287,7 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         barChart = view.findViewById(R.id.barchart_chart)
         pieChartLayout = view.findViewById(R.id.pieChart_layout)
         detailLegenLayout = view.findViewById(R.id.detailLegend_layout)
+        scrollView = view.findViewById(R.id.chart_scrollView);
 
         //test
         btnTest = view.findViewById(R.id.btn_test_chart)

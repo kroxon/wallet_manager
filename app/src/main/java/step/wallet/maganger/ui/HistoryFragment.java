@@ -191,6 +191,7 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         data.putString("note1", sendTransaction.getTransactionNote1());
         data.putString("type", sendTransaction.getTransactionType());
         data.putString("ID_transaction", sendTransaction.getTransactionId());
+        dialog.setInputListener(HistoryFragment.this);
         dialog.setArguments(data);
         dialog.show(getFragmentManager(), "DialogFragmentTransaction");
 
@@ -214,6 +215,7 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
     @Override
     public void sendSelected() {
         loadTransaciotns();
+        Toast.makeText(getContext(), "Added new!", Toast.LENGTH_SHORT).show();
     }
 
     public interface OnFragmentInteractionListener {
@@ -233,6 +235,7 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
             ArrayList<CurrencyStrings> currentList = currencyDatabase.getCurrenciesList();
             adapter = new ListViewVerticalHistoryAdapter(getActivity(), transactions, currentList);
             adapter.setClickListener(this);
+            adapter.notifyDataSetChanged();
             recyclerViewTransactions.setAdapter(adapter);
         }
     }

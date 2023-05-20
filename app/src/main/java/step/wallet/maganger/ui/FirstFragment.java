@@ -57,6 +57,7 @@ public class FirstFragment extends Fragment implements DialogFragmentTransaction
                 // display selected transaction
                 DialogFragmentTransaction dialog = new DialogFragmentTransaction();
                 dialog.setTargetFragment(FirstFragment.this, 1);
+                dialog.setInputListener(FirstFragment.this);
                 dialog.show(getFragmentManager(), "DialogFragmentTransaction");
             }
         });

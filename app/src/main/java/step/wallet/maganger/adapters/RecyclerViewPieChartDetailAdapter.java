@@ -113,6 +113,16 @@ public class RecyclerViewPieChartDetailAdapter extends RecyclerView.Adapter<Recy
         return categorySums.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {

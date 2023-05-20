@@ -22,7 +22,7 @@ import step.wallet.maganger.data.CurrencyDatabase;
 import step.wallet.maganger.data.InfoRepository;
 
 
-public class ThirdFragment extends Fragment implements DialogFragmentAccount.OnSaveListener, DialogFragmentAccount.OnInputListener, DialogFragmentTransaction.OnInputSelected{
+public class ThirdFragment extends Fragment implements DialogFragmentAccount.OnSaveListener, DialogFragmentAccount.OnInputListener{
 
     public ThirdFragment() {
         // Required empty public constructor
@@ -120,8 +120,4 @@ public class ThirdFragment extends Fragment implements DialogFragmentAccount.OnS
         loadRVAccounts();
     }
 
-    @Override
-    public void sendSelected() {
-        loadRVAccounts();
-    }
 }
