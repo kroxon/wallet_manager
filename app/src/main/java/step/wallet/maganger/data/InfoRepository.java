@@ -207,6 +207,17 @@ public class InfoRepository {
         db.close();
     }
 
+    public void removeAccountByName(String nameAccount) {
+        String[] whereArgs = new String[]{String.valueOf(nameAccount)};
+        db.delete(DBConstants.TABLE_ACCOUNT, DBConstants.COL_ACC_NAME + "=?", whereArgs);
+        ArrayList<Transaction> transactions = readTransactions();
+        for (int i = 0; i < transactions.size(); i++) {
+            if (transactions.get(i).getIdAccount().equals(getIdAccount(nameAccount))) {
+                removeTransaction(getIdAccount(nameAccount));
+            }
+        }
+    }
+
     public void removeSubategoryByName(String nameSubcategory, String idCategory) {
         String[] whereArgs = new String[]{String.valueOf(nameSubcategory), String.valueOf(idCategory)};
         db.delete(DBConstants.TABLE_SUBCATEGORY, DBConstants.COL_SUBCAT_NAME + "=? AND " + DBConstants.COL_SUBCAT_SUPERCAT_ID + "=?", whereArgs);

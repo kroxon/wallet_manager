@@ -1,8 +1,10 @@
 package step.wallet.maganger.adapters;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -135,6 +137,9 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
 //                                            .setCancelable(false)
 //                                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 //                                                public void onClick(DialogInterface dialog, int id) {
+//                                                    InfoRepository repository = new InfoRepository();
+//                                                    repository.removeAccountByName(accountsList.get(getBindingAdapterPosition()).getAccountName());
+//                                                    dialog.cancel();
 //                                                }
 //                                            })
 //                                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -197,6 +202,9 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
         dDeleteYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                InfoRepository repository = new InfoRepository();
+                repository.removeAccountByName(name);
+//
                 descpriptionDialog.dismiss();
             }
         });

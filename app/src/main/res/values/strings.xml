@@ -292,7 +292,6 @@
     <string-array name="accounts_names">
         <item>basic account</item>
         <item>second account</item>
-        <item>credit account</item>
         <item>savings account</item>
         <item>foreign currency account</item>
         <item>piggy bank</item>
