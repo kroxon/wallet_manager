@@ -5,83 +5,128 @@
     android:id="@+id/layoutDialogContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorApp1">
+    android:background="@color/olx_color_4">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         android:background="@drawable/transaction_bckgr_1"
-        android:paddingBottom="14dp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="8dp">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/trExpenses"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/d_tr_expense"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textAllCaps="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/trIncome"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></TextView>
+        <!--        <TextView-->
+        <!--            android:id="@+id/trExpenses"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="8dp"-->
+        <!--            android:text="@string/d_tr_expense"-->
+        <!--            android:textColor="@color/white"-->
+        <!--            android:textSize="20sp"-->
+        <!--            android:textAllCaps="true"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toStartOf="@+id/trIncome"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"></TextView>-->
+
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/trExpensesUnderline"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="2dp"-->
+        <!--            android:layout_alignLeft="@+id/trExpenses"-->
+        <!--            android:layout_alignRight="@+id/trExpenses"-->
+        <!--            android:layout_marginTop="2dp"-->
+        <!--            android:background="@color/white"-->
+        <!--            android:clickable="true"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            app:layout_constraintEnd_toEndOf="@+id/trExpenses"-->
+        <!--            app:layout_constraintStart_toStartOf="@+id/trExpenses"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/trExpenses"></LinearLayout>-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/trIncome"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="8dp"-->
+        <!--            android:text="@string/d_tr_income"-->
+        <!--            android:textColor="#C1BFBF"-->
+        <!--            android:textSize="20sp"-->
+        <!--            android:textAllCaps="true"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/trExpenses"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"></TextView>-->
+
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/trIncomeUnderline"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="2dp"-->
+        <!--            android:layout_alignLeft="@+id/trIncome"-->
+        <!--            android:layout_alignRight="@+id/trIncome"-->
+        <!--            android:layout_marginTop="2dp"-->
+        <!--            android:background="@color/white"-->
+        <!--            android:clickable="true"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            android:visibility="invisible"-->
+        <!--            app:layout_constraintEnd_toEndOf="@+id/trIncome"-->
+        <!--            app:layout_constraintStart_toStartOf="@+id/trIncome"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/trIncome"></LinearLayout>-->
 
         <LinearLayout
-            android:id="@+id/trExpensesUnderline"
-            android:layout_width="0dp"
-            android:layout_height="2dp"
-            android:layout_alignLeft="@+id/trExpenses"
-            android:layout_alignRight="@+id/trExpenses"
-            android:layout_marginTop="2dp"
-            android:background="@color/white"
-            android:clickable="true"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/trExpenses"
-            app:layout_constraintStart_toStartOf="@+id/trExpenses"
-            app:layout_constraintTop_toBottomOf="@+id/trExpenses"></LinearLayout>
-
-
-        <TextView
-            android:id="@+id/trIncome"
-            android:layout_width="wrap_content"
+            android:id="@+id/cat_tyes_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/d_tr_income"
-            android:textColor="#C1BFBF"
-            android:textSize="20sp"
-            android:textAllCaps="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/trExpenses"
-            app:layout_constraintTop_toTopOf="parent"></TextView>
-
-        <LinearLayout
-            android:id="@+id/trIncomeUnderline"
-            android:layout_width="0dp"
-            android:layout_height="2dp"
-            android:layout_alignLeft="@+id/trIncome"
-            android:layout_alignRight="@+id/trIncome"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="2dp"
-            android:background="@color/white"
-            android:clickable="true"
             android:orientation="horizontal"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="@+id/trIncome"
-            app:layout_constraintStart_toStartOf="@+id/trIncome"
-            app:layout_constraintTop_toBottomOf="@+id/trIncome"></LinearLayout>
+            android:padding="4dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/trExpenses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:layout_marginHorizontal="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/dialog_background"
+                android:backgroundTint="@color/olx_color_1"
+                android:clickable="true"
+                android:elevation="6dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/d_tr_expense"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/trIncome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:layout_marginHorizontal="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/dialog_background"
+                android:clickable="true"
+                android:elevation="6dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/d_tr_income"
+                android:textColor="@color/olx_color_1"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/trLayoutAccountSelect"
-        android:clickable="true"
         android:layout_width="170dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
+        android:clickable="true"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toStartOf="@+id/trlayoutDatePicker"
@@ -94,16 +139,17 @@
             android:layout_height="wrap_content"
             android:text="@string/d_tr_acc"
             android:textAllCaps="true"
-            android:textColor="@color/colorAppText1"
+            android:textColor="@color/olx_color_1"
             android:textSize="12sp"></TextView>
 
         <TextView
+            android:gravity="center"
             android:id="@+id/accNameTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="podstawowe"
             android:textAllCaps="true"
-            android:textColor="@color/white"
+            android:textColor="@color/olx_color_1"
             android:textSize="18sp"
             android:textStyle="bold"></TextView>
 
@@ -127,7 +173,7 @@
             android:layout_height="wrap_content"
             android:text="@string/d_tr_date"
             android:textAllCaps="true"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/olx_color_1"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -141,7 +187,7 @@
             android:gravity="bottom"
             android:text="2"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/olx_color_1"
             android:textSize="24sp"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -156,7 +202,7 @@
             android:layout_marginBottom="3dp"
             android:text="January 2022"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/olx_color_1"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -175,7 +221,7 @@
         android:lines="1"
         android:maxLength="7"
         android:text="0"
-        android:textColor="@color/white"
+        android:textColor="@color/olx_color_1"
         android:textSize="70sp"
         app:layout_constraintEnd_toEndOf="@+id/constraintLayout4"
         app:layout_constraintHorizontal_bias="0.502"
@@ -188,7 +234,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
         android:text=""
-        android:textColor="@color/white"
+        android:textColor="@color/olx_color_1"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/tvInput"
         app:layout_constraintEnd_toEndOf="@+id/tvInput"
@@ -198,8 +244,8 @@
     <TextView
         android:id="@+id/tvInputAlgebra"
         android:layout_width="wrap_content"
-        android:layout_marginLeft="10dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:text=""
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -213,9 +259,9 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:text="symbol"
-        android:visibility="invisible"
         android:textColor="@color/white"
         android:textSize="12sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/tvInput"
         app:layout_constraintEnd_toStartOf="@+id/tvInput"
         app:layout_constraintTop_toTopOf="@+id/tvInput"></TextView>
@@ -226,7 +272,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:text="zł"
-        android:textColor="@color/white"
+        android:textColor="@color/olx_color_1"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="@+id/tvInput"
         app:layout_constraintStart_toEndOf="@+id/tvInput"
@@ -248,7 +294,7 @@
             android:layout_height="wrap_content"
             android:text="@string/d_tr_category"
             android:textAllCaps="true"
-            android:textColor="@color/colorAppText1"
+            android:textColor="@color/olx_color_1"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -259,10 +305,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="DOM"
             android:maxWidth="200dp"
+            android:text="DOM"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/olx_color_1"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/textView2"
@@ -279,15 +325,15 @@
             app:layout_constraintEnd_toStartOf="@+id/trNameCategory"
             app:layout_constraintStart_toStartOf="@+id/textView2"
             app:layout_constraintTop_toTopOf="@+id/trNameCategory"
-            app:tint="@color/white"></ImageView>
+            app:tint="@color/olx_color_1"></ImageView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/dTransactionSubcatRV"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
             android:layout_gravity="center_horizontal"
-            android:padding="5dp"
             android:foregroundGravity="center"
+            android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/trNameCategory"></androidx.recyclerview.widget.RecyclerView>
@@ -299,15 +345,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:elevation="2dp"
         android:clickable="true"
+        android:elevation="2dp"
         android:gravity="center"
         android:maxLines="3"
         android:minHeight="40dp"
-        android:textColor="@color/white"
+        android:textColor="@color/olx_color_1"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout4">
-    </TextView>
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"></TextView>
 
     <TextView
         android:id="@+id/trNotesTvBackground"
@@ -319,10 +364,9 @@
         android:maxLines="3"
         android:minHeight="40dp"
         android:text="@string/d_tr_notes"
-        android:textColor="@color/white"
+        android:textColor="@color/olx_color_1"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout4">
-    </TextView>
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"></TextView>
 
 
     <LinearLayout
@@ -339,8 +383,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:paddingBottom="10dp"
             android:orientation="vertical"
+            android:paddingBottom="10dp"
             android:weightSum="4">
 
             <TextView
@@ -386,10 +430,10 @@
         <LinearLayout
             android:id="@+id/constraintLayout2"
             android:layout_width="0dp"
-            android:paddingBottom="10dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
+            android:paddingBottom="10dp"
             android:weightSum="4">
 
             <TextView
@@ -431,12 +475,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:paddingBottom="10dp"
             android:id="@+id/constraintLayout7"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
 
             <TextView
                 android:id="@+id/trDigit9"
@@ -481,9 +525,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#D8D8D8"
-            android:paddingBottom="10dp"
+            android:background="@color/olx_color_3"
             android:orientation="vertical"
+            android:paddingBottom="10dp"
             app:layout_constraintEnd_toEndOf="parent">
 
             <TextView
@@ -526,10 +570,10 @@
                 android:id="@+id/trDigitEqual"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:textColor="@color/colorApp1"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="✓"
+                android:textColor="@color/olx_color_2"
                 android:textSize="40sp"></TextView>
 
         </LinearLayout>

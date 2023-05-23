@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -220,8 +221,8 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         tvAccount = (TextView) view.findViewById(R.id.accNameTxt);
         currencyTv = (TextView) view.findViewById(R.id.tvCurrency);
         plusMinusTv = (TextView) view.findViewById(R.id.trPlusMinusTv);
-        expensesUnderline = (LinearLayout) view.findViewById(R.id.trExpensesUnderline);
-        incomeUnderline = (LinearLayout) view.findViewById(R.id.trIncomeUnderline);
+//        expensesUnderline = (LinearLayout) view.findViewById(R.id.trExpensesUnderline);
+//        incomeUnderline = (LinearLayout) view.findViewById(R.id.trIncomeUnderline);
         notesTv = (TextView) view.findViewById(R.id.trNotesTv);
         notesTvBckg = (TextView) view.findViewById(R.id.trNotesTvBackground);
 
@@ -231,8 +232,8 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 
         String accName = repository.getAllAccountsNames().get(0);
         writeAccount = repository.getIdAccount(accName);
-        if (accName.length() > 15)
-            accName = accName.substring(0, 12) + "...";
+//        if (accName.length() > 15)
+//            accName = accName.substring(0, 12) + "...";
         tvAccount.setText(accName);
         CurrencyDatabase currencyDatabase = new CurrencyDatabase(getContext());
         ArrayList<CurrencyStrings> currentList = currencyDatabase.getCurrenciesList();
@@ -408,9 +409,10 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         expensesTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                incomeUnderline.setVisibility(View.INVISIBLE);
-                expensesUnderline.setVisibility(View.VISIBLE);
-                incomeTv.setTextColor(Color.parseColor("#C1BFBF"));
+//                incomeUnderline.setVisibility(View.INVISIBLE);
+//                expensesUnderline.setVisibility(View.VISIBLE);
+                incomeTv.setTextColor(getResources().getColor(R.color.olx_color_1));
+                incomeTv.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
                 conLayTrCatSelct.setVisibility(View.VISIBLE);
                 if (expensesTv.getCurrentTextColor() != getResources().getColor(R.color.white)) {
                     categoryNameSelected.setText(repository.getAllExpenseCategories().get(0));
@@ -420,6 +422,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                     loadSubcatRecycleViewer(getContext(), array);
                 }
                 expensesTv.setTextColor(Color.WHITE);
+                expensesTv.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.olx_color_1)));
                 plusMinusTv.setText("-");
                 writeType = "expense";
                 writeIdCategory = repository.getIdCategory(repository.getAllExpenseCategories().get(0));
@@ -430,9 +433,10 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         incomeTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                expensesUnderline.setVisibility(View.INVISIBLE);
-                incomeUnderline.setVisibility(View.VISIBLE);
-                expensesTv.setTextColor(Color.parseColor("#C1BFBF"));
+//                expensesUnderline.setVisibility(View.INVISIBLE);
+//                incomeUnderline.setVisibility(View.VISIBLE);
+                expensesTv.setTextColor(getResources().getColor(R.color.olx_color_1));
+                expensesTv.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
                 conLayTrCatSelct.setVisibility(View.VISIBLE);
                 if (incomeTv.getCurrentTextColor() != getResources().getColor(R.color.white)) {
                     categoryNameSelected.setText(repository.getAllIncomeCategories().get(0));
@@ -442,6 +446,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                     loadSubcatRecycleViewer(getContext(), array);
                 }
                 incomeTv.setTextColor(Color.WHITE);
+                incomeTv.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.olx_color_1)));
                 plusMinusTv.setText("+");
                 writeType = "income";
                 writeIdCategory = repository.getIdCategory(repository.getAllIncomeCategories().get(0));
@@ -814,8 +819,8 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 
     private void expenseClick(String idCategory) {
         InfoRepository repository = new InfoRepository();
-        incomeUnderline.setVisibility(View.INVISIBLE);
-        expensesUnderline.setVisibility(View.VISIBLE);
+//        incomeUnderline.setVisibility(View.INVISIBLE);
+//        expensesUnderline.setVisibility(View.VISIBLE);
         incomeTv.setTextColor(Color.parseColor("#C1BFBF"));
         conLayTrCatSelct.setVisibility(View.VISIBLE);
         if (expensesTv.getCurrentTextColor() != getResources().getColor(R.color.white)) {
@@ -834,8 +839,8 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 
     private void incomeClick(String idCategory) {
         InfoRepository repository = new InfoRepository();
-        expensesUnderline.setVisibility(View.INVISIBLE);
-        incomeUnderline.setVisibility(View.VISIBLE);
+//        expensesUnderline.setVisibility(View.INVISIBLE);
+//        incomeUnderline.setVisibility(View.VISIBLE);
         expensesTv.setTextColor(Color.parseColor("#C1BFBF"));
         conLayTrCatSelct.setVisibility(View.VISIBLE);
         if (incomeTv.getCurrentTextColor() != getResources().getColor(R.color.white)) {

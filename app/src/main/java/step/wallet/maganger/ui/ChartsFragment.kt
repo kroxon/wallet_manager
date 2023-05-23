@@ -3,6 +3,7 @@ package step.wallet.maganger.ui
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.Fragment
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -21,6 +22,7 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.charts.BarChart
@@ -51,6 +53,8 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 
 
     private var accountTxt: TextView? = null
+    private var expenseTxt: TextView? = null
+    private var incomeTxt: TextView? = null
     private var periodDayLabel: TextView? = null
     private var periodMonthLabel: TextView? = null
     private var periodYearLabel: TextView? = null
@@ -112,7 +116,10 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 
         initItems()
 
-        loadChartAndLegend()
+        if (expenseTxt!!.currentTextColor.equals(resources.getColor(R.color.white)))
+            loadChartAndLegend("expense")
+        else
+            loadChartAndLegend("income")
 
 
         return view
@@ -220,8 +227,10 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
                 periodCustomLabel2!!.setText(dateFormat.format(cal2.time))
                 setVisibilityLabel(periodCustomLabel!!)
             }
-
-            loadChartAndLegend()
+            if (expenseTxt!!.currentTextColor.equals(resources.getColor(R.color.white)))
+                loadChartAndLegend("expense")
+            else
+                loadChartAndLegend("income")
         }
 
         rbDay!!.performClick()
@@ -243,12 +252,18 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 
         periodCustomLabel1!!.setOnClickListener {
             selectCustomDate(periodCustomLabel1!!, "start")
-            loadChartAndLegend()
+            if (expenseTxt!!.currentTextColor.equals(resources.getColor(R.color.white)))
+                loadChartAndLegend("expense")
+            else
+                loadChartAndLegend("income")
         }
 
         periodCustomLabel2!!.setOnClickListener {
             selectCustomDate(periodCustomLabel2!!, "end")
-            loadChartAndLegend()
+            if (expenseTxt!!.currentTextColor.equals(resources.getColor(R.color.white)))
+                loadChartAndLegend("expense")
+            else
+                loadChartAndLegend("income")
         }
 
 
@@ -262,6 +277,14 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         // testing
         btnTest!!.setOnClickListener {
             loadDetailsLegen()
+        }
+
+        expenseTxt!!.setOnClickListener {
+            expenseClick()
+        }
+
+        incomeTxt!!.setOnClickListener {
+            incomeClick()
         }
     }
 
@@ -282,6 +305,8 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         pieChart = view.findViewById(R.id.pieChart)
         recyclerViewCategories = view.findViewById(R.id.categoryLegenRV)
         accountTxt = view.findViewById(R.id.chartFrAccountTxt)
+        expenseTxt = view.findViewById(R.id.expensesChartTxt)
+        incomeTxt = view.findViewById(R.id.incomeChartTxt)
         recyclerViewCategoriesDetal = view.findViewById(R.id.char_detail_RV)
         centerSum = view.findViewById(R.id.chart_center_sum_txt)
         barChart = view.findViewById(R.id.barchart_chart)
@@ -303,7 +328,10 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         )
         this.monthPosition = monthPosition
         this.yearPosition = year
-        loadChartAndLegend()
+        if (expenseTxt!!.currentTextColor.equals(resources.getColor(R.color.white)))
+            loadChartAndLegend("expense")
+        else
+            loadChartAndLegend("income")
     }
 
     private fun setVisibilityLabel(view: View) {
@@ -408,7 +436,10 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
             periodYearLabel!!.setText(dateFormat.format(cal.time))
             setVisibilityLabel(periodYearLabel!!)
         }
-        loadChartAndLegend()
+        if (expenseTxt!!.currentTextColor.equals(resources.getColor(R.color.white)))
+            loadChartAndLegend("expense")
+        else
+            loadChartAndLegend("income")
     }
 
     fun clickRight() {
@@ -487,7 +518,10 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
             periodYearLabel!!.setText(dateFormat.format(cal.time))
             setVisibilityLabel(periodYearLabel!!)
         }
-        loadChartAndLegend()
+        if (expenseTxt!!.currentTextColor.equals(resources.getColor(R.color.white)))
+            loadChartAndLegend("expense")
+        else
+            loadChartAndLegend("income")
     }
 
     fun selectDay() {
@@ -578,7 +612,10 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
                     }
 
                 }
-                loadChartAndLegend()
+                if (expenseTxt!!.currentTextColor.equals(resources.getColor(R.color.white)))
+                    loadChartAndLegend("expense")
+                else
+                    loadChartAndLegend("income")
                 textView!!.setText(dateFormat.format(cal.time))
 //                textView!!.setText(cal.time.toString())
             }
@@ -624,9 +661,9 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 
     }
 
-    fun loadPieChart() {
+    fun loadPieChart(type: String = "expense") {
 
-        val transactionList = loadRangeTransactions("expense")
+        val transactionList = loadRangeTransactions(type)
         val transactionSummary = arrayListOf<Pair<String, Double>>()
 
         for (transaction in transactionList!!) {
@@ -680,10 +717,10 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
 
     }
 
-    fun loadCategorieLegend() {
+    fun loadCategorieLegend(type: String = "expense") {
         val repository = InfoRepository()
 
-        val transactions = loadRangeTransactions("expense")
+        val transactions = loadRangeTransactions(type)
         val uniqueCategories = arrayListOf<String>()
         for (transaction in transactions!!) {
             val category = repository.getCategoryName(transaction.transactionIdCategory)
@@ -719,7 +756,7 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
             AdapterView.OnItemClickListener { adapterView, view, i, l ->
                 var accNameTxt = finalAccList[i]
                 selectedIdAccount = repository.getIdAccount(accNameTxt)?.toInt()
-                if (accNameTxt!!.length > 15) accNameTxt = accNameTxt!!.substring(0, 30) + "..."
+//                if (accNameTxt!!.length > 15) accNameTxt = accNameTxt!!.substring(0, 30) + "..."
                 accountTxt?.setText(accNameTxt)
                 Toast.makeText(
                     context,
@@ -750,17 +787,17 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         )
     }
 
-    fun loadChartAndLegend() {
+    fun loadChartAndLegend(type: String = "expense") {
 
-        if (loadRangeTransactions("expense")?.size != 0) {
+        if (loadRangeTransactions(type)?.size != 0) {
             pieChartLayout!!.visibility = View.VISIBLE
             detailLegenLayout!!.visibility = View.VISIBLE
             barChart!!.visibility = View.VISIBLE
-            loadPieChart()
-            loadCategorieLegend()
-            loadDetailsLegen()
+            loadPieChart(type)
+            loadCategorieLegend(type)
+            loadDetailsLegen(type)
             if (rbYear?.isChecked == true || rbMonth?.isChecked == true)
-                loadBarChart()
+                loadBarChart(type)
             else
                 barChart!!.visibility = View.GONE
         } else {
@@ -772,9 +809,9 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     }
 
     // detail legen
-    fun loadDetailsLegen() {
+    fun loadDetailsLegen(type: String = "expense") {
 
-        val transactions = loadRangeTransactions("expense")
+        val transactions = loadRangeTransactions(type)
 
         // data for RecyclerView
         val categorySums = arrayListOf<Triple<String, Double, Double>>()
@@ -864,8 +901,8 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     }
 
     // load Bar Chart
-    private fun loadBarChart() {
-        barEntriesList()
+    private fun loadBarChart(type: String = "expense") {
+        barEntriesList(type)
 
         val set = BarDataSet(barEntriesList, "BarDataSet")
         set.valueTextSize = 12f
@@ -916,14 +953,14 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     }
 
     // prepare data for bar Chart
-    private fun barEntriesList() {
+    private fun barEntriesList(type: String = "expense") {
 //    private fun dataBarChart() {
         barEntriesList = ArrayList()
         xAxisLabels = ArrayList()
         var barData: ArrayList<BarEntry>? = null
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = startDate!!
-        val transactionList = loadRangeTransactions("expense")
+        val transactionList = loadRangeTransactions(type)
         if (rbMonth?.isChecked == true) {
             val numDays = calendar.getActualMaximum(Calendar.DATE)
             for (i in 1..numDays) {
@@ -954,4 +991,64 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         }
     }
 
+    fun expenseClick() {
+        expenseTxt!!.setTextColor(Color.WHITE)
+        expenseTxt!!.setBackgroundTintList(
+            ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    context!!,
+                    R.color.olx_color_1
+                )
+            )
+        )
+        incomeTxt!!.setTextColor(
+            ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    context!!,
+                    R.color.olx_color_1
+                )
+            )
+        )
+        incomeTxt!!.setBackgroundTintList(
+            ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    context!!,
+                    R.color.white
+                )
+            )
+        )
+        loadChartAndLegend("expense")
+    }
+
+    fun incomeClick() {
+        expenseTxt!!.setTextColor(
+            ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    context!!,
+                    R.color.olx_color_1
+                )
+            )
+        )
+        expenseTxt!!.setBackgroundTintList(
+            ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    context!!,
+                    R.color.white
+                )
+            )
+        )
+        incomeTxt!!.setTextColor(Color.WHITE)
+        incomeTxt!!.setBackgroundTintList(
+            ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    context!!,
+                    R.color.olx_color_1
+                )
+            )
+        )
+        loadChartAndLegend("income")
+    }
+
 }
+
+

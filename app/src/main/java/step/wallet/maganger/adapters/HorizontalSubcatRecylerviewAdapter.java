@@ -39,14 +39,14 @@ public class HorizontalSubcatRecylerviewAdapter extends RecyclerView.Adapter<Hor
     public void onBindViewHolder(@NonNull HorizontalViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.myText.setText(items[position]);
         holder.myText.setBackgroundResource(R.drawable.subcat_recycleview_background);
-        holder.myText.setTextColor(Color.WHITE);
+        holder.myText.setTextColor(ContextCompat.getColor(mInflater.getContext(), R.color.olx_color_1));
 
         int a = position;
         int b = position;
 
         if (selectedItem == position) {
             holder.myText.setBackgroundResource(R.drawable.subcat_recycleview_selected_background);
-            holder.myText.setTextColor(Color.parseColor("#1E88E5"));
+            holder.myText.setTextColor(ContextCompat.getColor(mInflater.getContext(), R.color.olx_color_1));
         }
 //        else
 //            holder.mLinearLayout.setBackgroundColor(R.drawable.subcat_recycleview_background);

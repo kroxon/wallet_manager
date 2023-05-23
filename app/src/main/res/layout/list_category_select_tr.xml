@@ -17,7 +17,7 @@
         android:layout_marginTop="2dp"
         android:gravity="center"
         android:maxLines="2"
-        android:textColor="@color/colorApp1"
+        android:textColor="@color/olx_color_1"
         android:text="Chemia domowa chemia"
         android:textSize="12sp"
         android:textStyle="bold"
@@ -34,7 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trCatIconAdapterTxt"
-        app:tint="@color/colorApp1"></ImageView>
+        app:tint="@color/olx_color_1"></ImageView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

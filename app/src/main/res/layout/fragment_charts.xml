@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/olx_color_3"
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
@@ -31,70 +32,62 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></TextView>
 
-            <TextView
-                android:id="@+id/trExpensesChart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/d_tr_expense"
-                android:textAllCaps="true"
-                android:textColor="@color/olx_color_1"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/trIncomeChart"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chartFrAccountTxt"></TextView>
-
             <LinearLayout
-                android:id="@+id/trExpensesChartUnderline"
-                android:layout_width="0dp"
-                android:layout_height="2dp"
-                android:layout_alignLeft="@+id/trExpensesChart"
-                android:layout_alignRight="@+id/trExpensesChart"
-                android:layout_marginTop="2dp"
-                android:background="@color/olx_color_1"
-                android:clickable="true"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="@+id/trExpensesChart"
-                app:layout_constraintStart_toStartOf="@+id/trExpensesChart"
-                app:layout_constraintTop_toBottomOf="@+id/trExpensesChart"></LinearLayout>
-
-            <TextView
-                android:id="@+id/trIncomeChart"
-                android:layout_width="wrap_content"
+                android:id="@+id/cats_chart_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/d_tr_income"
-                android:textAllCaps="true"
-                android:textColor="#595959"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/trExpensesChart"
-                app:layout_constraintTop_toTopOf="@+id/trExpensesChart"></TextView>
-
-            <LinearLayout
-                android:id="@+id/trIncomeChartUnderline"
-                android:layout_width="0dp"
-                android:layout_height="2dp"
-                android:layout_alignLeft="@+id/trIncomeChart"
-                android:layout_alignRight="@+id/trIncomeChart"
-                android:layout_marginTop="2dp"
-                android:background="#FF595959"
-                android:clickable="true"
+                android:layout_marginHorizontal="20dp"
                 android:orientation="horizontal"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="@+id/trIncomeChart"
-                app:layout_constraintStart_toStartOf="@+id/trIncomeChart"
-                app:layout_constraintTop_toBottomOf="@+id/trIncomeChart"></LinearLayout>
+                android:padding="4dp"
+                app:layout_constraintTop_toBottomOf="@+id/chartFrAccountTxt">
+
+                <TextView
+                    android:id="@+id/expensesChartTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:layout_marginHorizontal="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/dialog_background"
+                    android:backgroundTint="@color/olx_color_1"
+                    android:clickable="true"
+                    android:elevation="6dp"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="@string/d_tr_expense"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/incomeChartTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:layout_marginHorizontal="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/dialog_background"
+                    android:clickable="true"
+                    android:elevation="6dp"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="@string/d_tr_income"
+                    android:textColor="@color/olx_color_1"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="48dp"
                 android:background="@drawable/dialog_background"
                 android:paddingBottom="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chartFrAccountTxt">
+                app:layout_constraintTop_toBottomOf="@+id/cats_chart_layout"
+                >
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout8"
