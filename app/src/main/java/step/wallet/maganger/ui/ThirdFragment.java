@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import step.wallet.maganger.R;
 import step.wallet.maganger.adapters.RecyclerViewAccountsAdapter;
@@ -119,5 +120,7 @@ public class ThirdFragment extends Fragment implements DialogFragmentAccount.OnS
     public void sendInput(String input) {
         loadRVAccounts();
     }
+
+
 
 }

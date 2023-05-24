@@ -629,6 +629,9 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     }
 
     fun initStartAndEndDate() {
+
+        defaultDataBase()
+
         var cal = Calendar.getInstance()
         cal.set(Calendar.DAY_OF_MONTH, 1)
         cal.set(Calendar.HOUR_OF_DAY, 0)
@@ -1047,6 +1050,31 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
             )
         )
         loadChartAndLegend("income")
+    }
+
+    fun defaultDataBase() {
+        val categories = resources.getStringArray(R.array.categories)
+        val subcategories: MutableList<Array<String>> = java.util.ArrayList()
+        subcategories.add(resources.getStringArray(R.array.subcategories1))
+        subcategories.add(resources.getStringArray(R.array.subcategories2))
+        subcategories.add(resources.getStringArray(R.array.subcategories3))
+        subcategories.add(resources.getStringArray(R.array.subcategories4))
+        subcategories.add(resources.getStringArray(R.array.subcategories5))
+        subcategories.add(resources.getStringArray(R.array.subcategories6))
+        subcategories.add(resources.getStringArray(R.array.subcategories7))
+        subcategories.add(resources.getStringArray(R.array.subcategories8))
+        subcategories.add(resources.getStringArray(R.array.subcategories9))
+        subcategories.add(resources.getStringArray(R.array.subcategories10))
+        subcategories.add(resources.getStringArray(R.array.subcategories11))
+        subcategories.add(resources.getStringArray(R.array.subcategories12))
+        subcategories.add(resources.getStringArray(R.array.subcategories13))
+        subcategories.add(resources.getStringArray(R.array.subcategories14))
+        subcategories.add(resources.getStringArray(R.array.subcategories15))
+        val icons = resources.getStringArray(R.array.category_icon)
+        val colors = resources.getStringArray(R.array.category_colors)
+        val accountssList = resources.getStringArray(R.array.accounts_names)
+        val repository = InfoRepository()
+        repository.addDefaultDatabase(categories, subcategories, icons, colors, accountssList)
     }
 
 }

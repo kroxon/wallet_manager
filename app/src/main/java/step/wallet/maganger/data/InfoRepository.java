@@ -208,14 +208,10 @@ public class InfoRepository {
     }
 
     public void removeAccountByName(String nameAccount) {
+        String[] whereArgsDelete = new String[]{String.valueOf(getIdAccount(nameAccount))};
+        db.delete(DBConstants.TABLE_TRANSACTION, DBConstants.COL_TRANSACTION_ID_ACC + "=?", whereArgsDelete);
         String[] whereArgs = new String[]{String.valueOf(nameAccount)};
         db.delete(DBConstants.TABLE_ACCOUNT, DBConstants.COL_ACC_NAME + "=?", whereArgs);
-        ArrayList<Transaction> transactions = readTransactions();
-        for (int i = 0; i < transactions.size(); i++) {
-            if (transactions.get(i).getIdAccount().equals(getIdAccount(nameAccount))) {
-                removeTransaction(getIdAccount(nameAccount));
-            }
-        }
     }
 
     public void removeSubategoryByName(String nameSubcategory, String idCategory) {
@@ -370,12 +366,12 @@ public class InfoRepository {
         Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
 
         if (cursor.moveToFirst()) {
-                    account.setAccountId(cursor.getString(0));
-                    account.setAccountName(cursor.getString(1));
-                    account.setAccoutType(cursor.getString(2));
-                    account.setAccountCurrency(cursor.getString(3));
-                    account.setAccountDescription(cursor.getString(4));
-                    account.setAccountBalance(cursor.getString(5));
+            account.setAccountId(cursor.getString(0));
+            account.setAccountName(cursor.getString(1));
+            account.setAccoutType(cursor.getString(2));
+            account.setAccountCurrency(cursor.getString(3));
+            account.setAccountDescription(cursor.getString(4));
+            account.setAccountBalance(cursor.getString(5));
         }
         cursor.close();
 //        db.close();
@@ -577,21 +573,21 @@ public class InfoRepository {
         // looping through all rows and search for ID Accout
         if (cursor.moveToFirst()) {
             do {
-                    Transaction transaction = new Transaction();
-                    transaction.setTransactionId(cursor.getString(0));
-                    transaction.setTransactionValue(cursor.getString(1));
-                    transaction.setTransactionIdCategory(cursor.getString(2));
-                    transaction.setTransactionIdSubcategory(cursor.getString(3));
-                    transaction.setTransactionDate(cursor.getString(4));
-                    transaction.setIdAccount(cursor.getString(5));
+                Transaction transaction = new Transaction();
+                transaction.setTransactionId(cursor.getString(0));
+                transaction.setTransactionValue(cursor.getString(1));
+                transaction.setTransactionIdCategory(cursor.getString(2));
+                transaction.setTransactionIdSubcategory(cursor.getString(3));
+                transaction.setTransactionDate(cursor.getString(4));
+                transaction.setIdAccount(cursor.getString(5));
 //                    transaction.setTransactionCurency(cursor.getString(6));
-                    transaction.setTransactionNote1(cursor.getString(7));
-                    transaction.setTransactionNote2(cursor.getString(8));
-                    transaction.setTransactionPhoto(cursor.getString(9));
-                    transaction.setTransactionType(cursor.getString(10));
-                    Account account = getAccount(transaction.getIdAccount());
-                    transaction.setTransactionCurency(account.getAccountCurrency());
-                    transactionsList.add(transaction);
+                transaction.setTransactionNote1(cursor.getString(7));
+                transaction.setTransactionNote2(cursor.getString(8));
+                transaction.setTransactionPhoto(cursor.getString(9));
+                transaction.setTransactionType(cursor.getString(10));
+                Account account = getAccount(transaction.getIdAccount());
+                transaction.setTransactionCurency(account.getAccountCurrency());
+                transactionsList.add(transaction);
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -646,26 +642,26 @@ public class InfoRepository {
         }
 
 
-            Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and search for ID Accout
         if (cursor.moveToFirst()) {
             do {
-                    Transaction transaction = new Transaction();
-                    transaction.setTransactionId(cursor.getString(0));
-                    transaction.setTransactionValue(cursor.getString(1));
-                    transaction.setTransactionIdCategory(cursor.getString(2));
-                    transaction.setTransactionIdSubcategory(cursor.getString(3));
-                    transaction.setTransactionDate(cursor.getString(4));
-                    transaction.setIdAccount(cursor.getString(5));
+                Transaction transaction = new Transaction();
+                transaction.setTransactionId(cursor.getString(0));
+                transaction.setTransactionValue(cursor.getString(1));
+                transaction.setTransactionIdCategory(cursor.getString(2));
+                transaction.setTransactionIdSubcategory(cursor.getString(3));
+                transaction.setTransactionDate(cursor.getString(4));
+                transaction.setIdAccount(cursor.getString(5));
 //                    transaction.setTransactionCurency(cursor.getString(6));
-                    transaction.setTransactionNote1(cursor.getString(7));
-                    transaction.setTransactionNote2(cursor.getString(8));
-                    transaction.setTransactionPhoto(cursor.getString(9));
-                    transaction.setTransactionType(cursor.getString(10));
-                    Account account = getAccount(transaction.getIdAccount());
-                    transaction.setTransactionCurency(account.getAccountCurrency());
-                    transactionsList.add(transaction);
+                transaction.setTransactionNote1(cursor.getString(7));
+                transaction.setTransactionNote2(cursor.getString(8));
+                transaction.setTransactionPhoto(cursor.getString(9));
+                transaction.setTransactionType(cursor.getString(10));
+                Account account = getAccount(transaction.getIdAccount());
+                transaction.setTransactionCurency(account.getAccountCurrency());
+                transactionsList.add(transaction);
             } while (cursor.moveToNext());
         }
         cursor.close();
