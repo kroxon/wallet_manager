@@ -819,8 +819,6 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 
     private void expenseClick(String idCategory) {
         InfoRepository repository = new InfoRepository();
-//        incomeUnderline.setVisibility(View.INVISIBLE);
-//        expensesUnderline.setVisibility(View.VISIBLE);
         incomeTv.setTextColor(getResources().getColor(R.color.olx_color_1));
         incomeTv.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
         conLayTrCatSelct.setVisibility(View.VISIBLE);
@@ -841,8 +839,6 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 
     private void incomeClick(String idCategory) {
         InfoRepository repository = new InfoRepository();
-//        expensesUnderline.setVisibility(View.INVISIBLE);
-//        incomeUnderline.setVisibility(View.VISIBLE);
         expensesTv.setTextColor(getResources().getColor(R.color.olx_color_1));
         expensesTv.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
         conLayTrCatSelct.setVisibility(View.VISIBLE);
