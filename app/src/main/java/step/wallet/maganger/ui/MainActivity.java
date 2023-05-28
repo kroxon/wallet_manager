@@ -432,10 +432,9 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
         LinearLayout expenseLayout = bsDialog.findViewById(R.id.bSheetExpense);
         ImageView closeBSheet = bsDialog.findViewById(R.id.closeBottmSheet);
 
-        incomelayout.setOnClickListener(new View.OnClickListener() {
+        expenseLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Income", Toast.LENGTH_SHORT).show();
                 DialogFragmentTransaction dialog = new DialogFragmentTransaction();
                 dialog.setInputListener(MainActivity.this);
                 dialog.show(getFragmentManager(), "DialogFragmentTransaction");
@@ -443,10 +442,16 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
             }
         });
 
-        expenseLayout.setOnClickListener(new View.OnClickListener() {
+        incomelayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Expense", Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("type", "new income transaction");
+                DialogFragmentTransaction dialog = new DialogFragmentTransaction();
+                dialog.setInputListener(MainActivity.this);
+                dialog.setArguments(bundle);
+                dialog.getFragmentManager();
+                dialog.show(getFragmentManager(), "DialogFragmentTransaction");
                 bsDialog.dismiss();
             }
         });

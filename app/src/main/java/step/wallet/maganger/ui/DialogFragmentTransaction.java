@@ -102,8 +102,6 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
     }
 
 
-
-
     //widgets
     private ImageView lResultImg, iconCategorySelected;
     private TextView lResultTv, categoryNameSelected, plusMinusTv, currencyTv;
@@ -285,11 +283,12 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 
 // data from History Fragment
         Bundle data = getArguments();
-        if (data != null) {
+        if (data != null && !data.getString("type").equals("new income transaction")) {
             if (data.getString("type").equals("expense"))
                 expenseClick(data.getString("category"));
             else
                 incomeClick(data.getString("category"));
+
 
             categoryNameSelected.setText(repository.getCategoryName(data.getString("category")));
             iconCategorySelected.setImageResource(repository.getIdCategoryIcon(repository.getCategoryName(data.getString("category"))));
@@ -319,8 +318,8 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             writePhoto = data.getString("photo");
             writeType = data.getString("type");
             writeTransactionId = data.getString("ID_transaction");
-
         }
+
 
         conLayTrDatePick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -453,6 +452,10 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                 writeIdSubcategory = repository.getIdSubcategory(repository.getSubcategories(writeIdCategory).get(0), writeIdCategory);
             }
         });
+
+        if (data != null && data.getString("type").equals("new income transaction")) {
+            incomeTv.performClick();
+        }
 
         bDigitDivide.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -783,8 +786,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                         if (bundle == null) {
                             repository.writeTransaction(writeIdCategory, writeIdSubcategory, writeDate, tvInput.getText().toString(), writeCurrency, writeAccount, notesTv.getText().toString(), writeNote2, writePhoto, writeType);
                             Toast.makeText(context, getResources().getString(R.string.d_tr_suss_saved), Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                        } else {
                             repository.updateTransaction(writeTransactionId, writeIdCategory, writeIdSubcategory, writeDate, tvInput.getText().toString(), writeAccount, notesTv.getText().toString(), writeNote2, writePhoto, writeType);
                             Toast.makeText(context, getResources().getString(R.string.d_tr_suss_updated), Toast.LENGTH_SHORT).show();
                             getDialog().dismiss();

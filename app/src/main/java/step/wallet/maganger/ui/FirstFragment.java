@@ -18,15 +18,6 @@ public class FirstFragment extends Fragment implements DialogFragmentTransaction
 
     private static final String TAG = "FirstFragment";
 
-
-
-    public Button bexample4;
-    public Button bexample3;
-    public Button bexampleDialog;
-
-
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,52 +30,10 @@ public class FirstFragment extends Fragment implements DialogFragmentTransaction
 
         View view = inflater.inflate(R.layout.fragment_first, container, false);
 
-        bexample4 = (Button) view.findViewById(R.id.example_button_4);
-        bexample4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getActivity(), Category_Activity.class);
-//                Intent i = new Intent(getActivity(), Categories_Activity.class);
-                startActivity(i);
-            }
-        });
-
-        bexampleDialog = view.findViewById(R.id.btnDialog);
-        bexampleDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                // display selected transaction
-                DialogFragmentTransaction dialog = new DialogFragmentTransaction();
-                dialog.setTargetFragment(FirstFragment.this, 1);
-                dialog.setInputListener(FirstFragment.this);
-                dialog.show(getFragmentManager(), "DialogFragmentTransaction");
-            }
-        });
-
-        bexample3 = view.findViewById(R.id.example_button_3);
-        bexample3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "Test", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        findViews(view);
-
-        initItems();
-
         return view;
-
     }
 
-    private void initItems() {
 
-    }
-
-    private void findViews(View view) {
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {

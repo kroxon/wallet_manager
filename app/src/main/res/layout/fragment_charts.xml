@@ -358,6 +358,8 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:background="@drawable/dialog_background"
+                    android:padding="4dp"
                     android:id="@+id/char_detail_RV"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -369,6 +371,8 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.github.mikephil.charting.charts.BarChart
+                android:background="@drawable/dialog_background"
+                android:padding="4dp"
                 android:id="@+id/barchart_chart"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
