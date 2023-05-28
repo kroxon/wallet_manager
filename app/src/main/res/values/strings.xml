@@ -135,10 +135,20 @@
     <string name="updated">Updated!</string>
     <string name="delete_ask_1">Do you want to delete account</string>
     <string name="delete_ask_2">and all transactions associated with it?</string>
+    <string name="delete_account">Delete account</string>
+    <string name="categories">Categories</string>
+    <string name="expense_categories">Expenses</string>
+    <string name="income_categorie">Incomes</string>
 
 
     // charts
     <string name="details">Details</string>
+
+
+    // actvity Category
+    <string name="delete_ask_1_1">Do you want to delete category: </string>
+    <string name="add_subactegory">Add subcategory </string>
+    <string name="new_subcategory">new subcategory </string>
 
 
 

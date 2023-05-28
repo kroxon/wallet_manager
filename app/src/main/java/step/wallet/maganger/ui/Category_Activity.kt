@@ -9,7 +9,19 @@ import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.ListView
+import android.widget.PopupMenu
+import android.widget.Spinner
+import android.widget.TextView
+import android.widget.Toast
+import android.widget.Toolbar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -26,12 +38,21 @@ import step.wallet.maganger.R
 import step.wallet.maganger.adapters.ListViewVerticalAdapter
 import step.wallet.maganger.adapters.RecyclerViewCategoryActivityAdapter
 import step.wallet.maganger.data.InfoRepository
-import java.util.*
+import java.util.Arrays
 
 
 class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
     ListViewVerticalAdapter.OnShareClickedListener, DialogFragmentIconSelect.OnInputListener,
     RecyclerViewCategoryActivityAdapter.OnCategoryListener {
+
+    // interface to reload categories in third fragment
+    interface OnDataChangeListener {
+        fun stateChanged()
+    }
+    private var mListener: OnDataChangeListener? = null
+    fun setListener(listener: OnDataChangeListener) {
+        mListener = listener
+    }
 
     // new view of Activity
     var context: Context? = this
@@ -73,6 +94,7 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     var bUpdate: Button? = null
     var imgEdit: ImageView? = null
     var imgAddSubcat: ImageView? = null
+    var addSubcategorytxt: TextView? = null
     var imgCategoryIcon: ImageView? = null
     var imgAddnewCategory: ImageView? = null
     var imgMenuOption: ImageView? = null
@@ -103,6 +125,7 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         imgAddnewCategory = findViewById(R.id.acToolbarAdd)
         etNewSubcat = findViewById(R.id.acEtNewSubcat)
         imgAddSubcat = findViewById(R.id.acImgAddSubcat)
+        addSubcategorytxt = findViewById(R.id.ac_add_subcategory_txt)
         spinner = findViewById(R.id.spinner_sample)
         spinnerSubCat = findViewById(R.id.spinner_subCategoriers)
         loadSpinnerData()
@@ -227,7 +250,8 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                             .show()
 
                         val builder = AlertDialog.Builder(this)
-                        builder.setMessage("Are you sure you want to delete \"" + selectegCategory + "\" ?")
+                        builder.setMessage(context!!.getString(R.string.delete_ask_1_1) + " \n\"" + selectegCategory + "\"\n"
+                                + context!!.getString(R.string.delete_ask_2) + "?")
                             .setCancelable(false)
                             .setPositiveButton(
                                 "Yes",
@@ -257,9 +281,9 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
                     }
 
-                    R.id.ac_mo_merge ->
-                        Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
-                            .show()
+//                    R.id.ac_mo_merge ->
+//                        Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
+//                            .show()
                 }
                 true
             })
@@ -733,7 +757,8 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                 when (item.itemId) {
                     R.id.ac_mo_delete -> {
                         val builder = AlertDialog.Builder(this)
-                        builder.setMessage("Are you sure you want to delete \"" + txtCategoryName!!.text.toString() + "\" ?")
+                        builder.setMessage(context!!.getString(R.string.delete_ask_1_1) + " \n\"" + txtCategoryName!!.text.toString() + "\"\n"
+                                + context!!.getString(R.string.delete_ask_2) + "?")
                             .setCancelable(false)
                             .setPositiveButton(
                                 "Yes",
@@ -761,44 +786,44 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                         val alert = builder.create()
                         alert.show()
                     }
-                    R.id.ac_mo_merge ->
-                        Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
-                            .show()
-                    R.id.ac_mo_archive -> {
-                        val builder = AlertDialog.Builder(this)
-                        builder.setMessage("Are you sure you want to archive \"" + txtCategoryName!!.text.toString() + "\" ?")
-                            .setCancelable(false)
-                            .setPositiveButton(
-                                "Yes",
-                                DialogInterface.OnClickListener { dialog, id ->
-                                    dialog.cancel()
-                                    val repository = InfoRepository()
-                                    mainCatInfoLayout!!.visibility = View.GONE
-                                    subcatListLayout!!.visibility = View.GONE
-                                    if (repository.allExpenseCategories!!.contains(txtCategoryName!!.text.toString())) {
-                                        repository.setCategoryArchived(txtCategoryName!!.text.toString())
-                                        loadRVExpenseCategories()
-                                        Toast.makeText(
-                                            this,
-                                            "Expense category \"" + txtCategoryName!!.text.toString() + "\" has been archived!",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    } else {
-                                        repository.setCategoryArchived(txtCategoryName!!.text.toString())
-                                        loadRVIncomeCategories()
-                                        Toast.makeText(
-                                            this,
-                                            "Income category \"" + txtCategoryName!!.text.toString() + "\" has been archived!",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                })
-                            .setNegativeButton(
-                                "No",
-                                DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
-                        val alert = builder.create()
-                        alert.show()
-                    }
+//                    R.id.ac_mo_merge ->
+//                        Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
+//                            .show()
+//                    R.id.ac_mo_archive -> {
+//                        val builder = AlertDialog.Builder(this)
+//                        builder.setMessage("Are you sure you want to archive \"" + txtCategoryName!!.text.toString() + "\" ?")
+//                            .setCancelable(false)
+//                            .setPositiveButton(
+//                                "Yes",
+//                                DialogInterface.OnClickListener { dialog, id ->
+//                                    dialog.cancel()
+//                                    val repository = InfoRepository()
+//                                    mainCatInfoLayout!!.visibility = View.GONE
+//                                    subcatListLayout!!.visibility = View.GONE
+//                                    if (repository.allExpenseCategories!!.contains(txtCategoryName!!.text.toString())) {
+//                                        repository.setCategoryArchived(txtCategoryName!!.text.toString())
+//                                        loadRVExpenseCategories()
+//                                        Toast.makeText(
+//                                            this,
+//                                            "Expense category \"" + txtCategoryName!!.text.toString() + "\" has been archived!",
+//                                            Toast.LENGTH_SHORT
+//                                        ).show()
+//                                    } else {
+//                                        repository.setCategoryArchived(txtCategoryName!!.text.toString())
+//                                        loadRVIncomeCategories()
+//                                        Toast.makeText(
+//                                            this,
+//                                            "Income category \"" + txtCategoryName!!.text.toString() + "\" has been archived!",
+//                                            Toast.LENGTH_SHORT
+//                                        ).show()
+//                                    }
+//                                })
+//                            .setNegativeButton(
+//                                "No",
+//                                DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
+//                        val alert = builder.create()
+//                        alert.show()
+//                    }
                 }
                 true
             })
@@ -825,10 +850,13 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             etSubcategoryName?.setText("")
             btnAddSubcategoryClear?.visibility = View.VISIBLE
             btnAddSubcategory?.visibility = View.GONE
+            addSubcategorytxt?.visibility = View.GONE
         }
+
         btnAddSubcategoryClear!!.setOnClickListener {
             etLayoutSubcategoryName?.visibility = View.INVISIBLE
             btnAddSubcategory?.visibility = View.VISIBLE
+            addSubcategorytxt?.visibility = View.VISIBLE
             btnAddSubcategoryClear?.visibility = View.GONE
             val imm: InputMethodManager =
                 getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager

@@ -16,6 +16,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -79,7 +80,7 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
                 break;
             }
         }
-        holder.myDescriptonTxt.setText(accountsList.get(position).getAccountDescription());
+//        holder.myDescriptonTxt.setText(accountsList.get(position).getAccountDescription());
 
     }
 
@@ -93,27 +94,30 @@ public class RecyclerViewAccountsAdapter extends RecyclerView.Adapter<RecyclerVi
     // stores and recycles views as they are scrolled off screen
 //    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView myImage;
+//        ImageView myImage;
         TextView myNameTxt;
         TextView myBalanceTxt;
         TextView myCurrencyTxt;
-        TextView myDescriptonTxt;
+
+        ConstraintLayout myLayout;
+//        TextView myDescriptonTxt;
         int position = getLayoutPosition();
 
         ViewHolder(View itemView, OnItemClickListener listner) {
             super(itemView);
-            myImage = itemView.findViewById(R.id.accountOption);
+//            myImage = itemView.findViewById(R.id.accountOption);
             myNameTxt = itemView.findViewById(R.id.accountNameTxt);
             myBalanceTxt = itemView.findViewById(R.id.accountBalanceTxt);
             myCurrencyTxt = itemView.findViewById(R.id.accountCurrencyTxt);
-            myDescriptonTxt = itemView.findViewById(R.id.accountDescriptionTxt);
+            myLayout = itemView.findViewById(R.id.idAccountContiner);
+//            myDescriptonTxt = itemView.findViewById(R.id.accountDescriptionTxt);
 //            itemView.setOnClickListener(this);
 
-            myImage.setOnClickListener(new View.OnClickListener() {
+            myLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //creating a popup menu
-                    PopupMenu popup = new PopupMenu(context, myImage);
+                    PopupMenu popup = new PopupMenu(context, myLayout);
                     //inflating menu from xml resource
                     popup.inflate(R.menu.menu_account);
                     //adding click listener

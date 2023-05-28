@@ -35,6 +35,13 @@ public class RecyclerViewCategoryActivityAdapter extends RecyclerView.Adapter<Re
         this.mOnCategoryListener = onCategoryListener;
     }
 
+    public RecyclerViewCategoryActivityAdapter(Context context, List<String> data) {
+        this.mInflater = LayoutInflater.from(context);
+        this.mData = data;
+        this.context = context;
+    }
+
+
     @Override
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -62,7 +69,7 @@ public class RecyclerViewCategoryActivityAdapter extends RecyclerView.Adapter<Re
 
     @Override
     public int getItemCount() {
-        if (mData.size() < 10)
+        if (mData.size() < 10 && mOnCategoryListener != null)
             return mData.size() + 1;
         else
             return mData.size();
@@ -84,7 +91,8 @@ public class RecyclerViewCategoryActivityAdapter extends RecyclerView.Adapter<Re
             myLinearLayoutIconBckg = itemView.findViewById(R.id.ac_categroies_rv_bckg);
             this.onCategoryListener = onCategoryListener;
 
-            itemView.setOnClickListener(this);
+            if (mOnCategoryListener != null)
+                itemView.setOnClickListener(this);
         }
 
         @Override

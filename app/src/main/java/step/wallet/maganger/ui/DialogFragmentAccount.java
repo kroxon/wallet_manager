@@ -55,6 +55,8 @@ public class DialogFragmentAccount extends DialogFragment {
     private ArrayList<String> currencyNames;
     private LinearLayout descLayout;
     private LinearLayout balanceLayout;
+
+    private LinearLayout deleteLayout;
     private Bundle data;
 
     private OnSaveListener saveListener;
@@ -259,7 +261,6 @@ public class DialogFragmentAccount extends DialogFragment {
             }
         });
 
-
     }
 
     private void findViews(View view) {
@@ -273,6 +274,7 @@ public class DialogFragmentAccount extends DialogFragment {
         descLayout = view.findViewById(R.id.dAccDescLayout);
         balanceLayout = view.findViewById(R.id.dAccBalanceLayout);
         accNameEt = view.findViewById(R.id.accountNameEt);
+        deleteLayout = view.findViewById(R.id.layout_deleteAccount);
     }
 
     private void addAccount() {
@@ -319,6 +321,13 @@ public class DialogFragmentAccount extends DialogFragment {
         String curSymbol = currencyDb.getCurrenciesSymbolList().get(indexCurency);
         currencyTxt.setText(curSymbol);
         selectCurrencyTxt.setText(bundle.getString("currency") + " " + curSymbol);
+        deleteLayout.setVisibility(View.VISIBLE);
+        deleteLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displayDeleteDialog(bundle.getString("name"));
+            }
+        });
     }
 
 //    @Override
@@ -348,5 +357,44 @@ public class DialogFragmentAccount extends DialogFragment {
     public interface OnSaveListener {
         void onSaveClick(String s);
     }
+
+    private void displayDeleteDialog(String name) {
+        Dialog descpriptionDialog = new Dialog(getContext());
+        descpriptionDialog.setContentView(R.layout.dialog_acc_dialog_delete);
+//        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
+//        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.40);
+//        descpriptionDialog.getWindow().setLayout(width, height);
+        descpriptionDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        descpriptionDialog.show();
+
+        TextView dDeleteTitle = descpriptionDialog.findViewById(R.id.dAccDeletTitle);
+        TextView dDeleteNo = descpriptionDialog.findViewById(R.id.dAccDeletDNo);
+        TextView dDeleteYes = descpriptionDialog.findViewById(R.id.dAccDeletDYes);
+        String deleteString1 = getContext().getString(R.string.delete_ask_1);
+        String deleteString2 = getContext().getString(R.string.delete_ask_2);
+
+        dDeleteTitle.setText(deleteString1 + " \"" + name + "\" " + deleteString2);
+
+
+        dDeleteNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                descpriptionDialog.dismiss();
+            }
+        });
+
+        dDeleteYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InfoRepository repository = new InfoRepository();
+                repository.removeAccountByName(name);
+//
+                descpriptionDialog.dismiss();
+                onInputListener.sendInput("test");
+                getDialog().dismiss();
+            }
+        });
+    }
+
 
 }

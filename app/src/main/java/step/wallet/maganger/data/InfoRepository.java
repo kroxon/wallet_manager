@@ -59,7 +59,9 @@ public class InfoRepository {
         String idCategory = getIdCategory(nameCategory);
         int idCat = Integer.parseInt(idCategory);
         String[] whereArgs = new String[]{String.valueOf(nameCategory)};
+        String[] whereArgs2 = new String[]{String.valueOf(idCategory)};
         removeSubategory(idCategory);
+        db.delete(DBConstants.TABLE_TRANSACTION, DBConstants.COL_TRANSACTION_ID_CAT + "=?", whereArgs2);
         db.delete(DBConstants.TABLE_CATEGORY, DBConstants.COL_CAT_NAME + "=?", whereArgs);
 
 //        // reducing the number "id category" to match the correct one

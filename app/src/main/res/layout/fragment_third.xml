@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/olx_color_4"
     tools:context=".ui.ThirdFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +30,6 @@
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.526"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView16"></androidx.recyclerview.widget.RecyclerView>
 
@@ -43,6 +43,76 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/olx_color_1"></ImageView>
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/categories"
+            android:textColor="@color/olx_color_1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rVAccounts_facc"></TextView>
+
+        <ImageView
+            android:id="@+id/third_edit_category_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintBottom_toBottomOf="@+id/textView17"
+            app:layout_constraintEnd_toEndOf="@+id/addAccountImg_facc"
+            app:layout_constraintTop_toTopOf="@+id/textView17"
+            app:tint="@color/olx_color_1" />
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/expense_categories"
+            android:textColor="@color/olx_color_1"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView17"></TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:background="@drawable/dialog_background"
+            android:padding="4dp"
+            android:layout_marginTop="8dp"
+            android:id="@+id/third_expenses_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/income_categorie"
+            android:textColor="@color/olx_color_1"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/third_expenses_rv"></TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:background="@drawable/dialog_background"
+            android:padding="4dp"
+            android:layout_marginTop="8dp"
+            android:id="@+id/third_income_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
