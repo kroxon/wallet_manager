@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/olx_color_4"
+    android:background="@color/olx_color_3"
     tools:context=".ui.ThirdFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout

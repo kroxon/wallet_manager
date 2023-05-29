@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/olx_color_3"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/olx_color_3">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/chart_scrollView"
@@ -86,8 +86,7 @@
                 android:background="@drawable/dialog_background"
                 android:paddingBottom="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cats_chart_layout"
-                >
+                app:layout_constraintTop_toBottomOf="@+id/cats_chart_layout">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout8"
@@ -354,16 +353,17 @@
                     android:text="@string/details"
                     android:textColor="@color/olx_color_1"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:background="@drawable/dialog_background"
-                    android:padding="4dp"
                     android:id="@+id/char_detail_RV"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="8dp"
+                    android:background="@drawable/dialog_background"
+                    android:padding="4dp"
+                    android:layout_marginTop="4dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/charts_detail_title_txt" />
 
@@ -371,23 +371,29 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.github.mikephil.charting.charts.BarChart
-                android:background="@drawable/dialog_background"
-                android:padding="4dp"
                 android:id="@+id/barchart_chart"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="250dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="80dp"
+                android:background="@drawable/dialog_background"
+                android:padding="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/detailLegend_layout" />
 
-            <Button
-                android:id="@+id/btn_test_chart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="80dp"
-                android:text="Test"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/barchart_chart" />
+            <!--            <Button-->
+            <!--                android:id="@+id/btn_test_chart"-->
+            <!--                android:clickable="false"-->
+            <!--                android:visibility="invisible"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginBottom="80dp"-->
+            <!--                android:text="Test"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/barchart_chart" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -96,7 +96,6 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     private var detailLegenLayout: ConstraintLayout? = null
 
     // testing
-    private var btnTest: Button? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -275,9 +274,7 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         scrollView?.isNestedScrollingEnabled = false
 
         // testing
-        btnTest!!.setOnClickListener {
-            loadDetailsLegen()
-        }
+
 
         expenseTxt!!.setOnClickListener {
             expenseClick()
@@ -313,9 +310,6 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         pieChartLayout = view.findViewById(R.id.pieChart_layout)
         detailLegenLayout = view.findViewById(R.id.detailLegend_layout)
         scrollView = view.findViewById(R.id.chart_scrollView);
-
-        //test
-        btnTest = view.findViewById(R.id.btn_test_chart)
 
     }
 

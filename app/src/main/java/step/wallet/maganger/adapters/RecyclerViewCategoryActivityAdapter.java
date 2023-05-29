@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -54,8 +55,8 @@ public class RecyclerViewCategoryActivityAdapter extends RecyclerView.Adapter<Re
         if (position != mData.size()) {
             InfoRepository repository = new InfoRepository();
             String categorynameText = mData.get(position);
-            if (categorynameText.length() > 13)
-                categorynameText = categorynameText.substring(0, 10) + "...";
+//            if (categorynameText.length() > 13)
+//                categorynameText = categorynameText.substring(0, 10) + "...";
             holder.myText.setText(categorynameText);
             holder.myImage.setImageResource(repository.getIdCategoryIcon(mData.get(position)));
             holder.myLinearLayoutIconBckg.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(repository.getCategoryColor(mData.get(position)))));
@@ -80,7 +81,7 @@ public class RecyclerViewCategoryActivityAdapter extends RecyclerView.Adapter<Re
         OnCategoryListener onCategoryListener;
         ImageView myImage;
         TextView myText;
-        LinearLayout myLinearLayout;
+        ConstraintLayout myLinearLayout;
         LinearLayout myLinearLayoutIconBckg;
 
         ViewHolder(View itemView, OnCategoryListener onCategoryListener) {
