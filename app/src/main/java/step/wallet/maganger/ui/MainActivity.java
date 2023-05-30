@@ -65,7 +65,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class MainActivity extends GoogleDriveActivity implements DialogFragmentTransaction.OnInputSelected{
+public class MainActivity extends GoogleDriveActivity implements DialogFragmentTransaction.OnInputSelected, FourthFragment.OnSignInClick {
 
     private static final String LOG_TAG = "MainActivity";
 
@@ -104,6 +104,8 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
 //        googleSignIn.setVisibility(View.GONE);
 //        contentViews.setVisibility(View.VISIBLE);
         loadAccountInfo();
+        if (bottomNavigationView.getSelectedItemId() == R.id.bnmProfile)
+            refreshLogin();
     }
 
     @Override
@@ -139,8 +141,6 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
             startGoogleDriveSignIn();
         } else
             loadAccountInfo();
-
-
 
 
 //        googleSignOut.setOnClickListener(new View.OnClickListener() {
@@ -314,9 +314,6 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
                     case 4:
                         fragment = new FourthFragment();
                         break;
-                    case 5:
-                        fragment = new FourthFragment();
-                        break;
                 }
                 loadfragment(fragment);
             }
@@ -476,5 +473,17 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
         View view = bottomNavigationView.findViewById(R.id.bnmHistory);
         view.performClick();
         startView.performClick();
+    }
+
+    @Override
+    public void gsiClick() {
+        startGoogleDriveSignIn();
+    }
+
+    public void refreshLogin() {
+        View view1 = bottomNavigationView.findViewById(R.id.bnmHistory);
+        View view2 = bottomNavigationView.findViewById(R.id.bnmProfile);
+        view1.performClick();
+        view2.performClick();
     }
 }

@@ -1,14 +1,26 @@
 package step.wallet.maganger.ui;
 
+import static android.content.ContentValues.TAG;
+
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +31,29 @@ import step.wallet.maganger.data.InfoRepository;
 
 public class FourthFragment extends Fragment {
 
+    public OnSignInClick signInClick;
+
+    public interface OnSignInClick {
+        void gsiClick();
+    }
+
+    public void setGSIclick(OnSignInClick listener) {
+        this.signInClick = listener;
+    }
+
+
+    private TextView accInitials;
+    private TextView accName;
+    private TextView accMail;
+
+    private com.google.android.gms.common.SignInButton gsiBtn;
+
+    // buttons for testing
     private Button defaultDb;
     private Button btnArchived;
     private Button btnDeleteDb;
 
     public FourthFragment() {
-        // Required empty public constructor
     }
 
 
@@ -39,6 +68,7 @@ public class FourthFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fourth, container, false);
 
+        findViews(view);
         init(view);
 
         defaultDb.setOnClickListener(new View.OnClickListener() {
@@ -92,9 +122,59 @@ public class FourthFragment extends Fragment {
         return view;
     }
 
-    private void init(View view) {
+    private void findViews(View view) {
+        accInitials = view.findViewById(R.id.gsi_account_nitials);
+        accName = view.findViewById(R.id.gsi_account_name);
+        accMail = view.findViewById(R.id.gsi_account_mail);
+        gsiBtn = view.findViewById(R.id.gsiButton);
+
+        // test
         defaultDb = view.findViewById(R.id.btnDefaultDb);
         btnArchived = view.findViewById(R.id.btnRandomArchived);
         btnDeleteDb = view.findViewById(R.id.btnDeleteDb);
+    }
+
+    // testing database
+    private void init(View view) {
+        gsiBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signInClick.gsiClick();
+            }
+        });
+        loadAccountInfo();
+
+    }
+
+    private void loadAccountInfo() {
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity().getApplicationContext());
+        if (acct != null) {
+            String personName = acct.getDisplayName();
+            String personGivenName = acct.getGivenName();
+            String personFamilyName = acct.getFamilyName();
+            String personEmail = acct.getEmail();
+            Uri personPhoto = acct.getPhotoUrl();
+
+            accName.setText(personName);
+            accMail.setText(personEmail);
+            String[] strArray = personName.split(" ");
+            StringBuilder builder = new StringBuilder();
+            if (strArray.length > 0)
+                builder.append(strArray[0], 0, 1);
+            if (strArray.length > 1)
+                builder.append(strArray[1], 0, 1);
+            accInitials.setText(builder.toString());
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            signInClick = (OnSignInClick) getActivity();
+        } catch (ClassCastException e) {
+            Log.e(TAG, "onAttach: ClassCastException: "
+                    + e.getMessage());
+        }
     }
 }
