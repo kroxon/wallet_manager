@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.navigation.NavigationView;
@@ -47,6 +49,7 @@ public class FourthFragment extends Fragment {
     private TextView accMail;
 
     private com.google.android.gms.common.SignInButton gsiBtn;
+    private ConstraintLayout googleAccLayout;
 
     // buttons for testing
     private Button defaultDb;
@@ -127,6 +130,7 @@ public class FourthFragment extends Fragment {
         accName = view.findViewById(R.id.gsi_account_name);
         accMail = view.findViewById(R.id.gsi_account_mail);
         gsiBtn = view.findViewById(R.id.gsiButton);
+        googleAccLayout = view.findViewById(R.id.googleAccountlayout);
 
         // test
         defaultDb = view.findViewById(R.id.btnDefaultDb);

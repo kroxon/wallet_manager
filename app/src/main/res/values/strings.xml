@@ -150,6 +150,15 @@
     <string name="add_subactegory">Add subcategory </string>
     <string name="new_subcategory">new subcategory </string>
 
+    // setting/last fragment
+    <string name="account_setting">Google settings</string>
+    <string name="auto_log_in">Automatically sign in to your Google account on startup</string>
+    <string name="auto_cloud_save">Automatically send transactions to your Google Cloud account</string>
+    <string name="auto_cloud_load">Load data from Google Cloud at application launch</string>
+    <string name="general_setting">General settings</string>
+    <string name="show_balance">Show account balance</string>
+    <string name="delete_database">Delete database</string>
+    <string name="default_database">Default database</string>
 
 
     // default database: categories

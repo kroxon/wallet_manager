@@ -63,7 +63,7 @@
             android:layout_height="50dp"
             android:clickable="true"
             android:padding="10dp"
-            android:src="@drawable/ic_edit"
+            android:src="@drawable/ic_adjust"
             app:layout_constraintBottom_toBottomOf="@+id/textView17"
             app:layout_constraintEnd_toEndOf="@+id/addAccountImg_facc"
             app:layout_constraintTop_toTopOf="@+id/textView17"

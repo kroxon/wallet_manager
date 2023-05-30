@@ -14,7 +14,9 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
+            android:paddingBottom="2dp"
+            android:id="@+id/googleAccountlayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -23,15 +25,15 @@
                 android:id="@+id/account_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/gsi_account_icon"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:src="@drawable/bg_circle" />
 
                 <TextView
@@ -41,30 +43,207 @@
                     android:layout_centerInParent="true"
                     android:text="X x"
                     android:textColor="@color/olx_color_1"
-                    android:textSize="28sp" />
+                    android:textSize="24sp" />
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/gsi_account_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="16dp"
                 android:text="Name"
                 android:textColor="@color/olx_color_1"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/account_container"
-                app:layout_constraintTop_toBottomOf="@+id/account_container"></TextView>
+                app:layout_constraintBottom_toBottomOf="@+id/account_container"
+                app:layout_constraintStart_toEndOf="@+id/account_container"
+                app:layout_constraintTop_toTopOf="@+id/account_container"></TextView>
 
             <TextView
                 android:id="@+id/gsi_account_mail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="xxxx@gmail.com"
-                android:textSize="14sp"
                 android:textColor="@color/olx_color_1"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@+id/gsi_account_name"
                 app:layout_constraintTop_toBottomOf="@+id/gsi_account_name"></TextView>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/olx_color_1"
+                app:layout_constraintTop_toBottomOf="@+id/account_container" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="60dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/googleAccountlayout">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:padding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="@string/general_setting"
+                    android:textColor="@color/olx_color_1"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:maxWidth="300dp"
+                    android:text="@string/show_balance"
+                    android:textColor="@color/olx_color_1"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+<!--                <android.support.v7.widget.SwitchCompat-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:checked="true"-->
+<!--                    android:thumb="@drawable/thumb_selector"-->
+<!--                    app:track="@drawable/track_seector"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/textView24"/>-->
+
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:thumb="@drawable/thumb_selector"
+                    app:track="@drawable/track_seector"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView24" />
+
+                <TextView
+                    android:id="@+id/textView25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:maxWidth="300dp"
+                    android:text="@string/delete_database"
+                    android:textColor="@color/olx_color_1"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+                <TextView
+                    android:id="@+id/textView23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:maxWidth="300dp"
+                    android:text="@string/default_database"
+                    android:textColor="@color/olx_color_1"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/olx_color_1"
+                    app:layout_constraintBottom_toTopOf="@+id/textView3"
+                    tools:layout_editor_absoluteX="16dp" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/account_setting"
+                    android:textColor="@color/olx_color_1"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:maxWidth="300dp"
+                    android:text="@string/auto_log_in"
+                    android:textColor="@color/olx_color_1"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:maxWidth="300dp"
+                    android:text="@string/auto_cloud_save"
+                    android:textColor="@color/olx_color_1"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView21" />
+
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:maxWidth="300dp"
+                    android:text="@string/auto_cloud_load"
+                    android:textColor="@color/olx_color_1"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView26" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
 
 
         <com.google.android.gms.common.SignInButton
@@ -88,7 +267,6 @@
             android:text="defaultDb"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnRandomArchived"
             app:layout_constraintStart_toStartOf="parent"></Button>
 
         <Button
