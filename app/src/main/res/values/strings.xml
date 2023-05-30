@@ -152,8 +152,8 @@
 
     // setting/last fragment
     <string name="account_setting">Google settings</string>
-    <string name="auto_log_in">Automatically sign in to your Google account on startup</string>
-    <string name="auto_cloud_save">Automatically send transactions to your Google Cloud account</string>
+    <string name="auto_log_in">Auto sign in to your Google account on startup</string>
+    <string name="auto_cloud_save">Autosync with Google Drive</string>
     <string name="auto_cloud_load">Load data from Google Cloud at application launch</string>
     <string name="general_setting">General settings</string>
     <string name="show_balance">Show account balance</string>
