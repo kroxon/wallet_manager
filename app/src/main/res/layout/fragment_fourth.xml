@@ -14,7 +14,7 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/googleAccountlayout"
+            android:id="@+id/googleAccountLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="2dp"
@@ -87,7 +87,7 @@
             android:layout_marginBottom="60dp"
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/googleAccountlayout">
+            app:layout_constraintTop_toBottomOf="@+id/googleAccountLayout">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -106,34 +106,34 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/textView24"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="16dp"
-                    android:maxWidth="300dp"
-                    android:text="@string/show_balance"
-                    android:textColor="@color/olx_color_1"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView22" />
+<!--                <TextView-->
+<!--                    android:id="@+id/textView24"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="8dp"-->
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:maxWidth="300dp"-->
+<!--                    android:text="@string/show_balance"-->
+<!--                    android:textColor="@color/olx_color_1"-->
+<!--                    android:textSize="14sp"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/textView22" />-->
 
-                <Switch
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView24" />
+<!--                <Switch-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/textView24" />-->
 
                 <androidx.constraintlayout.widget.ConstraintLayout
 
-                    android:id="@+id/constraintLayout12"
+                    android:id="@+id/constraintLayoutDeleteDb"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="8dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
                     android:paddingTop="16dp"
-                    app:layout_constraintTop_toBottomOf="@+id/textView24">
+                    android:clickable="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView22">
 
                     <TextView
                         android:id="@+id/textView25"
@@ -172,10 +172,11 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout13"
+                    android:id="@+id/constraintLayoutDefaultDb"
+                    android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout12"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayoutDeleteDb"
                     android:paddingTop="16dp">
 
 
@@ -227,26 +228,27 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout13" />
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayoutDefaultDb" />
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="16dp"
-                    android:maxWidth="200dp"
-                    android:text="@string/auto_log_in"
-                    android:textColor="@color/olx_color_1"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+<!--                <TextView-->
+<!--                    android:id="@+id/textView4"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="8dp"-->
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:maxWidth="200dp"-->
+<!--                    android:text="@string/auto_log_in"-->
+<!--                    android:textColor="@color/olx_color_1"-->
+<!--                    android:textSize="14sp"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/textView3" />-->
 
-                <Switch
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView4" />
+<!--                <Switch-->
+<!--                    android:id="@+id/switchAutoSync"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/textView4" />-->
 
                 <TextView
                     android:id="@+id/textView21"
@@ -259,13 +261,106 @@
                     android:textColor="@color/olx_color_1"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
                 <Switch
+                    android:id="@+id/switchAutoLog"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/textView21" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutDriveUpload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:paddingTop="32dp"
+                    app:layout_constraintTop_toBottomOf="@+id/textView21"
+                    tools:layout_editor_absoluteX="8dp">
+
+
+                    <TextView
+                        android:id="@+id/textView26"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:maxWidth="300dp"
+                        android:text="@string/upload_to_google"
+                        android:textColor="@color/olx_color_1"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="10dp"
+                        android:clickable="true"
+                        android:src="@drawable/ic_cloud_upload"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView26"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/olx_color_1" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@color/olx_color_1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutDriveDownload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:paddingTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayoutDriveUpload"
+                    tools:layout_editor_absoluteX="8dp">
+
+
+                    <TextView
+                        android:id="@+id/textView27"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:maxWidth="300dp"
+                        android:text="@string/download_from_google"
+                        android:textColor="@color/olx_color_1"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="10dp"
+                        android:clickable="true"
+                        android:src="@drawable/ic_cloud_download"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView27"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/olx_color_1" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@color/olx_color_1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -285,41 +380,41 @@
             app:layout_constraintStart_toStartOf="parent"></com.google.android.gms.common.SignInButton>
 
 
-        <Button
-            android:id="@+id/btnDefaultDb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="60dp"
-            android:background="@color/olx_color_1"
-            android:text="defaultDb"
-            app:backgroundTint="@null"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"></Button>
+<!--        <Button-->
+<!--            android:id="@+id/btnDefaultDb"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="60dp"-->
+<!--            android:background="@color/olx_color_1"-->
+<!--            android:text="defaultDb"-->
+<!--            app:backgroundTint="@null"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"></Button>-->
 
-        <Button
-            android:id="@+id/btnRandomArchived"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="60dp"
-            android:background="@color/olx_color_1"
-            android:text="archived"
-            app:backgroundTint="@null"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnDeleteDb"
-            app:layout_constraintStart_toEndOf="@+id/btnDefaultDb"></Button>
+<!--        <Button-->
+<!--            android:id="@+id/btnRandomArchived"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="60dp"-->
+<!--            android:background="@color/olx_color_1"-->
+<!--            android:text="archived"-->
+<!--            app:backgroundTint="@null"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/btnDeleteDb"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/btnDefaultDb"></Button>-->
 
-        <Button
-            android:id="@+id/btnDeleteDb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="9dp"
-            android:layout_marginBottom="60dp"
-            android:background="@color/olx_color_1"
-            android:text="Delete Db"
-            app:backgroundTint="@null"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btnRandomArchived"></Button>
+<!--        <Button-->
+<!--            android:id="@+id/btnDeleteDb"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="9dp"-->
+<!--            android:layout_marginBottom="60dp"-->
+<!--            android:background="@color/olx_color_1"-->
+<!--            android:text="Delete Db"-->
+<!--            app:backgroundTint="@null"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/btnRandomArchived"></Button>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

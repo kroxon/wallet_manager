@@ -13,8 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +21,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +48,18 @@ public class FourthFragment extends Fragment {
 
     private com.google.android.gms.common.SignInButton gsiBtn;
     private ConstraintLayout googleAccLayout;
+    private ConstraintLayout deleteLayout;
+    private ConstraintLayout defaultLayout;
+    private ConstraintLayout uploadLayout;
+    private ConstraintLayout downloadLayout;
+
+    private Switch autosyncSwitch;
+    private Switch autologSwitch;
 
     // buttons for testing
-    private Button defaultDb;
-    private Button btnArchived;
-    private Button btnDeleteDb;
+//    private Button defaultDb;
+//    private Button btnArchived;
+//    private Button btnDeleteDb;
 
     public FourthFragment() {
     }
@@ -74,7 +79,7 @@ public class FourthFragment extends Fragment {
         findViews(view);
         init(view);
 
-        defaultDb.setOnClickListener(new View.OnClickListener() {
+        defaultLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String[] categories = getResources().getStringArray(R.array.categories);
@@ -103,15 +108,15 @@ public class FourthFragment extends Fragment {
             }
         });
 
-        btnArchived.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                InfoRepository infoRepository = new InfoRepository();
-                infoRepository.setCategoryArchived(infoRepository.getAllExpenseCategories().get(0));
-            }
-        });
+//        btnArchived.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                InfoRepository infoRepository = new InfoRepository();
+//                infoRepository.setCategoryArchived(infoRepository.getAllExpenseCategories().get(0));
+//            }
+//        });
 
-        btnDeleteDb.setOnClickListener(new View.OnClickListener() {
+        deleteLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 InfoRepository infoRepository = new InfoRepository();
@@ -130,12 +135,18 @@ public class FourthFragment extends Fragment {
         accName = view.findViewById(R.id.gsi_account_name);
         accMail = view.findViewById(R.id.gsi_account_mail);
         gsiBtn = view.findViewById(R.id.gsiButton);
-        googleAccLayout = view.findViewById(R.id.googleAccountlayout);
+        googleAccLayout = view.findViewById(R.id.googleAccountLayout);
+        deleteLayout = view.findViewById(R.id.constraintLayoutDeleteDb);
+        defaultLayout = view.findViewById(R.id.constraintLayoutDefaultDb);
+        uploadLayout = view.findViewById(R.id.constraintLayoutDriveUpload);
+        downloadLayout = view.findViewById(R.id.constraintLayoutDriveDownload);
+        autosyncSwitch = view.findViewById(R.id.switchAutoSync);
+        autologSwitch = view.findViewById(R.id.switchAutoLog);
 
         // test
-        defaultDb = view.findViewById(R.id.btnDefaultDb);
-        btnArchived = view.findViewById(R.id.btnRandomArchived);
-        btnDeleteDb = view.findViewById(R.id.btnDeleteDb);
+//        defaultDb = view.findViewById(R.id.btnDefaultDb);
+//        btnArchived = view.findViewById(R.id.btnRandomArchived);
+//        btnDeleteDb = view.findViewById(R.id.btnDeleteDb);
     }
 
     // testing database

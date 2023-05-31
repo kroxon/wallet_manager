@@ -45,8 +45,21 @@ public class InfoRepository {
         values.put(DBConstants.COL_TRANSACTION_PHOTO, photo);
         values.put(DBConstants.COL_TRANSACTION_TYPE, type);
         db.insert(DBConstants.TABLE_TRANSACTION, null, values);
-//        db.close();
 
+        updateAccountBalance(amount, type, id_account);
+//        db.close();
+    }
+
+    public void updateAccountBalance(String amount, String type, String id_account) {
+        double balance = getAccountBalance(id_account);
+        if (type.equals("expense"))
+            balance -= Double.parseDouble(amount);
+        else
+            balance += Double.parseDouble(amount);
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.COL_ACC_BALANCE, String.valueOf(balance));
+        String[] whereArgs = new String[]{String.valueOf(id_account)};
+        db.update(DBConstants.TABLE_ACCOUNT, values, DBConstants.COL_ACC_ID + "=?", whereArgs);
     }
 
     public void removeTransaction(String idTransaction) {
@@ -64,26 +77,16 @@ public class InfoRepository {
         db.delete(DBConstants.TABLE_TRANSACTION, DBConstants.COL_TRANSACTION_ID_CAT + "=?", whereArgs2);
         db.delete(DBConstants.TABLE_CATEGORY, DBConstants.COL_CAT_NAME + "=?", whereArgs);
 
-//        // reducing the number "id category" to match the correct one
-//
-//        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_SUBCATEGORY  + " WHERE " + DBConstants.COL_SUBCAT_SUPERCAT_ID + " > '" + idCat + "'" ;;
-//        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
-//        // looping through all rows and decreasing number
-//        if (cursor.moveToFirst()) {
-//            do {
-//                int idSuperCat = Integer.parseInt(cursor.getString(1));
-//                String idSubcat = cursor.getString(0);
-//                ContentValues values = new ContentValues();
-//                values.put(DBConstants.COL_SUBCAT_SUPERCAT_ID, String.valueOf(idSuperCat - 1));
-//                String[] whereArgsUpdate = new String[] { idSubcat };
-//                db.update(DBConstants.TABLE_SUBCATEGORY, values, DBConstants.COL_SUBCAT_SUPERCAT_ID + "=?", whereArgsUpdate);
-//            } while (cursor.moveToNext());
-//        }
-
     }
 
     public void updateTransaction(String idTransaction, String id_category, String id_subcategory, String date, String amount, String id_account,
                                   String note_1, String note_2, String photo, String type) {
+        Transaction transaction = readOneTransaction(idTransaction);
+        if (transaction.getTransactionType().equals("expense"))
+            updateAccountBalance(transaction.getTransactionValue(), "income", transaction.getIdAccount());
+        else
+            updateAccountBalance(transaction.getTransactionValue(), "expense", transaction.getIdAccount());
+        updateAccountBalance(amount, type, id_account);
         ContentValues values = new ContentValues();
         values.put(DBConstants.COL_TRANSACTION_ID_CAT, id_category);
         values.put(DBConstants.COL_TRANSACTION_ID_SUBCAT, id_subcategory);
@@ -553,6 +556,19 @@ public class InfoRepository {
         return idCategoryIcon;
     }
 
+    public double getAccountBalance(String id_account) {
+        double accountBalance = 0;
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_ACCOUNT + " WHERE " + DBConstants.COL_ACC_ID + " = '" + id_account + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and search for ID Category name
+        if (cursor.moveToFirst()) {
+            accountBalance = Double.parseDouble(cursor.getString(5));
+        }
+        cursor.close();
+        return accountBalance;
+    }
+
     public int getIdDrawable(String resourceName) {
         try {
             Field idField = R.drawable.class.getDeclaredField(resourceName);
@@ -598,6 +614,34 @@ public class InfoRepository {
         }
         Collections.reverse(transactionsList);
         return transactionsList;
+    }
+
+    public Transaction readOneTransaction(String id_transaction) {
+        Transaction transaction = new Transaction();
+
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_TRANSACTION  + " WHERE " + DBConstants.COL_TRANSACTION_ID + " = '" + id_transaction + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and search for ID Accout
+        if (cursor.moveToFirst()) {
+            do {
+                transaction.setTransactionId(cursor.getString(0));
+                transaction.setTransactionValue(cursor.getString(1));
+                transaction.setTransactionIdCategory(cursor.getString(2));
+                transaction.setTransactionIdSubcategory(cursor.getString(3));
+                transaction.setTransactionDate(cursor.getString(4));
+                transaction.setIdAccount(cursor.getString(5));
+//                    transaction.setTransactionCurency(cursor.getString(6));
+                transaction.setTransactionNote1(cursor.getString(7));
+                transaction.setTransactionNote2(cursor.getString(8));
+                transaction.setTransactionPhoto(cursor.getString(9));
+                transaction.setTransactionType(cursor.getString(10));
+                Account account = getAccount(transaction.getIdAccount());
+                transaction.setTransactionCurency(account.getAccountCurrency());
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return transaction;
     }
 
     //    read Accounts

@@ -159,6 +159,8 @@
     <string name="show_balance">Show account balance</string>
     <string name="delete_database">Delete database</string>
     <string name="default_database">Default database</string>
+    <string name="upload_to_google">Upload to Google Cloud</string>
+    <string name="download_from_google">Download from Google Drive</string>
 
 
     // default database: categories

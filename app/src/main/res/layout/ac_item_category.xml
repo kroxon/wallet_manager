@@ -50,6 +50,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLength="50"
+            android:breakStrategy="balanced"
             android:maxLines="2"
             android:text="Chemia domowa chemia"
             android:textColor="@color/olx_color_1"

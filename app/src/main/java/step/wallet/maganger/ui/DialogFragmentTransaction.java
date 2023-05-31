@@ -786,9 +786,13 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                         if (bundle == null) {
                             repository.writeTransaction(writeIdCategory, writeIdSubcategory, writeDate, tvInput.getText().toString(), writeCurrency, writeAccount, notesTv.getText().toString(), writeNote2, writePhoto, writeType);
                             Toast.makeText(context, getResources().getString(R.string.d_tr_suss_saved), Toast.LENGTH_SHORT).show();
-                        } else {
+                        } else if (bundle != null && !bundle.getString("type").equals("new income transaction")) {
                             repository.updateTransaction(writeTransactionId, writeIdCategory, writeIdSubcategory, writeDate, tvInput.getText().toString(), writeAccount, notesTv.getText().toString(), writeNote2, writePhoto, writeType);
                             Toast.makeText(context, getResources().getString(R.string.d_tr_suss_updated), Toast.LENGTH_SHORT).show();
+                            getDialog().dismiss();
+                        } else if (bundle != null && bundle.getString("type").equals("new income transaction")) {
+                            repository.writeTransaction(writeIdCategory, writeIdSubcategory, writeDate, tvInput.getText().toString(), writeCurrency, writeAccount, notesTv.getText().toString(), writeNote2, writePhoto, writeType);
+                            Toast.makeText(context, getResources().getString(R.string.d_tr_suss_saved), Toast.LENGTH_SHORT).show();
                             getDialog().dismiss();
                         }
                         mOnInputSelected.sendSelected();
