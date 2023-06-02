@@ -35,10 +35,11 @@
 
         <ImageView
             android:id="@+id/addAccountImg_facc"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_margin="10dp"
             android:clickable="true"
+            android:background="@drawable/radio_flat_selector"
             android:src="@drawable/ic_add"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -59,10 +60,11 @@
 
         <ImageView
             android:id="@+id/third_edit_category_img"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:clickable="true"
-            android:padding="10dp"
+            android:padding="4dp"
+            android:background="@drawable/radio_flat_selector"
             android:src="@drawable/ic_adjust"
             app:layout_constraintBottom_toBottomOf="@+id/textView17"
             app:layout_constraintEnd_toEndOf="@+id/addAccountImg_facc"

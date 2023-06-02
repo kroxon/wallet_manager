@@ -65,7 +65,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class MainActivity extends GoogleDriveActivity implements DialogFragmentTransaction.OnInputSelected, FourthFragment.OnSignInClick {
+public class MainActivity extends GoogleDriveActivity implements DialogFragmentTransaction.OnInputSelected, FourthFragment.OnGoogleClick {
 
     private static final String LOG_TAG = "MainActivity";
 
@@ -135,7 +135,10 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
 //        googleSignIn.setOnClickListener(v -> {
 //            startGoogleDriveSignIn();
 //        });
-
+        InfoRepository infoRepository = new InfoRepository();
+        if (infoRepository.getCheckAutosync()) {
+            startGoogleDriveSignIn();
+        }
         GoogleSignInAccount acctStart = GoogleSignIn.getLastSignedInAccount(this.getApplicationContext());
         if (acctStart == null) {
             startGoogleDriveSignIn();
@@ -469,15 +472,10 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
 
     @Override
     public void sendSelected() {
-        View startView = bottomNavigationView.findViewById(bottomNavigationView.getSelectedItemId());
-        View view = bottomNavigationView.findViewById(R.id.bnmHistory);
-        view.performClick();
-        startView.performClick();
-    }
-
-    @Override
-    public void gsiClick() {
-        startGoogleDriveSignIn();
+//        View startView = bottomNavigationView.findViewById(bottomNavigationView.getSelectedItemId());
+//        View view = bottomNavigationView.findViewById(R.id.bnmHistory);
+//        view.performClick();
+//        startView.performClick();
     }
 
     public void refreshLogin() {
@@ -485,5 +483,45 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
         View view2 = bottomNavigationView.findViewById(R.id.bnmProfile);
         view1.performClick();
         view2.performClick();
+    }
+
+    @Override
+    public void googleClick(String google) {
+        File db = new File(DBConstants.DB_LOCATION);
+        if (google.equals("sign in"))
+            startGoogleDriveSignIn();
+        if (google.equals("download")) {
+            if (repository == null) {
+                showMessage(R.string.message_google_sign_in_failed);
+            } else {
+                db.getParentFile().mkdirs();
+                db.delete();
+                repository.downloadFile(db, GOOGLE_DRIVE_DB_LOCATION)
+                        .addOnSuccessListener(r -> {
+//                                    InfoRepository repository = new InfoRepository();
+//                                    String infoText = repository.getInfo();
+//                                    inputToDb.setText(infoText);
+                            showMessage("Retrieved");
+                        })
+                        .addOnFailureListener(e -> {
+                            Log.e(LOG_TAG, "error download file", e);
+                            showMessage("Error download");
+                        });
+            }
+        }
+
+        if (google.equals("upload")) {
+            if (repository == null) {
+                showMessage(R.string.message_google_sign_in_failed);
+            } else {
+                repository.uploadFile(db, GOOGLE_DRIVE_DB_LOCATION)
+                        .addOnSuccessListener(r -> showMessage("Upload success"))
+                        .addOnFailureListener(e -> {
+                            Log.e(LOG_TAG, "error upload file", e);
+                            showMessage("Error upload");
+                        });
+            }
+        }
+
     }
 }

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,20 +32,19 @@ import step.wallet.maganger.data.InfoRepository;
 
 public class FourthFragment extends Fragment {
 
-    public OnSignInClick signInClick;
+    public OnGoogleClick googleClick;
 
-    public interface OnSignInClick {
-        void gsiClick();
+    public interface OnGoogleClick {
+        void googleClick(String google);
     }
 
-    public void setGSIclick(OnSignInClick listener) {
-        this.signInClick = listener;
-    }
 
 
     private TextView accInitials;
     private TextView accName;
     private TextView accMail;
+
+    private Button testBtn;
 
     private com.google.android.gms.common.SignInButton gsiBtn;
     private ConstraintLayout googleAccLayout;
@@ -53,7 +53,6 @@ public class FourthFragment extends Fragment {
     private ConstraintLayout uploadLayout;
     private ConstraintLayout downloadLayout;
 
-    private Switch autosyncSwitch;
     private Switch autologSwitch;
 
     // buttons for testing
@@ -78,6 +77,42 @@ public class FourthFragment extends Fragment {
 
         findViews(view);
         init(view);
+
+
+        return view;
+    }
+
+    private void findViews(View view) {
+        accInitials = view.findViewById(R.id.gsi_account_nitials);
+        accName = view.findViewById(R.id.gsi_account_name);
+        accMail = view.findViewById(R.id.gsi_account_mail);
+        gsiBtn = view.findViewById(R.id.gsiButton);
+        googleAccLayout = view.findViewById(R.id.googleAccountLayout);
+        deleteLayout = view.findViewById(R.id.constraintLayoutDeleteDb);
+        defaultLayout = view.findViewById(R.id.constraintLayoutDefaultDb);
+        uploadLayout = view.findViewById(R.id.constraintLayoutDriveUpload);
+        downloadLayout = view.findViewById(R.id.constraintLayoutDriveDownload);
+        autologSwitch = view.findViewById(R.id.switchAutoLog);
+
+        // test
+//        defaultDb = view.findViewById(R.id.btnDefaultDb);
+//        btnArchived = view.findViewById(R.id.btnRandomArchived);
+//        btnDeleteDb = view.findViewById(R.id.btnDeleteDb);
+        testBtn = view.findViewById(R.id.testSync);
+    }
+
+    // testing database
+    private void init(View view) {
+        InfoRepository repository = new InfoRepository();
+
+        gsiBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                googleClick.googleClick("sign in");
+                loadAccountInfo();
+            }
+        });
+
 
         defaultLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,14 +143,6 @@ public class FourthFragment extends Fragment {
             }
         });
 
-//        btnArchived.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                InfoRepository infoRepository = new InfoRepository();
-//                infoRepository.setCategoryArchived(infoRepository.getAllExpenseCategories().get(0));
-//            }
-//        });
-
         deleteLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,38 +153,42 @@ public class FourthFragment extends Fragment {
             }
         });
 
-
-        return view;
-    }
-
-    private void findViews(View view) {
-        accInitials = view.findViewById(R.id.gsi_account_nitials);
-        accName = view.findViewById(R.id.gsi_account_name);
-        accMail = view.findViewById(R.id.gsi_account_mail);
-        gsiBtn = view.findViewById(R.id.gsiButton);
-        googleAccLayout = view.findViewById(R.id.googleAccountLayout);
-        deleteLayout = view.findViewById(R.id.constraintLayoutDeleteDb);
-        defaultLayout = view.findViewById(R.id.constraintLayoutDefaultDb);
-        uploadLayout = view.findViewById(R.id.constraintLayoutDriveUpload);
-        downloadLayout = view.findViewById(R.id.constraintLayoutDriveDownload);
-        autosyncSwitch = view.findViewById(R.id.switchAutoSync);
-        autologSwitch = view.findViewById(R.id.switchAutoLog);
-
-        // test
-//        defaultDb = view.findViewById(R.id.btnDefaultDb);
-//        btnArchived = view.findViewById(R.id.btnRandomArchived);
-//        btnDeleteDb = view.findViewById(R.id.btnDeleteDb);
-    }
-
-    // testing database
-    private void init(View view) {
-        gsiBtn.setOnClickListener(new View.OnClickListener() {
+        autologSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                signInClick.gsiClick();
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (autologSwitch.isChecked())
+                    repository.setAutosync("true");
+                 else
+                    repository.setAutosync("false");
             }
         });
-        loadAccountInfo();
+        if (repository.getCheckAutosync()) {
+            autologSwitch.setChecked(true);
+            loadAccountInfo();
+        }
+
+        // test
+        testBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InfoRepository repo = new InfoRepository();
+                Toast.makeText(getContext(), String.valueOf(repo.getCheckAutosync()), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        uploadLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                googleClick.googleClick("upload");
+            }
+        });
+
+        downloadLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                googleClick.googleClick("download");
+            }
+        });
 
     }
 
@@ -186,7 +217,7 @@ public class FourthFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            signInClick = (OnSignInClick) getActivity();
+            googleClick = (OnGoogleClick) getActivity();
         } catch (ClassCastException e) {
             Log.e(TAG, "onAttach: ClassCastException: "
                     + e.getMessage());

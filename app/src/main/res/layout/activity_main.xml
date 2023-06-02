@@ -142,27 +142,37 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:background="@drawable/button_background_black"
-            app:itemIconTint="@color/darkgrey"
-            app:itemTextColor="@color/darkgrey"
+            app:itemIconTint="@color/olx_color_1"
+            android:foregroundGravity="center"
+            app:itemTextColor="@color/olx_color_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottom_nav_menu"></com.google.android.material.bottomnavigation.BottomNavigationView>
+            app:menu="@menu/bottom_nav_menu">
 
-        <ImageView
-            android:id="@+id/plusButton"
-            android:background="@drawable/button_background_black"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginBottom="4dp"
-            android:clickable="true"
-            android:elevation="8dp"
-            android:src="@drawable/ic_add"
-            app:layout_constraintBottom_toBottomOf="@+id/frame_layout"
-            app:layout_constraintEnd_toEndOf="@+id/bottom_nav_menu"
-            app:layout_constraintStart_toStartOf="@+id/bottom_nav_menu"
-            app:layout_constraintTop_toTopOf="@+id/bottom_nav_menu"
-            app:tint="@color/darkgrey"></ImageView>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/plusButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/subcat_recycleview_selected_background"
+                    android:clickable="true"
+                    android:elevation="8dp"
+                    android:src="@drawable/ic_add"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/colorAccent"></ImageButton>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

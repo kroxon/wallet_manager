@@ -7,13 +7,13 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ListView
@@ -95,13 +95,39 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     private var pieChartLayout: LinearLayout? = null
     private var detailLegenLayout: ConstraintLayout? = null
 
-    // testing
+    // reloading
+    private var transactionsNumber: Int? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    var handler = Handler()
+    var runnable: Runnable? = null
+    var delay = 1000
 
 
+    override fun onResume() {
+        //start handler as activity become visible
+        handler.postDelayed(Runnable { //do something
+            val repository = InfoRepository()
+            if (transactionsNumber != repository.readTransactions().size) {
+                if (expenseTxt?.getCurrentTextColor() == getResources().getColor(R.color.white))
+                    loadChartAndLegend()
+                else
+                    loadChartAndLegend("income")
+                transactionsNumber = repository.readTransactions().size
+            }
+            handler.postDelayed(runnable!!, delay.toLong())
+        }.also { runnable = it }, delay.toLong())
+        super.onResume()
+    }
+
+
+    override fun onPause() {
+        handler.removeCallbacks(runnable!!) //stop handler when activity not visible
+        super.onPause()
     }
 
     override fun onCreateView(
@@ -283,6 +309,10 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         incomeTxt!!.setOnClickListener {
             incomeClick()
         }
+
+        val repository = InfoRepository()
+        transactionsNumber = repository.readTransactions().size
+
     }
 
     private fun findViews(view: View) {

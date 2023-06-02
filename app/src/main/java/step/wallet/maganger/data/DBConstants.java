@@ -45,7 +45,7 @@ public class DBConstants {
 
     static final String COL_GENERAL_ID = "GENERAL_ID";
     static final String COL_GENERAL_SYNCHRONISED = "GENERAL_SYNCHRONISED";
-    static final String COL_GENERAL_NOTE_1 = "GENERAL_NOTE_1";
+    static final String COL_GENERAL_GOOGLE_AUTOSYNC = "GENERAL_GOOGLE_AUTOSYNC";
     static final String COL_GENERAL_NOTE_2 = "GENERAL_NOTE_2";
     static final String COL_GENERAL_NOTE_3 = "GENERAL_NOTE_3";
     static final String COL_GENERAL_NOTE_4 = "GENERAL_NOTE_4";
@@ -91,8 +91,8 @@ public class DBConstants {
     static {
         DATABASE_CREATE_5 = "CREATE TABLE IF NOT EXISTS "
                 + TABLE_GENERAL
-                + " (" + COL_GENERAL_ID + " INTEGER PRIMARY KEY, " + COL_GENERAL_SYNCHRONISED + " INTEGER, " +
-                COL_GENERAL_NOTE_1 + " TEXT, " + COL_GENERAL_NOTE_2 + " TEXT, " +
+                + " (" + COL_GENERAL_ID + " INTEGER PRIMARY KEY, " + COL_GENERAL_SYNCHRONISED + " TEXT, " +
+                COL_GENERAL_GOOGLE_AUTOSYNC + " TEXT, " + COL_GENERAL_NOTE_2 + " TEXT, " +
                 COL_GENERAL_NOTE_3 + " TEXT, " + COL_GENERAL_NOTE_4 + " TEXT, " +
                 COL_GENERAL_NOTE_5 + " TEXT);";
     }

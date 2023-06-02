@@ -26,7 +26,7 @@ public class InfoRepository {
 
     public void writeInfo(@NonNull String info) {
         ContentValues values = new ContentValues();
-        values.put(DBConstants.COL_GENERAL_NOTE_1, info);
+        values.put(DBConstants.COL_GENERAL_GOOGLE_AUTOSYNC, info);
         db.insert(DBConstants.TABLE_GENERAL, null, values);
         db.close();
     }
@@ -199,6 +199,11 @@ public class InfoRepository {
                 db.insert(DBConstants.TABLE_ACCOUNT, null, valuesAcc);
             }
         }
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.COL_GENERAL_GOOGLE_AUTOSYNC, "true");
+        db.insert(DBConstants.TABLE_GENERAL, null, values);
+
+
     }
 
     // add Account
@@ -261,7 +266,7 @@ public class InfoRepository {
     @Nullable
     public String getInfo() {
         String info;
-        final String[] cols = new String[]{DBConstants.COL_GENERAL_NOTE_1};
+        final String[] cols = new String[]{DBConstants.COL_GENERAL_GOOGLE_AUTOSYNC};
         try (Cursor cursor = db.query(
                 true,
                 DBConstants.TABLE_GENERAL,
@@ -619,7 +624,7 @@ public class InfoRepository {
     public Transaction readOneTransaction(String id_transaction) {
         Transaction transaction = new Transaction();
 
-        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_TRANSACTION  + " WHERE " + DBConstants.COL_TRANSACTION_ID + " = '" + id_transaction + "'";
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_TRANSACTION + " WHERE " + DBConstants.COL_TRANSACTION_ID + " = '" + id_transaction + "'";
         Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
 
         // looping through all rows and search for ID Accout
@@ -716,5 +721,29 @@ public class InfoRepository {
         }
         Collections.reverse(transactionsList);
         return transactionsList;
+    }
+
+    public void setAutosync(String checked) {
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.COL_GENERAL_GOOGLE_AUTOSYNC, String.valueOf(checked));
+        String[] whereArgs = new String[]{String.valueOf("1")};
+        db.update(DBConstants.TABLE_GENERAL, values, DBConstants.COL_GENERAL_ID + "=?", whereArgs);
+    }
+
+    public boolean getCheckAutosync() {
+        String checked = "";
+
+        String selectQuery = "SELECT  * FROM " + DBConstants.TABLE_GENERAL;
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+        // looping through all rows and search for ID Accout
+        if (cursor.moveToFirst()) {
+            do {
+                checked = (cursor.getString(2));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        if (checked.equals("true"))
+            return true;
+        else return false;
     }
 }

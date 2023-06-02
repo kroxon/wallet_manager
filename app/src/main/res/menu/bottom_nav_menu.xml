@@ -15,7 +15,7 @@
         android:title="Item" />
     <item
         android:id="@+id/bnmOverview"
-        android:icon="@drawable/ic_charts"
+        android:icon="@drawable/ic_adjust"
         android:title="@string/overview" />
     <item
         android:id="@+id/bnmProfile"
