@@ -229,7 +229,7 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         InfoRepository infoRepository = new InfoRepository();
         transactions = infoRepository.readTransactions();
         if (transactions.size() == 0)
-            Toast.makeText(getContext(), "Empty history", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getResources().getString(R.string.empty_history), Toast.LENGTH_SHORT).show();
         else {
             CurrencyDatabase currencyDatabase = new CurrencyDatabase(getContext());
             ArrayList<CurrencyStrings> currentList = currencyDatabase.getCurrenciesList();

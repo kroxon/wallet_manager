@@ -1,11 +1,15 @@
 package step.wallet.maganger.ui;
 
+import static android.content.ContentValues.TAG;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import android.app.Fragment;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +31,14 @@ import step.wallet.maganger.data.CurrencyDatabase;
 import step.wallet.maganger.data.InfoRepository;
 
 
-public class ThirdFragment extends Fragment implements DialogFragmentAccount.OnSaveListener, DialogFragmentAccount.OnInputListener{
+public class ThirdFragment extends Fragment implements DialogFragmentAccount.OnSaveListener, DialogFragmentAccount.OnInputListener {
+
+    public OnUploadListener mOnUploadListener;
+
+
+    public interface OnUploadListener {
+        void sendToUpload();
+    }
 
     public ThirdFragment() {
         // Required empty public constructor
@@ -41,6 +52,9 @@ public class ThirdFragment extends Fragment implements DialogFragmentAccount.OnS
     private RecyclerViewAccountsAdapter rvAccountsAdapter;
     private RecyclerViewCategoryActivityAdapter adapterExpenses;
     private RecyclerViewCategoryActivityAdapter adapterIncomes;
+
+
+    private int uploadConter = 0;
 
 
     @Override
@@ -59,12 +73,16 @@ public class ThirdFragment extends Fragment implements DialogFragmentAccount.OnS
     public void onResume() {
         //start handler as activity become visible
 
-        handler.postDelayed( runnable = new Runnable() {
+        handler.postDelayed(runnable = new Runnable() {
             public void run() {
                 //do something
                 loadRVExpenses();
                 loadRVIncomes();
                 handler.postDelayed(runnable, delay);
+                if (uploadConter == 0) {
+                    mOnUploadListener.sendToUpload();
+                    uploadConter = 1;
+                }
             }
         }, delay);
 
@@ -75,6 +93,7 @@ public class ThirdFragment extends Fragment implements DialogFragmentAccount.OnS
     @Override
     public void onPause() {
         handler.removeCallbacks(runnable); //stop handler when activity not visible
+        uploadConter = 0;
         super.onPause();
     }
 
@@ -92,7 +111,6 @@ public class ThirdFragment extends Fragment implements DialogFragmentAccount.OnS
 //        rvAccount.setAdapter(rvAccountsAdapter);
 //        Log.d("adapter", "onCreateView: " + rvAccountsAdapter.getItemCount());
 //        Log.d("adapter", "accountns: " + repository.readAccounts().get(1).getAccountCurrency());
-
 
 
         loadRVAccounts();
@@ -195,6 +213,19 @@ public class ThirdFragment extends Fragment implements DialogFragmentAccount.OnS
         loadRVAccounts();
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            if (uploadConter == 0)
+                mOnUploadListener
+                        = (OnUploadListener) getActivity();
+            uploadConter = -1;
+        } catch (ClassCastException e) {
+            Log.e(TAG, "onAttach: ClassCastException: "
+                    + e.getMessage());
+        }
+    }
 
 
 }

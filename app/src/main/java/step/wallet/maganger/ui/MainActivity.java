@@ -65,7 +65,8 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class MainActivity extends GoogleDriveActivity implements DialogFragmentTransaction.OnInputSelected, FourthFragment.OnGoogleClick {
+public class MainActivity extends GoogleDriveActivity implements DialogFragmentTransaction.OnInputSelected, FourthFragment.OnGoogleClick,
+        DialogFragmentTransaction.OnUploadListener, ThirdFragment.OnUploadListener {
 
     private static final String LOG_TAG = "MainActivity";
 
@@ -78,13 +79,13 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
     private Button writeToDb;
     private Button saveToGoogleDrive;
     private Button restoreFromDb;
-    private MaterialToolbar toolbar;
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
+//    private MaterialToolbar toolbar;
+//    private DrawerLayout drawerLayout;
+//    private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
     private ImageView btnPlus;
 
-    MeowBottomNavigation bottomNavigation;
+//    MeowBottomNavigation bottomNavigation;
 
     private GoogleDriveApiDataRepository repository;
 
@@ -103,7 +104,7 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
         repository = new GoogleDriveApiDataRepository(driveApi);
 //        googleSignIn.setVisibility(View.GONE);
 //        contentViews.setVisibility(View.VISIBLE);
-        loadAccountInfo();
+//        loadAccountInfo();
         if (bottomNavigationView.getSelectedItemId() == R.id.bnmProfile)
             refreshLogin();
     }
@@ -122,10 +123,10 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
 //        writeToDb = findViewById(R.id.write_to_db);
 //        saveToGoogleDrive = findViewById(R.id.save_to_google_drive);
 //        restoreFromDb = findViewById(R.id.restore_from_db);
-        toolbar = findViewById(R.id.topAppBar);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.navigation_view);
-        bottomNavigation = findViewById(R.id.bottom_navigation);
+//        toolbar = findViewById(R.id.topAppBar);
+//        drawerLayout = findViewById(R.id.drawer_layout);
+//        navigationView = findViewById(R.id.navigation_view);
+//        bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigationView = findViewById(R.id.bottom_nav_menu);
         btnPlus = findViewById(R.id.plusButton);
 
@@ -137,13 +138,14 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
 //        });
         InfoRepository infoRepository = new InfoRepository();
         if (infoRepository.getCheckAutosync()) {
-            startGoogleDriveSignIn();
+            startGoogleSignIn();
         }
         GoogleSignInAccount acctStart = GoogleSignIn.getLastSignedInAccount(this.getApplicationContext());
         if (acctStart == null) {
-            startGoogleDriveSignIn();
-        } else
-            loadAccountInfo();
+            startGoogleSignIn();
+        }
+//        else
+//            loadAccountInfo();
 
 
 //        googleSignOut.setOnClickListener(new View.OnClickListener() {
@@ -203,144 +205,145 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
 //                    });
 //        });
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                drawerLayout.openDrawer(GravityCompat.START);
+//
+//            }
+//        });
 
-                drawerLayout.openDrawer(GravityCompat.START);
+//        navigationView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull @org.jetbrains.annotations.NotNull MenuItem item) {
+//
+//                int id = item.getItemId();
+//                drawerLayout.closeDrawer(GravityCompat.START);
+//                File db = new File(DBConstants.DB_LOCATION);
+//                switch (id) {
+//
+//                    case R.id.nav_home:
+//                        Toast.makeText(MainActivity.this, "Home is Clicked", Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case R.id.nav_delete:
+//                        Toast.makeText(MainActivity.this, "DELETE is Clicked", Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case R.id.nav_login:
+//                        startGoogleDriveSignIn();
+//                        Toast.makeText(MainActivity.this, "LOGIN is Clicked", Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case R.id.nav_logout:
+//                        startGoogleSignOut();
+//                        signOut();
+//                        revokeAccess();
+//                        repository = null;
+////                        googleSignIn.setVisibility(View.VISIBLE);
+////                        contentViews.setVisibility(View.GONE);
+//                        unloadAccountInfo();
+//                        Toast.makeText(MainActivity.this, "LOGOUT is Clicked", Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case R.id.nav_upload: {
+//                        Toast.makeText(MainActivity.this, "UPLOAD is Clicked", Toast.LENGTH_SHORT).show();
+//                        if (repository == null) {
+//                            showMessage(R.string.message_google_sign_in_failed);
+//                            break;
+//                        }
+//
+//                        repository.uploadFile(db, GOOGLE_DRIVE_DB_LOCATION)
+//                                .addOnSuccessListener(r -> showMessage("Upload success"))
+//                                .addOnFailureListener(e -> {
+//                                    Log.e(LOG_TAG, "error upload file", e);
+//                                    showMessage("Error upload");
+//                                });
+//                    }
+//                    break;
+//                    case R.id.nav_download: {
+//                        Toast.makeText(MainActivity.this, "DOWNLOAD is Clicked", Toast.LENGTH_SHORT).show();
+//                        if (repository == null) {
+//                            showMessage(R.string.message_google_sign_in_failed);
+//                            break;
+//                        }
+//                        db.getParentFile().mkdirs();
+//                        db.delete();
+//                        repository.downloadFile(db, GOOGLE_DRIVE_DB_LOCATION)
+//                                .addOnSuccessListener(r -> {
+////                                    InfoRepository repository = new InfoRepository();
+////                                    String infoText = repository.getInfo();
+////                                    inputToDb.setText(infoText);
+//                                    showMessage("Retrieved");
+//                                })
+//                                .addOnFailureListener(e -> {
+//                                    Log.e(LOG_TAG, "error download file", e);
+//                                    showMessage("Error download");
+//                                });
+//                    }
+//                    break;
+//                    case R.id.nav_setting:
+//                        Toast.makeText(MainActivity.this, "Settings is Clicked", Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case R.id.nav_email:
+//                        Toast.makeText(MainActivity.this, "Email is Clicked", Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case R.id.nav_rate:
+//                        Toast.makeText(MainActivity.this, "Rate us is Clicked", Toast.LENGTH_SHORT).show();
+//                        break;
+//                    default:
+//                        return true;
+//
+//                }
+//                return true;
+//            }
+//        });
 
-            }
-        });
-        navigationView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull @org.jetbrains.annotations.NotNull MenuItem item) {
-
-                int id = item.getItemId();
-                drawerLayout.closeDrawer(GravityCompat.START);
-                File db = new File(DBConstants.DB_LOCATION);
-                switch (id) {
-
-                    case R.id.nav_home:
-                        Toast.makeText(MainActivity.this, "Home is Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.nav_delete:
-                        Toast.makeText(MainActivity.this, "DELETE is Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.nav_login:
-                        startGoogleDriveSignIn();
-                        Toast.makeText(MainActivity.this, "LOGIN is Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.nav_logout:
-                        startGoogleSignOut();
-                        signOut();
-                        revokeAccess();
-                        repository = null;
-//                        googleSignIn.setVisibility(View.VISIBLE);
-//                        contentViews.setVisibility(View.GONE);
-                        unloadAccountInfo();
-                        Toast.makeText(MainActivity.this, "LOGOUT is Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.nav_upload: {
-                        Toast.makeText(MainActivity.this, "UPLOAD is Clicked", Toast.LENGTH_SHORT).show();
-                        if (repository == null) {
-                            showMessage(R.string.message_google_sign_in_failed);
-                            break;
-                        }
-
-                        repository.uploadFile(db, GOOGLE_DRIVE_DB_LOCATION)
-                                .addOnSuccessListener(r -> showMessage("Upload success"))
-                                .addOnFailureListener(e -> {
-                                    Log.e(LOG_TAG, "error upload file", e);
-                                    showMessage("Error upload");
-                                });
-                    }
-                    break;
-                    case R.id.nav_download: {
-                        Toast.makeText(MainActivity.this, "DOWNLOAD is Clicked", Toast.LENGTH_SHORT).show();
-                        if (repository == null) {
-                            showMessage(R.string.message_google_sign_in_failed);
-                            break;
-                        }
-                        db.getParentFile().mkdirs();
-                        db.delete();
-                        repository.downloadFile(db, GOOGLE_DRIVE_DB_LOCATION)
-                                .addOnSuccessListener(r -> {
-//                                    InfoRepository repository = new InfoRepository();
-//                                    String infoText = repository.getInfo();
-//                                    inputToDb.setText(infoText);
-                                    showMessage("Retrieved");
-                                })
-                                .addOnFailureListener(e -> {
-                                    Log.e(LOG_TAG, "error download file", e);
-                                    showMessage("Error download");
-                                });
-                    }
-                    break;
-                    case R.id.nav_setting:
-                        Toast.makeText(MainActivity.this, "Settings is Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.nav_email:
-                        Toast.makeText(MainActivity.this, "Email is Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.nav_rate:
-                        Toast.makeText(MainActivity.this, "Rate us is Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        return true;
-
-                }
-                return true;
-            }
-        });
-
-        bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_home));
-        bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_history));
-        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_wallet));
-        bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_person));
-        bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
-            @Override
-            public void onShowItem(MeowBottomNavigation.Model item) {
-                Fragment fragment = null;
-                //check condition
-                switch (item.getId()) {
-                    case 1:
-                        fragment = new FirstFragment();
-                        break;
-                    case 2:
-                        fragment = new SecondFragment();
-                        break;
-                    case 3:
-                        fragment = new ThirdFragment();
-                        loadAccountInfo();
-                        break;
-                    case 4:
-                        fragment = new FourthFragment();
-                        break;
-                }
-                loadfragment(fragment);
-            }
-        });
-
-//        bottomNavigation.setCount(1, "");
-
-        bottomNavigation.show(1, true);
-
-        bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
-            @Override
-            public void onClickItem(MeowBottomNavigation.Model item) {
-                //display toast
-                Toast.makeText(getApplicationContext(), item.getId() + " is selected", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        bottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
-            @Override
-            public void onReselectItem(MeowBottomNavigation.Model item) {
-                //display toast
-                Toast.makeText(getApplicationContext(), item.getId() + " is reselected", Toast.LENGTH_SHORT).show();
-            }
-        });
+        //        bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_home));
+//        bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_history));
+//        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_wallet));
+//        bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_person));
+//        bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
+//            @Override
+//            public void onShowItem(MeowBottomNavigation.Model item) {
+//                Fragment fragment = null;
+//                //check condition
+//                switch (item.getId()) {
+//                    case 1:
+//                        fragment = new FirstFragment();
+//                        break;
+//                    case 2:
+//                        fragment = new SecondFragment();
+//                        break;
+//                    case 3:
+//                        fragment = new ThirdFragment();
+//                        loadAccountInfo();
+//                        break;
+//                    case 4:
+//                        fragment = new FourthFragment();
+//                        break;
+//                }
+//                loadfragment(fragment);
+//            }
+//        });
+//
+////        bottomNavigation.setCount(1, "");
+//
+//        bottomNavigation.show(1, true);
+//
+//        bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
+//            @Override
+//            public void onClickItem(MeowBottomNavigation.Model item) {
+//                //display toast
+//                Toast.makeText(getApplicationContext(), item.getId() + " is selected", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        bottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
+//            @Override
+//            public void onReselectItem(MeowBottomNavigation.Model item) {
+//                //display toast
+//                Toast.makeText(getApplicationContext(), item.getId() + " is reselected", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
 
@@ -369,50 +372,53 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
             }
         });
 
-        loadAccountInfo();
+//        loadAccountInfo();
+
+        View view = bottomNavigationView.findViewById(R.id.bnmHome);
+        view.performClick();
     }
 
-    private void loadAccountInfo() {
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this.getApplicationContext());
-        if (acct != null) {
-            String personName = acct.getDisplayName();
-            String personGivenName = acct.getGivenName();
-            String personFamilyName = acct.getFamilyName();
-            String personEmail = acct.getEmail();
-            String personId = acct.getId();
-            Uri personPhoto = acct.getPhotoUrl();
+//    private void loadAccountInfo() {
+//        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this.getApplicationContext());
+//        if (acct != null) {
+//            String personName = acct.getDisplayName();
+//            String personGivenName = acct.getGivenName();
+//            String personFamilyName = acct.getFamilyName();
+//            String personEmail = acct.getEmail();
+//            String personId = acct.getId();
+//            Uri personPhoto = acct.getPhotoUrl();
+//
+//            NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+//            View headerView = navigationView.getHeaderView(0);
+//            TextView tvUsername = (TextView) headerView.findViewById(R.id.userName);
+//            TextView tvMail = (TextView) headerView.findViewById(R.id.userMail);
+//            TextView tvIcon = (TextView) headerView.findViewById(R.id.icon_text);
+//            ImageView imgAccount = (ImageView) headerView.findViewById(R.id.account_icon);
+//            RelativeLayout relativeLayoutIcon = (RelativeLayout) headerView.findViewById(R.id.icon_container);
+//
+//            tvMail.setVisibility(View.VISIBLE);
+//            tvMail.setText(personEmail);
+//            tvUsername.setVisibility(View.VISIBLE);
+//            tvUsername.setText(personName);
+//            relativeLayoutIcon.setVisibility(View.VISIBLE);
+//            tvIcon.setVisibility(View.VISIBLE);
+//        }
+//    }
 
-            NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-            View headerView = navigationView.getHeaderView(0);
-            TextView tvUsername = (TextView) headerView.findViewById(R.id.userName);
-            TextView tvMail = (TextView) headerView.findViewById(R.id.userMail);
-            TextView tvIcon = (TextView) headerView.findViewById(R.id.icon_text);
-            ImageView imgAccount = (ImageView) headerView.findViewById(R.id.account_icon);
-            RelativeLayout relativeLayoutIcon = (RelativeLayout) headerView.findViewById(R.id.icon_container);
-
-            tvMail.setVisibility(View.VISIBLE);
-            tvMail.setText(personEmail);
-            tvUsername.setVisibility(View.VISIBLE);
-            tvUsername.setText(personName);
-            relativeLayoutIcon.setVisibility(View.VISIBLE);
-            tvIcon.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void unloadAccountInfo() {
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        View headerView = navigationView.getHeaderView(0);
-        TextView tvUsername = (TextView) headerView.findViewById(R.id.userName);
-        TextView tvMail = (TextView) headerView.findViewById(R.id.userMail);
-        TextView tvIcon = (TextView) headerView.findViewById(R.id.icon_text);
-        RelativeLayout relativeLayoutIcon = (RelativeLayout) headerView.findViewById(R.id.icon_container);
-
-        tvMail.setVisibility(View.GONE);
-        tvUsername.setVisibility(View.GONE);
-        relativeLayoutIcon.setVisibility(View.GONE);
-        tvIcon.setVisibility(View.GONE);
-    }
+//    private void unloadAccountInfo() {
+//
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+//        View headerView = navigationView.getHeaderView(0);
+//        TextView tvUsername = (TextView) headerView.findViewById(R.id.userName);
+//        TextView tvMail = (TextView) headerView.findViewById(R.id.userMail);
+//        TextView tvIcon = (TextView) headerView.findViewById(R.id.icon_text);
+//        RelativeLayout relativeLayoutIcon = (RelativeLayout) headerView.findViewById(R.id.icon_container);
+//
+//        tvMail.setVisibility(View.GONE);
+//        tvUsername.setVisibility(View.GONE);
+//        relativeLayoutIcon.setVisibility(View.GONE);
+//        tvIcon.setVisibility(View.GONE);
+//    }
 
 
     private void loadfragment(Fragment fragment) {
@@ -490,6 +496,8 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
         File db = new File(DBConstants.DB_LOCATION);
         if (google.equals("sign in"))
             startGoogleDriveSignIn();
+        if (google.equals("sign out"))
+            startGoogleSignOut();
         if (google.equals("download")) {
             if (repository == null) {
                 showMessage(R.string.message_google_sign_in_failed);
@@ -523,5 +531,35 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
             }
         }
 
+    }
+
+    @Override
+    public void sendToUpload() {
+        InfoRepository infoRepository = new InfoRepository();
+        if (infoRepository.getCheckAutosync()) {
+            File db = new File(DBConstants.DB_LOCATION);
+            if (repository == null) {
+                showMessage(R.string.message_google_sign_in_failed);
+            } else {
+                repository.uploadFile(db, GOOGLE_DRIVE_DB_LOCATION)
+                        .addOnSuccessListener(r -> showMessage("Upload success"))
+                        .addOnFailureListener(e -> {
+                            Log.e(LOG_TAG, "error upload file", e);
+                            showMessage("Error upload");
+                        });
+            }
+            if (bottomNavigationView.getSelectedItemId() == R.id.bnmHistory) {
+                View view1 = bottomNavigationView.findViewById(R.id.bnmHistory);
+                View view2 = bottomNavigationView.findViewById(R.id.bnmHome);
+                view2.performClick();
+                view1.performClick();
+            }
+            if (bottomNavigationView.getSelectedItemId() == R.id.bnmOverview) {
+                View view1 = bottomNavigationView.findViewById(R.id.bnmOverview);
+                View view2 = bottomNavigationView.findViewById(R.id.bnmHome);
+                view2.performClick();
+                view1.performClick();
+            }
+        }
     }
 }

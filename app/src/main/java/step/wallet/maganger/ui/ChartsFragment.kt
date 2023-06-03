@@ -106,8 +106,6 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
     var handler = Handler()
     var runnable: Runnable? = null
     var delay = 1000
-
-
     override fun onResume() {
         //start handler as activity become visible
         handler.postDelayed(Runnable { //do something
@@ -124,7 +122,6 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         super.onResume()
     }
 
-
     override fun onPause() {
         handler.removeCallbacks(runnable!!) //stop handler when activity not visible
         super.onPause()
@@ -140,6 +137,7 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         findViews(view)
 
         initItems()
+        
 
         if (expenseTxt!!.currentTextColor.equals(resources.getColor(R.color.white)))
             loadChartAndLegend("expense")
@@ -155,7 +153,7 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         initStartAndEndDate()
 
 
-        val sdf = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
+        val sdf = SimpleDateFormat("LLLL yyyy", Locale.getDefault())
         periodMonthLabel!!.setText(
             sdf.format(Calendar.getInstance().time)
 //            resources.getStringArray(R.array.months)
@@ -507,7 +505,7 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         }
 
         if (rbMonth!!.isChecked) {
-            val dateFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
+            val dateFormat = SimpleDateFormat("LLLL yyyy", Locale.getDefault())
 
             if (monthPosition == 11) {
                 yearPosition = yearPosition!! + 1

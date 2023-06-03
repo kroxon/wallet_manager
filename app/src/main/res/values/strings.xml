@@ -17,6 +17,7 @@
     <string name="title_activity_category2">Category_Activity2</string>
     <string name="home">Home</string>
     <string name="history">History</string>
+    <string name="empty_history">Empty history</string>
     <string name="profile">Profile</string>
     <string name="overview">Overview</string>
 
@@ -161,6 +162,11 @@
     <string name="default_database">Default database</string>
     <string name="upload_to_google">Upload to Google Cloud</string>
     <string name="download_from_google">Download from Google Drive</string>
+    <string name="not_logged">You are not logged into your Google account!</string>
+    <string name="log_in">Sign in with Google</string>
+    <string name="log_out">Log out</string>
+    <string name="delete_db_ask">Do you want to delete the entire database from the device?</string>
+    <string name="default_db_ask">Do you want to restore the default database? The existing data will be deleted from the device.</string>
 
 
     // default database: categories

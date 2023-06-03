@@ -17,28 +17,26 @@
             android:layout_height="0dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            app:layout_constraintVertical_bias="0.0"
-            tools:layout_editor_absoluteX="0dp">
+            app:layout_constraintTop_toTopOf="parent">
 
         </FrameLayout>
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+<!--        <com.google.android.material.appbar.AppBarLayout-->
+<!--            android:id="@+id/appBarLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/topAppBar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/white"
-                app:navigationIcon="@drawable/ic_menu"
-                app:title="Wallet manager"></com.google.android.material.appbar.MaterialToolbar>
+<!--            <com.google.android.material.appbar.MaterialToolbar-->
+<!--                android:id="@+id/topAppBar"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="?attr/actionBarSize"-->
+<!--                android:background="@color/white"-->
+<!--                app:navigationIcon="@drawable/ic_menu"-->
+<!--                app:title="Wallet manager"></com.google.android.material.appbar.MaterialToolbar>-->
 
-        </com.google.android.material.appbar.AppBarLayout>
+<!--        </com.google.android.material.appbar.AppBarLayout> -->
 
 
         <!--        <Button-->
@@ -124,17 +122,17 @@
         <!--            app:layout_constraintTop_toBottomOf="@+id/restore_from_db" />-->
 
 
-        <com.etebarian.meowbottomnavigation.MeowBottomNavigation
-            android:id="@+id/bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:mbn_backgroundBottomColor="@color/colorApp1"
-            app:mbn_circleColor="@color/white"
-            app:mbn_countTextColor="#ff6f00"
-            app:mbn_defaultIconColor="@color/purple_500"
-            app:mbn_selectedIconColor="@color/colorApp1"></com.etebarian.meowbottomnavigation.MeowBottomNavigation>
+<!--        <com.etebarian.meowbottomnavigation.MeowBottomNavigation-->
+<!--            android:id="@+id/bottom_navigation"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:visibility="gone"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:mbn_backgroundBottomColor="@color/colorApp1"-->
+<!--            app:mbn_circleColor="@color/white"-->
+<!--            app:mbn_countTextColor="#ff6f00"-->
+<!--            app:mbn_defaultIconColor="@color/purple_500"-->
+<!--            app:mbn_selectedIconColor="@color/colorApp1"></com.etebarian.meowbottomnavigation.MeowBottomNavigation>-->
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav_menu"
@@ -177,13 +175,13 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigation_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:visibility="visible"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/my_nav_items" />
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        android:id="@+id/navigation_view"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="start"-->
+<!--        android:visibility="visible"-->
+<!--        app:headerLayout="@layout/nav_header"-->
+<!--        app:menu="@menu/my_nav_items" />-->
 
 </androidx.drawerlayout.widget.DrawerLayout>

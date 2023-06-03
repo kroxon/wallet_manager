@@ -21,53 +21,88 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <RelativeLayout
-                android:id="@+id/account_container"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/loggedLayout"
+                android:visibility="gone"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="parent"
+                android:paddingBottom="16dp"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/gsi_account_icon"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/bg_circle" />
 
-                <TextView
-                    android:id="@+id/gsi_account_nitials"
+                <RelativeLayout
+                    android:id="@+id/account_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="X x"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/gsi_account_icon"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/bg_circle" />
+
+                    <TextView
+                        android:id="@+id/gsi_account_nitials"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="X x"
+                        android:textColor="@color/olx_color_1"
+                        android:textSize="24sp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/gsi_account_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="Name"
                     android:textColor="@color/olx_color_1"
-                    android:textSize="24sp" />
-            </RelativeLayout>
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/account_container"
+                    app:layout_constraintStart_toEndOf="@+id/account_container"
+                    app:layout_constraintTop_toTopOf="@+id/account_container"></TextView>
 
-            <TextView
-                android:id="@+id/gsi_account_name"
+                <TextView
+                    android:id="@+id/gsi_account_mail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="xxxx@gmail.com"
+                    android:textColor="@color/olx_color_1"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@+id/gsi_account_name"
+                    app:layout_constraintTop_toBottomOf="@+id/gsi_account_name"></TextView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/notLoggedLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginBottom="16dp"
-                android:text="Name"
-                android:textColor="@color/olx_color_1"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/account_container"
-                app:layout_constraintStart_toEndOf="@+id/account_container"
-                app:layout_constraintTop_toTopOf="@+id/account_container"></TextView>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingBottom="20dp"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/gsi_account_mail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="xxxx@gmail.com"
-                android:textColor="@color/olx_color_1"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/gsi_account_name"
-                app:layout_constraintTop_toBottomOf="@+id/gsi_account_name"></TextView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="60dp"
+                    android:paddingTop="20dp"
+                    android:text="@string/not_logged"
+                    android:textColor="@color/olx_color_1"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -76,7 +111,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="8dp"
                 android:background="@color/olx_color_1"
-                app:layout_constraintTop_toBottomOf="@+id/account_container" />
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -106,32 +141,32 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-<!--                <TextView-->
-<!--                    android:id="@+id/textView24"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="8dp"-->
-<!--                    android:layout_marginTop="16dp"-->
-<!--                    android:maxWidth="300dp"-->
-<!--                    android:text="@string/show_balance"-->
-<!--                    android:textColor="@color/olx_color_1"-->
-<!--                    android:textSize="14sp"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@+id/textView22" />-->
+                <!--                <TextView-->
+                <!--                    android:id="@+id/textView24"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginLeft="8dp"-->
+                <!--                    android:layout_marginTop="16dp"-->
+                <!--                    android:maxWidth="300dp"-->
+                <!--                    android:text="@string/show_balance"-->
+                <!--                    android:textColor="@color/olx_color_1"-->
+                <!--                    android:textSize="14sp"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@+id/textView22" />-->
 
-<!--                <Switch-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/textView24" />-->
+                <!--                <Switch-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintTop_toTopOf="@+id/textView24" />-->
 
                 <androidx.constraintlayout.widget.ConstraintLayout
 
                     android:id="@+id/constraintLayoutDeleteDb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="16dp"
                     android:clickable="true"
+                    android:paddingTop="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView22">
 
@@ -173,11 +208,11 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayoutDefaultDb"
-                    android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayoutDeleteDb"
-                    android:paddingTop="16dp">
+                    android:clickable="true"
+                    android:paddingTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayoutDeleteDb">
 
 
                     <TextView
@@ -230,25 +265,25 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayoutDefaultDb" />
 
-<!--                <TextView-->
-<!--                    android:id="@+id/textView4"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="8dp"-->
-<!--                    android:layout_marginTop="16dp"-->
-<!--                    android:maxWidth="200dp"-->
-<!--                    android:text="@string/auto_log_in"-->
-<!--                    android:textColor="@color/olx_color_1"-->
-<!--                    android:textSize="14sp"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@+id/textView3" />-->
+                <!--                <TextView-->
+                <!--                    android:id="@+id/textView4"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginLeft="8dp"-->
+                <!--                    android:layout_marginTop="16dp"-->
+                <!--                    android:maxWidth="200dp"-->
+                <!--                    android:text="@string/auto_log_in"-->
+                <!--                    android:textColor="@color/olx_color_1"-->
+                <!--                    android:textSize="14sp"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@+id/textView3" />-->
 
-<!--                <Switch-->
-<!--                    android:id="@+id/switchAutoSync"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/textView4" />-->
+                <!--                <Switch-->
+                <!--                    android:id="@+id/switchAutoSync"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintTop_toTopOf="@+id/textView4" />-->
 
                 <TextView
                     android:id="@+id/textView21"
@@ -367,11 +402,13 @@
 
         </ScrollView>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="test"
-            android:id="@+id/testSync"/>
+<!--        <Button-->
+<!--            android:id="@+id/testSync"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="test"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/gsiButton"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/gsiButton" />-->
 
 
         <com.google.android.gms.common.SignInButton
@@ -380,47 +417,46 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="70dp"
-            android:elevation="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"></com.google.android.gms.common.SignInButton>
 
 
-<!--        <Button-->
-<!--            android:id="@+id/btnDefaultDb"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginBottom="60dp"-->
-<!--            android:background="@color/olx_color_1"-->
-<!--            android:text="defaultDb"-->
-<!--            app:backgroundTint="@null"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"></Button>-->
+        <!--        <Button-->
+        <!--            android:id="@+id/btnDefaultDb"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginBottom="60dp"-->
+        <!--            android:background="@color/olx_color_1"-->
+        <!--            android:text="defaultDb"-->
+        <!--            app:backgroundTint="@null"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"></Button>-->
 
-<!--        <Button-->
-<!--            android:id="@+id/btnRandomArchived"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginBottom="60dp"-->
-<!--            android:background="@color/olx_color_1"-->
-<!--            android:text="archived"-->
-<!--            app:backgroundTint="@null"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toStartOf="@+id/btnDeleteDb"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/btnDefaultDb"></Button>-->
+        <!--        <Button-->
+        <!--            android:id="@+id/btnRandomArchived"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginBottom="60dp"-->
+        <!--            android:background="@color/olx_color_1"-->
+        <!--            android:text="archived"-->
+        <!--            app:backgroundTint="@null"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toStartOf="@+id/btnDeleteDb"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/btnDefaultDb"></Button>-->
 
-<!--        <Button-->
-<!--            android:id="@+id/btnDeleteDb"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="9dp"-->
-<!--            android:layout_marginBottom="60dp"-->
-<!--            android:background="@color/olx_color_1"-->
-<!--            android:text="Delete Db"-->
-<!--            app:backgroundTint="@null"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/btnRandomArchived"></Button>-->
+        <!--        <Button-->
+        <!--            android:id="@+id/btnDeleteDb"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="9dp"-->
+        <!--            android:layout_marginBottom="60dp"-->
+        <!--            android:background="@color/olx_color_1"-->
+        <!--            android:text="Delete Db"-->
+        <!--            app:backgroundTint="@null"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/btnRandomArchived"></Button>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
