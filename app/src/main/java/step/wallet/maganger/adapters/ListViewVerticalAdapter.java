@@ -79,9 +79,14 @@ public class ListViewVerticalAdapter extends ArrayAdapter<String> {
                                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                     public void onClick(DialogInterface dialog, int id) {
                                                         List<String> labels = infoRepository.getSubcategories(idCategory);
-                                                        if (!labels.contains(taskEditText.getText().toString())) {
+                                                        String takenString = taskEditText.getText().toString();
+                                                        if (!labels.contains(takenString)) {
                                                             Toast.makeText(context, "Updated!", Toast.LENGTH_LONG).show();
-                                                            infoRepository.updateSubcategoryName(taskEditText.getText().toString(), list.get(position), idCategory);
+                                                            if (takenString.length() > 19) {
+                                                                takenString = takenString.substring(0,20);
+                                                                Toast.makeText(context, context.getString(R.string.too_long_subcategory), Toast.LENGTH_LONG).show();
+                                                            }
+                                                            infoRepository.updateSubcategoryName(takenString, list.get(position), idCategory);
                                                         } else
                                                             Toast.makeText(context, "\"" + taskEditText.getText().toString() + "\" already exists!", Toast.LENGTH_LONG).show();
                                                         mCallback.ShareClicked(list.get(position));
@@ -97,7 +102,7 @@ public class ListViewVerticalAdapter extends ArrayAdapter<String> {
                                         break;
                                     case R.id.ac_subcat_delete:
                                         AlertDialog.Builder alertDialogBuilder2 = new AlertDialog.Builder(context);
-                                        alertDialogBuilder2.setTitle("Do you want to delete \"" + list.get(position) + "\"?");
+                                        alertDialogBuilder2.setTitle(getContext().getString(R.string.delete_subcat_ask1) + list.get(position) + getContext().getString(R.string.delete_subcat_ask2));
                                         alertDialogBuilder2
                                                 .setCancelable(false)
                                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {

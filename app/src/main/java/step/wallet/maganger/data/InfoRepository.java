@@ -225,8 +225,10 @@ public class InfoRepository {
     }
 
     public void removeSubategoryByName(String nameSubcategory, String idCategory) {
-        String[] whereArgs = new String[]{String.valueOf(nameSubcategory), String.valueOf(idCategory)};
-        db.delete(DBConstants.TABLE_SUBCATEGORY, DBConstants.COL_SUBCAT_NAME + "=? AND " + DBConstants.COL_SUBCAT_SUPERCAT_ID + "=?", whereArgs);
+        String[] whereArgs1 = new String[]{String.valueOf(getIdSubcategory(nameSubcategory, idCategory))};
+        String[] whereArgs2 = new String[]{String.valueOf(nameSubcategory), String.valueOf(idCategory)};
+        db.delete(DBConstants.TABLE_TRANSACTION, DBConstants.COL_TRANSACTION_ID_SUBCAT+ "=?", whereArgs1);
+        db.delete(DBConstants.TABLE_SUBCATEGORY, DBConstants.COL_SUBCAT_NAME + "=? AND " + DBConstants.COL_SUBCAT_SUPERCAT_ID + "=?", whereArgs2);
     }
 
     public void removeSubategory(String idCategory) {

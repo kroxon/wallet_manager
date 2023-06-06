@@ -44,6 +44,6 @@ public class FirstFragment extends Fragment implements DialogFragmentTransaction
 
     @Override
     public void sendSelected() {
-        Toast.makeText(getContext(), "Added transaction successfully!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getContext().getString(R.string.add_transaction_succesfully), Toast.LENGTH_SHORT).show();
     }
 }

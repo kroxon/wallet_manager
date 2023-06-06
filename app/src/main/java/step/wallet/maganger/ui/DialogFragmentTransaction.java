@@ -61,7 +61,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
 
     @Override
     public void onItemClick(View view, int position, String subcatName) {
-        Toast.makeText(getContext(), "You clicked number: " + (position + 1) + ", selected subcategory:  " + subcatName, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "You clicked number: " + (position + 1) + ", selected subcategory:  " + subcatName, Toast.LENGTH_SHORT).show();
         selectedSubcategory = subcatName;
         InfoRepository repository = new InfoRepository();
         writeIdSubcategory = repository.getIdSubcategory(subcatName, writeIdCategory);
@@ -154,7 +154,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         tvInputAlgerba = (TextView) view.findViewById(R.id.tvInputAlgebra);
         dateTv1 = (TextView) view.findViewById(R.id.dateTxt1);
         dateTv2 = (TextView) view.findViewById(R.id.dateTxt2);
-        lResultImg = (ImageView) view.findViewById(R.id.lResultImg);
+//        lResultImg = (ImageView) view.findViewById(R.id.lResultImg);
         lResultTv = (TextView) view.findViewById(R.id.lResultTxt);
 //        mActionCancel = view.findViewById(R.id.action_cancel);
 
@@ -253,7 +253,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         }
 
         // Category Spinner Drop down elements
-        dTCatSpinner = (Spinner) view.findViewById(R.id.dTransactionCatSpinner);
+//        dTCatSpinner = (Spinner) view.findViewById(R.id.dTransactionCatSpinner);
         final Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
@@ -262,29 +262,29 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
         categories = repository.getAllCategories();
         List<String> finalCategories = categories;
 
-        SpinnerCategoryAdapter adapter = new SpinnerCategoryAdapter(getContext(), finalCategories);
-        adapter.setDropDownViewResource(R.layout.dialog_transaction_category_dropdown);
-        dTCatSpinner.setAdapter(adapter);
+//        SpinnerCategoryAdapter adapter = new SpinnerCategoryAdapter(getContext(), finalCategories);
+//        adapter.setDropDownViewResource(R.layout.dialog_transaction_category_dropdown);
+//        dTCatSpinner.setAdapter(adapter);
 
-        dTCatSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getContext(), "" + finalCategories.get(i), Toast.LENGTH_SHORT).show();
-                List<String> subcategoriesList = repository.getSubcategories(repository.getIdCategory(finalCategories.get(i)));
-                String[] subcategories = subcategoriesList.toArray(new String[0]);
-                loadSubcatRecycleViewer(getActivity(), subcategories);
-                try {
-                    selectedSubcategory = subcategoriesList.get(0);
-                } catch (Exception e) {
-                    selectedSubcategory = "0";
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+//        dTCatSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                Toast.makeText(getContext(), "" + finalCategories.get(i), Toast.LENGTH_SHORT).show();
+//                List<String> subcategoriesList = repository.getSubcategories(repository.getIdCategory(finalCategories.get(i)));
+//                String[] subcategories = subcategoriesList.toArray(new String[0]);
+//                loadSubcatRecycleViewer(getActivity(), subcategories);
+//                try {
+//                    selectedSubcategory = subcategoriesList.get(0);
+//                } catch (Exception e) {
+//                    selectedSubcategory = "0";
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
         dateTv1.setText(new SimpleDateFormat("dd", Locale.getDefault()).format(new Date()));
 //        dateTv1.setText(getDate(Long.parseLong("1679788800136"), "dd"));
@@ -352,12 +352,12 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
             }
         });
 
-        lResultImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "" + finalCategories.get(dTCatSpinner.getSelectedItemPosition()), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        lResultImg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(getContext(), "" + finalCategories.get(dTCatSpinner.getSelectedItemPosition()), Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         conLayTrCatSelct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -407,7 +407,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                                 break;
                             }
                         }
-                        Toast.makeText(getContext(), "Currency: " + repository.getAccount(writeAccount).getAccountCurrency(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), "Currency: " + repository.getAccount(writeAccount).getAccountCurrency(), Toast.LENGTH_SHORT).show();
                         descpriptionDialog.dismiss();
                     }
                 });
@@ -810,7 +810,7 @@ public class DialogFragmentTransaction extends DialogFragment implements Horizon
                 }).setNegativeButton(cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(context, "Entry cancelled!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getString(R.string.entry_canceled), Toast.LENGTH_SHORT).show();
 //                        getDialog().cancel();
                     }
                 }).show();

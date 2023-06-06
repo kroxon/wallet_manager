@@ -41,8 +41,7 @@ import step.wallet.maganger.data.InfoRepository
 import java.util.Arrays
 
 
-class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
-    ListViewVerticalAdapter.OnShareClickedListener, DialogFragmentIconSelect.OnInputListener,
+class Category_Activity : AppCompatActivity(), ListViewVerticalAdapter.OnShareClickedListener, DialogFragmentIconSelect.OnInputListener,
     RecyclerViewCategoryActivityAdapter.OnCategoryListener {
 
     // interface to reload categories in third fragment
@@ -115,331 +114,331 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         generateItem()
 
 
-        layoutIcon = findViewById(R.id.layoutIconSelect)
-        layoutButtonsCatName = findViewById(R.id.loButtonsChangeCatName)
-        imgCategoryIcon = findViewById(R.id.acIconCategory)
-        textView_msg = findViewById(R.id.msg)
-        textView_idSelectedCat = findViewById(R.id.idSelectCategory)
-        imgEdit = findViewById(R.id.acEditIconCatName)
-        imgMenuOption = findViewById(R.id.acToolbarOptions)
-        imgAddnewCategory = findViewById(R.id.acToolbarAdd)
-        etNewSubcat = findViewById(R.id.acEtNewSubcat)
-        imgAddSubcat = findViewById(R.id.acImgAddSubcat)
+//        layoutIcon = findViewById(R.id.layoutIconSelect)
+//        layoutButtonsCatName = findViewById(R.id.loButtonsChangeCatName)
+//        imgCategoryIcon = findViewById(R.id.acIconCategory)
+//        textView_msg = findViewById(R.id.msg)
+//        textView_idSelectedCat = findViewById(R.id.idSelectCategory)
+//        imgEdit = findViewById(R.id.acEditIconCatName)
+//        imgMenuOption = findViewById(R.id.acToolbarOptions)
+//        imgAddnewCategory = findViewById(R.id.acToolbarAdd)
+//        etNewSubcat = findViewById(R.id.acEtNewSubcat)
+//        imgAddSubcat = findViewById(R.id.acImgAddSubcat)
         addSubcategorytxt = findViewById(R.id.ac_add_subcategory_txt)
-        spinner = findViewById(R.id.spinner_sample)
-        spinnerSubCat = findViewById(R.id.spinner_subCategoriers)
-        loadSpinnerData()
-        spinner!!.setOnItemSelectedListener(this)
+//        spinner = findViewById(R.id.spinner_sample)
+//        spinnerSubCat = findViewById(R.id.spinner_subCategoriers)
+//        loadSpinnerData()
+//        spinner!!.setOnItemSelectedListener(this)
 
-        toolbar = findViewById(R.id.toolbar)
-        spinner_toolbar = findViewById(R.id.spinner_nav_toolbar_ac)
-        loadToolbarSpinnerData()
-        spinner_toolbar!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                selectedToolbarSpinner(position)
-            }
-        }
-
-
-        bAdd = findViewById(R.id.bAddCategory)
-        bUpdate = findViewById(R.id.bUpdateCategory)
-        etNewCategory = findViewById(R.id.etCategory)
-        etNewCategoryName = findViewById(R.id.etNewNameCategory)
-        etCatName = findViewById(R.id.acNameEt)
-        bSaveCatName = findViewById(R.id.bSaveNewCatName)
-        bCancelcatName = findViewById(R.id.bCancelNewCatName)
-
-        imgAddSubcat!!.setOnClickListener {
-            if (!etNewSubcat!!.text.toString().equals("")) {
-                addSubcategory(etNewSubcat!!.text.toString())
-                etNewSubcat!!.onEditorAction(EditorInfo.IME_ACTION_DONE)
-                etNewSubcat!!.setText("")
-            }
-        }
-
-        listView = findViewById<ListView>(R.id.acListview)
-
-        listView!!.setOnItemClickListener { adapterView, view, i, l ->
-            Toast.makeText(this, "" + i + " + " + l, Toast.LENGTH_SHORT).show()
-        }
+//        toolbar = findViewById(R.id.toolbar)
+//        spinner_toolbar = findViewById(R.id.spinner_nav_toolbar_ac)
+//        loadToolbarSpinnerData()
+//        spinner_toolbar!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//            }
+//
+//            override fun onItemSelected(
+//                parent: AdapterView<*>?,
+//                view: View?,
+//                position: Int,
+//                id: Long
+//            ) {
+//                selectedToolbarSpinner(position)
+//            }
+//        }
 
 
-        bRemove = findViewById(R.id.bRemoveCategory) as Button
-        bRemove!!.setOnClickListener {
-            removeSelectedCategory(textView_msg!!.text as String)
-            loadSpinnerData()
-        }
+//        bAdd = findViewById(R.id.bAddCategory)
+//        bUpdate = findViewById(R.id.bUpdateCategory)
+//        etNewCategory = findViewById(R.id.etCategory)
+//        etNewCategoryName = findViewById(R.id.etNewNameCategory)
+//        etCatName = findViewById(R.id.acNameEt)
+//        bSaveCatName = findViewById(R.id.bSaveNewCatName)
+//        bCancelcatName = findViewById(R.id.bCancelNewCatName)
 
-        bAdd!!.setOnClickListener {
-            addCategory(etNewCategory!!.text.toString())
-            loadSpinnerData()
+//        imgAddSubcat!!.setOnClickListener {
+//            if (!etNewSubcat!!.text.toString().equals("")) {
+//                addSubcategory(etNewSubcat!!.text.toString())
+//                etNewSubcat!!.onEditorAction(EditorInfo.IME_ACTION_DONE)
+//                etNewSubcat!!.setText("")
+//            }
+//        }
 
-        }
+//        listView = findViewById<ListView>(R.id.acListview)
+//
+//        listView!!.setOnItemClickListener { adapterView, view, i, l ->
+//            Toast.makeText(this, "" + i + " + " + l, Toast.LENGTH_SHORT).show()
+//        }
 
-        bUpdate!!.setOnClickListener {
-            updateCategoryName(etNewCategoryName!!.text.toString(), textView_msg!!.text.toString())
-            loadSpinnerData()
-//            loadListViewSubcat()
-        }
+//
+//        bRemove = findViewById(R.id.bRemoveCategory) as Button
+//        bRemove!!.setOnClickListener {
+//            removeSelectedCategory(textView_msg!!.text as String)
+////            loadSpinnerData()
+//        }
+//
+//        bAdd!!.setOnClickListener {
+//            addCategory(etNewCategory!!.text.toString())
+////            loadSpinnerData()
+//
+//        }
+//
+//        bUpdate!!.setOnClickListener {
+//            updateCategoryName(etNewCategoryName!!.text.toString(), textView_msg!!.text.toString())
+//            loadSpinnerData()
+////            loadListViewSubcat()
+//        }
 
-        imgEdit!!.setOnClickListener {
-            etCatName!!.setEnabled(true)
-            layoutButtonsCatName?.visibility = View.VISIBLE
-            imgEdit?.visibility = View.GONE
-        }
+//        imgEdit!!.setOnClickListener {
+//            etCatName!!.setEnabled(true)
+//            layoutButtonsCatName?.visibility = View.VISIBLE
+//            imgEdit?.visibility = View.GONE
+//        }
+//
+//        bSaveCatName!!.setOnClickListener {
+//            layoutButtonsCatName?.visibility = View.GONE
+//            imgEdit?.visibility = View.VISIBLE
+//            etCatName!!.setEnabled(false)
+//            //update edited Category Name
+//            val repository = InfoRepository()
+//            repository.updateCategoryName(etCatName!!.text.toString(), selectegCategory)
+////            loadToolbarSpinnerData()
+//            selectegCategory = etCatName!!.text.toString()
+//        }
+//
+//        bCancelcatName!!.setOnClickListener {
+//            layoutButtonsCatName?.visibility = View.GONE
+//            imgEdit?.visibility = View.VISIBLE
+//            etCatName!!.setEnabled(false)
+//            etCatName!!.setText(selectegCategory)
+//        }
+//
+//        layoutIcon!!.setOnClickListener {
+//            val dialog = DialogFragmentIconSelect()
+//            val fm = this@Category_Activity.fragmentManager
+//            dialog.show(fm, "DialogFragmentIconSelect")
+//        }
 
-        bSaveCatName!!.setOnClickListener {
-            layoutButtonsCatName?.visibility = View.GONE
-            imgEdit?.visibility = View.VISIBLE
-            etCatName!!.setEnabled(false)
-            //update edited Category Name
-            val repository = InfoRepository()
-            repository.updateCategoryName(etCatName!!.text.toString(), selectegCategory)
-            loadToolbarSpinnerData()
-            selectegCategory = etCatName!!.text.toString()
-        }
+//        imgAddnewCategory!!.setOnClickListener {
+//
+//            val repository = InfoRepository()
+//            val labels: List<String> = repository.allCategories as List<String>
+//            var i = 1
+//            while (true) {
+//                if (labels.contains("New Category " + i))
+//                    i++
+//                else {
+//                    addCategory("New Category " + i)
+//                    selectegCategory = "New Category " + i
+//                    break
+//                }
+//            }
+////            loadToolbarSpinnerData()
+////            setSpinnerToolbarSelectedValue(spinner_toolbar!!, selectegCategory!!)
+////            addSubcategory("subcategory")
+//            loadRVExpenseCategories()
+//        }
 
-        bCancelcatName!!.setOnClickListener {
-            layoutButtonsCatName?.visibility = View.GONE
-            imgEdit?.visibility = View.VISIBLE
-            etCatName!!.setEnabled(false)
-            etCatName!!.setText(selectegCategory)
-        }
-
-        layoutIcon!!.setOnClickListener {
-            val dialog = DialogFragmentIconSelect()
-            val fm = this@Category_Activity.fragmentManager
-            dialog.show(fm, "DialogFragmentIconSelect")
-        }
-
-        imgAddnewCategory!!.setOnClickListener {
-
-            val repository = InfoRepository()
-            val labels: List<String> = repository.allCategories as List<String>
-            var i = 1
-            while (true) {
-                if (labels.contains("New Category " + i))
-                    i++
-                else {
-                    addCategory("New Category " + i)
-                    selectegCategory = "New Category " + i
-                    break
-                }
-            }
-            loadToolbarSpinnerData()
-            setSpinnerToolbarSelectedValue(spinner_toolbar!!, selectegCategory!!)
-            addSubcategory("subcategory")
-            loadRVExpenseCategories()
-        }
-
-        imgMenuOption!!.setOnClickListener {
-            val popupMenu = PopupMenu(this, imgMenuOption)
-            popupMenu.menuInflater.inflate(R.menu.ac_menu_option, popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.ac_mo_delete -> {
-                        Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
-                            .show()
-
-                        val builder = AlertDialog.Builder(this)
-                        builder.setMessage(context!!.getString(R.string.delete_ask_1_1) + " \n\"" + selectegCategory + "\"\n"
-                                + context!!.getString(R.string.delete_ask_2) + "?")
-                            .setCancelable(false)
-                            .setPositiveButton(
-                                "Yes",
-                                DialogInterface.OnClickListener { dialog, id ->
-                                    dialog.cancel()
-                                    val repository = InfoRepository()
-                                    repository.removeCategory(selectegCategory)
-                                    loadToolbarSpinnerData()
-                                    try {
-                                        selectegCategory = spinner_toolbar!!.get(0).toString()
-                                    } catch (ex: Exception) {
-                                        //your error handling code here
-                                        //here, consider adding Log.e("SmsReceiver", ex.localizedMessage)
-                                        //this log statement simply prints errors to your android studio terminal and will help with debugging, alternatively leave it out
-                                        Toast.makeText(
-                                            this,
-                                            ex.localizedMessage,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                })
-                            .setNegativeButton(
-                                "No",
-                                DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
-                        val alert = builder.create()
-                        alert.show()
-
-                    }
-
-//                    R.id.ac_mo_merge ->
+//        imgMenuOption!!.setOnClickListener {
+//            val popupMenu = PopupMenu(this, imgMenuOption)
+//            popupMenu.menuInflater.inflate(R.menu.ac_menu_option, popupMenu.menu)
+//            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+//                when (item.itemId) {
+//                    R.id.ac_mo_delete -> {
 //                        Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
 //                            .show()
-                }
-                true
-            })
-            popupMenu.show()
-        }
+//
+//                        val builder = AlertDialog.Builder(this)
+//                        builder.setMessage(context!!.getString(R.string.delete_ask_1_1) + " \n\"" + selectegCategory + "\"\n"
+//                                + context!!.getString(R.string.delete_ask_2) + "?")
+//                            .setCancelable(false)
+//                            .setPositiveButton(
+//                                "Yes",
+//                                DialogInterface.OnClickListener { dialog, id ->
+//                                    dialog.cancel()
+//                                    val repository = InfoRepository()
+//                                    repository.removeCategory(selectegCategory)
+//                                    loadToolbarSpinnerData()
+//                                    try {
+//                                        selectegCategory = spinner_toolbar!!.get(0).toString()
+//                                    } catch (ex: Exception) {
+//                                        //your error handling code here
+//                                        //here, consider adding Log.e("SmsReceiver", ex.localizedMessage)
+//                                        //this log statement simply prints errors to your android studio terminal and will help with debugging, alternatively leave it out
+//                                        Toast.makeText(
+//                                            this,
+//                                            ex.localizedMessage,
+//                                            Toast.LENGTH_SHORT
+//                                        ).show()
+//                                    }
+//                                })
+//                            .setNegativeButton(
+//                                "No",
+//                                DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
+//                        val alert = builder.create()
+//                        alert.show()
+//
+//                    }
+//
+////                    R.id.ac_mo_merge ->
+////                        Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
+////                            .show()
+//                }
+//                true
+//            })
+//            popupMenu.show()
+//        }
     }
 
 
     /**
      * Function to load the spinner data from SQLite database
      */
-    private fun loadSpinnerData() {
-        val repository = InfoRepository()
-        val labels: List<String> = repository.allCategories as List<String>
+//    private fun loadSpinnerData() {
+//        val repository = InfoRepository()
+//        val labels: List<String> = repository.allCategories as List<String>
+//
+//        // Creating adapter for spinner
+//        val dataAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+//
+//        // Drop down layout style - list view with radio button
+//        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//
+//        // attaching data adapter to spinner
+//        spinner!!.adapter = dataAdapter
+//
+//    }
 
-        // Creating adapter for spinner
-        val dataAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+//    private fun loadToolbarSpinnerData() {
+//        val repository = InfoRepository()
+//        val labels: List<String> = repository.allCategories as List<String>
+//
+//        // Creating adapter for spinner
+//        val dataAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+//
+//        // Drop down layout style - list view with  button
+//        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//
+//        // attaching data adapter to spinner
+//        spinner_toolbar!!.adapter = dataAdapter
+//    }
 
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//    private fun selectedToolbarSpinner(position: Int) {
+//        val repository = InfoRepository()
+//        val labels: List<String> = repository.allCategories as List<String>
+//        etCatName!!.setText(labels.get(position))
+//        etCatName!!.setEnabled(false)
+//        selectegCategory = labels.get(position)
+//
+//        //add load category icon
+//        try {
+//            imgCategoryIcon?.setImageResource(repository.getIdCategoryIcon((labels.get(position))))
+//        } catch (ex: Exception) {
+//            //your error handling code here
+//            //here, consider adding Log.e("SmsReceiver", ex.localizedMessage)
+//            //this log statement simply prints errors to your android studio terminal and will help with debugging, alternatively leave it out
+//            Toast.makeText(this, ex.localizedMessage, Toast.LENGTH_SHORT).show()
+//        }
+//
+//        loadListViewSubcat(position)
+//    }
 
-        // attaching data adapter to spinner
-        spinner!!.adapter = dataAdapter
+//    private fun loadSpinnerSUbcat(idCategory: String) {
+//        val repository = InfoRepository()
+//        val labels: List<String> = repository.getSubcategories(idCategory) as List<String>
+//
+//        // Creating adapter for spinner
+//        val dataAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+//
+//        // Drop down layout style - list view with radio button
+//        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//
+//        // attaching data adapter to spinner
+//        spinnerSubCat!!.adapter = dataAdapter
+//    }
 
-    }
+//    override fun onItemSelected(
+//        parent: AdapterView<*>, view: View?, position: Int, id: Long
+//    ) {
+//        val repository = InfoRepository()
+////        loadSpinnerData()
+//        val label = parent.getItemAtPosition(position).toString()
+//
+//        textView_msg!!.text = "$label"
+//        // On selecting a spinner item
+//
+//        textView_idSelectedCat!!.text = "" + repository.getIdCategory("$label")
+//
+////        loadSpinnerSUbcat(textView_idSelectedCat!!.text.toString())
+//
+//    }
 
-    private fun loadToolbarSpinnerData() {
-        val repository = InfoRepository()
-        val labels: List<String> = repository.allCategories as List<String>
+//    fun loadListViewSubcat(position: Int) {
+//        val arrayAdapter: ListViewVerticalAdapter
+//        val repository = InfoRepository()
+//        val labels: List<String> =
+//            repository.getSubcategories(repository.getIdCategory(selectegCategory)) as List<String>
+//        arrayAdapter =
+//            ListViewVerticalAdapter(this, labels as ArrayList<String>?, repository.getIdCategory(repository.allCategories?.get(position + 1)))
+//        arrayAdapter.setOnShareClickedListener(this)
+//        listView!!.adapter = arrayAdapter
+//    }
 
-        // Creating adapter for spinner
-        val dataAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+//    override fun onNothingSelected(arg0: AdapterView<*>?) {
+//        // TODO Auto-generated method stub
+//    }
 
-        // Drop down layout style - list view with  button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//    private fun removeSelectedCategory(name: String) {
+//        val repository = InfoRepository()
+//        repository.removeCategory(name)
+//    }
 
-        // attaching data adapter to spinner
-        spinner_toolbar!!.adapter = dataAdapter
-    }
+//    private fun addCategory(name: String) {
+//        val repository = InfoRepository()
+//        val labels: List<String> = repository.allCategories as List<String>
+//        var flag = true
+//        for (i in labels)
+//            if (i.equals(name))
+//                flag = false
+//        if (flag == true && labels.size < 12)
+//            repository.addCategory(name, "expense")
+//        else if (flag == false)
+//            Toast.makeText(this, "\"$name\" already exists", Toast.LENGTH_SHORT).show()
+//        else if (labels.size >= 12)
+//            Toast.makeText(this, "to much categories", Toast.LENGTH_SHORT).show()
+//    }
 
-    private fun selectedToolbarSpinner(position: Int) {
-        val repository = InfoRepository()
-        val labels: List<String> = repository.allCategories as List<String>
-        etCatName!!.setText(labels.get(position))
-        etCatName!!.setEnabled(false)
-        selectegCategory = labels.get(position)
+//    private fun addSubcategory(name: String) {
+//        val repository = InfoRepository()
+//        val labels: List<String> =
+//            repository.getSubcategories(repository.getIdCategory(spinner_toolbar!!.selectedItem.toString())) as List<String>
+//        var flag = true
+//        for (i in labels)
+//            if (i.equals(name))
+//                flag = false
+//        if (flag == true) {
+//            repository.addSubcategory(
+//                name,
+//                repository.getIdCategory(spinner_toolbar!!.selectedItem.toString())
+//            )
+//            Toast.makeText(this, "\"$name\" added", Toast.LENGTH_SHORT).show()
+//        } else
+//            Toast.makeText(this, "\"$name\" already exists", Toast.LENGTH_SHORT).show()
+//        loadListViewSubcat(spinner_toolbar!!.selectedItemPosition)
+//    }
 
-        //add load category icon
-        try {
-            imgCategoryIcon?.setImageResource(repository.getIdCategoryIcon((labels.get(position))))
-        } catch (ex: Exception) {
-            //your error handling code here
-            //here, consider adding Log.e("SmsReceiver", ex.localizedMessage)
-            //this log statement simply prints errors to your android studio terminal and will help with debugging, alternatively leave it out
-            Toast.makeText(this, ex.localizedMessage, Toast.LENGTH_SHORT).show()
-        }
-
-        loadListViewSubcat(position)
-    }
-
-    private fun loadSpinnerSUbcat(idCategory: String) {
-        val repository = InfoRepository()
-        val labels: List<String> = repository.getSubcategories(idCategory) as List<String>
-
-        // Creating adapter for spinner
-        val dataAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
-
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        // attaching data adapter to spinner
-        spinnerSubCat!!.adapter = dataAdapter
-    }
-
-    override fun onItemSelected(
-        parent: AdapterView<*>, view: View?, position: Int, id: Long
-    ) {
-        val repository = InfoRepository()
-//        loadSpinnerData()
-        val label = parent.getItemAtPosition(position).toString()
-
-        textView_msg!!.text = "$label"
-        // On selecting a spinner item
-
-        textView_idSelectedCat!!.text = "" + repository.getIdCategory("$label")
-
-        loadSpinnerSUbcat(textView_idSelectedCat!!.text.toString())
-
-    }
-
-    fun loadListViewSubcat(position: Int) {
-        val arrayAdapter: ListViewVerticalAdapter
-        val repository = InfoRepository()
-        val labels: List<String> =
-            repository.getSubcategories(repository.getIdCategory(selectegCategory)) as List<String>
-        arrayAdapter =
-            ListViewVerticalAdapter(this, labels as ArrayList<String>?, "" + (position + 1))
-        arrayAdapter.setOnShareClickedListener(this)
-        listView!!.adapter = arrayAdapter
-    }
-
-    override fun onNothingSelected(arg0: AdapterView<*>?) {
-        // TODO Auto-generated method stub
-    }
-
-    private fun removeSelectedCategory(name: String) {
-        val repository = InfoRepository()
-        repository.removeCategory(name)
-    }
-
-    private fun addCategory(name: String) {
-        val repository = InfoRepository()
-        val labels: List<String> = repository.allCategories as List<String>
-        var flag = true
-        for (i in labels)
-            if (i.equals(name))
-                flag = false
-        if (flag == true && labels.size < 12)
-            repository.addCategory(name, "expense")
-        else if (flag == false)
-            Toast.makeText(this, "\"$name\" already exists", Toast.LENGTH_SHORT).show()
-        else if (labels.size >= 12)
-            Toast.makeText(this, "to much categories", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun addSubcategory(name: String) {
-        val repository = InfoRepository()
-        val labels: List<String> =
-            repository.getSubcategories(repository.getIdCategory(spinner_toolbar!!.selectedItem.toString())) as List<String>
-        var flag = true
-        for (i in labels)
-            if (i.equals(name))
-                flag = false
-        if (flag == true) {
-            repository.addSubcategory(
-                name,
-                repository.getIdCategory(spinner_toolbar!!.selectedItem.toString())
-            )
-            Toast.makeText(this, "\"$name\" added", Toast.LENGTH_SHORT).show()
-        } else
-            Toast.makeText(this, "\"$name\" already exists", Toast.LENGTH_SHORT).show()
-        loadListViewSubcat(spinner_toolbar!!.selectedItemPosition)
-    }
-
-    private fun updateCategoryName(newName: String, oldName: String) {
-        val repository = InfoRepository()
-        val labels: List<String> = repository.allCategories as List<String>
-        var flag = true
-        for (i in labels)
-            if (i.equals(newName))
-                flag = false
-        if (flag == true)
-            repository.updateCategoryName(newName, oldName)
-        else
-            Toast.makeText(this, "\"$newName\" already exists", Toast.LENGTH_SHORT).show()
-    }
+//    private fun updateCategoryName(newName: String, oldName: String) {
+//        val repository = InfoRepository()
+//        val labels: List<String> = repository.allCategories as List<String>
+//        var flag = true
+//        for (i in labels)
+//            if (i.equals(newName))
+//                flag = false
+//        if (flag == true)
+//            repository.updateCategoryName(newName, oldName)
+//        else
+//            Toast.makeText(this, "\"$newName\" already exists", Toast.LENGTH_SHORT).show()
+//    }
 
     override fun ShareClicked(subcategorycatName: String?) {
         loadLVSubcategories(txtCategoryName!!.text.toString())
@@ -456,43 +455,43 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             loadRVIncomeCategories()
     }
 
-    private fun setSpinnerToolbarSelectedValue(spinner: Spinner, value: Any) {
-        for (i in 0 until spinner.count) {
-            if (spinner.getItemAtPosition(i) == value) {
-                spinner.setSelection(i)
-                break
-            }
-        }
-    }
+//    private fun setSpinnerToolbarSelectedValue(spinner: Spinner, value: Any) {
+//        for (i in 0 until spinner.count) {
+//            if (spinner.getItemAtPosition(i) == value) {
+//                spinner.setSelection(i)
+//                break
+//            }
+//        }
+//    }
 
-    private fun showEditItemDialog(c: Context, oldSubcatrgory: String, idCategory: String) {
-        val taskEditText = EditText(c)
-        taskEditText.setText(oldSubcatrgory)
-        val dialog = AlertDialog.Builder(c)
-            .setTitle("Edit subcategory name")
-            .setView(taskEditText)
-            .setPositiveButton("Ok") { dialog, which ->
-                val repository = InfoRepository()
-                val labels: List<String> =
-                    repository.getSubcategories(repository.getIdCategory(txtCategoryName!!.toString())) as List<String>
-                if (!labels.contains(oldSubcatrgory)) {
-                    repository.updateSubcategoryName(
-                        taskEditText.text.toString(),
-                        oldSubcatrgory,
-                        idCategory
-                    )
-                    Toast.makeText(this, "Changed!", Toast.LENGTH_SHORT).show()
-                } else
-                    Toast.makeText(
-                        this,
-                        taskEditText.text.toString() + " already exists!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-            }
-            .setNegativeButton("Cancel", null)
-            .create()
-        dialog.show()
-    }
+//    private fun showEditItemDialog(c: Context, oldSubcatrgory: String, idCategory: String) {
+//        val taskEditText = EditText(c)
+//        taskEditText.setText(oldSubcatrgory)
+//        val dialog = AlertDialog.Builder(c)
+//            .setTitle("Edit subcategory name")
+//            .setView(taskEditText)
+//            .setPositiveButton("Ok") { dialog, which ->
+//                val repository = InfoRepository()
+//                val labels: List<String> =
+//                    repository.getSubcategories(repository.getIdCategory(txtCategoryName!!.toString())) as List<String>
+//                if (!labels.contains(oldSubcatrgory)) {
+//                    repository.updateSubcategoryName(
+//                        taskEditText.text.toString(),
+//                        oldSubcatrgory,
+//                        idCategory
+//                    )
+//                    Toast.makeText(this, "Changed!", Toast.LENGTH_SHORT).show()
+//                } else
+//                    Toast.makeText(
+//                        this,
+//                        taskEditText.text.toString() + " already exists!",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//            }
+//            .setNegativeButton("Cancel", null)
+//            .create()
+//        dialog.show()
+//    }
 
     private fun init() {
         recyclerViewCategories = findViewById<RecyclerView>(R.id.ac_categories_rv)
@@ -533,14 +532,10 @@ class Category_Activity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     private fun loadLVSubcategories(catName: String) {
         val arrayAdapter: ListViewVerticalAdapter
         val repository = InfoRepository()
-        var id = (repository.allCategories!!.indexOf(repository.getIdCategory(catName))).toString()
+        var id = repository.getIdCategory(catName).toString()
         val labels: List<String> =
             repository.getSubcategories(repository.getIdCategory(catName)) as List<String>
-        arrayAdapter = ListViewVerticalAdapter(
-            this,
-            labels as ArrayList<String>?,
-            repository.getIdCategory(txtCategoryName!!.text.toString())
-        )
+        arrayAdapter = ListViewVerticalAdapter(this, labels as ArrayList<String>?, id)
         arrayAdapter.setOnShareClickedListener(this)
         listViewSubcategories!!.adapter = arrayAdapter
     }

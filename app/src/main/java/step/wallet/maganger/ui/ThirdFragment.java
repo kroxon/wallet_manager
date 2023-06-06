@@ -163,7 +163,7 @@ public class ThirdFragment extends Fragment implements DialogFragmentAccount.OnS
                 @Override
                 public void onItemClick(int position) {
                     // open account dialog with extra input
-                    Toast.makeText(getContext(), arrayAccountList.get(position).getAccountName() + " " + arrayAccountList.get(position).getAccountCurrency(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), arrayAccountList.get(position).getAccountName() + " " + arrayAccountList.get(position).getAccountCurrency(), Toast.LENGTH_SHORT).show();
                     DialogFragmentAccount dialog = new DialogFragmentAccount();
                     dialog.setTargetFragment(ThirdFragment.this, 1);
                     Bundle data = new Bundle();
@@ -176,7 +176,7 @@ public class ThirdFragment extends Fragment implements DialogFragmentAccount.OnS
                 }
             });
         } else
-            Toast.makeText(getContext(), "no accounts", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getContext().getString(R.string.no_accounts), Toast.LENGTH_SHORT).show();
     }
 
     private void loadRVExpenses() {
@@ -205,7 +205,7 @@ public class ThirdFragment extends Fragment implements DialogFragmentAccount.OnS
 
     @Override
     public void onSaveClick(String s) {
-        Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<resources>
+    <string name="app_name">Wallet manager</string>
+
+    <string name="message_drive_client_is_ready">Klient Dysku Google jest gotowy</string>
+    <string name="message_google_sign_in_failed">Logowanie Google nie powiodło się</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="title_activity_category" translatable="false">Category_Activity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label" translatable="false">First Fragment</string>
+    <string name="second_fragment_label" translatable="false">Second Fragment</string>
+    <string name="next" translatable="false">Next</string>
+    <string name="previous" translatable="false">Previous</string>
+
+    <string name="hello_first_fragment" translatable="false">Hello first fragment</string>
+    <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_category2" translatable="false">Category_Activity2</string>
+    <string name="home">Start</string>
+    <string name="history">Historia</string>
+    <string name="empty_history">Pusta historia</string>
+    <string name="profile">Profil</string>
+    <string name="overview">Przegląd</string>
+
+    <string name="dialog_catname_rename">Nazwa kategorii:</string>.
+
+    // ogólne
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
+    <string name="cancel">Anuluj</string>
+    <string name="edit">Edytuj</string>
+    <string name="delete">Usuń</string>
+    <string name="cofnij">Cofnij</string>
+
+
+    //dialog transaction
+    <string name="d_tr_notes">Notatki...</string>
+    <string name="d_tr_acc_select">Wybierz konto</string>
+    <string name="d_tr_acc">Konto</string>
+    <string name="d_tr_date">Data</string>
+    <string name="d_tr_expense">Wydatki</string>
+    <string name="d_tr_income">Dochód</string>
+    <string name="d_tr_category">Kategoria</string>
+    <string name="d_tr_save">Zapisać transakcję</string>
+    <string name="d_tr_update">Zaktualizuj transakcję?</string>
+    <string name="d_tr_suss_saved">Zapisano pomyślnie!</string>
+    <string name="d_tr_suss_updated">Pomyślnie zaktualizowano!</string>
+    <string name="add_transaction_succesfully">Pomyślnie dodano transakcję!</string>
+    <string name="entry_canceled">Wpis anulowany!</string>
+
+
+    //dialog date picker
+    <string name="d_date_select_month">Select a month</string>
+    <string name="jan">styczeń</string>
+    <string name="feb">Luty</string>
+    <string name="mar">Marzec</string>
+    <string name="apr">kwiecień</string>
+    <string name="may">May</string>
+    <string name="jun">czerwiec</string>
+    <string name="jul">lipiec</string>
+    <string name="aug">August</string>
+    <string name="sep">Wrzesień</string>
+    <string name="ost">Październik</string>
+    <string name="nov">listopad</string>
+    <string name="dec">grudzień</string>
+    <string name="day">Day</string>
+    <string name="month">Month</string>
+    <string name="year">Rok</string>
+    <string name="custom">Custom</string>
+    <string name="today">Dzisiaj</string>
+    <string name="yesterday">Wczoraj</string>
+    <string name="tomorow">Tomorow</string>
+    <string name="select_range">Wybierz zakres dat</string>
+
+
+    <string-array name="months">
+        <item>styczeń</item>
+        <item>Luty</item>
+        <item>marzec</item>
+        <item>kwiecień</itemm>
+        <item>maj</item>
+        <item>czerwiec</item>
+        <item>lipiec</item>
+        <item>sierpień</item>
+        <item>wrzesień</item>
+        <item>październik</item>
+        <item>listopad</item>
+        <item>grudzień</item>
+    </string-array>
+
+
+
+
+    //color picker
+    <string name="colorpicker_dialog_cancel">Anuluj</string>
+    <string name="colorpicker_dialog_ok">Zapisz</string>
+
+
+    //history transaction
+    <string name="filter_save">Zapisz</string>
+    <string name="filter_cancel">Anuluj</string>
+    <string name="filter_clear">Wyczyść</string>
+    <string name="filter_amount">Kwota</string>
+    <string name="filter_currency">Waluta</string>
+    <string name="filter_currency_all">Wszystko</string>
+    <string name="filter_period">Okres</string>
+    <string name="filter_type_operation">Rodzaj operacji</string>
+    <string name="filter_account">Konto</string>
+    <string name="filter_from">Od</string>
+    <string name="filter_to">Do</string>
+    <string name="filter_date_start">Start</string>
+    <string name="filter_date_end">Koniec</string>
+    <string name="filter_type_debits">Obciążenia</string>
+    <string name="filter_type_all">Wszystkie</string>
+    <string name="filter_type_credits">Uznania</string>
+
+    <string-array name="periods">
+        <item>WSZYSTKO</item>
+        <item>OSTATNI TYDZIEŃ</item>
+        <item>OSTATNI MIESIĄC</item>
+        <item>OSTATNI ROK</item>
+        <item>INNE</item>
+    </string-array>
+
+
+    // account fragment
+    <string name="account">Konta</string>
+    <string name="search">Wyszukiwanie...</string>
+    <string name="description">Opis</string>
+    <string name="account_balance">Saldo konta</string>
+    <string name="lack_description">Brak opisu</string>
+    <string name="select_currency">Wybierz walutę</string>
+    <string name="new_account">Nowy rachunek</string>
+    <string name="write">Napisz...</string>
+    <string name="to_many_acc">Za dużo kont!</string>
+    <string name="exists">Taka nazwa już istnieje</string>
+    <string name="write_name">Wpisz nazwę konta</string>
+    <string name="primary_account">Konto podstawowe</string>
+    <string name="updated">Zaktualizowano</string>
+    <string name="delete_ask_1">Czy chcesz usunąć konto?</string>
+    <string name="delete_ask_2">i wszystkie transakcje z nim związane?</string>
+    <string name="delete_account">Usuń konto</string>
+    <string name="categories">Kategorie</string>
+    <string name="expense_categories">Wydatki</string>
+    <string name="income_categorie">Dochody</string>
+    <string name="no_accounts">Brak kont</string>
+
+
+    // charts
+    <string name="details">Szczegóły</string>
+
+    // google drive
+    <string name="error_upload">Błąd przesyłania</string>
+    <string name="error_download">Błąd pobierania</string>
+
+
+    // actvity Category
+    <string name="delete_ask_1_1">Czy chcesz usunąć kategorię: </string>
+    <string name="add_subactegory">Dodaj podkategorię </string>
+    <string name="new_subcategory">nowa podkategoria </string>
+    <string name="delete_subcat_ask1">Czy chcesz usunąć "</string>
+    <string name="delete_subcat_ask2">" i wszystkie transakcje z nim związane?</string>
+    <string name="too_long_subcategory">Zbyt długa nazwa podkategorii!</string>
+
+    // setting/last fragment
+    <string name="account_setting">Ustawienia Google</string>
+    <string name="auto_log_in">Automatyczne logowanie do konta Google podczas uruchamiania</string>
+    <string name="auto_cloud_save">Autosynchronizacja z Dyskiem Google</string>
+    <string name="auto_cloud_load">Ładowanie danych z Google Cloud podczas uruchamiania aplikacji</string>
+    <string name="general_setting">Ustawienia ogólne</string>
+    <string name="show_balance">Pokaż saldo konta</string>
+    <string name="delete_database">Usuń bazę danych</string>
+    <string name="default_database">Domyślna baza danych</string>
+    <string name="upload_to_google">Przesyłanie do Google Drive</string>
+    <string name="download_from_google">Download from Google Drive</string>
+    <string name="not_logged">Nie jesteś zalogowany na swoje konto Google!</string>
+    <string name="log_in">Zaloguj się za pomocą Google</string>
+    <string name="log_out">Wyloguj się</string>
+    <string name="delete_db_ask">Czy chcesz usunąć całą bazę danych z urządzenia?</string>
+    <string name="default_db_ask">Czy chcesz przywrócić domyślną bazę danych? Istniejące dane zostaną usunięte z urządzenia.</string>
+    <string name="removed_db">Baza danych została usunięta!</string>
+
+
+    // default database: categories
+
+    <string-array name="categories">
+        <item>żywność i napoje</item>
+        <item>mieszkanie</item>
+        <item>transport</item>
+        <item>higiena i uroda</item>
+        <item>opieka zdrowotna</item>
+        <item>rozrywka i wypoczynek</item>
+        <item>odzież i obuwie</item>
+        <item>komunikacja i technologia</item>
+        <item>finanse i ubezpieczenie</item>
+        <item>edukacja</item>
+
+        <item>praca</item>
+        <item>inwestycje</item>
+        <item>zasiłki</item>
+        <item>darowizny</item>
+        <item>inne</item>
+    </string-array>
+
+
+    <string-array name="subcategories1">
+        <item>artykuły spożywcze i napoje</item>
+        <item>restauracje i jedzenie na wynos</item>
+        <item>przekąski i słodycze</item>
+    </string-array>
+
+    <string-array name="subcategories2">
+        <item>czynsz</item>
+        <item>rachunki za media</item>
+        <item>remonty i naprawy</item>
+        <item>wyposażenie domu</item>
+    </string-array>
+
+    <string-array name="subcategories3">
+        <item>paliwo</item>
+        <item>bilety</item>
+        <item>parkingi</item>
+        <item>utrzymanie i naprawy samochodu</item>
+    </string-array>
+
+    <string-array name="subcategories4">
+        <item>leki i suplementy</item>
+        <item>wizyty u lekarza i opieki medycznej</item>
+        <item>opieka dentystyczna</item>
+    </string-array>
+
+    <string-array name="subcategories5">
+        <item>pielęgnacja</item>
+        <item>makijaż</item>
+        <item>higiena osobista</item>
+    </string-array>
+
+    <string-array name="subcategories6">
+        <item>kino, teatr i inne wyjścia</item>
+        <item>zabawki i gry</item>
+        <item>wakacje i wyjazdy</item>
+        <item>książki i inne produkty kultury</item>
+    </string-array>
+
+    <string-array name="subcategories7">
+        <item>ubrania</item>
+        <item>obuwie</item>
+        <item>dodatki</item>
+    </string-array>
+
+    <string-array name="subcategories8">
+        <item>sprzęt elektroniczny</item>
+        <item>abonamenty i opłaty za multimedia</item>
+        <item>internet</item>
+    </string-array>
+
+    <string-array name="subcategories9">
+        <item>opłaty bankowe i karty kredytowe</item>
+        <item>ubezpieczenia</item>
+    </string-array>
+
+    <string-array name="subcategories10">
+        <item>kursy i szkolenia</item>
+        <item>książki i materiały edukacyjne</item>
+    </string-array>
+
+    <string-array name="subcategories11">
+        <item>wynagrodzenie</item>
+        <item>dodatki, premie</item>
+        <item>nadgodziny</item>
+    </string-array>
+
+    <string-array name="subcategories12">
+        <item>odsetki</item>
+        <item>dywidendy</item>
+        <item>zyski z inwestycji</item>
+    </string-array>
+
+    <string-array name="subcategories13">
+        <item>zasiłki rodzinne</item>
+        <item>zasiłki dla bezrobotnych</item>
+        <item>zasiłki pielęgnacyjne</item>
+    </string-array>
+
+    <string-array name="subcategories14">
+        <item>prezenty</item>
+        <item>spadki</item>
+    </string-array>
+
+    <string-array name="subcategories15">
+        <item>inne</item>
+    </string-array>
+
+
+    // default database: accounts
+
+    <string-array name="accounts_names">
+        <item>konto podstawowe</item>
+        <item>drugie konto</item>
+        <item>konto oszczędnościowe</item>
+        <item>konto walutowe</item>
+        <item>świnka skarbonka</item>
+    </string-array>
+
+
+</resources>

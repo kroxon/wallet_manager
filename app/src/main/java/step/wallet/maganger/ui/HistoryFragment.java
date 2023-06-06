@@ -172,7 +172,7 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
     @Override
     public void onItemClick(View view, int position, String s, List<Transaction> tr) {
 //        Toast.makeText(getContext(), "position: " + position, Toast.LENGTH_SHORT).show();
-        Toast.makeText(getContext(), "ID transaction: " + tr.get(position).getTransactionId(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "ID transaction: " + tr.get(position).getTransactionId(), Toast.LENGTH_SHORT).show();
 
         Transaction sendTransaction = tr.get(position);
 
@@ -207,15 +207,15 @@ public class HistoryFragment extends Fragment implements ListViewVerticalHistory
         pPeriodTo = sPeriodTo;
         pTypeOperation = sTypeOper;
         pAccount = sAccount;
-        Toast.makeText(getContext(), "received: " + pAmountFrom + " " + pAmountTo + " " + pCurrency + " " + pPeriod
-                + " " + pPeriodFrom + " " + pPeriodTo + " " + pTypeOperation + " " + pAccount, Toast.LENGTH_LONG).show();
+//        Toast.makeText(getContext(), "received: " + pAmountFrom + " " + pAmountTo + " " + pCurrency + " " + pPeriod
+//                + " " + pPeriodFrom + " " + pPeriodTo + " " + pTypeOperation + " " + pAccount, Toast.LENGTH_LONG).show();
         loadSpecificTransaciotns();
     }
 
     @Override
     public void sendSelected() {
         loadTransaciotns();
-        Toast.makeText(getContext(), "Added new!", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "Added new!", Toast.LENGTH_SHORT).show();
     }
 
     public interface OnFragmentInteractionListener {

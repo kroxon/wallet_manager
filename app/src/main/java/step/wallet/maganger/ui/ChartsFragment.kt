@@ -424,15 +424,15 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
         }
 
         if (rbMonth!!.isChecked) {
+            val dateFormat = SimpleDateFormat("LLLL yyyy", Locale.getDefault())
+
 
             if (monthPosition == 0) {
                 yearPosition = yearPosition!! - 1
                 monthPosition = 11
             } else
                 monthPosition = monthPosition!! - 1
-            periodMonthLabel!!.setText(
-                resources.getStringArray(R.array.months).get(monthPosition!!) + " " + yearPosition
-            )
+//            periodMonthLabel!!.setText(resources.getStringArray(R.array.months).get(monthPosition!!) + " " + yearPosition)
             val cal = Calendar.getInstance()
             val cal2 = Calendar.getInstance()
             cal.timeInMillis = startDate!!
@@ -443,6 +443,8 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
             startDate = cal.timeInMillis
             endDate = cal2.timeInMillis
             setVisibilityLabel(periodMonthLabel!!)
+
+            periodMonthLabel!!.setText(dateFormat.format(cal.time))
         }
 
         if (rbYear!!.isChecked) {
@@ -783,11 +785,11 @@ class ChartsFragment : Fragment(), DialogFragmentDatePicker.onDateRangeSelectedL
                 selectedIdAccount = repository.getIdAccount(accNameTxt)?.toInt()
 //                if (accNameTxt!!.length > 15) accNameTxt = accNameTxt!!.substring(0, 30) + "..."
                 accountTxt?.setText(accNameTxt)
-                Toast.makeText(
-                    context,
-                    "selected: " + i + ", id: " + repository.getIdAccount(accList.get(i)),
-                    Toast.LENGTH_SHORT
-                ).show()
+//                Toast.makeText(
+//                    context,
+//                    "selected: " + i + ", id: " + repository.getIdAccount(accList.get(i)),
+//                    Toast.LENGTH_SHORT
+//                ).show()
                 var currency = repository.getAccount(
                     repository.getIdAccount(accList.get(i)).toString()
                 )!!.accountCurrency

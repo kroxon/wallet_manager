@@ -5,12 +5,14 @@ import android.accounts.AccountManager;
 import android.accounts.AuthenticatorDescription;
 import android.app.Dialog;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -137,7 +139,7 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
 //            startGoogleDriveSignIn();
 //        });
         InfoRepository infoRepository = new InfoRepository();
-        if (infoRepository.getCheckAutosync()) {
+        if (infoRepository.getCheckAutosync() && networkIsConnected()) {
             startGoogleSignIn();
         }
         GoogleSignInAccount acctStart = GoogleSignIn.getLastSignedInAccount(this.getApplicationContext());
@@ -513,7 +515,7 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
                         })
                         .addOnFailureListener(e -> {
                             Log.e(LOG_TAG, "error download file", e);
-                            showMessage("Error download");
+                            showMessage(MainActivity.this.getString(R.string.error_download));
                         });
             }
         }
@@ -523,10 +525,10 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
                 showMessage(R.string.message_google_sign_in_failed);
             } else {
                 repository.uploadFile(db, GOOGLE_DRIVE_DB_LOCATION)
-                        .addOnSuccessListener(r -> showMessage("Upload success"))
+//                        .addOnSuccessListener(r -> showMessage("Upload success"))
                         .addOnFailureListener(e -> {
                             Log.e(LOG_TAG, "error upload file", e);
-                            showMessage("Error upload");
+                            showMessage(MainActivity.this.getString(R.string.error_upload));
                         });
             }
         }
@@ -536,13 +538,13 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
     @Override
     public void sendToUpload() {
         InfoRepository infoRepository = new InfoRepository();
-        if (infoRepository.getCheckAutosync()) {
+        if (infoRepository.getCheckAutosync() && networkIsConnected()) {
             File db = new File(DBConstants.DB_LOCATION);
             if (repository == null) {
                 showMessage(R.string.message_google_sign_in_failed);
             } else {
                 repository.uploadFile(db, GOOGLE_DRIVE_DB_LOCATION)
-                        .addOnSuccessListener(r -> showMessage("Upload success"))
+//                        .addOnSuccessListener(r -> showMessage("Upload success"))
                         .addOnFailureListener(e -> {
                             Log.e(LOG_TAG, "error upload file", e);
                             showMessage("Error upload");
@@ -561,5 +563,10 @@ public class MainActivity extends GoogleDriveActivity implements DialogFragmentT
                 view1.performClick();
             }
         }
+    }
+
+    private boolean networkIsConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
 }

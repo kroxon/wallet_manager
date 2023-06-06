@@ -214,7 +214,7 @@ class DialogFragmentFilterHistoryTransaction : DialogFragment() {
                     periodTo = Calendar.getInstance().timeInMillis
                 }
                 if (position == 4) {
-                    Toast.makeText(context, "custom", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "custom", Toast.LENGTH_SHORT).show()
                 }
                 if (position != 4 && position != 0) {
                     val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
@@ -378,12 +378,12 @@ class DialogFragmentFilterHistoryTransaction : DialogFragment() {
             checkBoxAll!!.isChecked = true
             typeOperation = "All"
             aCTvAccount!!.setSelection(0)
-            Toast.makeText(
-                context,
-                "SAVE: amountFrom: " + amountFrom + "\namountTo: " + amountTo + "\ncurrency: " + currency
-                        + "\nperiodFrom: " + periodFrom + "\nperiodTo: " + periodTo + "\ntypeOperation: " + typeOperation + "\naccount: " + account,
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                context,
+//                "SAVE: amountFrom: " + amountFrom + "\namountTo: " + amountTo + "\ncurrency: " + currency
+//                        + "\nperiodFrom: " + periodFrom + "\nperiodTo: " + periodTo + "\ntypeOperation: " + typeOperation + "\naccount: " + account,
+//                Toast.LENGTH_SHORT
+//            ).show()
         }
 
         btnCancel!!.setOnClickListener {
@@ -391,12 +391,12 @@ class DialogFragmentFilterHistoryTransaction : DialogFragment() {
         }
 
         btnSave!!.setOnClickListener {
-            Toast.makeText(
-                context,
-                "SAVE: amountFrom: " + amountFrom + "\namountTo: " + amountTo + "\ncurrency: " + currency + "\nperiod: " + period
-                        + "\nperiodFrom: " + periodFrom + "\nperiodTo: " + periodTo + "\ntypeOperation: " + typeOperation + "\naccount: " + account,
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                context,
+//                "SAVE: amountFrom: " + amountFrom + "\namountTo: " + amountTo + "\ncurrency: " + currency + "\nperiod: " + period
+//                        + "\nperiodFrom: " + periodFrom + "\nperiodTo: " + periodTo + "\ntypeOperation: " + typeOperation + "\naccount: " + account,
+//                Toast.LENGTH_SHORT
+//            ).show()
             mOnInputSend?.sendData(
                 amountFrom,
                 amountTo,

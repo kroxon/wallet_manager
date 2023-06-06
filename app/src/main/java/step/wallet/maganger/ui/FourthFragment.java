@@ -57,6 +57,7 @@ public class FourthFragment extends Fragment {
     private ConstraintLayout downloadLayout;
     private ConstraintLayout loggedLayout;
     private ConstraintLayout notLoggedLayout;
+    private ConstraintLayout autosyncLayout;
 
     private Switch autologSwitch;
 
@@ -100,6 +101,7 @@ public class FourthFragment extends Fragment {
         autologSwitch = view.findViewById(R.id.switchAutoLog);
         loggedLayout = view.findViewById(R.id.loggedLayout);
         notLoggedLayout = view.findViewById(R.id.notLoggedLayout);
+        autosyncLayout = view.findViewById(R.id.autosyncLayout);
 
         // test
 //        defaultDb = view.findViewById(R.id.btnDefaultDb);
@@ -196,6 +198,13 @@ public class FourthFragment extends Fragment {
 //            }
 //        });
 
+        autosyncLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                autologSwitch.performClick();
+            }
+        });
+
     }
 
     private void loadAccountInfo() {
@@ -261,7 +270,7 @@ public class FourthFragment extends Fragment {
                 InfoRepository infoRepository = new InfoRepository();
                 getContext().deleteDatabase("WalletManager.db");
                 if (infoRepository.getAllCategories().size() == 0)
-                    Toast.makeText(getContext(), "Deleted!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getContext().getString(R.string.removed_db), Toast.LENGTH_SHORT).show();
                 descpriptionDialog.dismiss();
             }
         });
@@ -295,7 +304,7 @@ public class FourthFragment extends Fragment {
                 InfoRepository infoRepository = new InfoRepository();
                 getContext().deleteDatabase("WalletManager.db");
                 if (infoRepository.getAllCategories().size() == 0)
-                    Toast.makeText(getContext(), "Deleted!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getContext().getString(R.string.removed_db), Toast.LENGTH_SHORT).show();
 
                 // add default db
 

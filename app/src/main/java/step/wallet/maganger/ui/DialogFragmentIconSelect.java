@@ -33,7 +33,7 @@ public class DialogFragmentIconSelect extends DialogFragment implements Recycler
 
     @Override
     public void onItemClick(View view, int position, String iconName) {
-        Toast.makeText(getContext(), "You clicked number " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "You clicked number " + position, Toast.LENGTH_SHORT).show();
         bigSelectedIcon.setImageResource(position);
         imageResource = iconName;
     }

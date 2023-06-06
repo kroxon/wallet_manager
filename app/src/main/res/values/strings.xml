@@ -1,73 +1,75 @@
 <resources>
     <string name="app_name">Wallet manager</string>
 
-    <string name="message_drive_client_is_ready">Google Drive client is ready</string>
-    <string name="message_google_sign_in_failed">Google Sign In failed</string>
+    <string name="message_drive_client_is_ready" translatable="false">Google Drive client is ready</string>
+    <string name="message_google_sign_in_failed" translatable="false">Google Sign In failed</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_category">Category_Activity</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="title_activity_category" translatable="false">Category_Activity</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="first_fragment_label" translatable="false">First Fragment</string>
+    <string name="second_fragment_label" translatable="false">Second Fragment</string>
+    <string name="next" translatable="false">Next</string>
+    <string name="previous" translatable="false">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="title_activity_category2">Category_Activity2</string>
-    <string name="home">Home</string>
-    <string name="history">History</string>
-    <string name="empty_history">Empty history</string>
-    <string name="profile">Profile</string>
-    <string name="overview">Overview</string>
+    <string name="hello_first_fragment" translatable="false">Hello first fragment</string>
+    <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_category2" translatable="false">Category_Activity2</string>
+    <string name="home" translatable="false">Home</string>
+    <string name="history" translatable="false">History</string>
+    <string name="empty_history" translatable="false">Empty history</string>
+    <string name="profile" translatable="false">Profile</string>
+    <string name="overview" translatable="false">Overview</string>
 
-    <string name="dialog_catname_rename">Category name:</string>
+    <string name="dialog_catname_rename" translatable="false">Category name:</string>
 
     // general
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="cancel">Cancel</string>
-    <string name="edit">Edit</string>
-    <string name="delete">Delete</string>
-    <string name="undo">Undo</string>
+    <string name="yes" translatable="false">Yes</string>
+    <string name="no" translatable="false">No</string>
+    <string name="cancel" translatable="false">Cancel</string>
+    <string name="edit" translatable="false">Edit</string>
+    <string name="delete" translatable="false">Delete</string>
+    <string name="undo" translatable="false">Undo</string>
 
 
     //dialog transaction
-    <string name="d_tr_notes">Notes...</string>
-    <string name="d_tr_acc_select">Select account</string>
-    <string name="d_tr_acc">Account</string>
-    <string name="d_tr_date">Date</string>
-    <string name="d_tr_expense">Expenses</string>
-    <string name="d_tr_income">Income</string>
-    <string name="d_tr_category">Category</string>
-    <string name="d_tr_save">Save a transaction?</string>
-    <string name="d_tr_update">Update a transaction?</string>
-    <string name="d_tr_suss_saved">Successfully saved!</string>
-    <string name="d_tr_suss_updated">Successfully updated!</string>
+    <string name="d_tr_notes" translatable="false">Notes...</string>
+    <string name="d_tr_acc_select" translatable="false">Select account</string>
+    <string name="d_tr_acc" translatable="false">Account</string>
+    <string name="d_tr_date" translatable="false">Date</string>
+    <string name="d_tr_expense" translatable="false">Expenses</string>
+    <string name="d_tr_income" translatable="false">Income</string>
+    <string name="d_tr_category" translatable="false">Category</string>
+    <string name="d_tr_save" translatable="false">Save a transaction?</string>
+    <string name="d_tr_update" translatable="false">Update a transaction?</string>
+    <string name="d_tr_suss_saved" translatable="false">Successfully saved!</string>
+    <string name="d_tr_suss_updated" translatable="false">Successfully updated!</string>
+    <string name="add_transaction_succesfully" translatable="false">Added transaction successfully!</string>
+    <string name="entry_canceled" translatable="false">Entry cancelled!</string>
 
 
     //dialog date picker
-    <string name="d_date_select_month">Select a month</string>
-    <string name="jan">January</string>
-    <string name="feb">February</string>
-    <string name="mar">March</string>
-    <string name="apr">April</string>
-    <string name="may">May</string>
-    <string name="jun">June</string>
-    <string name="jul">July</string>
-    <string name="aug">August</string>
-    <string name="sep">September</string>
-    <string name="ost">October</string>
-    <string name="nov">November</string>
-    <string name="dec">December</string>
-    <string name="day">Day</string>
-    <string name="month">Month</string>
-    <string name="year">Year</string>
-    <string name="custom">Custom</string>
-    <string name="today">Today</string>
-    <string name="yesterday">Yesterday</string>
-    <string name="tomorow">Tomorow</string>
-    <string name="select_range">Select a date range</string>
+    <string name="d_date_select_month" translatable="false">Select a month</string>
+    <string name="jan" translatable="false">January</string>
+    <string name="feb" translatable="false">February</string>
+    <string name="mar" translatable="false">March</string>
+    <string name="apr" translatable="false">April</string>
+    <string name="may" translatable="false">May</string>
+    <string name="jun" translatable="false">June</string>
+    <string name="jul" translatable="false">July</string>
+    <string name="aug" translatable="false">August</string>
+    <string name="sep" translatable="false">September</string>
+    <string name="ost" translatable="false">October</string>
+    <string name="nov" translatable="false">November</string>
+    <string name="dec" translatable="false">December</string>
+    <string name="day" translatable="false">Day</string>
+    <string name="month" translatable="false">Month</string>
+    <string name="year" translatable="false">Year</string>
+    <string name="custom" translatable="false">Custom</string>
+    <string name="today" translatable="false">Today</string>
+    <string name="yesterday" translatable="false">Yesterday</string>
+    <string name="tomorow" translatable="false">Tomorow</string>
+    <string name="select_range" translatable="false">Select a date range</string>
 
 
     <string-array name="months">
@@ -89,27 +91,27 @@
 
 
     //color picker
-    <string name="colorpicker_dialog_cancel">Cancel</string>
-    <string name="colorpicker_dialog_ok">Save</string>
+    <string name="colorpicker_dialog_cancel" translatable="false">Cancel</string>
+    <string name="colorpicker_dialog_ok" translatable="false">Save</string>
 
 
     //history transaction
-    <string name="filter_save">Save</string>
-    <string name="filter_cancel">Cancel</string>
-    <string name="filter_clear">Clear</string>
-    <string name="filter_amount">Amount</string>
-    <string name="filter_currency">Currency</string>
-    <string name="filter_currency_all">All</string>
-    <string name="filter_period">Period</string>
-    <string name="filter_type_operation">Type of operation</string>
-    <string name="filter_account">Account</string>
-    <string name="filter_from">From</string>
-    <string name="filter_to">To</string>
-    <string name="filter_date_start">Start</string>
-    <string name="filter_date_end">End</string>
-    <string name="filter_type_debits">Debits</string>
-    <string name="filter_type_all">All</string>
-    <string name="filter_type_credits">Credits</string>
+    <string name="filter_save" translatable="false">Save</string>
+    <string name="filter_cancel" translatable="false">Cancel</string>
+    <string name="filter_clear" translatable="false">Clear</string>
+    <string name="filter_amount" translatable="false">Amount</string>
+    <string name="filter_currency" translatable="false">Currency</string>
+    <string name="filter_currency_all" translatable="false">All</string>
+    <string name="filter_period" translatable="false">Period</string>
+    <string name="filter_type_operation" translatable="false">Type of operation</string>
+    <string name="filter_account" translatable="false">Account</string>
+    <string name="filter_from" translatable="false">From</string>
+    <string name="filter_to" translatable="false">To</string>
+    <string name="filter_date_start" translatable="false">Start</string>
+    <string name="filter_date_end" translatable="false">End</string>
+    <string name="filter_type_debits" translatable="false">Debits</string>
+    <string name="filter_type_all" translatable="false">All</string>
+    <string name="filter_type_credits" translatable="false">Credits</string>
 
     <string-array name="periods">
         <item>FULL TIME</item>
@@ -121,52 +123,61 @@
 
 
     // account fragment
-    <string name="account">Accounts</string>
-    <string name="search">Search...</string>
-    <string name="description">Description</string>
-    <string name="account_balance">Account balance</string>
-    <string name="lack_description">No description</string>
-    <string name="select_currency">Select currency</string>
-    <string name="new_account">New account</string>
-    <string name="write">Write...</string>
-    <string name="to_many_acc">To many accounts!</string>
-    <string name="exists">Such a name already exists</string>
-    <string name="write_name">Write account name</string>
-    <string name="primary_account">Primary account</string>
-    <string name="updated">Updated!</string>
-    <string name="delete_ask_1">Do you want to delete account</string>
-    <string name="delete_ask_2">and all transactions associated with it?</string>
-    <string name="delete_account">Delete account</string>
-    <string name="categories">Categories</string>
-    <string name="expense_categories">Expenses</string>
-    <string name="income_categorie">Incomes</string>
+    <string name="account" translatable="false">Accounts</string>
+    <string name="search" translatable="false">Search...</string>
+    <string name="description" translatable="false">Description</string>
+    <string name="account_balance" translatable="false">Account balance</string>
+    <string name="lack_description" translatable="false">No description</string>
+    <string name="select_currency" translatable="false">Select currency</string>
+    <string name="new_account" translatable="false">New account</string>
+    <string name="write" translatable="false">Write...</string>
+    <string name="to_many_acc" translatable="false">To many accounts!</string>
+    <string name="exists" translatable="false">Such a name already exists</string>
+    <string name="write_name" translatable="false">Write account name</string>
+    <string name="primary_account" translatable="false">Primary account</string>
+    <string name="updated" translatable="false">Updated!</string>
+    <string name="delete_ask_1" translatable="false">Do you want to delete account</string>
+    <string name="delete_ask_2" translatable="false">and all transactions associated with it?</string>
+    <string name="delete_account" translatable="false">Delete account</string>
+    <string name="categories" translatable="false">Categories</string>
+    <string name="expense_categories" translatable="false">Expenses</string>
+    <string name="income_categorie" translatable="false">Incomes</string>
+    <string name="no_accounts" translatable="false">No accounts</string>
 
 
     // charts
-    <string name="details">Details</string>
+    <string name="details" translatable="false">Details</string>
+
+    // google drive
+    <string name="error_upload" translatable="false">Error upload</string>
+    <string name="error_download" translatable="false">Error download</string>
 
 
     // actvity Category
-    <string name="delete_ask_1_1">Do you want to delete category: </string>
-    <string name="add_subactegory">Add subcategory </string>
-    <string name="new_subcategory">new subcategory </string>
+    <string name="delete_ask_1_1" translatable="false">Do you want to delete category: </string>
+    <string name="add_subactegory" translatable="false">Add subcategory </string>
+    <string name="new_subcategory" translatable="false">new subcategory </string>
+    <string name="delete_subcat_ask1" translatable="false">Do you want to delete "</string>
+    <string name="delete_subcat_ask2" translatable="false">" and all transactions associated with it?</string>
+    <string name="too_long_subcategory" translatable="false">Subcategory name too long!</string>
 
     // setting/last fragment
-    <string name="account_setting">Google settings</string>
-    <string name="auto_log_in">Auto sign in to your Google account on startup</string>
-    <string name="auto_cloud_save">Autosync with Google Drive</string>
-    <string name="auto_cloud_load">Load data from Google Cloud at application launch</string>
-    <string name="general_setting">General settings</string>
-    <string name="show_balance">Show account balance</string>
-    <string name="delete_database">Delete database</string>
-    <string name="default_database">Default database</string>
-    <string name="upload_to_google">Upload to Google Cloud</string>
-    <string name="download_from_google">Download from Google Drive</string>
-    <string name="not_logged">You are not logged into your Google account!</string>
-    <string name="log_in">Sign in with Google</string>
-    <string name="log_out">Log out</string>
-    <string name="delete_db_ask">Do you want to delete the entire database from the device?</string>
-    <string name="default_db_ask">Do you want to restore the default database? The existing data will be deleted from the device.</string>
+    <string name="account_setting" translatable="false">Google settings</string>
+    <string name="auto_log_in" translatable="false">Auto sign in to your Google account on startup</string>
+    <string name="auto_cloud_save" translatable="false">Autosync with Google Drive</string>
+    <string name="auto_cloud_load" translatable="false">Load data from Google Cloud at application launch</string>
+    <string name="general_setting" translatable="false">General settings</string>
+    <string name="show_balance" translatable="false">Show account balance</string>
+    <string name="delete_database" translatable="false">Delete database</string>
+    <string name="default_database" translatable="false">Default database</string>
+    <string name="upload_to_google" translatable="false">Upload to Google Cloud</string>
+    <string name="download_from_google" translatable="false">Download from Google Drive</string>
+    <string name="not_logged" translatable="false">You are not logged into your Google account!</string>
+    <string name="log_in" translatable="false">Sign in with Google</string>
+    <string name="log_out" translatable="false">Log out</string>
+    <string name="delete_db_ask" translatable="false">Do you want to delete the entire database from the device?</string>
+    <string name="default_db_ask" translatable="false">Do you want to restore the default database? The existing data will be deleted from the device.</string>
+    <string name="removed_db" translatable="false">The database has been deleted!</string>
 
 
     // default database: categories

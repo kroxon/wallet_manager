@@ -9,13 +9,15 @@
 
     <TextView
         android:id="@+id/pieChart_detail_nested_cat_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/olx_color_1"
+        android:layout_marginLeft="40dp"
         android:text="napoje"
-        android:layout_marginLeft="50dp"
+        android:layout_marginRight="12dp"
+        android:textColor="@color/olx_color_1"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/char_value_detail_nested_txt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
