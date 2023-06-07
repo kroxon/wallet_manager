@@ -54,10 +54,10 @@ class RecyclerViewMonthAdapter(
         holder.monthName.text = courseList.get(position)
         if (selectedItem != position) {
             holder.monthName.setBackgroundResource(R.drawable.subcat_recycleview_background)
-            holder.monthName.setTextColor(Color.WHITE)
+            holder.monthName.setTextColor(ContextCompat.getColor(context,R.color.olx_color_1))
         } else {
             holder.monthName.setBackgroundResource(R.drawable.subcat_recycleview_selected_background)
-            holder.monthName.setTextColor(ContextCompat.getColor(context,R.color.colorApp1))
+            holder.monthName.setTextColor(Color.WHITE)
         }
 
         holder.monthName.setOnClickListener {

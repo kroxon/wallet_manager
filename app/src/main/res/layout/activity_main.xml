@@ -156,7 +156,7 @@
                     android:id="@+id/plusButton"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@drawable/subcat_recycleview_selected_background"
+                    android:background="@drawable/button_background"
                     android:clickable="true"
                     android:elevation="8dp"
                     android:src="@drawable/ic_add"
