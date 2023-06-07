@@ -25,20 +25,36 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_money_income"
-            app:tint="@color/olx_color_1"></ImageView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:text="income"
-            android:textColor="@color/olx_color_1"
-            android:textSize="18sp"
-            android:textStyle="bold"></TextView>
+
+            <ImageView
+                android:id="@+id/incomeImg"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:paddingRight="130dp"
+                android:src="@drawable/ic_money_income"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/olx_color_1"></ImageView>
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:text="@string/add_income"
+                android:textColor="@color/olx_color_1"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/incomeImg"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
@@ -50,20 +66,36 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_money_expense"
-            app:tint="@color/olx_color_1"></ImageView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:text="expense"
-            android:textColor="@color/olx_color_1"
-            android:textSize="18sp"
-            android:textStyle="bold"></TextView>
+
+            <ImageView
+                android:id="@+id/expenseImg"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:paddingRight="130dp"
+                android:src="@drawable/ic_money_expense"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/olx_color_1"></ImageView>
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:text="@string/add_expense"
+                android:textColor="@color/olx_color_1"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/expenseImg"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

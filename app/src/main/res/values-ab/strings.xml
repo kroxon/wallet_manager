@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wallet manager</string>
+	
+	<string name="home">بيت</string>
+    <string name="history">تاريخ</string>
+    <string name="empty_history">تاريخ فارغ</string>
+    <string name="profile">مظهر</string>
+    <string name="overview">ملخص</string>
+
+    <string name="dialog_catname_rename">اسم التصنيف:</string>
+
+    // general
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="cancel">يلغي</string>
+    <string name="edit">يحرر</string>
+    <string name="delete">يمسح</string>
+    <string name="undo">الغاء التحميل</string>
+    <string name="add_income">أضف الدخل</string>
+    <string name="add_expense">أضف المصاريف</string>
+
+
+    //dialog transaction
+    <string name="d_tr_notes">ملحوظات...></string>
+    <string name="d_tr_acc_select">حدد حساب</string>
+    <string name="d_tr_acc">حساب</string>
+    <string name="d_tr_date">تاريخ</string>
+    <string name="d_tr_expense">نفقات</string>
+    <string name="d_tr_income">دخل</string>
+    <string name="d_tr_category">فئة</string>
+    <string name="d_tr_save">حفظ الصفقة؟</string>
+    <string name="d_tr_update">تحديث معاملة؟</string>
+    <string name="d_tr_suss_saved">تم الحفظ بنجاح!</string>
+    <string name="d_tr_suss_updated">تم التحديث بنجاح!</string>
+    <string name="add_transaction_succesfully">تمت إضافة المعاملة بنجاح!</string>
+    <string name="entry_canceled">تم إلغاء الدخول!</string>
+
+
+    //dialog date picker
+    <string name="d_date_select_month">اختار شهرا</string>
+    <string name="jan">يناير</string>
+    <string name="feb">شهر فبراير</string>
+    <string name="mar">يمشي</string>
+    <string name="apr">أبريل</string>
+    <string name="may">يمكن</string>
+    <string name="jun">يونيو</string>
+    <string name="jul">يوليو</string>
+    <string name="aug">أغسطس</string>
+    <string name="sep">سبتمبر</string>
+    <string name="ost">اكتوبر</string>
+    <string name="nov">شهر نوفمبر</string>
+    <string name="dec">ديسمبر</string>
+    <string name="day">يوم</string>
+    <string name="month">شهر</string>
+    <string name="year">سنة</string>
+    <string name="custom">مخصص</string>
+    <string name="today">اليوم</string>
+    <string name="yesterday">أمس</string>
+    <string name="tomorow">غداً</string>
+    <string name="select_range">حدد نطاقًا زمنيًا</string>
+
+
+    <string-array name="months">
+        <item>يناير</item>
+        <item>شهر فبراير</item>
+        <item>يمشي</item>
+        <item>أبريل</item>
+        <item>يمكن</item>
+        <item>يونيو</item>
+        <item>يوليو</item>
+        <item>أغسطس</item>
+        <item>سبتمبر</item>
+        <item>اكتوبر</item>
+        <item>شهر نوفمبر</item>
+        <item>ديسمبر</item>
+    </string-array>
+
+
+
+
+    //color picker
+    <string name="colorpicker_dialog_cancel">يلغي</string>
+    <string name="colorpicker_dialog_ok">يحفظ</string>
+
+
+    //history transaction
+    <string name="filter_save">يحفظ</string>
+    <string name="filter_cancel">يلغي</string>
+    <string name="filter_clear">واضح</string>
+    <string name="filter_amount">كمية</string>
+    <string name="filter_currency">عملة</string>
+    <string name="filter_currency_all">الجميع</string>
+    <string name="filter_period">فترة</string>
+    <string name="filter_type_operation">نوع العملية</string>
+    <string name="filter_account">حساب</string>
+    <string name="filter_from">من</string>
+    <string name="filter_to">ل</string>
+    <string name="filter_date_start">يبدأ</string>
+    <string name="filter_date_end">نهاية</string>
+    <string name="filter_type_debits">الديون</string>
+    <string name="filter_type_all">الجميع</string>
+    <string name="filter_type_credits">الاعتمادات</string>
+
+    <string-array name="periods">
+        <item>كامل الوقت </item>
+        <item>الأسبوع الماضي</item>
+        <item>الشهر الماضي</item>
+        <item>العام الماضي</item>
+        <item>آخر</item>
+    </string-array>
+
+
+    // account fragment
+    <string name="account">حسابات</string>
+    <string name="search">...يبحث</string>
+    <string name="description">وصف</string>
+    <string name="account_balance">رصيد الحساب</string>
+    <string name="lack_description">بدون وصف</string>
+    <string name="select_currency">اختر العملة</string>
+    <string name="new_account">حساب جديد</string>
+    <string name="write">...يكتب</string>
+    <string name="to_many_acc">للعديد من الحسابات!</string>
+    <string name="exists">هذا الاسم موجود بالفعل</string>
+    <string name="write_name">اكتب اسم الحساب</string>
+    <string name="primary_account">حساب اساسي</string>
+    <string name="updated">محدث!</string>
+	    <string name="delete_ask_1">وجميع المعاملات المرتبطة بها؟</string>
+    <string name="delete_ask_2">هل تريد حذف الحساب</string>
+    <string name="delete_account">حذف الحساب</string>
+    <string name="categories">فئات</string>
+    <string name="expense_categories">نفقات</string>
+    <string name="income_categorie">الدخل</string>
+    <string name="no_accounts">لا حسابات</string>
+
+
+    // charts
+    <string name="details">تفاصيل</string>
+
+    // google drive
+    <string name="error_upload">خطأ في التحميل</string>
+    <string name="error_download">خطأ في التنزيل</string>
+
+
+    // actvity Category
+    <string name="delete_ask_1_1">هل تريد حذف فئة:</string>
+    <string name="add_subactegory">إضافة فئة فرعية</string>
+    <string name="new_subcategory"> فئة فرعية جديدة</string>
+    <string name="delete_subcat_ask2">هل تريد أن تحذف "</string>
+    <string name="delete_subcat_ask1">"وجميع المعاملات المرتبطة بها؟</string>
+    <string name="too_long_subcategory">اسم الفئة الفرعية طويل جدًا!</string>
+
+    // setting/last fragment
+    <string name="account_setting">إعدادات Google</string>
+    <string name="auto_log_in">تسجيل الدخول التلقائي إلى حساب Google الخاص بك عند بدء التشغيل</string>
+    <string name="auto_cloud_save">المزامنة التلقائية مع Google Drive</string>
+    <string name="auto_cloud_load">تحميل البيانات من Google Cloud عند تشغيل التطبيق</string>
+    <string name="general_setting">الاعدادات العامة</string>
+    <string name="show_balance">إظهار رصيد الحساب</string>
+    <string name="delete_database">حذف قاعدة البيانات</string>
+    <string name="default_database">قاعدة البيانات الافتراضية</string>
+    <string name="upload_to_google">تحميل إلى Google Drive</string>
+    <string name="download_from_google">تنزيل من Google Drive</string>
+    <string name="not_logged">أنت لم تسجل الدخول إلى حساب Google الخاص بك!</string>
+    <string name="log_in">سجّل الدخول باستخدام Google</string>
+    <string name="log_out">تسجيل خروج</string>
+    <string name="delete_db_ask">هل تريد حذف قاعدة البيانات بأكملها من الجهاز؟</string>
+    <string name="default_db_ask">هل تريد استعادة قاعدة البيانات الافتراضية؟ سيتم حذف البيانات الموجودة من الجهاز.</string>
+    <string name="removed_db">تم حذف قاعدة البيانات!</string>
+
+
+    // default database: categories
+
+    <string-array name="categories">
+		 <item> الطعام والشراب </item>
+         <item> الإقامة </item>
+         <item> النقل </ em>
+         <item> النظافة والجمال </ em>
+         <item> الرعاية الصحية </item>
+         <item> ترفيه وتسلية </ em>
+         <item> الملابس والأحذية </ item>
+         <item> الاتصالات والتكنولوجيا </item>
+         <item> التمويل والتأمين </item>
+         <item> التعليم </item>
+
+		 <item> وظيفة </item>
+         <item> استثمارات </item>
+         <item> ميزة </item>
+         <item> التبرعات </item>
+         <item> أخرى </ em>
+    </string-array>
+
+    <string-array name="category_icon">
+        <item>x22</item>
+        <item>x51</item>
+        <item>x28</item>
+        <item>x23</item>
+        <item>x92</item>
+        <item>x48</item>
+        <item>x115</item>
+        <item>x34</item>
+        <item>x118</item>
+        <item>x14</item>
+        <item>x15</item>
+        <item>x7</item>
+        <item>x25</item>
+        <item>x50</item>
+        <item>x36</item>
+    </string-array>
+
+    <string-array name="subcategories1">
+         <item> الأطعمة والمشروبات </item>
+         <item> مطاعم وأطعمة جاهزة </item>
+         <item> الوجبات الخفيفة والحلويات </item>
+    </string-array>
+
+    <string-array name="subcategories2">
+<item> إيجار </item>
+         <item> فواتير المرافق </item>
+         <item> إصلاحات </item>
+         <item> معدات منزلية </item>
+    </string-array>
+
+    <string-array name="subcategories3">
+<item> وقود </item>
+         <item> تذاكر </item>
+         <item> تذاكر وقوف السيارات </item>
+         <item> صيانة السيارات وإصلاحها </item>
+    </string-array>
+
+    <string-array name="subcategories4">
+<item> من الأدوية والمكملات </item>
+         <item> زيارات الطبيب والرعاية الطبية </item>
+         <item> رعاية الأسنان </item>
+    </string-array>
+
+    <string-array name="subcategories5">
+<item> رعاية </item>
+         <item> مكياج </item>
+         <item> النظافة الشخصية </item>
+    </string-array>
+
+    <string-array name="subcategories6">
+<item> سينما ومسرح ونزهات أخرى </item>
+         <item> الدمى والألعاب </item>
+         <item> عطلات ورحلات </item>
+         <item> كتب ومنتجات ثقافية أخرى </item>
+    </string-array>
+
+    <string-array name="subcategories7">
+<item> ملابس </item>
+         <item> أحذية </item>
+         <item> من الملحقات </item>
+    </string-array>
+
+    <string-array name="subcategories8">
+<item> معدات إلكترونية </item>
+         <item> رسوم واشتراكات الوسائط المتعددة </item>
+         <item> الإنترنت </item>
+    </string-array>
+
+    <string-array name="subcategories9">
+<item> الرسوم المصرفية وبطاقات الائتمان </item>
+         <item> تأمين </item>>
+    </string-array>
+
+    <string-array name="subcategories10">
+<item> الدورات التدريبية والدورات التدريبية </item>
+         <item> الكتب والمواد التعليمية </item>
+    </string-array>
+
+    <string-array name="subcategories11">
+<item> مكافأة </item>
+         <item> المزايا والمكافآت </item>
+         <item> العمل الإضافي </item>
+    </string-array>
+
+    <string-array name="subcategories12">
+<item> الفائدة </item>
+         <item> أرباح الأسهم </item>
+         <item> أرباح من الاستثمارات </item>
+    </string-array>
+
+    <string-array name="subcategories13">
+<item> مزايا الأسرة </item>
+         <item> إعانات البطالة </item>
+         <item> مزايا التمريض </item>
+    </string-array>
+
+    <string-array name="subcategories14">
+        <item>الهدايا</item>
+        <item>الميراث</item>
+    </string-array>
+
+    <string-array name="subcategories15">
+        <item>آخر</item>
+    </string-array>
+
+    <string-array name="category_colors">
+        <item>#ef9a9a</item>
+        <item>#f44336</item>
+        <item>#f48fb1</item>
+        <item>#ad1457</item>
+        <item>#ce93d8</item>
+        <item>#1976d2</item>
+        <item>#26c6da</item>
+        <item>#0097a7</item>
+        <item>#66bb6a</item>
+        <item>#43a047</item>
+        <item>#1b5e20</item>
+        <item>#ffea00</item>
+        <item>#ffca28</item>
+        <item>#ff6f00</item>
+        <item>#3e2723</item>
+    </string-array>
+
+    // default database: accounts
+
+    <string-array name="accounts_names">
+<item> الحساب الأساسي </item>
+         <item> الحساب الثاني </item>
+         <item> حساب التوفير </item>
+         <item> حساب بالعملة الأجنبية </item>
+         <item> حصالة نقود </item>
+    </string-array>
+
+	
+</resources>
