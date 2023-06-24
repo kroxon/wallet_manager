@@ -9,7 +9,6 @@ The app is used to manage your household budget. With a simple and intuitive int
 ![Screenshot_20230609_194620](https://github.com/kroxon/wallet_manager/assets/59028898/57352794-66c2-4d7d-9f2c-30175ad072d5)   ![Screenshot_20230609_194654](https://github.com/kroxon/wallet_manager/assets/59028898/bb8348c6-148a-4f71-9d3d-12553908b63d)  ![Screenshot_20230609_193453](https://github.com/kroxon/wallet_manager/assets/59028898/949e059b-b2a6-4c06-b25d-c1158c2d7bd3)![Screenshot_20230609_193438](https://github.com/kroxon/wallet_manager/assets/59028898/0d2e1c1a-5692-46e8-847a-c82f6121e58a)  ![Screenshot_20230609_194445](https://github.com/kroxon/wallet_manager/assets/59028898/2b4d8c0a-4fdb-46a3-a10e-10f51d3feaf7)  ![Screenshot_20230609_194549](https://github.com/kroxon/wallet_manager/assets/59028898/ddda2b7e-61e7-4edf-805c-d6ade94da82b)   ![Screenshot_20230609_183659](https://github.com/kroxon/wallet_manager/assets/59028898/34491984-d2e0-4011-bfa9-1e5d985923b1)
 
 
-
 ## 📦 Download
 
 <a href='https://play.google.com/store/apps/details?id=step.wallet.maganger'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width=240/></a>
