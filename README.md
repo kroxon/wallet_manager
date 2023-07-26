@@ -1,12 +1,21 @@
+
 # Wallet manager
 
-![image](https://github.com/kroxon/wallet_manager/assets/59028898/1805a06c-4ad8-42f1-9db6-cf30b428f7b5)
+![unnamed6](https://github.com/kroxon/wallet_manager/assets/59028898/46918969-0050-45c4-b287-f2a4641e80e7)
+
+
 
 
 ## Description
 The app is used to manage your household budget. With a simple and intuitive interface, you can easily add transactions and control your finances. The app allows you to summarise your expenses on a daily, monthly, annual or other basis. The data is presented using a pie chart and bar chart. The user can view transaction history and add notes. The user can freely configure expense and income categories, specify their subcategories, icon and colour. It is possible to synchronise data between devices using the same Google account and to restore data in case of device loss. The app is under development and new features will be added, such as export to xlsx.
 
-![Screenshot_20230609_194620](https://github.com/kroxon/wallet_manager/assets/59028898/57352794-66c2-4d7d-9f2c-30175ad072d5)   ![Screenshot_20230609_194654](https://github.com/kroxon/wallet_manager/assets/59028898/bb8348c6-148a-4f71-9d3d-12553908b63d)  ![Screenshot_20230609_193453](https://github.com/kroxon/wallet_manager/assets/59028898/949e059b-b2a6-4c06-b25d-c1158c2d7bd3)![Screenshot_20230609_193438](https://github.com/kroxon/wallet_manager/assets/59028898/0d2e1c1a-5692-46e8-847a-c82f6121e58a)  ![Screenshot_20230609_194445](https://github.com/kroxon/wallet_manager/assets/59028898/2b4d8c0a-4fdb-46a3-a10e-10f51d3feaf7)  ![Screenshot_20230609_194549](https://github.com/kroxon/wallet_manager/assets/59028898/ddda2b7e-61e7-4edf-805c-d6ade94da82b)   ![Screenshot_20230609_183659](https://github.com/kroxon/wallet_manager/assets/59028898/34491984-d2e0-4011-bfa9-1e5d985923b1)
+![unnamed1](https://github.com/kroxon/wallet_manager/assets/59028898/a440145e-f3f5-4871-88b1-a8cba4fbfd85)
+![unnamed](https://github.com/kroxon/wallet_manager/assets/59028898/148857af-91a9-4c22-8602-1e68db627600)  
+![unnamed5](https://github.com/kroxon/wallet_manager/assets/59028898/a8ca7833-0611-4aa6-9d7d-770d7bf56946)
+![unnamed4](https://github.com/kroxon/wallet_manager/assets/59028898/e4b8f31a-8ff3-4f88-973f-75cbb19008e2)  
+![unnamed3](https://github.com/kroxon/wallet_manager/assets/59028898/42c4b2e0-1e95-4bb1-b67b-da4713cce3e9)
+![unnamed2](https://github.com/kroxon/wallet_manager/assets/59028898/c3d8ed78-86c4-4f65-9cf8-6cf2f74704bc)
+
 
 
 ## 📦 Download
